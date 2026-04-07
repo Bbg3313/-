@@ -23,8 +23,8 @@ export function Doctors() {
   return (
     <section id="doctors" className="py-32 px-6 bg-background relative">
       <div className="max-w-6xl mx-auto">
-        <div className="max-w-3xl mb-16 lg:mb-20">
-          <div className="w-12 h-px bg-gold-accent mb-8" />
+        <div className="max-w-3xl mx-auto mb-16 lg:mb-20 text-center">
+          <div className="w-12 h-px bg-gold-accent mb-8 mx-auto" />
           <h2
             className="mb-6 text-charcoal tracking-tight"
             style={{
@@ -36,25 +36,30 @@ export function Doctors() {
           >
             Meet Our Specialists
           </h2>
-          <p className="text-xl text-muted-foreground leading-relaxed">
-            피부과 전문의로 구성된 최고의 의료진이 여러분을 기다립니다
+          <p className="text-xl text-charcoal/90 leading-relaxed font-medium mb-4">
+            20년의 숙련도, 확신 있는 결과.
+          </p>
+          <p className="text-lg text-muted-foreground leading-relaxed">
+            상담부터 시술, 사후 관리까지 대표원장이 직접 책임집니다.
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] gap-12 lg:gap-16 items-start">
-          <div className="relative max-w-md mx-auto lg:mx-0 w-full">
-            <div className="relative aspect-[3/4] overflow-hidden bg-muted shadow-xl">
-              <ImageWithFallback
-                src={DIRECTOR.image}
-                alt={`${DIRECTOR.name} ${DIRECTOR.role}`}
-                className="w-full h-full object-cover object-top"
-              />
-              <div className="absolute top-4 right-4 w-16 h-16 border border-gold-accent/50 pointer-events-none" />
+        <div className="mx-auto w-full max-w-5xl grid lg:grid-cols-2 gap-12 lg:gap-14 xl:gap-16 items-start">
+          <div className="flex justify-center w-full">
+            <div className="relative w-full max-w-md">
+              <div className="relative aspect-[3/4] overflow-hidden bg-muted shadow-xl">
+                <ImageWithFallback
+                  src={DIRECTOR.image}
+                  alt={`${DIRECTOR.name} ${DIRECTOR.role}`}
+                  className="w-full h-full object-cover object-top"
+                />
+                <div className="absolute top-4 right-4 w-16 h-16 border border-gold-accent/50 pointer-events-none" />
+              </div>
+              <div className="absolute -bottom-4 -left-4 w-32 h-32 border border-gold-accent/20 -z-10 hidden lg:block" />
             </div>
-            <div className="absolute -bottom-4 -left-4 w-32 h-32 border border-gold-accent/20 -z-10 hidden lg:block" />
           </div>
 
-          <div className="pt-0 lg:pt-4">
+          <div className="pt-0 lg:pt-4 max-w-xl mx-auto w-full lg:max-w-none">
             <p className="text-sm tracking-[0.15em] text-gold-accent mb-6 font-medium">
               [ 의료진 소개 ]
             </p>

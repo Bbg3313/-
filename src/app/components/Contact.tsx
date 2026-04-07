@@ -1,172 +1,30 @@
-import { useState } from "react";
-
 const GOOGLE_MAPS_EMBED_SRC =
   "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3234.1930747588513!2d129.212623776708!3d35.844268972535126!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x35664e4195c7c2cf%3A0xa3a7117464dabddd!2z7Jew7IS466-47J2Y7JuQIOqyveyjvO2UvOu2gOqzvA!5e0!3m2!1sko!2skr!4v1775533999427!5m2!1sko!2skr";
 
 export function Contact() {
-  const [formData, setFormData] = useState({
-    name: "",
-    phone: "",
-    email: "",
-    service: "",
-    date: "",
-    message: "",
-  });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Form submitted:", formData);
-  };
-
   return (
     <section id="contact" className="py-32 px-6 bg-background relative">
       <div className="max-w-7xl mx-auto">
-        <div className="grid lg:grid-cols-2 gap-20">
-          {/* Left - Booking Form */}
-          <div>
-            <div className="w-12 h-px bg-gold-accent mb-8" />
-            <h2
-              className="mb-6 text-charcoal tracking-tight"
-              style={{
-                fontFamily: "'Playfair Display', serif",
-                fontSize: "3rem",
-                lineHeight: "1.2",
-                fontWeight: "500",
-              }}
-            >
-              Book Your<br />Consultation
-            </h2>
-            <p className="text-xl text-muted-foreground mb-12 leading-relaxed">
-              전문의와의 상담 예약을 통해 맞춤형 치료 계획을 시작하세요
-            </p>
-
-            <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Name */}
-              <div>
-                <label className="block text-sm tracking-wider uppercase text-charcoal/60 mb-3">
-                  성함 *
-                </label>
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-6 py-4 bg-champagne border-b border-gold-accent/30 focus:border-gold-accent outline-none transition-colors duration-300"
-                  placeholder="이름을 입력하세요"
-                />
-              </div>
-
-              {/* Phone & Email */}
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm tracking-wider uppercase text-charcoal/60 mb-3">
-                    연락처 *
-                  </label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-6 py-4 bg-champagne border-b border-gold-accent/30 focus:border-gold-accent outline-none transition-colors duration-300"
-                    placeholder="010-0000-0000"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm tracking-wider uppercase text-charcoal/60 mb-3">
-                    이메일
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    className="w-full px-6 py-4 bg-champagne border-b border-gold-accent/30 focus:border-gold-accent outline-none transition-colors duration-300"
-                    placeholder="email@example.com"
-                  />
-                </div>
-              </div>
-
-              {/* Service Selection */}
-              <div>
-                <label className="block text-sm tracking-wider uppercase text-charcoal/60 mb-3">
-                  상담 분야 *
-                </label>
-                <select
-                  name="service"
-                  value={formData.service}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-6 py-4 bg-champagne border-b border-gold-accent/30 focus:border-gold-accent outline-none transition-colors duration-300 appearance-none cursor-pointer"
-                >
-                  <option value="">선택하세요</option>
-                  <option value="general">일반 피부과</option>
-                  <option value="cosmetic">미용 피부과</option>
-                  <option value="antiaging">안티에이징</option>
-                  <option value="pigmentation">색소 치료</option>
-                  <option value="laser">레이저 시술</option>
-                  <option value="skincare">피부 관리</option>
-                </select>
-              </div>
-
-              {/* Preferred Date */}
-              <div>
-                <label className="block text-sm tracking-wider uppercase text-charcoal/60 mb-3">
-                  희망 날짜
-                </label>
-                <input
-                  type="date"
-                  name="date"
-                  value={formData.date}
-                  onChange={handleChange}
-                  className="w-full px-6 py-4 bg-champagne border-b border-gold-accent/30 focus:border-gold-accent outline-none transition-colors duration-300"
-                />
-              </div>
-
-              {/* Message */}
-              <div>
-                <label className="block text-sm tracking-wider uppercase text-charcoal/60 mb-3">
-                  추가 문의사항
-                </label>
-                <textarea
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  rows={4}
-                  className="w-full px-6 py-4 bg-champagne border-b border-gold-accent/30 focus:border-gold-accent outline-none transition-colors duration-300 resize-none"
-                  placeholder="궁금하신 점을 자유롭게 작성해주세요"
-                />
-              </div>
-
-              {/* Submit Button */}
-              <button
-                type="submit"
-                className="group relative w-full px-12 py-5 bg-primary text-primary-foreground overflow-hidden transition-all duration-500 hover:shadow-xl"
-              >
-                <span className="relative z-10 tracking-wider uppercase text-sm">
-                  예약 신청하기
-                </span>
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
-              </button>
-
-              <p className="text-xs text-muted-foreground text-center leading-relaxed">
-                예약 신청 후 담당자가 확인하여 연락드립니다.
-                <br />
-                급한 문의는 전화로 연락 주시기 바랍니다.
-              </p>
-            </form>
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-stretch">
+          {/* Map — left on large screens; below Visit Us on mobile */}
+          <div className="order-2 lg:order-1 min-h-[280px] sm:min-h-[340px] lg:min-h-[520px]">
+            <div className="border border-border overflow-hidden bg-muted h-full min-h-[inherit]">
+              <iframe
+                src={GOOGLE_MAPS_EMBED_SRC}
+                className="w-full h-full min-h-[280px] sm:min-h-[340px] lg:min-h-[520px] border-0 block"
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="연세미의원 위치 — 구글 지도"
+              />
+            </div>
           </div>
 
-          {/* Right - Clinic Info */}
-          <div>
-            <div className="bg-champagne p-12 mb-8">
-              <h3
+          {/* Visit Us — right on large screens; first on mobile */}
+          <div className="order-1 lg:order-2">
+            <div className="bg-champagne p-8 sm:p-12 h-full">
+              <div className="w-12 h-px bg-gold-accent mb-8" />
+              <h2
                 className="mb-8 text-charcoal"
                 style={{
                   fontFamily: "'Playfair Display', serif",
@@ -175,7 +33,7 @@ export function Contact() {
                 }}
               >
                 Visit Us
-              </h3>
+              </h2>
 
               <div className="space-y-8">
                 {/* Address */}
@@ -201,9 +59,9 @@ export function Contact() {
                     </svg>
                   </div>
                   <div className="min-w-0 flex-1">
-                    <h4 className="text-charcoal mb-3 tracking-wide" style={{ fontWeight: "500" }}>
+                    <h3 className="text-charcoal mb-3 tracking-wide" style={{ fontWeight: "500" }}>
                       주소 · 오시는 길
-                    </h4>
+                    </h3>
                     <div className="text-muted-foreground text-sm leading-relaxed space-y-3">
                       <p className="text-charcoal/90 font-medium">
                         경북 경주시 화랑로 132, 2층 연세미의원
@@ -251,9 +109,9 @@ export function Contact() {
                     </svg>
                   </div>
                   <div>
-                    <h4 className="text-charcoal mb-2 tracking-wide" style={{ fontWeight: "500" }}>
+                    <h3 className="text-charcoal mb-2 tracking-wide" style={{ fontWeight: "500" }}>
                       전화
-                    </h4>
+                    </h3>
                     <p className="text-muted-foreground leading-relaxed">
                       <a href="tel:0547728575" className="text-gold-accent hover:underline underline-offset-2">
                         054-772-8575
@@ -280,9 +138,9 @@ export function Contact() {
                     </svg>
                   </div>
                   <div className="min-w-0 flex-1">
-                    <h4 className="text-charcoal mb-3 tracking-wide" style={{ fontWeight: "500" }}>
+                    <h3 className="text-charcoal mb-3 tracking-wide" style={{ fontWeight: "500" }}>
                       진료 시간
-                    </h4>
+                    </h3>
                     <div className="border border-gold-accent/20 rounded-sm overflow-hidden text-sm">
                       <div className="grid grid-cols-[1fr_auto] gap-x-4 sm:gap-x-8 items-baseline px-4 py-2.5 border-b border-gold-accent/15 bg-champagne/80">
                         <span className="text-charcoal font-medium">월·목·금요일</span>
@@ -312,17 +170,6 @@ export function Contact() {
                   </div>
                 </div>
               </div>
-            </div>
-
-            <div className="border border-border overflow-hidden bg-muted">
-              <iframe
-                src={GOOGLE_MAPS_EMBED_SRC}
-                className="w-full h-[280px] sm:h-[340px] md:h-[450px] border-0 block"
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="연세미의원 위치 — 구글 지도"
-              />
             </div>
           </div>
         </div>
