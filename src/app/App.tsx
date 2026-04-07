@@ -1,21 +1,18 @@
-import { Header } from './components/Header';
-import { Hero } from './components/Hero';
-import { About } from './components/About';
-import { Services } from './components/Services';
-import { Doctors } from './components/Doctors';
-import { Testimonials } from './components/Testimonials';
-import { Contact } from './components/Contact';
+import { BrowserRouter, Route, Routes } from "react-router";
+import { HomePage } from "./pages/HomePage";
+import { NoticePage } from "./pages/NoticePage";
+import { PrivacyPage } from "./pages/PrivacyPage";
+import { TermsPage } from "./pages/TermsPage";
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
-      <Hero />
-      <About />
-      <Services />
-      <Doctors />
-      <Testimonials />
-      <Contact />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/notice" element={<NoticePage />} />
+        <Route path="/privacy" element={<PrivacyPage />} />
+        <Route path="/terms" element={<TermsPage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }

@@ -1,7 +1,4 @@
 import { useState } from "react";
-import logo from "../../imports/logo.svg";
-import { PrivacyPolicyContent } from "./PrivacyPolicyContent";
-import { TermsOfServiceContent } from "./TermsOfServiceContent";
 
 export function Contact() {
   const [formData, setFormData] = useState({
@@ -290,72 +287,6 @@ export function Contact() {
           </div>
         </div>
       </div>
-
-      <div className="max-w-3xl mx-auto px-6 mt-24 space-y-16 text-muted-foreground text-sm leading-relaxed">
-        <section id="notice" className="scroll-mt-28 border-t border-border/50 pt-16">
-          <h3
-            className="text-charcoal text-xl mb-4 tracking-wide"
-            style={{ fontFamily: "'Playfair Display', serif", fontWeight: 500 }}
-          >
-            공지사항
-          </h3>
-          <p>등록된 공지사항이 없습니다. 안내가 있을 경우 이곳에 게시됩니다.</p>
-        </section>
-
-        <section id="privacy" className="scroll-mt-28 border-t border-border/50 pt-16">
-          <h3
-            className="text-charcoal text-xl mb-6 tracking-wide"
-            style={{ fontFamily: "'Playfair Display', serif", fontWeight: 500 }}
-          >
-            개인정보처리방침
-          </h3>
-          <PrivacyPolicyContent />
-        </section>
-
-        <section id="terms" className="scroll-mt-28 border-t border-border/50 pt-16">
-          <h3
-            className="text-charcoal text-xl mb-6 tracking-wide"
-            style={{ fontFamily: "'Playfair Display', serif", fontWeight: 500 }}
-          >
-            서비스이용약관
-          </h3>
-          <TermsOfServiceContent />
-        </section>
-      </div>
-
-      <footer className="mt-24 border-t border-border/50">
-        <div className="max-w-7xl mx-auto px-6 pt-12 pb-10">
-          <div className="flex flex-col lg:flex-row lg:justify-between gap-10">
-            <div className="flex flex-col sm:flex-row gap-6 sm:gap-8 items-start">
-              <a href="#" className="shrink-0">
-                <img src={logo} alt="연세미의원" className="h-14 w-auto" />
-              </a>
-              <div className="text-sm text-muted-foreground space-y-2">
-                <p className="text-charcoal font-medium text-base">연세미의원</p>
-                <p>대표자 심형경</p>
-                <p>사업자등록번호 587-10-03051</p>
-                <p>주소 경북 경주시 화랑로 132, 2층 연세미의원</p>
-              </div>
-            </div>
-            <nav className="flex flex-wrap gap-x-8 gap-y-3 text-sm text-muted-foreground items-start lg:pt-1">
-              <a href="#notice" className="hover:text-gold-accent transition-colors">
-                공지사항
-              </a>
-              <a href="#privacy" className="hover:text-gold-accent transition-colors">
-                개인정보처리방침
-              </a>
-              <a href="#terms" className="hover:text-gold-accent transition-colors">
-                서비스이용약관
-              </a>
-            </nav>
-          </div>
-        </div>
-        <div className="border-t border-border/60 bg-secondary py-5">
-          <div className="max-w-7xl mx-auto px-6 text-center">
-            <p className="text-muted-foreground text-xs">© 2026 연세미의원. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
     </section>
   );
 }
