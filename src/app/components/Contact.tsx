@@ -44,9 +44,9 @@ export function Contact() {
           {/* Visit Us — right on large screens; first on mobile */}
           <div className="order-1 lg:order-2">
             <div className="bg-champagne p-8 lg:p-10 shadow-sm border border-border/60">
-              <div className="grid gap-8 lg:grid-cols-3 lg:gap-8">
+              <div className="grid gap-8 lg:grid-cols-2 lg:gap-8">
                 {/* Address */}
-                <div className="flex items-start gap-6 lg:col-span-2">
+                <div className="flex items-start gap-6">
                   <div className="w-12 h-12 border border-gold-accent/40 flex items-center justify-center shrink-0">
                     <svg
                       className="w-5 h-5 text-gold-accent"
@@ -100,8 +100,54 @@ export function Contact() {
                   </div>
                 </div>
 
+                {/* Phone + CTA */}
+                <div className="space-y-6">
+                  <div className="flex items-start gap-6">
+                    <div className="w-12 h-12 border border-gold-accent/40 flex items-center justify-center shrink-0">
+                      <svg
+                        className="w-5 h-5 text-gold-accent"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"
+                        />
+                      </svg>
+                    </div>
+                    <div className="min-w-0">
+                      <h3 className="text-charcoal mb-2 tracking-wide" style={{ fontWeight: "500" }}>
+                        전화
+                      </h3>
+                      <p className="text-muted-foreground leading-relaxed">
+                        <a href="tel:0547728575" className="text-gold-accent hover:underline underline-offset-2">
+                          054-772-8575
+                        </a>
+                      </p>
+                    </div>
+                  </div>
+
+                  <div>
+                    <a
+                      href={SITE_LINKS.reservation}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="group relative inline-flex w-full items-center justify-center px-10 py-4 bg-primary text-primary-foreground overflow-hidden transition-all duration-500 hover:shadow-xl"
+                    >
+                      <span className="relative z-10 tracking-wider uppercase text-sm">예약하기</span>
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
+                    </a>
+                    <p className="mt-3 text-xs text-muted-foreground leading-relaxed text-center">
+                      버튼을 누르면 네이버 지도로 이동합니다.
+                    </p>
+                  </div>
+                </div>
+
                 {/* Hours */}
-                <div className="flex items-start gap-6">
+                <div className="flex items-start gap-6 lg:col-span-2">
                   <div className="w-12 h-12 border border-gold-accent/40 flex items-center justify-center shrink-0">
                     <svg
                       className="w-5 h-5 text-gold-accent"
@@ -152,49 +198,7 @@ export function Contact() {
                   </div>
                 </div>
 
-                {/* Phone + CTA row (wider, less vertical) */}
-                <div className="flex items-start gap-6 lg:col-span-1">
-                  <div className="w-12 h-12 border border-gold-accent/40 flex items-center justify-center shrink-0">
-                    <svg
-                      className="w-5 h-5 text-gold-accent"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"
-                      />
-                    </svg>
-                  </div>
-                  <div className="min-w-0">
-                    <h3 className="text-charcoal mb-2 tracking-wide" style={{ fontWeight: "500" }}>
-                      전화
-                    </h3>
-                    <p className="text-muted-foreground leading-relaxed">
-                      <a href="tel:0547728575" className="text-gold-accent hover:underline underline-offset-2">
-                        054-772-8575
-                      </a>
-                    </p>
-                  </div>
-                </div>
 
-                <div className="lg:col-span-2">
-                  <a
-                    href={SITE_LINKS.reservation}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="group relative inline-flex w-full items-center justify-center px-10 py-4 bg-primary text-primary-foreground overflow-hidden transition-all duration-500 hover:shadow-xl"
-                  >
-                    <span className="relative z-10 tracking-wider uppercase text-sm">예약하기</span>
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
-                  </a>
-                  <p className="mt-3 text-xs text-muted-foreground leading-relaxed text-center">
-                    버튼을 누르면 네이버 지도로 이동합니다.
-                  </p>
-                </div>
               </div>
             </div>
           </div>

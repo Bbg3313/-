@@ -7,11 +7,13 @@ import { TermsPage } from "./pages/TermsPage";
 import { FloatingActions } from "./components/FloatingActions";
 import { EventDetailPage } from "./pages/EventDetailPage";
 import { PricingPage } from "./pages/PricingPage";
+import { LanguageSwitcher } from "./components/LanguageSwitcher";
 
 export default function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
+      <LanguageSwitcher />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/notice" element={<NoticePage />} />

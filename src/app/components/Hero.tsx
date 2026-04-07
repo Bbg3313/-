@@ -34,7 +34,7 @@ export function Hero() {
           </h1>
 
           {/* Subheadline - Korean */}
-          <p className="text-white/90 text-2xl mb-8 leading-relaxed">
+          <p className="text-white/90 text-[1.65rem] md:text-[1.75rem] mb-8 leading-relaxed">
             건강하고 아름다운 피부를 위한 전문 클리닉
           </p>
 

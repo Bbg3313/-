@@ -1,5 +1,5 @@
 import React from "react";
-import { useLocation } from "react-router";
+import { Link, useLocation } from "react-router";
 import { SITE_LINKS } from "../config/siteLinks";
 
 const PHONE_TEL = "0547728575";
@@ -23,31 +23,54 @@ export function FloatingActions() {
   };
 
   const isEventsActive = location.pathname.startsWith("/events") || location.pathname === "/notice";
+  const isExternalEventBoard = /^https?:\/\//.test(SITE_LINKS.eventBoard);
 
   return (
     <div className="fixed right-4 bottom-4 sm:right-6 sm:bottom-6 z-50">
       <div className="flex flex-col gap-3 sm:gap-3.5">
-        <a
-          href={SITE_LINKS.eventBoard}
-          target="_blank"
-          rel="noreferrer"
-          className={`group inline-flex items-center gap-3.5 rounded-full px-5 py-3.5 shadow-lg border transition-colors ${
-            isEventsActive
-              ? "bg-primary text-primary-foreground border-primary"
-              : "bg-background/90 text-charcoal border-border hover:border-gold-accent/40"
-          }`}
-          aria-label="이벤트 보드로 이동(새 탭)"
-        >
-          <Icon>
-            <svg viewBox="0 0 24 24" className="w-5 h-5 text-gold-accent" fill="none" stroke="currentColor" strokeWidth="1.6">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M3 8h18v4H3V8z" />
-              <path strokeLinecap="round" strokeLinejoin="round" d="M5 12v8h14v-8" />
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v12" />
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 8c0-2.2-2.2-4-4.4-3.2C5.7 5.5 6.8 8 9 8m3 0c0-2.2 2.2-4 4.4-3.2 1.9.7.8 3.2-1.4 3.2" />
-            </svg>
-          </Icon>
-          <span className="text-[15px] font-semibold tracking-wide">이벤트</span>
-        </a>
+        {isExternalEventBoard ? (
+          <a
+            href={SITE_LINKS.eventBoard}
+            target="_blank"
+            rel="noreferrer"
+            className={`group inline-flex items-center gap-3.5 rounded-full px-5 py-3.5 shadow-lg border transition-colors ${
+              isEventsActive
+                ? "bg-primary text-primary-foreground border-primary"
+                : "bg-background/90 text-charcoal border-border hover:border-gold-accent/40"
+            }`}
+            aria-label="이벤트 보드로 이동(새 탭)"
+          >
+            <Icon>
+              <svg viewBox="0 0 24 24" className="w-5 h-5 text-gold-accent" fill="none" stroke="currentColor" strokeWidth="1.6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3 8h18v4H3V8z" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 12v8h14v-8" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v12" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 8c0-2.2-2.2-4-4.4-3.2C5.7 5.5 6.8 8 9 8m3 0c0-2.2 2.2-4 4.4-3.2 1.9.7.8 3.2-1.4 3.2" />
+              </svg>
+            </Icon>
+            <span className="text-[15px] font-semibold tracking-wide">이벤트</span>
+          </a>
+        ) : (
+          <Link
+            to={SITE_LINKS.eventBoard}
+            className={`group inline-flex items-center gap-3.5 rounded-full px-5 py-3.5 shadow-lg border transition-colors ${
+              isEventsActive
+                ? "bg-primary text-primary-foreground border-primary"
+                : "bg-background/90 text-charcoal border-border hover:border-gold-accent/40"
+            }`}
+            aria-label="이벤트 게시판으로 이동"
+          >
+            <Icon>
+              <svg viewBox="0 0 24 24" className="w-5 h-5 text-gold-accent" fill="none" stroke="currentColor" strokeWidth="1.6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3 8h18v4H3V8z" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 12v8h14v-8" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v12" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 8c0-2.2-2.2-4-4.4-3.2C5.7 5.5 6.8 8 9 8m3 0c0-2.2 2.2-4 4.4-3.2 1.9.7.8 3.2-1.4 3.2" />
+              </svg>
+            </Icon>
+            <span className="text-[15px] font-semibold tracking-wide">이벤트</span>
+          </Link>
+        )}
 
         <a
           href={SITE_LINKS.reservation}

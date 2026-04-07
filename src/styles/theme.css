@@ -196,3 +196,17 @@
     background: radial-gradient(circle, var(--tw-gradient-from), var(--tw-gradient-to));
   }
 }
+
+/* Google Translate default UI/banners hidden (we use custom buttons) */
+.goog-te-banner-frame.skiptranslate {
+  display: none !important;
+}
+
+body {
+  top: 0 !important;
+}
+
+.goog-logo-link,
+.goog-te-gadget span {
+  display: none !important;
+}

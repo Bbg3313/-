@@ -25,6 +25,7 @@ export function Header() {
   const navClass = solid
     ? "text-charcoal hover:text-gold-accent"
     : "text-white/90 hover:text-white";
+  const isExternalEventBoard = /^https?:\/\//.test(SITE_LINKS.eventBoard);
 
   return (
     <header
@@ -50,24 +51,25 @@ export function Header() {
             </Link>
           </li>
           <li>
-            <Link to="/#services" className={`text-sm tracking-wider uppercase transition-colors duration-300 ${navClass}`}>
-              Medical Services
-            </Link>
-          </li>
-          <li>
             <Link to="/#doctors" className={`text-sm tracking-wider uppercase transition-colors duration-300 ${navClass}`}>
               의료진
             </Link>
           </li>
           <li>
-            <a
-              href={SITE_LINKS.eventBoard}
-              target="_blank"
-              rel="noreferrer"
-              className={`text-sm tracking-wider uppercase transition-colors duration-300 ${navClass}`}
-            >
-              이벤트
-            </a>
+            {isExternalEventBoard ? (
+              <a
+                href={SITE_LINKS.eventBoard}
+                target="_blank"
+                rel="noreferrer"
+                className={`text-sm tracking-wider uppercase transition-colors duration-300 ${navClass}`}
+              >
+                이벤트
+              </a>
+            ) : (
+              <Link to={SITE_LINKS.eventBoard} className={`text-sm tracking-wider uppercase transition-colors duration-300 ${navClass}`}>
+                이벤트
+              </Link>
+            )}
           </li>
           <li>
             <Link to="/#contact" className={`text-sm tracking-wider uppercase transition-colors duration-300 ${navClass}`}>
