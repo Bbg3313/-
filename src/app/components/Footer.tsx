@@ -96,7 +96,7 @@ export function Footer({ className }: FooterProps) {
               <img
                 src={logo}
                 alt="연세미의원"
-                className={`${SITE_LOGO_IMG_CLASS} mx-auto opacity-95 group-hover:opacity-100 transition-opacity`}
+                className={`${SITE_LOGO_IMG_CLASS} mx-auto translate-x-1 opacity-95 group-hover:opacity-100 transition-opacity`}
               />
             </Link>
           </div>
@@ -122,8 +122,16 @@ export function Footer({ className }: FooterProps) {
               <Instagram className="h-[22px] w-[22px]" strokeWidth={2} />
             </SocialButton>
             <SocialButton href={SOCIAL_LINKS.naverBlog} label="네이버 블로그" variant="naver">
-              <NaverBlogIcon className="h-[22px] w-[22px] text-white" />
+              <NaverBlogIcon className="h-[26px] w-[26px] text-white" />
             </SocialButton>
+          </div>
+
+          <div className="mt-10 w-full max-w-3xl mx-auto border border-border/60 bg-background/60 backdrop-blur-sm px-5 py-4">
+            <p className="text-center text-xs tracking-widest text-charcoal/80 font-medium mb-2">주의사항</p>
+            <p className="text-center text-xs sm:text-sm text-muted-foreground leading-relaxed">
+              해당 수술 및 시술의 결과는 개인마다 차이가 있을 수 있습니다. 개인에 따라 피부 트러블, 붓기, 출혈, 염증, 멍,
+              신경손상 등 부작용이 발생할 수 있으므로 주의를 요합니다.
+            </p>
           </div>
 
           <nav

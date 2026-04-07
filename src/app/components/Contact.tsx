@@ -7,7 +7,7 @@ const GOOGLE_MAPS_EMBED_SRC =
 export function Contact() {
   return (
     <section id="contact" className="py-32 px-6 bg-background relative">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-[90rem] mx-auto">
         <div className="max-w-3xl mx-auto mb-16 lg:mb-20 text-center">
           <div className="w-12 h-px bg-gold-accent mb-8 mx-auto" />
           <h2
@@ -26,13 +26,13 @@ export function Contact() {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-stretch">
+        <div className="grid lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] gap-10 lg:gap-12 items-stretch">
           {/* Map — left on large screens; below Visit Us on mobile */}
-          <div className="order-2 lg:order-1 min-h-[280px] sm:min-h-[340px] lg:min-h-[520px]">
+          <div className="order-2 lg:order-1 min-h-[280px] sm:min-h-[340px] lg:min-h-[440px]">
             <div className="border border-border overflow-hidden bg-muted h-full min-h-[inherit]">
               <iframe
                 src={GOOGLE_MAPS_EMBED_SRC}
-                className="w-full h-full min-h-[280px] sm:min-h-[340px] lg:min-h-[520px] border-0 block"
+                className="w-full h-full min-h-[280px] sm:min-h-[340px] lg:min-h-[440px] border-0 block"
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
@@ -43,10 +43,10 @@ export function Contact() {
 
           {/* Visit Us — right on large screens; first on mobile */}
           <div className="order-1 lg:order-2">
-            <div className="bg-champagne p-8 sm:p-12 h-full">
-              <div className="grid sm:grid-cols-2 gap-8">
+            <div className="bg-champagne p-8 lg:p-10 h-full">
+              <div className="grid gap-8 lg:grid-cols-3 lg:gap-8">
                 {/* Address */}
-                <div className="flex items-start gap-6 sm:col-span-2">
+                <div className="flex items-start gap-6 lg:col-span-2">
                   <div className="w-12 h-12 border border-gold-accent/40 flex items-center justify-center shrink-0">
                     <svg
                       className="w-5 h-5 text-gold-accent"
@@ -97,35 +97,6 @@ export function Contact() {
                         </li>
                       </ul>
                     </div>
-                  </div>
-                </div>
-
-                {/* Phone */}
-                <div className="flex items-start gap-6">
-                  <div className="w-12 h-12 border border-gold-accent/40 flex items-center justify-center shrink-0">
-                    <svg
-                      className="w-5 h-5 text-gold-accent"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"
-                      />
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 className="text-charcoal mb-2 tracking-wide" style={{ fontWeight: "500" }}>
-                      전화
-                    </h3>
-                    <p className="text-muted-foreground leading-relaxed">
-                      <a href="tel:0547728575" className="text-gold-accent hover:underline underline-offset-2">
-                        054-772-8575
-                      </a>
-                    </p>
                   </div>
                 </div>
 
@@ -181,7 +152,36 @@ export function Contact() {
                   </div>
                 </div>
 
-                <div className="sm:col-span-2">
+                {/* Phone + CTA row (wider, less vertical) */}
+                <div className="flex items-start gap-6 lg:col-span-1">
+                  <div className="w-12 h-12 border border-gold-accent/40 flex items-center justify-center shrink-0">
+                    <svg
+                      className="w-5 h-5 text-gold-accent"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"
+                      />
+                    </svg>
+                  </div>
+                  <div className="min-w-0">
+                    <h3 className="text-charcoal mb-2 tracking-wide" style={{ fontWeight: "500" }}>
+                      전화
+                    </h3>
+                    <p className="text-muted-foreground leading-relaxed">
+                      <a href="tel:0547728575" className="text-gold-accent hover:underline underline-offset-2">
+                        054-772-8575
+                      </a>
+                    </p>
+                  </div>
+                </div>
+
+                <div className="lg:col-span-2">
                   <a
                     href={SITE_LINKS.reservation}
                     target="_blank"

@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router";
 import { SITE_LOGO_IMG_CLASS } from "../config/logo";
 import { useHomeLogoClick } from "../hooks/useHomeLogoClick";
+import { SITE_LINKS } from "../config/siteLinks";
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -59,12 +60,14 @@ export function Header() {
             </Link>
           </li>
           <li>
-            <Link
-              to="/#events"
+            <a
+              href={SITE_LINKS.eventBoard}
+              target="_blank"
+              rel="noreferrer"
               className={`text-sm tracking-wider uppercase transition-colors duration-300 ${navClass}`}
             >
               이벤트
-            </Link>
+            </a>
           </li>
           <li>
             <Link to="/#contact" className={`text-sm tracking-wider uppercase transition-colors duration-300 ${navClass}`}>
