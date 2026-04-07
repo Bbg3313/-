@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 declare global {
   interface Window {
@@ -8,9 +8,9 @@ declare global {
 }
 
 const LANG_OPTIONS = [
-  { code: "ko", label: "🇰🇷 한국어" },
-  { code: "th", label: "🇹🇭 ไทย" },
-  { code: "vi", label: "🇻🇳 Tiếng Việt" },
+  { code: "ko", label: "한국어", flag: "https://flagcdn.com/w40/kr.png" },
+  { code: "th", label: "ไทย", flag: "https://flagcdn.com/w40/th.png" },
+  { code: "vi", label: "Tiếng Việt", flag: "https://flagcdn.com/w40/vn.png" },
 ] as const;
 
 function applyLanguage(lang: string) {
@@ -21,6 +21,11 @@ function applyLanguage(lang: string) {
 }
 
 export function LanguageSwitcher() {
+  const [open, setOpen] = useState(false);
+  const [selected, setSelected] = useState<(typeof LANG_OPTIONS)[number]>(LANG_OPTIONS[0]);
+
+  const selectedLabel = useMemo(() => selected.label, [selected]);
+
   useEffect(() => {
     if (document.getElementById("google-translate-script")) return;
 
@@ -45,17 +50,43 @@ export function LanguageSwitcher() {
 
   return (
     <>
-      <div className="fixed top-20 right-4 sm:right-6 z-50 flex items-center gap-1 rounded-full border border-border bg-background/90 backdrop-blur-sm p-1 shadow-sm">
-        {LANG_OPTIONS.map((lang) => (
-          <button
-            key={lang.code}
-            type="button"
-            onClick={() => applyLanguage(lang.code)}
-            className="px-2.5 py-1.5 text-[11px] sm:text-xs text-charcoal hover:text-gold-accent transition-colors"
+      <div className="relative">
+        <button
+          type="button"
+          onClick={() => setOpen((prev) => !prev)}
+          className="inline-flex items-center gap-2.5 px-3 py-2.5 border border-border bg-background/90 backdrop-blur-sm text-charcoal hover:border-gold-accent/50 transition-colors min-w-[156px] justify-between"
+          aria-haspopup="listbox"
+          aria-expanded={open}
+        >
+          <span className="inline-flex items-center gap-2">
+            <img src={selected.flag} alt={selectedLabel} className="w-[18px] h-[13px] object-cover border border-border/60" />
+            <span className="text-sm">{selectedLabel}</span>
+          </span>
+          <span className="text-xs text-charcoal/70">▾</span>
+        </button>
+
+        {open && (
+          <div
+            className="absolute right-0 mt-2 w-full border border-border bg-background shadow-lg z-50"
+            role="listbox"
           >
-            {lang.label}
-          </button>
-        ))}
+            {LANG_OPTIONS.map((lang) => (
+              <button
+                key={lang.code}
+                type="button"
+                onClick={() => {
+                  setSelected(lang);
+                  applyLanguage(lang.code);
+                  setOpen(false);
+                }}
+                className="w-full flex items-center gap-2 px-3 py-2 text-left text-sm hover:bg-muted/60 transition-colors"
+              >
+                <img src={lang.flag} alt={lang.label} className="w-[18px] h-[13px] object-cover border border-border/60" />
+                <span>{lang.label}</span>
+              </button>
+            ))}
+          </div>
+        )}
       </div>
       <div id="google_translate_element" className="hidden" />
     </>

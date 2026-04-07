@@ -4,6 +4,7 @@ import { Link, useLocation } from "react-router";
 import { SITE_LOGO_IMG_CLASS } from "../config/logo";
 import { useHomeLogoClick } from "../hooks/useHomeLogoClick";
 import { SITE_LINKS } from "../config/siteLinks";
+import { LanguageSwitcher } from "./LanguageSwitcher";
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -83,20 +84,7 @@ export function Header() {
           </li>
         </ul>
 
-        <Link to="/#contact">
-          <button
-            className={`group relative px-8 py-3 overflow-hidden transition-all duration-500 ${
-              solid
-                ? "bg-primary text-primary-foreground hover:shadow-lg"
-                : "bg-white/10 text-white border border-white/30 backdrop-blur-sm hover:bg-white/20"
-            }`}
-          >
-            <span className="relative z-10 tracking-wider uppercase text-sm">예약</span>
-            {solid && (
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
-            )}
-          </button>
-        </Link>
+        <LanguageSwitcher />
       </nav>
     </header>
   );

@@ -26,13 +26,12 @@ export function Contact() {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] gap-10 lg:gap-12 items-start">
-          {/* Map — left on large screens; below Visit Us on mobile */}
-          <div className="order-2 lg:order-1 min-h-[280px] sm:min-h-[340px] lg:min-h-[440px]">
-            <div className="border border-border overflow-hidden bg-muted h-full min-h-[inherit]">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-10 items-stretch">
+          <div className="min-h-[300px] sm:min-h-[360px] lg:min-h-[560px]">
+            <div className="border border-border/70 overflow-hidden bg-muted h-full">
               <iframe
                 src={GOOGLE_MAPS_EMBED_SRC}
-                className="w-full h-full min-h-[280px] sm:min-h-[340px] lg:min-h-[440px] border-0 block"
+                className="w-full h-full min-h-[300px] sm:min-h-[360px] lg:min-h-[560px] border-0 block"
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
@@ -41,164 +40,56 @@ export function Contact() {
             </div>
           </div>
 
-          {/* Visit Us — right on large screens; first on mobile */}
-          <div className="order-1 lg:order-2">
-            <div className="bg-champagne p-8 lg:p-10 shadow-sm border border-border/60">
-              <div className="grid gap-8 lg:grid-cols-2 lg:gap-8">
-                {/* Address */}
-                <div className="flex items-start gap-6">
-                  <div className="w-12 h-12 border border-gold-accent/40 flex items-center justify-center shrink-0">
-                    <svg
-                      className="w-5 h-5 text-gold-accent"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"
-                      />
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"
-                      />
-                    </svg>
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <h3 className="text-charcoal mb-3 tracking-wide" style={{ fontWeight: "500" }}>
-                      주소 · 오시는 길
-                    </h3>
-                    <div className="text-muted-foreground text-sm leading-relaxed space-y-3">
-                      <p className="text-charcoal/90 font-medium">
-                        경북 경주시 화랑로 132, 2층 연세미의원
-                      </p>
-                      <p className="text-muted-foreground">(경주역 우체국 옆 GS편의점 2층)</p>
-                      <ul className="space-y-2 pt-1 border-t border-gold-accent/15">
-                        <li className="flex gap-2">
-                          <span className="text-gold-accent shrink-0 font-medium" aria-hidden>
-                            ·
-                          </span>
-                          <span>경주역 역전삼거리에서 KT삼거리 방향으로 약 150m 직진</span>
-                        </li>
-                        <li className="flex gap-2">
-                          <span className="text-gold-accent shrink-0 font-medium" aria-hidden>
-                            ·
-                          </span>
-                          <span>경주우체국 버스정류장 도보 1분</span>
-                        </li>
-                        <li className="flex gap-2">
-                          <span className="text-gold-accent shrink-0 font-medium" aria-hidden>
-                            ·
-                          </span>
-                          <span>건물 외부 1층에 노상 유료주차장</span>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
+          <div className="bg-champagne p-6 sm:p-7 lg:p-8 shadow-sm border border-border/60 h-full min-h-[300px] sm:min-h-[360px] lg:min-h-[560px]">
+            <div className="h-full grid grid-rows-[auto_auto_1fr] gap-5">
+              <div className="border border-gold-accent/20 bg-background/35 p-5">
+                <p className="text-xs tracking-[0.18em] text-gold-accent uppercase mb-2">Address</p>
+                <p className="text-charcoal font-medium leading-relaxed">경북 경주시 화랑로 132, 2층 연세미의원</p>
+                <p className="text-sm text-muted-foreground mt-2 leading-relaxed">(경주역 우체국 옆 GS편의점 2층)</p>
+              </div>
+
+              <div className="grid sm:grid-cols-[1fr_auto] gap-4 items-center border border-gold-accent/20 bg-background/35 p-5">
+                <div>
+                  <p className="text-xs tracking-[0.18em] text-gold-accent uppercase mb-2">Call</p>
+                  <a href="tel:0547728575" className="text-xl font-semibold text-charcoal hover:text-gold-accent transition-colors">
+                    054-772-8575
+                  </a>
                 </div>
+                <a
+                  href={SITE_LINKS.reservation}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="group relative inline-flex w-full sm:w-auto items-center justify-center px-8 py-3 bg-primary text-primary-foreground overflow-hidden transition-all duration-500 hover:shadow-xl"
+                >
+                  <span className="relative z-10 tracking-wider text-sm">예약하기</span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
+                </a>
+              </div>
 
-                {/* Phone + CTA */}
-                <div className="space-y-6">
-                  <div className="flex items-start gap-6">
-                    <div className="w-12 h-12 border border-gold-accent/40 flex items-center justify-center shrink-0">
-                      <svg
-                        className="w-5 h-5 text-gold-accent"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth="1.5"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"
-                        />
-                      </svg>
-                    </div>
-                    <div className="min-w-0">
-                      <h3 className="text-charcoal mb-2 tracking-wide" style={{ fontWeight: "500" }}>
-                        전화
-                      </h3>
-                      <p className="text-muted-foreground leading-relaxed">
-                        <a href="tel:0547728575" className="text-gold-accent hover:underline underline-offset-2">
-                          054-772-8575
-                        </a>
-                      </p>
-                    </div>
+              <div className="border border-gold-accent/20 bg-background/35 p-5">
+                <p className="text-xs tracking-[0.18em] text-gold-accent uppercase mb-3">Hours</p>
+                <dl className="space-y-2.5 text-sm">
+                  <div className="flex items-center justify-between gap-4">
+                    <dt className="text-charcoal font-medium">월·목·금</dt>
+                    <dd className="text-muted-foreground tabular-nums">10:00 - 20:00</dd>
                   </div>
-
-                  <div>
-                    <a
-                      href={SITE_LINKS.reservation}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="group relative inline-flex w-full items-center justify-center px-10 py-4 bg-primary text-primary-foreground overflow-hidden transition-all duration-500 hover:shadow-xl"
-                    >
-                      <span className="relative z-10 tracking-wider uppercase text-sm">예약하기</span>
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
-                    </a>
-                    <p className="mt-3 text-xs text-muted-foreground leading-relaxed text-center">
-                      버튼을 누르면 네이버 지도로 이동합니다.
-                    </p>
+                  <div className="flex items-center justify-between gap-4">
+                    <dt className="text-charcoal font-medium">화·수</dt>
+                    <dd className="text-muted-foreground tabular-nums">10:00 - 18:00</dd>
                   </div>
-                </div>
-
-                {/* Hours */}
-                <div className="flex items-start gap-6 lg:col-span-2">
-                  <div className="w-12 h-12 border border-gold-accent/40 flex items-center justify-center shrink-0">
-                    <svg
-                      className="w-5 h-5 text-gold-accent"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
-                      />
-                    </svg>
+                  <div className="flex items-start justify-between gap-4">
+                    <dt className="text-charcoal font-medium">토</dt>
+                    <dd className="text-muted-foreground tabular-nums text-right">
+                      10:00 - 15:00
+                      <span className="block text-[11px] text-muted-foreground/80">(점심시간 없음)</span>
+                    </dd>
                   </div>
-                  <div className="min-w-0 flex-1">
-                    <h3 className="text-charcoal mb-3 tracking-wide" style={{ fontWeight: "500" }}>
-                      진료 시간
-                    </h3>
-                    <div className="border border-gold-accent/20 rounded-sm overflow-hidden text-sm">
-                      <dl className="divide-y divide-gold-accent/15">
-                        <div className="flex items-center justify-between gap-6 px-4 py-3 bg-champagne/70">
-                          <dt className="text-charcoal font-medium">월·목·금</dt>
-                          <dd className="text-muted-foreground tabular-nums shrink-0">10:00 – 20:00</dd>
-                        </div>
-                        <div className="flex items-center justify-between gap-6 px-4 py-3">
-                          <dt className="text-charcoal font-medium">화·수</dt>
-                          <dd className="text-muted-foreground tabular-nums shrink-0">10:00 – 18:00</dd>
-                        </div>
-                        <div className="flex items-start justify-between gap-6 px-4 py-3 bg-champagne/40">
-                          <dt className="text-charcoal font-medium">토</dt>
-                          <dd className="text-muted-foreground tabular-nums shrink-0 text-right leading-snug">
-                            10:00 – 15:00
-                            <span className="text-muted-foreground/80 text-[11px] sm:text-xs font-normal block">
-                              (점심시간 없음)
-                            </span>
-                          </dd>
-                        </div>
-                        <div className="flex items-center justify-between gap-6 px-4 py-3">
-                          <dt className="text-charcoal font-medium">점심</dt>
-                          <dd className="text-muted-foreground tabular-nums shrink-0">13:00 – 14:00</dd>
-                        </div>
-                      </dl>
-                      <p className="px-4 py-3 text-destructive text-xs sm:text-sm text-center bg-muted/30">
-                        일요일·공휴일은 휴무입니다
-                      </p>
-                    </div>
+                  <div className="flex items-center justify-between gap-4 pt-2 border-t border-gold-accent/15">
+                    <dt className="text-charcoal font-medium">점심</dt>
+                    <dd className="text-muted-foreground tabular-nums">13:00 - 14:00</dd>
                   </div>
-                </div>
-
-
+                </dl>
+                <p className="mt-4 text-xs text-destructive">일요일·공휴일 휴무</p>
               </div>
             </div>
           </div>
