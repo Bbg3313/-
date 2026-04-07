@@ -26,21 +26,24 @@ function InfoLine({ label, children }: { label: string; children: ReactNode }) {
   );
 }
 
+const socialInactive =
+  "flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-border/70 bg-background text-charcoal shadow-sm";
+
 function SocialButton({
   href,
   label,
+  variant,
   children,
 }: {
   href: string;
   label: string;
+  variant: "instagram" | "naver";
   children: ReactNode;
 }) {
-  const ring =
-    "flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-border/70 bg-background text-charcoal shadow-sm transition-colors";
   if (!href) {
     return (
       <span
-        className={cn(ring, "cursor-not-allowed opacity-45")}
+        className={cn(socialInactive, "cursor-not-allowed opacity-45")}
         title={`${label} 주소는 src/app/config/socialLinks.ts (또는 .env)에서 설정하세요`}
         role="img"
         aria-label={`${label} (링크 미설정)`}
@@ -49,14 +52,20 @@ function SocialButton({
       </span>
     );
   }
+
+  const brand =
+    variant === "instagram"
+      ? "border-0 bg-gradient-to-br from-[#f58529] via-[#dd2a7b] to-[#8134af] text-white shadow-md hover:brightness-105 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-muted/50"
+      : "border-0 bg-[#03C75A] text-white shadow-md hover:bg-[#02b351] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#03C75A]/80 focus-visible:ring-offset-2 focus-visible:ring-offset-muted/50";
+
   return (
     <a
       href={href}
       target="_blank"
       rel="noopener noreferrer"
       className={cn(
-        ring,
-        "hover:border-gold-accent/60 hover:text-gold-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-accent/40",
+        "flex h-11 w-11 shrink-0 items-center justify-center rounded-full transition-all duration-200",
+        brand,
       )}
       aria-label={`${label} 새 창`}
     >
@@ -109,11 +118,11 @@ export function Footer({ className }: FooterProps) {
           </ul>
 
           <div className="mt-9 flex flex-wrap justify-center gap-4">
-            <SocialButton href={SOCIAL_LINKS.instagram} label="인스타그램">
-              <Instagram className="h-[22px] w-[22px]" strokeWidth={1.75} />
+            <SocialButton href={SOCIAL_LINKS.instagram} label="인스타그램" variant="instagram">
+              <Instagram className="h-[22px] w-[22px]" strokeWidth={2} />
             </SocialButton>
-            <SocialButton href={SOCIAL_LINKS.naverBlog} label="네이버 블로그">
-              <NaverBlogIcon className="h-[22px] w-[22px]" />
+            <SocialButton href={SOCIAL_LINKS.naverBlog} label="네이버 블로그" variant="naver">
+              <NaverBlogIcon className="h-[22px] w-[22px] text-white" />
             </SocialButton>
           </div>
 
