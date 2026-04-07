@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { PrivacyPolicyContent } from "./PrivacyPolicyContent";
+import { TermsOfServiceContent } from "./TermsOfServiceContent";
 
 export function Contact() {
   const [formData, setFormData] = useState({
@@ -312,24 +313,12 @@ export function Contact() {
 
         <section id="terms" className="scroll-mt-28 border-t border-border/50 pt-16">
           <h3
-            className="text-charcoal text-xl mb-4 tracking-wide"
+            className="text-charcoal text-xl mb-6 tracking-wide"
             style={{ fontFamily: "'Playfair Display', serif", fontWeight: 500 }}
           >
             서비스이용약관
           </h3>
-          <div className="space-y-4">
-            <p>
-              본 웹사이트는 연세미의원의 진료 안내 및 예약·상담 신청을 위한 정보 제공 목적으로 운영됩니다.
-            </p>
-            <p>
-              웹사이트에 게시된 정보는 참고용이며, 실제 진료는 의료진 판단에 따릅니다. 예약 후 변경·취소가 필요한
-              경우 병원으로 연락해 주세요.
-            </p>
-            <p>
-              이용자는 본 약관 및 관련 법령을 준수해야 하며, 허위 정보 제공·시스템 악용 등에 대해 병원은 서비스 이용을
-              제한할 수 있습니다.
-            </p>
-          </div>
+          <TermsOfServiceContent />
         </section>
       </div>
 
