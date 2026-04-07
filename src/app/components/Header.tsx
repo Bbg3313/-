@@ -45,13 +45,13 @@ export function Header() {
 
         <ul className="hidden md:flex items-center gap-10">
           <li>
-            <Link to="/#services" className={`text-sm tracking-wider uppercase transition-colors duration-300 ${navClass}`}>
-              진료안내
+            <Link to="/#about" className={`text-sm tracking-wider uppercase transition-colors duration-300 ${navClass}`}>
+              병원소개
             </Link>
           </li>
           <li>
-            <Link to="/#about" className={`text-sm tracking-wider uppercase transition-colors duration-300 ${navClass}`}>
-              병원소개
+            <Link to="/#services" className={`text-sm tracking-wider uppercase transition-colors duration-300 ${navClass}`}>
+              Medical Services
             </Link>
           </li>
           <li>

@@ -26,7 +26,7 @@ export function Contact() {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] gap-10 lg:gap-12 items-stretch">
+        <div className="grid lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] gap-10 lg:gap-12 items-start">
           {/* Map — left on large screens; below Visit Us on mobile */}
           <div className="order-2 lg:order-1 min-h-[280px] sm:min-h-[340px] lg:min-h-[440px]">
             <div className="border border-border overflow-hidden bg-muted h-full min-h-[inherit]">
@@ -43,7 +43,7 @@ export function Contact() {
 
           {/* Visit Us — right on large screens; first on mobile */}
           <div className="order-1 lg:order-2">
-            <div className="bg-champagne p-8 lg:p-10 h-full">
+            <div className="bg-champagne p-8 lg:p-10 shadow-sm border border-border/60">
               <div className="grid gap-8 lg:grid-cols-3 lg:gap-8">
                 {/* Address */}
                 <div className="flex items-start gap-6 lg:col-span-2">

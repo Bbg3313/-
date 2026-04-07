@@ -44,7 +44,7 @@ export function Doctors() {
           </p>
         </div>
 
-        <div className="w-full grid lg:grid-cols-[minmax(0,420px)_minmax(0,600px)] justify-center gap-12 lg:gap-20 xl:gap-24 items-start">
+        <div className="w-full grid lg:grid-cols-[minmax(0,420px)_minmax(0,600px)] justify-center gap-12 lg:gap-20 xl:gap-24 items-start lg:translate-x-10 xl:translate-x-14">
           <div className="flex justify-center lg:justify-end w-full">
             <div className="relative w-full max-w-md">
               <div className="relative aspect-[3/4] overflow-hidden bg-muted shadow-xl">
