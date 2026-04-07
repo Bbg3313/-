@@ -36,7 +36,9 @@ export function Header() {
           <img
             src={logo}
             alt="연세미의원"
-            className={`${SITE_LOGO_IMG_CLASS} transition-all duration-300 ${solid ? "opacity-100" : "opacity-90"}`}
+            className={`${SITE_LOGO_IMG_CLASS} mix-blend-multiply transition-all duration-300 ${
+              solid ? "opacity-100" : "opacity-95"
+            }`}
           />
         </Link>
 

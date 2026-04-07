@@ -1,5 +1,4 @@
 import { ImageWithFallback } from "./figma/ImageWithFallback";
-import logo from "../../imports/logo.svg";
 
 export function Hero() {
   return (
@@ -18,11 +17,6 @@ export function Hero() {
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 py-32 w-full">
         <div className="max-w-2xl">
-          {/* Logo */}
-          <div className="mb-12">
-            <img src={logo} alt="연세미의원" className="h-14 w-auto opacity-90" />
-          </div>
-
           {/* Gold accent line */}
           <div className="w-16 h-0.5 bg-gradient-to-r from-gold-accent to-transparent mb-8" />
 
