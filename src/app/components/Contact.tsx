@@ -44,9 +44,9 @@ export function Contact() {
           {/* Visit Us — right on large screens; first on mobile */}
           <div className="order-1 lg:order-2">
             <div className="bg-champagne p-8 sm:p-12 h-full">
-              <div className="space-y-8">
+              <div className="grid sm:grid-cols-2 gap-8">
                 {/* Address */}
-                <div className="flex items-start gap-6">
+                <div className="flex items-start gap-6 sm:col-span-2">
                   <div className="w-12 h-12 border border-gold-accent/40 flex items-center justify-center shrink-0">
                     <svg
                       className="w-5 h-5 text-gold-accent"
@@ -178,22 +178,22 @@ export function Contact() {
                         일요일·공휴일은 휴무입니다
                       </p>
                     </div>
-
-                    <div className="mt-6">
-                      <a
-                        href={SITE_LINKS.reservation}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="group relative inline-flex w-full items-center justify-center px-10 py-4 bg-primary text-primary-foreground overflow-hidden transition-all duration-500 hover:shadow-xl"
-                      >
-                        <span className="relative z-10 tracking-wider uppercase text-sm">예약하기</span>
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
-                      </a>
-                      <p className="mt-3 text-xs text-muted-foreground leading-relaxed text-center">
-                        버튼을 누르면 네이버 지도로 이동합니다.
-                      </p>
-                    </div>
                   </div>
+                </div>
+
+                <div className="sm:col-span-2">
+                  <a
+                    href={SITE_LINKS.reservation}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="group relative inline-flex w-full items-center justify-center px-10 py-4 bg-primary text-primary-foreground overflow-hidden transition-all duration-500 hover:shadow-xl"
+                  >
+                    <span className="relative z-10 tracking-wider uppercase text-sm">예약하기</span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
+                  </a>
+                  <p className="mt-3 text-xs text-muted-foreground leading-relaxed text-center">
+                    버튼을 누르면 네이버 지도로 이동합니다.
+                  </p>
                 </div>
               </div>
             </div>

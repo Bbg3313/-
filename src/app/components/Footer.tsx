@@ -85,18 +85,18 @@ export function Footer({ className }: FooterProps) {
     <footer className={cn("mt-auto", className)}>
       <div className="border-t border-border bg-muted/50">
         <div className="max-w-xl mx-auto px-6 py-12 md:py-14 flex flex-col items-center">
-          {/* 로고: flex 컬럼에서 가로 중앙 — 링크 너비를 이미지에 맞춤 */}
-          <div className="w-full flex flex-col items-center">
+          {/* 로고: 정확히 가로 중앙 정렬 */}
+          <div className="w-full flex justify-center">
             <Link
               to="/"
               onClick={onHomeLogoClick}
-              className="group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-accent/40 rounded-sm w-max max-w-full"
+              className="group inline-flex mx-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-accent/40 rounded-sm max-w-full"
               aria-label="연세미의원 홈 — 맨 위로 이동"
             >
               <img
                 src={logo}
                 alt="연세미의원"
-                className={`${SITE_LOGO_IMG_CLASS} opacity-95 group-hover:opacity-100 transition-opacity`}
+                className={`${SITE_LOGO_IMG_CLASS} mx-auto opacity-95 group-hover:opacity-100 transition-opacity`}
               />
             </Link>
           </div>

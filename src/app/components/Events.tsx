@@ -39,7 +39,7 @@ export function Events() {
       <div className="absolute top-1/2 left-0 w-96 h-96 bg-gradient-radial from-gold-accent/5 to-transparent blur-3xl -translate-y-1/2" />
       <div className="absolute top-1/2 right-0 w-96 h-96 bg-gradient-radial from-gold-accent/5 to-transparent blur-3xl -translate-y-1/2" />
 
-      <div className="max-w-7xl mx-auto relative">
+      <div className="max-w-[90rem] mx-auto relative">
         <div className="text-center mb-16 lg:mb-20">
           <div className="w-12 h-px bg-gold-accent mx-auto mb-8" />
           <h2
@@ -58,7 +58,7 @@ export function Events() {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
           {EVENTS.map((event) => (
             <Link
               key={event.slug}
@@ -66,7 +66,7 @@ export function Events() {
               className="group block bg-white/60 backdrop-blur-sm overflow-hidden border border-gold-accent/10 hover:border-gold-accent/30 transition-colors"
               aria-label={`${event.title} 상세 보기`}
             >
-              <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+              <div className="relative aspect-[5/4] overflow-hidden bg-muted">
                 <ImageWithFallback
                   src={event.thumbnail}
                   alt={event.title}
@@ -74,9 +74,11 @@ export function Events() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </div>
-              <div className="p-5">
+              <div className="p-5 lg:p-6">
                 <p className="text-xs tracking-widest uppercase text-gold-accent mb-2">{event.period}</p>
-                <p className="text-charcoal font-medium leading-snug line-clamp-2">{event.title}</p>
+                <p className="text-charcoal font-semibold leading-snug line-clamp-2 text-[15px] lg:text-base">
+                  {event.title}
+                </p>
               </div>
             </Link>
           ))}

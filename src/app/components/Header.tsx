@@ -50,7 +50,7 @@ export function Header() {
           </li>
           <li>
             <Link to="/#about" className={`text-sm tracking-wider uppercase transition-colors duration-300 ${navClass}`}>
-              클리닉 소개
+              병원소개
             </Link>
           </li>
           <li>
@@ -60,15 +60,20 @@ export function Header() {
           </li>
           <li>
             <Link
-              to="/#testimonials"
+              to="/#events"
               className={`text-sm tracking-wider uppercase transition-colors duration-300 ${navClass}`}
             >
-              고객후기
+              이벤트
             </Link>
           </li>
           <li>
             <Link to="/#contact" className={`text-sm tracking-wider uppercase transition-colors duration-300 ${navClass}`}>
               예약·문의
+            </Link>
+          </li>
+          <li>
+            <Link to="/pricing" className={`text-sm tracking-wider uppercase transition-colors duration-300 ${navClass}`}>
+              시술/가격
             </Link>
           </li>
         </ul>

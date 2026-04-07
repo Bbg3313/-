@@ -44,7 +44,7 @@ export function Doctors() {
           </p>
         </div>
 
-        <div className="mx-auto w-full max-w-5xl grid lg:grid-cols-2 gap-12 lg:gap-14 xl:gap-16 items-start">
+        <div className="w-full grid lg:grid-cols-[minmax(0,420px)_minmax(0,560px)] justify-center gap-12 lg:gap-14 xl:gap-16 items-start">
           <div className="flex justify-center w-full">
             <div className="relative w-full max-w-md">
               <div className="relative aspect-[3/4] overflow-hidden bg-muted shadow-xl">
@@ -53,13 +53,11 @@ export function Doctors() {
                   alt={`${DIRECTOR.name} ${DIRECTOR.role}`}
                   className="w-full h-full object-cover object-top"
                 />
-                <div className="absolute top-4 right-4 w-16 h-16 border border-gold-accent/50 pointer-events-none" />
               </div>
-              <div className="absolute -bottom-4 -left-4 w-32 h-32 border border-gold-accent/20 -z-10 hidden lg:block" />
             </div>
           </div>
 
-          <div className="pt-0 lg:pt-4 max-w-xl mx-auto w-full lg:max-w-none">
+          <div className="pt-0 lg:pt-4 max-w-xl mx-auto w-full lg:max-w-none lg:mx-0">
             <p className="text-sm tracking-[0.15em] text-gold-accent mb-6 font-medium">
               [ 의료진 소개 ]
             </p>

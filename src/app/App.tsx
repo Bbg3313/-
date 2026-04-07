@@ -6,6 +6,7 @@ import { PrivacyPage } from "./pages/PrivacyPage";
 import { TermsPage } from "./pages/TermsPage";
 import { FloatingActions } from "./components/FloatingActions";
 import { EventDetailPage } from "./pages/EventDetailPage";
+import { PricingPage } from "./pages/PricingPage";
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/notice" element={<NoticePage />} />
         <Route path="/events/:slug" element={<EventDetailPage />} />
+        <Route path="/pricing" element={<PricingPage />} />
         <Route path="/privacy" element={<PrivacyPage />} />
         <Route path="/terms" element={<TermsPage />} />
       </Routes>
