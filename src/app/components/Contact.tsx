@@ -202,9 +202,9 @@ export function Contact() {
                       Address
                     </h4>
                     <p className="text-muted-foreground leading-relaxed">
-                      서울특별시 강남구 테헤란로 123
+                      경북 경주시 화랑로 132, 2층
                       <br />
-                      메디컬빌딩 3층
+                      연세미의원
                     </p>
                   </div>
                 </div>
@@ -288,25 +288,89 @@ export function Contact() {
         </div>
       </div>
 
-      {/* Footer */}
-      <footer className="mt-32 pt-12 border-t border-border/50">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            <p className="text-muted-foreground text-sm">
-              © 2026 피부과의원. All rights reserved.
+      <div className="max-w-3xl mx-auto px-6 mt-24 space-y-16 text-muted-foreground text-sm leading-relaxed">
+        <section id="notice" className="scroll-mt-28 border-t border-border/50 pt-16">
+          <h3
+            className="text-charcoal text-xl mb-4 tracking-wide"
+            style={{ fontFamily: "'Playfair Display', serif", fontWeight: 500 }}
+          >
+            공지사항
+          </h3>
+          <p>등록된 공지사항이 없습니다. 안내가 있을 경우 이곳에 게시됩니다.</p>
+        </section>
+
+        <section id="privacy" className="scroll-mt-28 border-t border-border/50 pt-16">
+          <h3
+            className="text-charcoal text-xl mb-4 tracking-wide"
+            style={{ fontFamily: "'Playfair Display', serif", fontWeight: 500 }}
+          >
+            개인정보처리방침
+          </h3>
+          <div className="space-y-4">
+            <p>
+              연세미의원(이하 &quot;병원&quot;)은 이용자의 개인정보를 중요시하며, 「개인정보 보호법」 등 관련 법령을
+              준수합니다.
             </p>
-            <div className="flex gap-8 text-sm text-muted-foreground">
-              <a href="#" className="hover:text-gold-accent transition-colors">
+            <p>
+              <span className="text-charcoal font-medium">수집 항목:</span> 예약·상담 시 성명, 연락처, 이메일 등
+              서비스 제공에 필요한 최소한의 정보를 수집할 수 있습니다.
+            </p>
+            <p>
+              <span className="text-charcoal font-medium">이용 목적:</span> 진료 예약, 본인 확인, 문의 응대 및
+              서비스 품질 개선에 이용됩니다.
+            </p>
+            <p>
+              <span className="text-charcoal font-medium">보관 및 파기:</span> 관련 법령에서 정한 기간 동안 보관 후
+              지체 없이 파기합니다. 자세한 사항은 병원에 문의해 주세요.
+            </p>
+          </div>
+        </section>
+
+        <section id="terms" className="scroll-mt-28 border-t border-border/50 pt-16">
+          <h3
+            className="text-charcoal text-xl mb-4 tracking-wide"
+            style={{ fontFamily: "'Playfair Display', serif", fontWeight: 500 }}
+          >
+            서비스이용약관
+          </h3>
+          <div className="space-y-4">
+            <p>
+              본 웹사이트는 연세미의원의 진료 안내 및 예약·상담 신청을 위한 정보 제공 목적으로 운영됩니다.
+            </p>
+            <p>
+              웹사이트에 게시된 정보는 참고용이며, 실제 진료는 의료진 판단에 따릅니다. 예약 후 변경·취소가 필요한
+              경우 병원으로 연락해 주세요.
+            </p>
+            <p>
+              이용자는 본 약관 및 관련 법령을 준수해야 하며, 허위 정보 제공·시스템 악용 등에 대해 병원은 서비스 이용을
+              제한할 수 있습니다.
+            </p>
+          </div>
+        </section>
+      </div>
+
+      <footer className="mt-24 pt-12 border-t border-border/50 pb-16">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex flex-col lg:flex-row lg:justify-between gap-10">
+            <div className="text-sm text-muted-foreground space-y-2">
+              <p className="text-charcoal font-medium text-base">연세미의원</p>
+              <p>대표자 심형경</p>
+              <p>사업자등록번호 587-10-03051</p>
+              <p>주소 경북 경주시 화랑로 132, 2층 연세미의원</p>
+            </div>
+            <nav className="flex flex-wrap gap-x-8 gap-y-3 text-sm text-muted-foreground items-start">
+              <a href="#notice" className="hover:text-gold-accent transition-colors">
+                공지사항
+              </a>
+              <a href="#privacy" className="hover:text-gold-accent transition-colors">
                 개인정보처리방침
               </a>
-              <a href="#" className="hover:text-gold-accent transition-colors">
-                이용약관
+              <a href="#terms" className="hover:text-gold-accent transition-colors">
+                서비스이용약관
               </a>
-              <a href="#" className="hover:text-gold-accent transition-colors">
-                오시는길
-              </a>
-            </div>
+            </nav>
           </div>
+          <p className="text-muted-foreground text-xs mt-10">© 2026 연세미의원. All rights reserved.</p>
         </div>
       </footer>
     </section>
