@@ -35,7 +35,7 @@ const EVENTS = [
 
 export function Events() {
   return (
-    <section id="events" className="py-32 px-6 bg-champagne relative overflow-hidden">
+    <section id="events" className="py-20 sm:py-24 lg:py-32 px-6 bg-champagne relative overflow-hidden">
       <div className="absolute top-1/2 left-0 w-96 h-96 bg-gradient-radial from-gold-accent/5 to-transparent blur-3xl -translate-y-1/2" />
       <div className="absolute top-1/2 right-0 w-96 h-96 bg-gradient-radial from-gold-accent/5 to-transparent blur-3xl -translate-y-1/2" />
 

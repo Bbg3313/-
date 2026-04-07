@@ -32,7 +32,7 @@ export function HomePage() {
         <Events />
         <Contact />
       </main>
-      <Footer className="mt-20 md:mt-28" />
+      <Footer className="mt-10 md:mt-16" />
     </div>
   );
 }

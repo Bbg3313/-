@@ -21,7 +21,7 @@ const DIRECTOR = {
 
 export function Doctors() {
   return (
-    <section id="doctors" className="py-32 px-6 bg-background relative">
+    <section id="doctors" className="py-20 sm:py-24 lg:py-32 px-6 bg-background relative">
       <div className="max-w-6xl mx-auto">
         <div className="max-w-3xl mx-auto mb-16 lg:mb-20 text-center">
           <div className="w-12 h-px bg-gold-accent mb-8 mx-auto" />

@@ -47,7 +47,7 @@ export function Services() {
   ];
 
   return (
-    <section id="services" className="py-32 px-6 bg-background relative">
+    <section id="services" className="py-20 sm:py-24 lg:py-32 px-6 bg-background relative">
       {/* Subtle decorative element */}
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
 

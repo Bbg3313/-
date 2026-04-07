@@ -84,7 +84,7 @@ export function Footer({ className }: FooterProps) {
   return (
     <footer className={cn("mt-auto", className)}>
       <div className="border-t border-border bg-muted/50">
-        <div className="max-w-xl mx-auto px-6 py-12 md:py-14 flex flex-col items-center">
+        <div className="max-w-xl mx-auto px-6 py-9 md:py-12 flex flex-col items-center">
           {/* 로고: 정확히 가로 중앙 정렬 */}
           <div className="w-full flex justify-center">
             <Link
@@ -101,7 +101,7 @@ export function Footer({ className }: FooterProps) {
             </Link>
           </div>
 
-          <div className="w-12 h-px bg-gold-accent/35 my-7 md:my-8 shrink-0" aria-hidden />
+          <div className="w-12 h-px bg-gold-accent/35 my-5 md:my-7 shrink-0" aria-hidden />
 
           <ul className="text-center space-y-2.5 w-full max-w-md mx-auto">
             <InfoLine label="대표자">심형경</InfoLine>
@@ -117,7 +117,7 @@ export function Footer({ className }: FooterProps) {
             </InfoLine>
           </ul>
 
-          <div className="mt-9 flex flex-wrap justify-center gap-4">
+          <div className="mt-6 flex flex-wrap justify-center gap-4">
             <SocialButton href={SOCIAL_LINKS.instagram} label="인스타그램" variant="instagram">
               <Instagram className="h-[22px] w-[22px]" strokeWidth={2} />
             </SocialButton>
@@ -126,7 +126,7 @@ export function Footer({ className }: FooterProps) {
             </SocialButton>
           </div>
 
-          <div className="mt-10 w-full max-w-3xl mx-auto border border-border/60 bg-background/60 backdrop-blur-sm px-5 py-4">
+          <div className="mt-7 w-full max-w-3xl mx-auto border border-border/60 bg-background/60 backdrop-blur-sm px-5 py-4">
             <p className="text-center text-xs tracking-widest text-charcoal/80 font-medium mb-2">주의사항</p>
             <p className="text-center text-xs sm:text-sm text-muted-foreground leading-relaxed">
               해당 수술 및 시술의 결과는 개인마다 차이가 있을 수 있습니다. 개인에 따라 피부 트러블, 붓기, 출혈, 염증, 멍,
@@ -135,7 +135,7 @@ export function Footer({ className }: FooterProps) {
           </div>
 
           <nav
-            className="mt-10 flex flex-wrap justify-center items-center gap-x-1 gap-y-2 text-sm w-full"
+            className="mt-7 flex flex-wrap justify-center items-center gap-x-1 gap-y-2 text-sm w-full"
             aria-label="법적 고지"
           >
             {footerLinks.map((item, i) => (

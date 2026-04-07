@@ -2,7 +2,7 @@ import { ImageWithFallback } from "./figma/ImageWithFallback";
 
 export function About() {
   return (
-    <section id="about" className="py-32 px-6 bg-champagne relative overflow-hidden">
+    <section id="about" className="py-20 sm:py-24 lg:py-32 px-6 bg-champagne relative overflow-hidden">
       {/* Subtle decorative element */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-radial from-gold-accent/10 to-transparent blur-3xl" />
 
