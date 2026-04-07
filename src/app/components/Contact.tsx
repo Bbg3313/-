@@ -1,3 +1,8 @@
+import React from "react";
+
+const NAVER_RESERVATION_URL =
+  "https://map.naver.com/p/entry/place/1084784069?placePath=/home?from=map&fromPanelNum=1&additionalHeight=76&timestamp=202604071448&locale=ko&svcName=map_pcv5&c=16.52,0,0,0,dh";
+
 const GOOGLE_MAPS_EMBED_SRC =
   "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3234.1930747588513!2d129.212623776708!3d35.844268972535126!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x35664e4195c7c2cf%3A0xa3a7117464dabddd!2z7Jew7IS466-47J2Y7JuQIOqyveyjvO2UvOu2gOqzvA!5e0!3m2!1sko!2skr!4v1775533999427!5m2!1sko!2skr";
 
@@ -5,6 +10,24 @@ export function Contact() {
   return (
     <section id="contact" className="py-32 px-6 bg-background relative">
       <div className="max-w-7xl mx-auto">
+        <div className="max-w-3xl mx-auto mb-16 lg:mb-20 text-center">
+          <div className="w-12 h-px bg-gold-accent mb-8 mx-auto" />
+          <h2
+            className="mb-6 text-charcoal tracking-tight"
+            style={{
+              fontFamily: "'Playfair Display', serif",
+              fontSize: "3.5rem",
+              lineHeight: "1.1",
+              fontWeight: "500",
+            }}
+          >
+            Visit Us
+          </h2>
+          <p className="text-lg text-muted-foreground leading-relaxed">
+            오시는 길, 진료 시간, 예약 안내를 확인하세요
+          </p>
+        </div>
+
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-stretch">
           {/* Map — left on large screens; below Visit Us on mobile */}
           <div className="order-2 lg:order-1 min-h-[280px] sm:min-h-[340px] lg:min-h-[520px]">
@@ -23,18 +46,6 @@ export function Contact() {
           {/* Visit Us — right on large screens; first on mobile */}
           <div className="order-1 lg:order-2">
             <div className="bg-champagne p-8 sm:p-12 h-full">
-              <div className="w-12 h-px bg-gold-accent mb-8" />
-              <h2
-                className="mb-8 text-charcoal"
-                style={{
-                  fontFamily: "'Playfair Display', serif",
-                  fontSize: "2rem",
-                  fontWeight: "500",
-                }}
-              >
-                Visit Us
-              </h2>
-
               <div className="space-y-8">
                 {/* Address */}
                 <div className="flex items-start gap-6">
@@ -142,29 +153,46 @@ export function Contact() {
                       진료 시간
                     </h3>
                     <div className="border border-gold-accent/20 rounded-sm overflow-hidden text-sm">
-                      <div className="grid grid-cols-[1fr_auto] gap-x-4 sm:gap-x-8 items-baseline px-4 py-2.5 border-b border-gold-accent/15 bg-champagne/80">
-                        <span className="text-charcoal font-medium">월·목·금요일</span>
-                        <span className="text-muted-foreground tabular-nums shrink-0">10:00 ~ 20:00</span>
-                      </div>
-                      <div className="grid grid-cols-[1fr_auto] gap-x-4 sm:gap-x-8 items-baseline px-4 py-2.5 border-b border-gold-accent/15">
-                        <span className="text-charcoal font-medium">화·수요일</span>
-                        <span className="text-muted-foreground tabular-nums shrink-0">10:00 ~ 18:00</span>
-                      </div>
-                      <div className="grid grid-cols-[1fr_auto] gap-x-4 sm:gap-x-8 items-baseline px-4 py-2.5 border-b border-gold-accent/15 bg-champagne/40">
-                        <span className="text-charcoal font-medium">토요일</span>
-                        <span className="text-muted-foreground tabular-nums shrink-0 text-right leading-snug">
-                          10:00 ~ 15:00
-                          <span className="text-muted-foreground/80 text-[11px] sm:text-xs font-normal block sm:inline sm:ml-1">
-                            (점심시간 없음)
-                          </span>
-                        </span>
-                      </div>
-                      <div className="grid grid-cols-[1fr_auto] gap-x-4 sm:gap-x-8 items-baseline px-4 py-2.5 border-b border-gold-accent/15">
-                        <span className="text-charcoal font-medium">점심시간</span>
-                        <span className="text-muted-foreground tabular-nums shrink-0">13:00 ~ 14:00</span>
-                      </div>
-                      <p className="px-4 py-2.5 text-destructive text-xs sm:text-sm text-center bg-muted/30">
+                      <dl className="divide-y divide-gold-accent/15">
+                        <div className="flex items-center justify-between gap-6 px-4 py-3 bg-champagne/70">
+                          <dt className="text-charcoal font-medium">월·목·금</dt>
+                          <dd className="text-muted-foreground tabular-nums shrink-0">10:00 – 20:00</dd>
+                        </div>
+                        <div className="flex items-center justify-between gap-6 px-4 py-3">
+                          <dt className="text-charcoal font-medium">화·수</dt>
+                          <dd className="text-muted-foreground tabular-nums shrink-0">10:00 – 18:00</dd>
+                        </div>
+                        <div className="flex items-start justify-between gap-6 px-4 py-3 bg-champagne/40">
+                          <dt className="text-charcoal font-medium">토</dt>
+                          <dd className="text-muted-foreground tabular-nums shrink-0 text-right leading-snug">
+                            10:00 – 15:00
+                            <span className="text-muted-foreground/80 text-[11px] sm:text-xs font-normal block">
+                              (점심시간 없음)
+                            </span>
+                          </dd>
+                        </div>
+                        <div className="flex items-center justify-between gap-6 px-4 py-3">
+                          <dt className="text-charcoal font-medium">점심</dt>
+                          <dd className="text-muted-foreground tabular-nums shrink-0">13:00 – 14:00</dd>
+                        </div>
+                      </dl>
+                      <p className="px-4 py-3 text-destructive text-xs sm:text-sm text-center bg-muted/30">
                         일요일·공휴일은 휴무입니다
+                      </p>
+                    </div>
+
+                    <div className="mt-6">
+                      <a
+                        href={NAVER_RESERVATION_URL}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="group relative inline-flex w-full items-center justify-center px-10 py-4 bg-primary text-primary-foreground overflow-hidden transition-all duration-500 hover:shadow-xl"
+                      >
+                        <span className="relative z-10 tracking-wider uppercase text-sm">예약하기</span>
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
+                      </a>
+                      <p className="mt-3 text-xs text-muted-foreground leading-relaxed text-center">
+                        버튼을 누르면 네이버 지도로 이동합니다.
                       </p>
                     </div>
                   </div>

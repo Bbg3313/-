@@ -4,6 +4,7 @@ import { HomePage } from "./pages/HomePage";
 import { NoticePage } from "./pages/NoticePage";
 import { PrivacyPage } from "./pages/PrivacyPage";
 import { TermsPage } from "./pages/TermsPage";
+import { FloatingActions } from "./components/FloatingActions";
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
         <Route path="/privacy" element={<PrivacyPage />} />
         <Route path="/terms" element={<TermsPage />} />
       </Routes>
+      <FloatingActions />
     </BrowserRouter>
   );
 }
