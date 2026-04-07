@@ -1,47 +1,29 @@
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 
-export function Doctors() {
-  const doctors = [
-    {
-      name: "김민지",
-      title: "대표 원장",
-      specialty: "피부과 전문의",
-      credentials: [
-        "서울대학교 의과대학 졸업",
-        "세브란스병원 피부과 전문의",
-        "대한피부과학회 정회원",
-      ],
-      image: "https://images.unsplash.com/photo-1758691461516-7e716e0ca135?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwyfHxwcm9mZXNzaW9uYWwlMjBkb2N0b3IlMjBwb3J0cmFpdCUyMG1lZGljYWx8ZW58MXx8fHwxNzc1NDY0NjYxfDA&ixlib=rb-4.1.0&q=80&w=1080",
-    },
-    {
-      name: "이서준",
-      title: "진료 원장",
-      specialty: "레이저 및 미용 피부과",
-      credentials: [
-        "연세대학교 의과대학 졸업",
-        "삼성서울병원 피부과 전문의",
-        "대한레이저의학회 정회원",
-      ],
-      image: "https://images.unsplash.com/photo-1615177393114-bd2917a4f74a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHw2fHxwcm9mZXNzaW9uYWwlMjBkb2N0b3IlMjBwb3J0cmFpdCUyMG1lZGljYWx8ZW58MXx8fHwxNzc1NDY0NjYxfDA&ixlib=rb-4.1.0&q=80&w=1080",
-    },
-    {
-      name: "박지원",
-      title: "진료 원장",
-      specialty: "아토피 및 피부질환",
-      credentials: [
-        "가톨릭대학교 의과대학 졸업",
-        "서울아산병원 피부과 전문의",
-        "대한피부연구학회 정회원",
-      ],
-      image: "https://images.unsplash.com/photo-1614105687119-93b4f75e8ca9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHw3fHxwcm9mZXNzaW9uYWwlMjBkb2N0b3IlMjBwb3J0cmFpdCUyMG1lZGljYWx8ZW58MXx8fHwxNzc1NDY0NjYxfDA&ixlib=rb-4.1.0&q=80&w=1080",
-    },
-  ];
+const DIRECTOR = {
+  name: "심형경",
+  role: "대표원장",
+  specialty: "피부과 전문의",
+  image: "/images/doctor-shim-hyeong-gyeong.png",
+  credentials: [
+    "경상대학교 의과대학 졸업",
+    "고려대학교 의과대학 외래교수",
+    "서울다빈치의원 피부과원장",
+    "중국우한한진성형병원 피부과원장",
+    "중국선전연수성형병원 피부과원장",
+    "대구파르베의원 피부과 원장",
+    "한국미용외과의학회 정회원",
+    "한국피부비만성형학회 정회원",
+    "대한비만체형학회 정회원",
+    "대한레이져피부모발학회 정회원",
+  ],
+} as const;
 
+export function Doctors() {
   return (
     <section id="doctors" className="py-32 px-6 bg-background relative">
-      <div className="max-w-7xl mx-auto">
-        {/* Section Header */}
-        <div className="max-w-3xl mb-24">
+      <div className="max-w-6xl mx-auto">
+        <div className="max-w-3xl mb-16 lg:mb-20">
           <div className="w-12 h-px bg-gold-accent mb-8" />
           <h2
             className="mb-6 text-charcoal tracking-tight"
@@ -59,55 +41,55 @@ export function Doctors() {
           </p>
         </div>
 
-        {/* Doctors Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
-          {doctors.map((doctor, index) => (
-            <div key={index} className="group">
-              {/* Doctor Image */}
-              <div className="relative h-[500px] overflow-hidden mb-8 bg-muted">
-                <ImageWithFallback
-                  src={doctor.image}
-                  alt={doctor.name}
-                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
-                />
-                {/* Overlay on hover */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                {/* Gold accent border */}
-                <div className="absolute top-4 right-4 w-16 h-16 border border-gold-accent/50 group-hover:border-gold-accent transition-colors duration-500" />
-              </div>
-
-              {/* Doctor Info */}
-              <div>
-                <p className="text-sm tracking-widest uppercase text-gold-accent mb-2">
-                  {doctor.title}
-                </p>
-                <h3
-                  className="text-charcoal mb-2"
-                  style={{
-                    fontFamily: "'Playfair Display', serif",
-                    fontSize: "2rem",
-                    fontWeight: "500",
-                  }}
-                >
-                  {doctor.name}
-                </h3>
-                <p className="text-muted-foreground mb-6">{doctor.specialty}</p>
-
-                {/* Credentials */}
-                <div className="space-y-2">
-                  {doctor.credentials.map((credential, i) => (
-                    <div key={i} className="flex items-start gap-3">
-                      <div className="w-1 h-1 bg-gold-accent mt-2 shrink-0" />
-                      <p className="text-sm text-muted-foreground leading-relaxed">
-                        {credential}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
+        <div className="grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] gap-12 lg:gap-16 items-start">
+          <div className="relative max-w-md mx-auto lg:mx-0 w-full">
+            <div className="relative aspect-[3/4] overflow-hidden bg-muted shadow-xl">
+              <ImageWithFallback
+                src={DIRECTOR.image}
+                alt={`${DIRECTOR.name} ${DIRECTOR.role}`}
+                className="w-full h-full object-cover object-top"
+              />
+              <div className="absolute top-4 right-4 w-16 h-16 border border-gold-accent/50 pointer-events-none" />
             </div>
-          ))}
+            <div className="absolute -bottom-4 -left-4 w-32 h-32 border border-gold-accent/20 -z-10 hidden lg:block" />
+          </div>
+
+          <div className="pt-0 lg:pt-4">
+            <p className="text-sm tracking-[0.15em] text-gold-accent mb-6 font-medium">
+              [ 의료진 소개 ]
+            </p>
+            <h3
+              className="text-charcoal mb-2"
+              style={{
+                fontFamily: "'Playfair Display', serif",
+                fontSize: "clamp(2rem, 4vw, 2.75rem)",
+                fontWeight: "500",
+                lineHeight: "1.2",
+              }}
+            >
+              {DIRECTOR.name}{" "}
+              <span className="text-charcoal/90 text-[0.92em] font-normal">
+                {DIRECTOR.role}
+              </span>
+            </h3>
+            <p className="text-muted-foreground text-lg mb-10 pb-10 border-b border-charcoal/10">
+              {DIRECTOR.specialty}
+            </p>
+
+            <ul className="space-y-3.5">
+              {DIRECTOR.credentials.map((line) => (
+                <li key={line} className="flex items-start gap-3.5">
+                  <span
+                    className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-gold-accent"
+                    aria-hidden
+                  />
+                  <span className="text-base text-muted-foreground leading-relaxed">
+                    {line}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </section>
