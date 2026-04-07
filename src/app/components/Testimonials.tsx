@@ -71,7 +71,7 @@ export function Testimonials() {
               <blockquote
                 className="mb-8 mt-8 text-charcoal/80 leading-relaxed"
                 style={{
-                  fontFamily: "'Cormorant Garamond', serif",
+                  fontFamily: "'Playfair Display', serif",
                   fontSize: "1.25rem",
                   fontStyle: "italic",
                   lineHeight: "1.8",

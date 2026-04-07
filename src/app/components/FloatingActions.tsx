@@ -1,15 +1,13 @@
 import React from "react";
-import { Link, useLocation } from "react-router";
-
-const NAVER_RESERVATION_URL =
-  "https://map.naver.com/p/entry/place/1084784069?placePath=/home?from=map&fromPanelNum=1&additionalHeight=76&timestamp=202604071448&locale=ko&svcName=map_pcv5&c=16.52,0,0,0,dh";
+import { useLocation } from "react-router";
+import { SITE_LINKS } from "../config/siteLinks";
 
 const PHONE_TEL = "0547728575";
 
 function Icon({ children }: { children: React.ReactNode }) {
   return (
     <span
-      className="grid place-items-center shrink-0 w-9 h-9 rounded-full border border-gold-accent/35 bg-background/80 backdrop-blur-sm"
+      className="grid place-items-center shrink-0 w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-gold-accent/35 bg-background/80 backdrop-blur-sm"
       aria-hidden
     >
       {children}
@@ -24,54 +22,57 @@ export function FloatingActions() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const isNoticeActive = location.pathname === "/notice";
+  const isEventsActive = location.pathname.startsWith("/events") || location.pathname === "/notice";
 
   return (
     <div className="fixed right-4 bottom-4 sm:right-6 sm:bottom-6 z-50">
-      <div className="flex flex-col gap-2">
-        <Link
-          to="/notice"
-          className={`group inline-flex items-center gap-3 rounded-full px-4 py-3 shadow-lg border transition-colors ${
-            isNoticeActive
+      <div className="flex flex-col gap-3 sm:gap-3.5">
+        <a
+          href={SITE_LINKS.eventBoard}
+          target="_blank"
+          rel="noreferrer"
+          className={`group inline-flex items-center gap-3.5 rounded-full px-5 py-3.5 shadow-lg border transition-colors ${
+            isEventsActive
               ? "bg-primary text-primary-foreground border-primary"
               : "bg-background/90 text-charcoal border-border hover:border-gold-accent/40"
           }`}
-          aria-label="이벤트(공지) 보기"
+          aria-label="이벤트 보드로 이동(새 탭)"
         >
           <Icon>
-            <svg viewBox="0 0 24 24" className="w-4.5 h-4.5 text-gold-accent" fill="none" stroke="currentColor" strokeWidth="1.6">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M6 8h12M6 12h12M6 16h8" />
+            <svg viewBox="0 0 24 24" className="w-5 h-5 text-gold-accent" fill="none" stroke="currentColor" strokeWidth="1.6">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3 8h18v4H3V8z" />
+              <path strokeLinecap="round" strokeLinejoin="round" d="M5 12v8h14v-8" />
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v12" />
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 8c0-2.2-2.2-4-4.4-3.2C5.7 5.5 6.8 8 9 8m3 0c0-2.2 2.2-4 4.4-3.2 1.9.7.8 3.2-1.4 3.2" />
             </svg>
           </Icon>
-          <span className="text-sm font-medium tracking-wide">이벤트</span>
-        </Link>
+          <span className="text-[15px] font-semibold tracking-wide">이벤트</span>
+        </a>
 
         <a
-          href={NAVER_RESERVATION_URL}
+          href={SITE_LINKS.reservation}
           target="_blank"
           rel="noreferrer"
-          className="group inline-flex items-center gap-3 rounded-full px-4 py-3 shadow-lg border border-border bg-background/90 text-charcoal hover:border-gold-accent/40 transition-colors"
+          className="group inline-flex items-center gap-3.5 rounded-full px-5 py-3.5 shadow-lg border border-border bg-background/90 text-charcoal hover:border-gold-accent/40 transition-colors"
           aria-label="네이버로 예약하기(새 탭)"
         >
           <Icon>
-            <svg viewBox="0 0 24 24" className="w-4.5 h-4.5 text-gold-accent" fill="none" stroke="currentColor" strokeWidth="1.6">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M7 4h10a2 2 0 0 1 2 2v14l-7-3-7 3V6a2 2 0 0 1 2-2z"
-              />
+            <svg viewBox="0 0 24 24" className="w-5 h-5 text-gold-accent" fill="none" stroke="currentColor" strokeWidth="1.6">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M8 4v3M16 4v3M4.5 9h15" />
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6.5 6.5h11A2.5 2.5 0 0 1 20 9v10A2.5 2.5 0 0 1 17.5 21h-11A2.5 2.5 0 0 1 4 19V9a2.5 2.5 0 0 1 2.5-2.5z" />
+              <path strokeLinecap="round" strokeLinejoin="round" d="M8.6 14.2l2 2 4.8-5.2" />
             </svg>
           </Icon>
-          <span className="text-sm font-medium tracking-wide">예약</span>
+          <span className="text-[15px] font-semibold tracking-wide">예약</span>
         </a>
 
         <a
           href={`tel:${PHONE_TEL}`}
-          className="group inline-flex items-center gap-3 rounded-full px-4 py-3 shadow-lg border border-border bg-background/90 text-charcoal hover:border-gold-accent/40 transition-colors"
+          className="group inline-flex items-center gap-3.5 rounded-full px-5 py-3.5 shadow-lg border border-border bg-background/90 text-charcoal hover:border-gold-accent/40 transition-colors"
           aria-label="전화 상담하기"
         >
           <Icon>
-            <svg viewBox="0 0 24 24" className="w-4.5 h-4.5 text-gold-accent" fill="none" stroke="currentColor" strokeWidth="1.6">
+            <svg viewBox="0 0 24 24" className="w-5 h-5 text-gold-accent" fill="none" stroke="currentColor" strokeWidth="1.6">
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -79,21 +80,21 @@ export function FloatingActions() {
               />
             </svg>
           </Icon>
-          <span className="text-sm font-medium tracking-wide">상담</span>
+          <span className="text-[15px] font-semibold tracking-wide">상담</span>
         </a>
 
         <button
           type="button"
           onClick={handleTop}
-          className="group inline-flex items-center gap-3 rounded-full px-4 py-3 shadow-lg border border-border bg-background/90 text-charcoal hover:border-gold-accent/40 transition-colors"
+          className="group inline-flex items-center gap-3.5 rounded-full px-5 py-3.5 shadow-lg border border-border bg-background/90 text-charcoal hover:border-gold-accent/40 transition-colors"
           aria-label="맨 위로"
         >
           <Icon>
-            <svg viewBox="0 0 24 24" className="w-4.5 h-4.5 text-gold-accent" fill="none" stroke="currentColor" strokeWidth="1.8">
+            <svg viewBox="0 0 24 24" className="w-5 h-5 text-gold-accent" fill="none" stroke="currentColor" strokeWidth="1.8">
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 5l-6 6m6-6l6 6M12 5v14" />
             </svg>
           </Icon>
-          <span className="text-sm font-medium tracking-wide">TOP</span>
+          <span className="text-[15px] font-semibold tracking-wide">TOP</span>
         </button>
       </div>
     </div>

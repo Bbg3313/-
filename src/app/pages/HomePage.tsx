@@ -5,7 +5,7 @@ import { Hero } from "../components/Hero";
 import { About } from "../components/About";
 import { Services } from "../components/Services";
 import { Doctors } from "../components/Doctors";
-import { Testimonials } from "../components/Testimonials";
+import { Events } from "../components/Events";
 import { Contact } from "../components/Contact";
 import { Footer } from "../components/Footer";
 
@@ -29,7 +29,7 @@ export function HomePage() {
         <About />
         <Services />
         <Doctors />
-        <Testimonials />
+        <Events />
         <Contact />
       </main>
       <Footer className="mt-20 md:mt-28" />

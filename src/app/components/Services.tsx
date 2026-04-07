@@ -57,7 +57,7 @@ export function Services() {
           <div className="w-12 h-px bg-primary mb-8" />
           <h2
             className="mb-6 text-foreground tracking-tight"
-            style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "3.5rem", lineHeight: "1.1", fontWeight: "300" }}
+            style={{ fontFamily: "'Playfair Display', serif", fontSize: "3.5rem", lineHeight: "1.1", fontWeight: "600" }}
           >
             Medical Services
           </h2>
@@ -83,7 +83,7 @@ export function Services() {
                 </p>
                 <h3
                   className="text-white mb-4"
-                  style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "2.5rem", lineHeight: "1.2", fontWeight: "300" }}
+                  style={{ fontFamily: "'Playfair Display', serif", fontSize: "2.5rem", lineHeight: "1.2", fontWeight: "600" }}
                 >
                   {services[0].title}
                 </h3>
@@ -111,7 +111,7 @@ export function Services() {
                     </p>
                     <h3
                       className="text-white mb-3"
-                      style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.75rem", lineHeight: "1.2", fontWeight: "300" }}
+                      style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.75rem", lineHeight: "1.2", fontWeight: "600" }}
                     >
                       {service.title}
                     </h3>
@@ -139,7 +139,7 @@ export function Services() {
                 </p>
                 <h3
                   className="text-white mb-3"
-                  style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.75rem", lineHeight: "1.2", fontWeight: "300" }}
+                  style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.75rem", lineHeight: "1.2", fontWeight: "600" }}
                 >
                   {services[3].title}
                 </h3>
@@ -164,7 +164,7 @@ export function Services() {
                 </p>
                 <h3
                   className="text-white mb-3"
-                  style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.75rem", lineHeight: "1.2", fontWeight: "300" }}
+                  style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.75rem", lineHeight: "1.2", fontWeight: "600" }}
                 >
                   {services[4].title}
                 </h3>
@@ -189,7 +189,7 @@ export function Services() {
                 </p>
                 <h3
                   className="text-white mb-3"
-                  style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.75rem", lineHeight: "1.2", fontWeight: "300" }}
+                  style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.75rem", lineHeight: "1.2", fontWeight: "600" }}
                 >
                   {services[5].title}
                 </h3>
