@@ -1,6 +1,7 @@
 import logo from "../../imports/logo.svg";
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router";
+import { SITE_LOGO_IMG_CLASS } from "../config/logo";
 import { useHomeLogoClick } from "../hooks/useHomeLogoClick";
 
 export function Header() {
@@ -30,12 +31,12 @@ export function Header() {
         solid ? "bg-background/98 backdrop-blur-md border-b border-border/50 shadow-sm" : "bg-transparent"
       }`}
     >
-      <nav className="max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
-        <Link to="/" onClick={onHomeLogoClick} className="flex items-center">
+      <nav className="max-w-7xl mx-auto px-6 py-4 md:py-5 flex items-center justify-between gap-4">
+        <Link to="/" onClick={onHomeLogoClick} className="flex items-center shrink-0 group">
           <img
             src={logo}
             alt="연세미의원"
-            className={`h-10 transition-all duration-300 ${solid ? "opacity-100" : "opacity-90"}`}
+            className={`${SITE_LOGO_IMG_CLASS} transition-all duration-300 ${solid ? "opacity-100" : "opacity-90"}`}
           />
         </Link>
 

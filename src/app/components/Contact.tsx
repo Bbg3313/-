@@ -202,7 +202,7 @@ export function Contact() {
                       Address
                     </h4>
                     <p className="text-muted-foreground leading-relaxed">
-                      경북 경주시 화랑로 132, 2층
+                      경북 경주시 황성로 137, 2층
                       <br />
                       연세미의원
                     </p>

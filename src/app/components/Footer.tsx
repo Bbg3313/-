@@ -1,7 +1,11 @@
-import { Fragment } from "react";
+import { Fragment, type ReactNode } from "react";
 import { Link } from "react-router";
+import { Instagram } from "lucide-react";
 import logo from "../../imports/logo.svg";
+import { SITE_LOGO_IMG_CLASS } from "../config/logo";
+import { SOCIAL_LINKS } from "../config/socialLinks";
 import { useHomeLogoClick } from "../hooks/useHomeLogoClick";
+import { NaverBlogIcon } from "./icons/NaverBlogIcon";
 import { cn } from "./ui/utils";
 
 const footerLinks = [
@@ -9,6 +13,57 @@ const footerLinks = [
   { to: "/privacy", label: "개인정보처리방침" },
   { to: "/terms", label: "서비스이용약관" },
 ] as const;
+
+function InfoLine({ label, children }: { label: string; children: ReactNode }) {
+  return (
+    <li className="flex flex-wrap items-center justify-center gap-x-2 sm:gap-x-3 text-sm text-muted-foreground leading-relaxed">
+      <span className="text-charcoal/75 font-medium shrink-0">{label}</span>
+      <span className="text-muted-foreground/45 select-none font-light" aria-hidden>
+        |
+      </span>
+      <span className="text-left sm:text-center min-w-0">{children}</span>
+    </li>
+  );
+}
+
+function SocialButton({
+  href,
+  label,
+  children,
+}: {
+  href: string;
+  label: string;
+  children: ReactNode;
+}) {
+  const ring =
+    "flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-border/70 bg-background text-charcoal shadow-sm transition-colors";
+  if (!href) {
+    return (
+      <span
+        className={cn(ring, "cursor-not-allowed opacity-45")}
+        title={`${label} 주소는 src/app/config/socialLinks.ts (또는 .env)에서 설정하세요`}
+        role="img"
+        aria-label={`${label} (링크 미설정)`}
+      >
+        {children}
+      </span>
+    );
+  }
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={cn(
+        ring,
+        "hover:border-gold-accent/60 hover:text-gold-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-accent/40",
+      )}
+      aria-label={`${label} 새 창`}
+    >
+      {children}
+    </a>
+  );
+}
 
 type FooterProps = {
   className?: string;
@@ -19,49 +74,51 @@ export function Footer({ className }: FooterProps) {
 
   return (
     <footer className={cn("mt-auto", className)}>
-      {/* 상단: 본문과 구분 — 살짝 다른 톤의 배경으로 한 덩어리 */}
       <div className="border-t border-border bg-muted/50">
-        <div className="max-w-xl mx-auto px-6 py-12 md:py-14 flex flex-col items-center text-center">
-          <div className="w-full flex justify-center">
+        <div className="max-w-xl mx-auto px-6 py-12 md:py-14 flex flex-col items-center">
+          {/* 로고: flex 컬럼에서 가로 중앙 — 링크 너비를 이미지에 맞춤 */}
+          <div className="w-full flex flex-col items-center">
             <Link
               to="/"
               onClick={onHomeLogoClick}
-              className="inline-flex justify-center group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-accent/40 rounded-sm mx-auto"
+              className="group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-accent/40 rounded-sm w-max max-w-full"
               aria-label="연세미의원 홈 — 맨 위로 이동"
             >
               <img
                 src={logo}
                 alt="연세미의원"
-                className="h-[4.75rem] sm:h-[5.5rem] md:h-24 w-auto mx-auto opacity-95 group-hover:opacity-100 transition-opacity"
+                className={`${SITE_LOGO_IMG_CLASS} opacity-95 group-hover:opacity-100 transition-opacity`}
               />
             </Link>
           </div>
 
-          <div className="w-12 h-px bg-gold-accent/35 my-7 md:my-8" aria-hidden />
+          <div className="w-12 h-px bg-gold-accent/35 my-7 md:my-8 shrink-0" aria-hidden />
 
-          <ul className="text-sm text-muted-foreground space-y-2.5 leading-relaxed w-full max-w-sm">
-            <li>
-              <span className="text-charcoal/70 font-medium">대표자</span> 심형경
-            </li>
-            <li>
-              <span className="text-charcoal/70 font-medium">사업자등록번호</span> 587-10-03051
-            </li>
-            <li>
-              <span className="text-charcoal/70 font-medium">주소</span> 경북 경주시 화랑로 132, 2층 연세미의원
-            </li>
-            <li>
-              <span className="text-charcoal/70 font-medium">전화</span>{" "}
+          <ul className="text-center space-y-2.5 w-full max-w-md mx-auto">
+            <InfoLine label="대표자">신휘권</InfoLine>
+            <InfoLine label="사업자등록번호">587-10-03051</InfoLine>
+            <InfoLine label="주소">경북 경주시 황성로 137, 2층 연세미의원</InfoLine>
+            <InfoLine label="전화">
               <a
                 href="tel:0547728575"
                 className="text-gold-accent font-medium hover:underline underline-offset-2 transition-colors"
               >
                 054-772-8575
               </a>
-            </li>
+            </InfoLine>
           </ul>
 
+          <div className="mt-9 flex flex-wrap justify-center gap-4">
+            <SocialButton href={SOCIAL_LINKS.instagram} label="인스타그램">
+              <Instagram className="h-[22px] w-[22px]" strokeWidth={1.75} />
+            </SocialButton>
+            <SocialButton href={SOCIAL_LINKS.naverBlog} label="네이버 블로그">
+              <NaverBlogIcon className="h-[22px] w-[22px]" />
+            </SocialButton>
+          </div>
+
           <nav
-            className="mt-10 flex flex-wrap justify-center items-center gap-x-1 gap-y-2 text-sm"
+            className="mt-10 flex flex-wrap justify-center items-center gap-x-1 gap-y-2 text-sm w-full"
             aria-label="법적 고지"
           >
             {footerLinks.map((item, i) => (
@@ -83,7 +140,6 @@ export function Footer({ className }: FooterProps) {
         </div>
       </div>
 
-      {/* 하단: 색 띠로 명확히 구분 */}
       <div className="border-t border-primary/15 bg-secondary">
         <div className="max-w-xl mx-auto px-6 py-3.5">
           <p className="text-center text-muted-foreground text-[11px] sm:text-xs tracking-wide">
