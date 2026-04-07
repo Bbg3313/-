@@ -1,5 +1,8 @@
 import { useState } from "react";
 
+const GOOGLE_MAPS_EMBED_SRC =
+  "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3234.1930747588513!2d129.212623776708!3d35.844268972535126!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x35664e4195c7c2cf%3A0xa3a7117464dabddd!2z7Jew7IS466-47J2Y7JuQIOqyveyjvO2UvOu2gOqzvA!5e0!3m2!1sko!2skr!4v1775533999427!5m2!1sko!2skr";
+
 export function Contact() {
   const [formData, setFormData] = useState({
     name: "",
@@ -311,24 +314,15 @@ export function Contact() {
               </div>
             </div>
 
-            {/* Map placeholder */}
-            <div className="h-[300px] bg-muted flex items-center justify-center border border-border">
-              <div className="text-center">
-                <svg
-                  className="w-16 h-16 mx-auto mb-4 text-muted-foreground/30"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth="1"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z"
-                  />
-                </svg>
-                <p className="text-muted-foreground">Map Location</p>
-              </div>
+            <div className="border border-border overflow-hidden bg-muted">
+              <iframe
+                src={GOOGLE_MAPS_EMBED_SRC}
+                className="w-full h-[280px] sm:h-[340px] md:h-[450px] border-0 block"
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="연세미의원 위치 — 구글 지도"
+              />
             </div>
           </div>
         </div>
