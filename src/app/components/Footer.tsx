@@ -19,19 +19,19 @@ export function Footer({ className }: FooterProps) {
       {/* 상단: 본문과 구분 — 살짝 다른 톤의 배경으로 한 덩어리 */}
       <div className="border-t border-border bg-muted/50">
         <div className="max-w-xl mx-auto px-6 py-12 md:py-14 flex flex-col items-center text-center">
-          <Link to="/" className="inline-flex flex-col items-center gap-3 group">
+          <Link
+            to="/"
+            className="inline-block group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-accent/40 rounded-sm"
+            aria-label="연세미의원 홈"
+          >
             <img
               src={logo}
               alt="연세미의원"
-              className="h-14 w-auto opacity-95 group-hover:opacity-100 transition-opacity"
+              className="h-[4.75rem] sm:h-[5.5rem] md:h-24 w-auto opacity-95 group-hover:opacity-100 transition-opacity"
             />
-            <div>
-              <p className="text-charcoal font-semibold text-lg tracking-tight">연세미의원</p>
-              <p className="text-muted-foreground text-sm mt-0.5">진료과목 피부과 · 경주시 화랑로</p>
-            </div>
           </Link>
 
-          <div className="w-12 h-px bg-gold-accent/35 my-8" aria-hidden />
+          <div className="w-12 h-px bg-gold-accent/35 my-7 md:my-8" aria-hidden />
 
           <ul className="text-sm text-muted-foreground space-y-2.5 leading-relaxed w-full max-w-sm">
             <li>
