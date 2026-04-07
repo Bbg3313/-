@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { PrivacyPolicyContent } from "./PrivacyPolicyContent";
 
 export function Contact() {
   const [formData, setFormData] = useState({
@@ -230,7 +231,7 @@ export function Contact() {
                     <h4 className="text-charcoal mb-2 tracking-wide" style={{ fontWeight: "500" }}>
                       Phone
                     </h4>
-                    <p className="text-muted-foreground leading-relaxed">02-1234-5678</p>
+                    <p className="text-muted-foreground leading-relaxed">054-772-8575</p>
                   </div>
                 </div>
 
@@ -301,29 +302,12 @@ export function Contact() {
 
         <section id="privacy" className="scroll-mt-28 border-t border-border/50 pt-16">
           <h3
-            className="text-charcoal text-xl mb-4 tracking-wide"
+            className="text-charcoal text-xl mb-6 tracking-wide"
             style={{ fontFamily: "'Playfair Display', serif", fontWeight: 500 }}
           >
             개인정보처리방침
           </h3>
-          <div className="space-y-4">
-            <p>
-              연세미의원(이하 &quot;병원&quot;)은 이용자의 개인정보를 중요시하며, 「개인정보 보호법」 등 관련 법령을
-              준수합니다.
-            </p>
-            <p>
-              <span className="text-charcoal font-medium">수집 항목:</span> 예약·상담 시 성명, 연락처, 이메일 등
-              서비스 제공에 필요한 최소한의 정보를 수집할 수 있습니다.
-            </p>
-            <p>
-              <span className="text-charcoal font-medium">이용 목적:</span> 진료 예약, 본인 확인, 문의 응대 및
-              서비스 품질 개선에 이용됩니다.
-            </p>
-            <p>
-              <span className="text-charcoal font-medium">보관 및 파기:</span> 관련 법령에서 정한 기간 동안 보관 후
-              지체 없이 파기합니다. 자세한 사항은 병원에 문의해 주세요.
-            </p>
-          </div>
+          <PrivacyPolicyContent />
         </section>
 
         <section id="terms" className="scroll-mt-28 border-t border-border/50 pt-16">
