@@ -197,15 +197,36 @@ export function Contact() {
                       />
                     </svg>
                   </div>
-                  <div>
-                    <h4 className="text-charcoal mb-2 tracking-wide" style={{ fontWeight: "500" }}>
-                      Address
+                  <div className="min-w-0 flex-1">
+                    <h4 className="text-charcoal mb-3 tracking-wide" style={{ fontWeight: "500" }}>
+                      주소 · 오시는 길
                     </h4>
-                    <p className="text-muted-foreground leading-relaxed">
-                      경북 경주시 황성로 137, 2층
-                      <br />
-                      연세미의원
-                    </p>
+                    <div className="text-muted-foreground text-sm leading-relaxed space-y-3">
+                      <p className="text-charcoal/90 font-medium">
+                        경북 경주시 화랑로 132, 2층 연세미의원
+                      </p>
+                      <p className="text-muted-foreground">(경주역 우체국 옆 GS편의점 2층)</p>
+                      <ul className="space-y-2 pt-1 border-t border-gold-accent/15">
+                        <li className="flex gap-2">
+                          <span className="text-gold-accent shrink-0 font-medium" aria-hidden>
+                            ·
+                          </span>
+                          <span>경주역 역전삼거리에서 KT삼거리 방향으로 약 150m 직진</span>
+                        </li>
+                        <li className="flex gap-2">
+                          <span className="text-gold-accent shrink-0 font-medium" aria-hidden>
+                            ·
+                          </span>
+                          <span>경주우체국 버스정류장 도보 1분</span>
+                        </li>
+                        <li className="flex gap-2">
+                          <span className="text-gold-accent shrink-0 font-medium" aria-hidden>
+                            ·
+                          </span>
+                          <span>건물 외부 1층에 노상 유료주차장</span>
+                        </li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
 
@@ -228,9 +249,13 @@ export function Contact() {
                   </div>
                   <div>
                     <h4 className="text-charcoal mb-2 tracking-wide" style={{ fontWeight: "500" }}>
-                      Phone
+                      전화
                     </h4>
-                    <p className="text-muted-foreground leading-relaxed">054-772-8575</p>
+                    <p className="text-muted-foreground leading-relaxed">
+                      <a href="tel:0547728575" className="text-gold-accent hover:underline underline-offset-2">
+                        054-772-8575
+                      </a>
+                    </p>
                   </div>
                 </div>
 
@@ -251,14 +276,35 @@ export function Contact() {
                       />
                     </svg>
                   </div>
-                  <div>
-                    <h4 className="text-charcoal mb-2 tracking-wide" style={{ fontWeight: "500" }}>
-                      Hours
+                  <div className="min-w-0 flex-1">
+                    <h4 className="text-charcoal mb-3 tracking-wide" style={{ fontWeight: "500" }}>
+                      진료 시간
                     </h4>
-                    <div className="text-muted-foreground leading-relaxed space-y-1">
-                      <p>평일: 오전 10시 - 오후 7시</p>
-                      <p>토요일: 오전 10시 - 오후 2시</p>
-                      <p className="text-destructive">일요일 및 공휴일 휴진</p>
+                    <div className="border border-gold-accent/20 rounded-sm overflow-hidden text-sm">
+                      <div className="grid grid-cols-[1fr_auto] gap-x-4 sm:gap-x-8 items-baseline px-4 py-2.5 border-b border-gold-accent/15 bg-champagne/80">
+                        <span className="text-charcoal font-medium">월·목·금요일</span>
+                        <span className="text-muted-foreground tabular-nums shrink-0">10:00 ~ 20:00</span>
+                      </div>
+                      <div className="grid grid-cols-[1fr_auto] gap-x-4 sm:gap-x-8 items-baseline px-4 py-2.5 border-b border-gold-accent/15">
+                        <span className="text-charcoal font-medium">화·수요일</span>
+                        <span className="text-muted-foreground tabular-nums shrink-0">10:00 ~ 18:00</span>
+                      </div>
+                      <div className="grid grid-cols-[1fr_auto] gap-x-4 sm:gap-x-8 items-baseline px-4 py-2.5 border-b border-gold-accent/15 bg-champagne/40">
+                        <span className="text-charcoal font-medium">토요일</span>
+                        <span className="text-muted-foreground tabular-nums shrink-0 text-right leading-snug">
+                          10:00 ~ 15:00
+                          <span className="text-muted-foreground/80 text-[11px] sm:text-xs font-normal block sm:inline sm:ml-1">
+                            (점심시간 없음)
+                          </span>
+                        </span>
+                      </div>
+                      <div className="grid grid-cols-[1fr_auto] gap-x-4 sm:gap-x-8 items-baseline px-4 py-2.5 border-b border-gold-accent/15">
+                        <span className="text-charcoal font-medium">점심시간</span>
+                        <span className="text-muted-foreground tabular-nums shrink-0">13:00 ~ 14:00</span>
+                      </div>
+                      <p className="px-4 py-2.5 text-destructive text-xs sm:text-sm text-center bg-muted/30">
+                        일요일·공휴일은 휴무입니다
+                      </p>
                     </div>
                   </div>
                 </div>

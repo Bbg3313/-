@@ -97,7 +97,7 @@ export function Footer({ className }: FooterProps) {
           <ul className="text-center space-y-2.5 w-full max-w-md mx-auto">
             <InfoLine label="대표자">신휘권</InfoLine>
             <InfoLine label="사업자등록번호">587-10-03051</InfoLine>
-            <InfoLine label="주소">경북 경주시 황성로 137, 2층 연세미의원</InfoLine>
+            <InfoLine label="주소">경북 경주시 화랑로 132, 2층 연세미의원</InfoLine>
             <InfoLine label="전화">
               <a
                 href="tel:0547728575"
