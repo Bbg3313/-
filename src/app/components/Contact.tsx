@@ -1,4 +1,5 @@
 import { useState } from "react";
+import logo from "../../imports/logo.svg";
 import { PrivacyPolicyContent } from "./PrivacyPolicyContent";
 import { TermsOfServiceContent } from "./TermsOfServiceContent";
 
@@ -322,16 +323,21 @@ export function Contact() {
         </section>
       </div>
 
-      <footer className="mt-24 pt-12 border-t border-border/50 pb-16">
-        <div className="max-w-7xl mx-auto px-6">
+      <footer className="mt-24 border-t border-border/50">
+        <div className="max-w-7xl mx-auto px-6 pt-12 pb-10">
           <div className="flex flex-col lg:flex-row lg:justify-between gap-10">
-            <div className="text-sm text-muted-foreground space-y-2">
-              <p className="text-charcoal font-medium text-base">연세미의원</p>
-              <p>대표자 심형경</p>
-              <p>사업자등록번호 587-10-03051</p>
-              <p>주소 경북 경주시 화랑로 132, 2층 연세미의원</p>
+            <div className="flex flex-col sm:flex-row gap-6 sm:gap-8 items-start">
+              <a href="#" className="shrink-0">
+                <img src={logo} alt="연세미의원" className="h-14 w-auto" />
+              </a>
+              <div className="text-sm text-muted-foreground space-y-2">
+                <p className="text-charcoal font-medium text-base">연세미의원</p>
+                <p>대표자 심형경</p>
+                <p>사업자등록번호 587-10-03051</p>
+                <p>주소 경북 경주시 화랑로 132, 2층 연세미의원</p>
+              </div>
             </div>
-            <nav className="flex flex-wrap gap-x-8 gap-y-3 text-sm text-muted-foreground items-start">
+            <nav className="flex flex-wrap gap-x-8 gap-y-3 text-sm text-muted-foreground items-start lg:pt-1">
               <a href="#notice" className="hover:text-gold-accent transition-colors">
                 공지사항
               </a>
@@ -343,7 +349,11 @@ export function Contact() {
               </a>
             </nav>
           </div>
-          <p className="text-muted-foreground text-xs mt-10">© 2026 연세미의원. All rights reserved.</p>
+        </div>
+        <div className="border-t border-border/60 bg-secondary py-5">
+          <div className="max-w-7xl mx-auto px-6 text-center">
+            <p className="text-muted-foreground text-xs">© 2026 연세미의원. All rights reserved.</p>
+          </div>
         </div>
       </footer>
     </section>

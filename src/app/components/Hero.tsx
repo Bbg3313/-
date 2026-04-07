@@ -20,7 +20,7 @@ export function Hero() {
         <div className="max-w-2xl">
           {/* Logo */}
           <div className="mb-12">
-            <img src={logo} alt="피부과 로고" className="h-14 w-auto opacity-90" />
+            <img src={logo} alt="연세미의원" className="h-14 w-auto opacity-90" />
           </div>
 
           {/* Gold accent line */}

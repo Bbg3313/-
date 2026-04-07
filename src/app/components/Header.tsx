@@ -25,7 +25,7 @@ export function Header() {
         <a href="#" className="flex items-center">
           <img
             src={logo}
-            alt="Dermatology Clinic Logo"
+            alt="연세미의원"
             className={`h-10 transition-all duration-300 ${
               isScrolled ? "opacity-100" : "opacity-90"
             }`}
