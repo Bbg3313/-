@@ -1,10 +1,12 @@
 import logo from "../../imports/logo.svg";
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router";
+import { useHomeLogoClick } from "../hooks/useHomeLogoClick";
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
+  const onHomeLogoClick = useHomeLogoClick();
   const isHome = location.pathname === "/";
   const solid = !isHome || isScrolled;
 
@@ -29,7 +31,7 @@ export function Header() {
       }`}
     >
       <nav className="max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
-        <Link to="/" className="flex items-center">
+        <Link to="/" onClick={onHomeLogoClick} className="flex items-center">
           <img
             src={logo}
             alt="연세미의원"

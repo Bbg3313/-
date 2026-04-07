@@ -1,6 +1,7 @@
 import { Fragment } from "react";
 import { Link } from "react-router";
 import logo from "../../imports/logo.svg";
+import { useHomeLogoClick } from "../hooks/useHomeLogoClick";
 import { cn } from "./ui/utils";
 
 const footerLinks = [
@@ -14,22 +15,27 @@ type FooterProps = {
 };
 
 export function Footer({ className }: FooterProps) {
+  const onHomeLogoClick = useHomeLogoClick();
+
   return (
     <footer className={cn("mt-auto", className)}>
       {/* 상단: 본문과 구분 — 살짝 다른 톤의 배경으로 한 덩어리 */}
       <div className="border-t border-border bg-muted/50">
         <div className="max-w-xl mx-auto px-6 py-12 md:py-14 flex flex-col items-center text-center">
-          <Link
-            to="/"
-            className="inline-block group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-accent/40 rounded-sm"
-            aria-label="연세미의원 홈"
-          >
-            <img
-              src={logo}
-              alt="연세미의원"
-              className="h-[4.75rem] sm:h-[5.5rem] md:h-24 w-auto opacity-95 group-hover:opacity-100 transition-opacity"
-            />
-          </Link>
+          <div className="w-full flex justify-center">
+            <Link
+              to="/"
+              onClick={onHomeLogoClick}
+              className="inline-flex justify-center group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-accent/40 rounded-sm mx-auto"
+              aria-label="연세미의원 홈 — 맨 위로 이동"
+            >
+              <img
+                src={logo}
+                alt="연세미의원"
+                className="h-[4.75rem] sm:h-[5.5rem] md:h-24 w-auto mx-auto opacity-95 group-hover:opacity-100 transition-opacity"
+              />
+            </Link>
+          </div>
 
           <div className="w-12 h-px bg-gold-accent/35 my-7 md:my-8" aria-hidden />
 
