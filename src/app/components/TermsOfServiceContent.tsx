@@ -8,7 +8,7 @@ export function TermsOfServiceContent() {
           <h5 className="text-charcoal font-medium">제1조 목적</h5>
           <p>
             이 약관은 연세미의원(이하 &apos;본원&apos;)에서 제공하는 서비스 이용조건 및 절차에 관한 사항과 기타 필요한
-            사항을 본원과 이용자의 권리, 의미 및 책임사항 등을 규정함을 목적으로 합니다.
+            사항을 본원과 이용자의 권리, 의무 및 책임사항 등을 규정함을 목적으로 합니다.
           </p>
         </div>
 
