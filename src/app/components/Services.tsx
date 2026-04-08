@@ -13,14 +13,14 @@ export function Services() {
       title: "미용 피부과",
       subtitle: "Cosmetic Dermatology",
       description: "레이저 토닝, 필러, 보톡스 등 피부 미용 시술을 제공합니다.",
-      image: "https://source.unsplash.com/featured/1600x1000?botox,injection,syringe,clinic",
+      image: "/images/cosmetic-derm.png",
       size: "medium",
     },
     {
       title: "안티에이징",
       subtitle: "Anti-Aging",
       description: "주름 개선, 피부 탄력 증진 등 젊고 건강한 피부를 위한 관리를 제공합니다.",
-      image: "https://images.unsplash.com/photo-1541752857837-f8a0154fd092?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoZWFsdGh5JTIwc2tpbiUyMHRleHR1cmUlMjBuYXR1cmFsJTIwbGlnaHR8ZW58MXx8fHwxNzc1NDYyNzIwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      image: "/images/anti-aging.png",
       size: "medium",
     },
     {
@@ -34,8 +34,7 @@ export function Services() {
       title: "레이저 시술",
       subtitle: "Laser Treatment",
       description: "최신 레이저 장비를 활용한 안전하고 효과적인 시술을 제공합니다.",
-      image:
-        "https://images.unsplash.com/photo-1582719478145-73a3f5a9a6a1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHw2fHxsYXNlciUyMGRlcm1hdG9sb2d5JTIwZGV2aWNlfGVufDF8fHx8MTc5NjU3ODkwMHww&ixlib=rb-4.1.0&q=80&w=1080",
+      image: "/images/laser-treatment.png",
       size: "medium",
     },
     {
@@ -43,7 +42,7 @@ export function Services() {
       subtitle: "Telemedicine",
       description:
         "내원 전 상담이 필요하거나 경과 확인이 필요한 경우, 영상 통화를 통해 간편하게 상담과 진료 안내를 도와드립니다.",
-      image: "https://source.unsplash.com/featured/1600x1000?telemedicine,video-call,doctor,laptop",
+      image: "/images/telemedicine.png",
       size: "small",
     },
   ];

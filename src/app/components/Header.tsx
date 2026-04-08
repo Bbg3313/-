@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router";
 import { SITE_LOGO_IMG_CLASS } from "../config/logo";
 import { useHomeLogoClick } from "../hooks/useHomeLogoClick";
-import { SITE_LINKS } from "../config/siteLinks";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 
 export function Header() {
@@ -26,7 +25,6 @@ export function Header() {
   const navClass = solid
     ? "text-charcoal hover:text-gold-accent"
     : "text-white/90 hover:text-white";
-  const isExternalEventBoard = /^https?:\/\//.test(SITE_LINKS.eventBoard);
 
   return (
     <header
@@ -47,6 +45,11 @@ export function Header() {
 
         <ul className="hidden md:flex items-center gap-10">
           <li>
+            <Link to="/#events" className={`text-sm tracking-wider uppercase transition-colors duration-300 ${navClass}`}>
+              이벤트
+            </Link>
+          </li>
+          <li>
             <Link to="/#about" className={`text-sm tracking-wider uppercase transition-colors duration-300 ${navClass}`}>
               병원소개
             </Link>
@@ -55,22 +58,6 @@ export function Header() {
             <Link to="/#doctors" className={`text-sm tracking-wider uppercase transition-colors duration-300 ${navClass}`}>
               의료진
             </Link>
-          </li>
-          <li>
-            {isExternalEventBoard ? (
-              <a
-                href={SITE_LINKS.eventBoard}
-                target="_blank"
-                rel="noreferrer"
-                className={`text-sm tracking-wider uppercase transition-colors duration-300 ${navClass}`}
-              >
-                이벤트
-              </a>
-            ) : (
-              <Link to={SITE_LINKS.eventBoard} className={`text-sm tracking-wider uppercase transition-colors duration-300 ${navClass}`}>
-                이벤트
-              </Link>
-            )}
           </li>
           <li>
             <Link to="/#contact" className={`text-sm tracking-wider uppercase transition-colors duration-300 ${navClass}`}>
