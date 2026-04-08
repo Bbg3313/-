@@ -1,16 +1,43 @@
+import { useEffect, useMemo, useState } from "react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { Link } from "react-router";
 import { SITE_LINKS } from "../config/siteLinks";
+import { fetchActiveHeroBanners } from "../lib/cmsApi";
+import type { HeroBanner } from "../types/cms";
 
 export function Hero() {
   const isExternalBoard = /^https?:\/\//.test(SITE_LINKS.eventBoard);
+  const [banners, setBanners] = useState<HeroBanner[]>([]);
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    fetchActiveHeroBanners()
+      .then((rows) => setBanners(rows))
+      .catch(() => setBanners([]));
+  }, []);
+
+  useEffect(() => {
+    if (banners.length <= 1) return;
+    const t = window.setInterval(() => {
+      setIndex((prev) => (prev + 1) % banners.length);
+    }, 5000);
+    return () => window.clearInterval(t);
+  }, [banners.length]);
+
+  const currentBanner = useMemo(() => {
+    if (!banners.length) return null;
+    return banners[index] ?? banners[0];
+  }, [banners, index]);
 
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
       {/* Large editorial background image */}
       <div className="absolute inset-0">
         <ImageWithFallback
-          src="https://images.unsplash.com/photo-1722185388507-0a46e2d9dcca?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBzcGElMjBuYXR1cmFsJTIwbGlnaHQlMjBtaW5pbWFsfGVufDF8fHx8MTc3NTQ2NDY2MXww&ixlib=rb-4.1.0&q=80&w=1080"
+          src={
+            currentBanner?.image_url ??
+            "https://images.unsplash.com/photo-1722185388507-0a46e2d9dcca?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBzcGElMjBuYXR1cmFsJTIwbGlnaHQlMjBtaW5pbWFsfGVufDF8fHx8MTc3NTQ2NDY2MXww&ixlib=rb-4.1.0&q=80&w=1080"
+          }
           alt="Luxury dermatology clinic"
           className="w-full h-full object-cover"
         />
@@ -34,7 +61,17 @@ export function Hero() {
               lineHeight: "1.1",
             }}
           >
-            The Art of<br />Radiant Skin
+            {currentBanner?.title ? (
+              <>
+                {currentBanner.title}
+                <br />
+                {currentBanner.subtitle || "Radiant Skin"}
+              </>
+            ) : (
+              <>
+                The Art of<br />Radiant Skin
+              </>
+            )}
           </h1>
 
           {/* Subheadline - Korean */}

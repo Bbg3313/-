@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
+import { fetchPublishedPromotions } from "../lib/cmsApi";
+import type { Promotion } from "../types/cms";
 
 const EVENTS = [
   {
@@ -34,6 +36,23 @@ const EVENTS = [
 ] as const;
 
 export function Events() {
+  const [rows, setRows] = useState<Promotion[]>([]);
+
+  useEffect(() => {
+    fetchPublishedPromotions()
+      .then((data) => setRows(data))
+      .catch(() => setRows([]));
+  }, []);
+
+  const cards = rows.length
+    ? rows.map((row) => ({
+        slug: row.slug,
+        title: row.title,
+        period: row.period ?? "",
+        thumbnail: row.thumbnail_url,
+      }))
+    : EVENTS;
+
   return (
     <section id="events" className="py-20 sm:py-24 lg:py-32 px-6 bg-background relative overflow-hidden">
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/15 to-transparent" />
@@ -61,10 +80,10 @@ export function Events() {
         </div>
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-          {EVENTS.map((event) => (
+          {cards.map((event) => (
             <Link
               key={event.slug}
-              to={`/events/${event.slug}`}
+              to={`/promotions/${event.slug}`}
               className="group block bg-white overflow-hidden border border-border/70 hover:border-gold-accent/25 transition-colors shadow-sm hover:shadow-md"
               aria-label={`${event.title} 상세 보기`}
             >
