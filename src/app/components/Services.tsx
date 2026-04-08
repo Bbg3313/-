@@ -13,7 +13,8 @@ export function Services() {
       title: "미용 피부과",
       subtitle: "Cosmetic Dermatology",
       description: "레이저 토닝, 필러, 보톡스 등 피부 미용 시술을 제공합니다.",
-      image: "https://images.unsplash.com/photo-1773565744218-d8d11de58362?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwyfHxtaW5pbWFsaXN0JTIwc3BhJTIwbHV4dXJ5JTIwc2tpbmNhcmV8ZW58MXx8fHwxNzc1NDYyNzIwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      image:
+        "https://images.unsplash.com/photo-1629904853893-c2c8981a1dc5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHw0fHxib3RveCUyMGluamVjdGlvbnxlbnwxfHx8fDE3OTY1Nzg5MDB8MA&ixlib=rb-4.1.0&q=80&w=1080",
       size: "medium",
     },
     {
@@ -34,14 +35,17 @@ export function Services() {
       title: "레이저 시술",
       subtitle: "Laser Treatment",
       description: "최신 레이저 장비를 활용한 안전하고 효과적인 시술을 제공합니다.",
-      image: "https://images.unsplash.com/photo-1758188753373-5b01a0fc6d9d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwzfHxtaW5pbWFsaXN0JTIwc3BhJTIwbHV4dXJ5JTIwc2tpbmNhcmV8ZW58MXx8fHwxNzc1NDYyNzIwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      image:
+        "https://images.unsplash.com/photo-1582719478145-73a3f5a9a6a1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHw2fHxsYXNlciUyMGRlcm1hdG9sb2d5JTIwZGV2aWNlfGVufDF8fHx8MTc5NjU3ODkwMHww&ixlib=rb-4.1.0&q=80&w=1080",
       size: "medium",
     },
     {
-      title: "피부 관리",
-      subtitle: "Skin Care",
-      description: "전문적인 스킨케어와 맞춤형 홈케어 프로그램을 제공합니다.",
-      image: "https://images.unsplash.com/photo-1760862652442-e8ff7ebdd2f8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHw1fHxtaW5pbWFsaXN0JTIwc3BhJTIwbHV4dXJ5JTIwc2tpbmNhcmV8ZW58MXx8fHwxNzc1NDYyNzIwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      title: "화상진료",
+      subtitle: "Telemedicine",
+      description:
+        "내원 전 상담이 필요하거나 경과 확인이 필요한 경우, 영상 통화를 통해 간편하게 상담과 진료 안내를 도와드립니다.",
+      image:
+        "https://images.unsplash.com/photo-1584515933487-779824d29309?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHw0fHx0ZWxlbWVkaWNpbmV8ZW58MXx8fHwxNzk2NTc4OTAwfDA&ixlib=rb-4.1.0&q=80&w=1080",
       size: "small",
     },
   ];

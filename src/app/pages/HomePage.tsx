@@ -25,11 +25,11 @@ export function HomePage() {
     <div className="min-h-screen bg-background flex flex-col">
       <Header />
       <main className="flex-1">
+        <Events />
         <Hero />
         <About />
         <Services />
         <Doctors />
-        <Events />
         <Contact />
       </main>
       <Footer className="mt-10 md:mt-16" />

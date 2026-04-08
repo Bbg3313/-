@@ -3,7 +3,6 @@ import { ImageWithFallback } from "./figma/ImageWithFallback";
 const DIRECTOR = {
   name: "심형경",
   role: "대표원장",
-  specialty: "피부과 전문의",
   image: "/images/doctor-shim-hyeong-gyeong.png",
   credentials: [
     "경상대학교 의과대학 졸업",
@@ -75,9 +74,7 @@ export function Doctors() {
                 {DIRECTOR.role}
               </span>
             </h3>
-            <p className="text-muted-foreground text-lg mb-10 pb-10 border-b border-charcoal/10">
-              {DIRECTOR.specialty}
-            </p>
+            <div className="mb-10 pb-10 border-b border-charcoal/10" />
 
             <ul className="space-y-3.5">
               {DIRECTOR.credentials.map((line) => (
