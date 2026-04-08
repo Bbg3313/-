@@ -1,10 +1,13 @@
 import React from "react";
+import { Link } from "react-router";
 import { SITE_LINKS } from "../config/siteLinks";
 
 const GOOGLE_MAPS_EMBED_SRC =
   "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3234.1930747588513!2d129.212623776708!3d35.844268972535126!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x35664e4195c7c2cf%3A0xa3a7117464dabddd!2z7Jew7IS466-47J2Y7JuQIOqyveyjvO2UvOu2gOqzvA!5e0!3m2!1sko!2skr!4v1775533999427!5m2!1sko!2skr";
 
 export function Contact() {
+  const isExternalBoard = /^https?:\/\//.test(SITE_LINKS.eventBoard);
+
   return (
     <section id="contact" className="py-20 sm:py-24 lg:py-32 px-6 bg-background relative">
       <div className="max-w-[90rem] mx-auto">
@@ -55,15 +58,25 @@ export function Contact() {
                     054-772-8575
                   </a>
                 </div>
-                <a
-                  href={SITE_LINKS.reservation}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="group relative inline-flex w-full sm:w-auto items-center justify-center px-8 py-3 bg-primary text-primary-foreground overflow-hidden transition-all duration-500 hover:shadow-xl"
-                >
-                  <span className="relative z-10 tracking-wider text-sm">예약하기</span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
-                </a>
+                {isExternalBoard ? (
+                  <a
+                    href={SITE_LINKS.eventBoard}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="group relative inline-flex w-full sm:w-auto items-center justify-center px-8 py-3 bg-primary text-primary-foreground overflow-hidden transition-all duration-500 hover:shadow-xl"
+                  >
+                    <span className="relative z-10 tracking-wider text-sm">예약하기</span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
+                  </a>
+                ) : (
+                  <Link
+                    to={SITE_LINKS.eventBoard}
+                    className="group relative inline-flex w-full sm:w-auto items-center justify-center px-8 py-3 bg-primary text-primary-foreground overflow-hidden transition-all duration-500 hover:shadow-xl"
+                  >
+                    <span className="relative z-10 tracking-wider text-sm">예약하기</span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
+                  </Link>
+                )}
               </div>
 
               <div className="border border-gold-accent/20 bg-background/35 p-5">

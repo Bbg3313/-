@@ -7,15 +7,12 @@ export function PricingPage() {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <Header />
-      <main className="flex-1 pt-28 md:pt-32 pb-16 px-6">
+      <main className="flex-1 pt-32 md:pt-36 pb-16 px-6">
         <article className="max-w-4xl mx-auto">
-          <Link to="/" className="inline-block text-sm text-muted-foreground hover:text-gold-accent transition-colors mb-8">
+          <Link to="/" className="inline-flex items-center py-1 text-sm leading-none text-muted-foreground hover:text-gold-accent transition-colors mb-8">
             ← 홈으로
           </Link>
-          <h1
-            className="text-charcoal text-3xl md:text-4xl mb-6 tracking-tight"
-            style={{ fontFamily: "'Playfair Display', serif", fontWeight: 600 }}
-          >
+          <h1 className="text-charcoal text-3xl md:text-4xl font-semibold mb-6 tracking-tight">
             시술/가격
           </h1>
           <p className="text-muted-foreground leading-relaxed">

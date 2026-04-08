@@ -1,6 +1,10 @@
 import { ImageWithFallback } from "./figma/ImageWithFallback";
+import { Link } from "react-router";
+import { SITE_LINKS } from "../config/siteLinks";
 
 export function Hero() {
+  const isExternalBoard = /^https?:\/\//.test(SITE_LINKS.eventBoard);
+
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
       {/* Large editorial background image */}
@@ -44,15 +48,27 @@ export function Hero() {
             여러분의 피부 건강을 책임집니다
           </p>
 
-          {/* CTA Buttons */}
-          <div className="flex gap-4">
-            <button className="group relative px-10 py-4 bg-primary text-primary-foreground overflow-hidden transition-all duration-500 hover:shadow-2xl">
-              <span className="relative z-10 tracking-wider uppercase text-sm">예약 상담</span>
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
-            </button>
-            <button className="px-10 py-4 bg-white/10 text-white border border-white/30 backdrop-blur-sm hover:bg-white/20 transition-all duration-300">
-              <span className="tracking-wider uppercase text-sm">클리닉 투어</span>
-            </button>
+          {/* CTA */}
+          <div className="flex">
+            {isExternalBoard ? (
+              <a
+                href={SITE_LINKS.eventBoard}
+                target="_blank"
+                rel="noreferrer"
+                className="group relative inline-flex items-center justify-center px-10 py-4 bg-primary text-primary-foreground overflow-hidden transition-all duration-500 hover:shadow-2xl"
+              >
+                <span className="relative z-10 tracking-wider uppercase text-sm">예약 상담</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
+              </a>
+            ) : (
+              <Link
+                to={SITE_LINKS.eventBoard}
+                className="group relative inline-flex items-center justify-center px-10 py-4 bg-primary text-primary-foreground overflow-hidden transition-all duration-500 hover:shadow-2xl"
+              >
+                <span className="relative z-10 tracking-wider uppercase text-sm">예약 상담</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
+              </Link>
+            )}
           </div>
         </div>
       </div>

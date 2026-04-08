@@ -1,6 +1,9 @@
 import { ImageWithFallback } from "./figma/ImageWithFallback";
+import { Link } from "react-router";
+import { SITE_LINKS } from "../config/siteLinks";
 
 export function Services() {
+  const isExternalBoard = /^https?:\/\//.test(SITE_LINKS.eventBoard);
   const services = [
     {
       title: "일반 피부과",
@@ -177,11 +180,11 @@ export function Services() {
           </div>
 
           <div className="lg:col-span-4 group">
-            <div className="relative h-[400px] overflow-hidden bg-card shadow-sm hover:shadow-xl transition-all duration-700">
+            <div className="relative h-[520px] sm:h-[560px] lg:h-[520px] overflow-hidden bg-card shadow-sm hover:shadow-xl transition-all duration-700">
               <ImageWithFallback
                 src={services[5].image}
                 alt={services[5].title}
-                className="absolute inset-0 w-full h-full object-contain bg-black/[0.04] transition-transform duration-700 group-hover:scale-[1.02]"
+                className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-8">
@@ -204,10 +207,25 @@ export function Services() {
 
         {/* CTA section */}
         <div className="mt-24 text-center">
-          <button className="group relative px-12 py-4 bg-primary text-primary-foreground overflow-hidden transition-all duration-500 hover:shadow-lg">
-            <span className="relative z-10 tracking-wider text-sm uppercase">상담 예약하기</span>
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
-          </button>
+          {isExternalBoard ? (
+            <a
+              href={SITE_LINKS.eventBoard}
+              target="_blank"
+              rel="noreferrer"
+              className="group relative inline-flex px-12 py-4 bg-primary text-primary-foreground overflow-hidden transition-all duration-500 hover:shadow-lg"
+            >
+              <span className="relative z-10 tracking-wider text-sm uppercase">상담 예약하기</span>
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
+            </a>
+          ) : (
+            <Link
+              to={SITE_LINKS.eventBoard}
+              className="group relative inline-flex px-12 py-4 bg-primary text-primary-foreground overflow-hidden transition-all duration-500 hover:shadow-lg"
+            >
+              <span className="relative z-10 tracking-wider text-sm uppercase">상담 예약하기</span>
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
+            </Link>
+          )}
         </div>
       </div>
 

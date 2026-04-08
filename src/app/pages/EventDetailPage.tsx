@@ -9,13 +9,10 @@ export function EventDetailPage() {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <Header />
-      <main className="flex-1 px-6 py-24">
+      <main className="flex-1 px-6 pt-32 md:pt-36 pb-20">
         <div className="max-w-3xl mx-auto">
           <div className="w-12 h-px bg-gold-accent mb-8" />
-          <h1
-            className="mb-6 text-charcoal tracking-tight"
-            style={{ fontFamily: "'Playfair Display', serif", fontWeight: 600, fontSize: "3rem", lineHeight: "1.15" }}
-          >
+          <h1 className="mb-6 text-charcoal tracking-tight text-3xl md:text-5xl font-semibold">
             이벤트 상세
           </h1>
           <p className="text-muted-foreground leading-relaxed mb-10">

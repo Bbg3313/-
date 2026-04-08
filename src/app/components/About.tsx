@@ -14,7 +14,7 @@ export function About() {
               {/* Large image */}
               <div className="col-span-2 relative h-[400px] overflow-hidden">
                 <ImageWithFallback
-                  src="https://images.unsplash.com/photo-1648775507324-b48dd3791fa5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHw0fHxtb2Rlcm4lMjBjbGluaWMlMjBpbnRlcmlvciUyMGx1eHVyeXxlbnwxfHx8fDE3NzU0NjQ2NjJ8MA&ixlib=rb-4.1.0&q=80&w=1080"
+                  src="/images/about-clinic-main.png"
                   alt="Modern clinic interior"
                   className="w-full h-full object-cover shadow-2xl"
                 />
@@ -23,7 +23,7 @@ export function About() {
               {/* Two smaller images */}
               <div className="relative h-[250px] overflow-hidden">
                 <ImageWithFallback
-                  src="https://images.unsplash.com/photo-1589554882513-691f8f071f72?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwzfHxtb2Rlcm4lMjBjbGluaWMlMjBpbnRlcmlvciUyMGx1eHVyeXxlbnwxfHx8fDE3NzU0NjQ2NjJ8MA&ixlib=rb-4.1.0&q=80&w=1080"
+                  src="/images/about-clinic-room.png"
                   alt="Clinic waiting area"
                   className="w-full h-full object-cover shadow-xl"
                 />
@@ -31,7 +31,7 @@ export function About() {
 
               <div className="relative h-[250px] overflow-hidden">
                 <ImageWithFallback
-                  src="https://images.unsplash.com/photo-1759262151080-e05ba1c6294f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBjbGluaWMlMjBpbnRlcmlvciUyMGx1eHVyeXxlbnwxfHx8fDE3NzU0NjQ2NjJ8MA&ixlib=rb-4.1.0&q=80&w=1080"
+                  src="/images/about-clinic-lobby.png"
                   alt="Clinic environment"
                   className="w-full h-full object-cover shadow-xl"
                 />
