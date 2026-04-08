@@ -2,8 +2,6 @@ import React from "react";
 import { Link, useLocation } from "react-router";
 import { SITE_LINKS } from "../config/siteLinks";
 
-const PHONE_TEL = "0547728575";
-
 function Icon({ children }: { children: React.ReactNode }) {
   return (
     <span
@@ -89,22 +87,35 @@ export function FloatingActions() {
           <span className="text-[15px] font-semibold tracking-wide">예약</span>
         </a>
 
-        <a
-          href={`tel:${PHONE_TEL}`}
-          className="group inline-flex items-center gap-3.5 rounded-full px-5 py-3.5 shadow-lg border border-border bg-background/90 text-charcoal hover:border-gold-accent/40 transition-colors"
-          aria-label="전화 상담하기"
-        >
-          <Icon>
-            <svg viewBox="0 0 24 24" className="w-5 h-5 text-gold-accent" fill="none" stroke="currentColor" strokeWidth="1.6">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25z"
-              />
-            </svg>
-          </Icon>
-          <span className="text-[15px] font-semibold tracking-wide">상담</span>
-        </a>
+        {isExternalEventBoard ? (
+          <a
+            href={SITE_LINKS.eventBoard}
+            target="_blank"
+            rel="noreferrer"
+            className="group inline-flex items-center gap-3.5 rounded-full px-5 py-3.5 shadow-lg border border-border bg-background/90 text-charcoal hover:border-gold-accent/40 transition-colors"
+            aria-label="상담 게시판으로 이동(새 탭)"
+          >
+            <Icon>
+              <svg viewBox="0 0 24 24" className="w-5 h-5 text-gold-accent" fill="none" stroke="currentColor" strokeWidth="1.6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M7 8h10M7 12h6m-8 8l3.2-2.1c.4-.3.9-.4 1.4-.4h7.9A2.5 2.5 0 0 0 20 15V7A2.5 2.5 0 0 0 17.5 4h-11A2.5 2.5 0 0 0 4 6.5V15a2.5 2.5 0 0 0 2.5 2.5H7V20z" />
+              </svg>
+            </Icon>
+            <span className="text-[15px] font-semibold tracking-wide">상담</span>
+          </a>
+        ) : (
+          <Link
+            to={SITE_LINKS.eventBoard}
+            className="group inline-flex items-center gap-3.5 rounded-full px-5 py-3.5 shadow-lg border border-border bg-background/90 text-charcoal hover:border-gold-accent/40 transition-colors"
+            aria-label="상담 게시판으로 이동"
+          >
+            <Icon>
+              <svg viewBox="0 0 24 24" className="w-5 h-5 text-gold-accent" fill="none" stroke="currentColor" strokeWidth="1.6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M7 8h10M7 12h6m-8 8l3.2-2.1c.4-.3.9-.4 1.4-.4h7.9A2.5 2.5 0 0 0 20 15V7A2.5 2.5 0 0 0 17.5 4h-11A2.5 2.5 0 0 0 4 6.5V15a2.5 2.5 0 0 0 2.5 2.5H7V20z" />
+              </svg>
+            </Icon>
+            <span className="text-[15px] font-semibold tracking-wide">상담</span>
+          </Link>
+        )}
 
         <button
           type="button"

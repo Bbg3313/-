@@ -7,14 +7,22 @@ const envEventBoard =
   typeof import.meta.env.VITE_EVENT_BOARD_URL === "string" ? import.meta.env.VITE_EVENT_BOARD_URL.trim() : "";
 const envReservation =
   typeof import.meta.env.VITE_NAVER_RESERVATION_URL === "string" ? import.meta.env.VITE_NAVER_RESERVATION_URL.trim() : "";
+const envNaverTalk =
+  typeof import.meta.env.VITE_NAVER_TALK_URL === "string" ? import.meta.env.VITE_NAVER_TALK_URL.trim() : "";
+const envKakaoChannel =
+  typeof import.meta.env.VITE_KAKAO_CHANNEL_URL === "string" ? import.meta.env.VITE_KAKAO_CHANNEL_URL.trim() : "";
 
 // 파일 기본값 (env가 비어 있을 때 사용)
 const FILE_EVENT_BOARD_URL = "/notice";
 const FILE_NAVER_RESERVATION_URL =
   "https://map.naver.com/p/entry/place/1084784069?placePath=/home?from=map&fromPanelNum=1&additionalHeight=76&timestamp=202604071448&locale=ko&svcName=map_pcv5&c=16.52,0,0,0,dh";
+const FILE_NAVER_TALK_URL = "https://talk.naver.com/ct/w42fn5?frm=mnmb&frm=nmb_detail#nafullscreen";
+const FILE_KAKAO_CHANNEL_URL = "http://pf.kakao.com/_ijdXs";
 
 export const SITE_LINKS = {
   eventBoard: envEventBoard || FILE_EVENT_BOARD_URL,
   reservation: envReservation || FILE_NAVER_RESERVATION_URL,
+  naverTalk: envNaverTalk || FILE_NAVER_TALK_URL,
+  kakaoChannel: envKakaoChannel || FILE_KAKAO_CHANNEL_URL,
 } as const;
 

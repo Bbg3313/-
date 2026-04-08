@@ -42,7 +42,7 @@ export function Services() {
       subtitle: "Telemedicine",
       description:
         "내원 전 상담이 필요하거나 경과 확인이 필요한 경우, 영상 통화를 통해 간편하게 상담과 진료 안내를 도와드립니다.",
-      image: "/images/telemedicine.png",
+      image: "/images/telemedicine-original.png",
       size: "small",
     },
   ];
