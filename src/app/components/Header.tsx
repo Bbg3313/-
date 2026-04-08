@@ -71,7 +71,19 @@ export function Header() {
           </li>
         </ul>
 
-        <LanguageSwitcher />
+        <div className="flex items-center gap-2">
+          <Link
+            to="/admin/login"
+            className={`inline-flex items-center justify-center px-3 py-2 border text-xs tracking-wide transition-colors ${
+              solid
+                ? "border-border text-charcoal hover:border-gold-accent/40"
+                : "border-white/35 text-white/90 hover:bg-white/10"
+            }`}
+          >
+            관리자 로그인
+          </Link>
+          <LanguageSwitcher />
+        </div>
       </nav>
     </header>
   );
