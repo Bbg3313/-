@@ -7,7 +7,7 @@ export function About() {
       <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-radial from-gold-accent/10 to-transparent blur-3xl" />
 
       <div className="max-w-7xl mx-auto relative">
-        <div className="grid lg:grid-cols-2 gap-20 items-center">
+        <div className="grid lg:grid-cols-2 gap-20 items-stretch">
           {/* Left - Images Grid */}
           <div className="relative">
             <div className="grid grid-cols-2 gap-6">
@@ -43,7 +43,7 @@ export function About() {
           </div>
 
           {/* Right - Content */}
-          <div>
+          <div className="h-full flex flex-col">
             <div className="w-12 h-px bg-gold-accent mb-8" />
 
             <h2
@@ -58,61 +58,66 @@ export function About() {
               Where Science<br />Meets Beauty
             </h2>
 
-            <p className="text-xl text-charcoal/80 mb-8 leading-relaxed">
-              전문성과 예술성의 완벽한 조화
+            <p className="text-xl text-charcoal/90 mb-6 leading-relaxed">
+              안녕하세요 연세미의원입니다. 진료과 1인 대표원장의 상담 및 시술 책임제 병원으로서 경주의 아름다움을 선도하고 있는 병원입니다.
             </p>
 
             <p className="text-muted-foreground mb-12 leading-relaxed text-lg">
-              풍부한 임상 경험과 끊임없는 연구를 통해 최상의 진료를 제공하는 피부과 전문의가 직접 진료합니다.
-              개인별 피부 특성을 세밀하게 분석하여 맞춤형 치료 계획을 수립합니다.
+              공장형 네트워크 병원과는 다른 시술 퀄리티를 보장합니다.{" "}
+              <span className="text-charcoal/55">
+                보톡스 / 필러 / 레이저토닝 / 레이저 리프팅 / 실리프팅 / 다이어트 약 / 스킨부스터
+              </span>
             </p>
 
-            {/* Features with elegant line icons */}
-            <div className="space-y-8">
+            {/* Features */}
+            <div className="space-y-8 mt-auto">
               <div className="flex items-start gap-6">
-                <div className="w-12 h-12 border border-gold-accent/40 flex items-center justify-center shrink-0">
-                  <svg className="w-6 h-6 text-gold-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                <div className="w-12 h-12 border border-gold-accent/45 bg-gold-accent/5 flex items-center justify-center shrink-0">
+                  <svg className="w-5 h-5 text-gold-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 12.75L11.4 14.4 14.25 10.95" />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 3.75l6.75 2.25v5.7c0 4.425-2.85 7.95-6.75 8.55-3.9-.6-6.75-4.125-6.75-8.55V6l6.75-2.25z" />
                   </svg>
                 </div>
                 <div>
                   <h4 className="text-charcoal mb-2 tracking-wide" style={{ fontWeight: "500" }}>
-                    피부과 전문의 자격
+                    양심적인 진료
                   </h4>
                   <p className="text-muted-foreground leading-relaxed">
-                    대한피부과학회 정회원, 국제 학술지 논문 발표 다수
+                    고민을 나눌 동반자로서 정직하고 신중한 진료를 약속드립니다.
                   </p>
                 </div>
               </div>
 
               <div className="flex items-start gap-6">
-                <div className="w-12 h-12 border border-gold-accent/40 flex items-center justify-center shrink-0">
-                  <svg className="w-6 h-6 text-gold-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                <div className="w-12 h-12 border border-gold-accent/45 bg-gold-accent/5 flex items-center justify-center shrink-0">
+                  <svg className="w-5 h-5 text-gold-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 10.5A4.5 4.5 0 1112 15a4.5 4.5 0 01-4.5-4.5z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 20.25c1.8-2.7 4.65-4.125 8.25-4.125s6.45 1.425 8.25 4.125" />
                   </svg>
                 </div>
                 <div>
                   <h4 className="text-charcoal mb-2 tracking-wide" style={{ fontWeight: "500" }}>
-                    최신 의료 장비
+                    배려하는 임직원
                   </h4>
                   <p className="text-muted-foreground leading-relaxed">
-                    FDA 승인 레이저 및 첨단 피부 진단 시스템 완비
+                    따스한 말과 행동으로 편안하고 신뢰할 수 있는 진료 환경을 만듭니다.
                   </p>
                 </div>
               </div>
 
               <div className="flex items-start gap-6">
-                <div className="w-12 h-12 border border-gold-accent/40 flex items-center justify-center shrink-0">
-                  <svg className="w-6 h-6 text-gold-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                <div className="w-12 h-12 border border-gold-accent/45 bg-gold-accent/5 flex items-center justify-center shrink-0">
+                  <svg className="w-5 h-5 text-gold-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.75v5.25l3.75 2.25" />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
                 <div>
                   <h4 className="text-charcoal mb-2 tracking-wide" style={{ fontWeight: "500" }}>
-                    맞춤형 케어
+                    대표원장 1:1 책임 전담제
                   </h4>
                   <p className="text-muted-foreground leading-relaxed">
-                    개인별 피부 상태 분석을 통한 최적의 치료 계획 수립
+                    상담부터 사후 관리까지 대표원장이 직접 책임지고 끝까지 함께합니다.
                   </p>
                 </div>
               </div>

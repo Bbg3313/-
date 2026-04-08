@@ -66,7 +66,7 @@ export function Services() {
             Medical Services
           </h2>
           <p className="text-muted-foreground text-lg leading-relaxed">
-            피부과 전문의의 전문적인 진료와 최신 시술로<br />건강하고 아름다운 피부를 만들어드립니다.
+            피부과 전문의의 전문적인 진료와 최신 시술로 건강하고 아름다운 피부를 만들어드립니다.
           </p>
         </div>
 
@@ -91,7 +91,7 @@ export function Services() {
                 >
                   {services[0].title}
                 </h3>
-                <p className="text-white/80 leading-relaxed max-w-md">
+                <p className="text-white/80 leading-relaxed max-w-md line-clamp-1">
                   {services[0].description}
                 </p>
               </div>
@@ -119,7 +119,7 @@ export function Services() {
                     >
                       {service.title}
                     </h3>
-                    <p className="text-white/80 text-sm leading-relaxed">
+                    <p className="text-white/80 text-sm leading-relaxed line-clamp-1">
                       {service.description}
                     </p>
                   </div>
@@ -147,7 +147,7 @@ export function Services() {
                 >
                   {services[3].title}
                 </h3>
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-white/80 text-sm leading-relaxed line-clamp-1">
                   {services[3].description}
                 </p>
               </div>
@@ -172,7 +172,7 @@ export function Services() {
                 >
                   {services[4].title}
                 </h3>
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-white/80 text-sm leading-relaxed line-clamp-1">
                   {services[4].description}
                 </p>
               </div>
@@ -180,7 +180,7 @@ export function Services() {
           </div>
 
           <div className="lg:col-span-4 group">
-            <div className="relative h-[520px] sm:h-[560px] lg:h-[520px] overflow-hidden bg-card shadow-sm hover:shadow-xl transition-all duration-700">
+            <div className="relative h-[400px] overflow-hidden bg-card shadow-sm hover:shadow-xl transition-all duration-700">
               <ImageWithFallback
                 src={services[5].image}
                 alt={services[5].title}
