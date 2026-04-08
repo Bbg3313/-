@@ -8,35 +8,35 @@ export function Services() {
     {
       title: "일반 피부과",
       subtitle: "General Dermatology",
-      description: "여드름, 아토피, 건선 등 다양한 피부 질환을 정확하게 진단하고 치료합니다.",
+      description: "여드름, 아토피, 건선 등 피부 질환을 정확하게 진단·치료합니다.",
       image: "https://images.unsplash.com/photo-1710580889701-9fa8f2cd5927?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwzfHxoZWFsdGh5JTIwc2tpbiUyMHRleHR1cmUlMjBuYXR1cmFsJTIwbGlnaHR8ZW58MXx8fHwxNzc1NDYyNzIwfDA&ixlib=rb-4.1.0&q=80&w=1080",
       size: "large",
     },
     {
       title: "미용 피부과",
       subtitle: "Cosmetic Dermatology",
-      description: "레이저 토닝, 필러, 보톡스 등 피부 미용 시술을 제공합니다.",
+      description: "레이저 토닝, 필러, 보톡스 등 맞춤 미용 시술을 제공합니다.",
       image: "/images/cosmetic-derm.png",
       size: "medium",
     },
     {
       title: "안티에이징",
       subtitle: "Anti-Aging",
-      description: "주름 개선, 피부 탄력 증진 등 젊고 건강한 피부를 위한 관리를 제공합니다.",
+      description: "주름 개선과 탄력 증진으로 젊고 건강한 피부를 관리합니다.",
       image: "/images/anti-aging.png",
       size: "medium",
     },
     {
       title: "색소 치료",
       subtitle: "Pigmentation Treatment",
-      description: "기미, 주근깨, 잡티 등 색소 질환을 효과적으로 개선합니다.",
+      description: "기미, 주근깨, 잡티 등 색소 질환을 정밀하게 개선합니다.",
       image: "https://images.unsplash.com/photo-1741278232341-33534050414c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHw2fHxoZWFsdGh5JTIwc2tpbiUyMHRleHR1cmUlMjBuYXR1cmFsJTIwbGlnaHR8ZW58MXx8fHwxNzc1NDYyNzIwfDA&ixlib=rb-4.1.0&q=80&w=1080",
       size: "small",
     },
     {
       title: "레이저 시술",
       subtitle: "Laser Treatment",
-      description: "최신 레이저 장비를 활용한 안전하고 효과적인 시술을 제공합니다.",
+      description: "최신 레이저 장비로 안전하고 효과적인 시술을 제공합니다.",
       image: "/images/laser-treatment.png",
       size: "medium",
     },
@@ -91,7 +91,7 @@ export function Services() {
                 >
                   {services[0].title}
                 </h3>
-                <p className="text-white/80 leading-relaxed max-w-md line-clamp-1">
+                <p className="text-white/80 leading-relaxed text-[0.95rem] whitespace-nowrap">
                   {services[0].description}
                 </p>
               </div>
@@ -119,7 +119,7 @@ export function Services() {
                     >
                       {service.title}
                     </h3>
-                    <p className="text-white/80 text-sm leading-relaxed line-clamp-1">
+                    <p className="text-white/80 text-sm leading-relaxed whitespace-nowrap">
                       {service.description}
                     </p>
                   </div>
@@ -147,7 +147,7 @@ export function Services() {
                 >
                   {services[3].title}
                 </h3>
-                <p className="text-white/80 text-sm leading-relaxed line-clamp-1">
+                <p className="text-white/80 text-sm leading-relaxed whitespace-nowrap">
                   {services[3].description}
                 </p>
               </div>
@@ -172,7 +172,7 @@ export function Services() {
                 >
                   {services[4].title}
                 </h3>
-                <p className="text-white/80 text-sm leading-relaxed line-clamp-1">
+                <p className="text-white/80 text-sm leading-relaxed whitespace-nowrap">
                   {services[4].description}
                 </p>
               </div>
