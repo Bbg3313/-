@@ -35,9 +35,11 @@ const EVENTS = [
 
 export function Events() {
   return (
-    <section id="events" className="py-20 sm:py-24 lg:py-32 px-6 bg-champagne relative overflow-hidden">
-      <div className="absolute top-1/2 left-0 w-96 h-96 bg-gradient-radial from-gold-accent/5 to-transparent blur-3xl -translate-y-1/2" />
-      <div className="absolute top-1/2 right-0 w-96 h-96 bg-gradient-radial from-gold-accent/5 to-transparent blur-3xl -translate-y-1/2" />
+    <section id="events" className="py-20 sm:py-24 lg:py-32 px-6 bg-background relative overflow-hidden">
+      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/15 to-transparent" />
+      <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/15 to-transparent" />
+      <div className="absolute top-1/2 left-0 w-96 h-96 bg-gradient-radial from-gold-accent/6 to-transparent blur-3xl -translate-y-1/2" />
+      <div className="absolute top-1/2 right-0 w-96 h-96 bg-gradient-radial from-gold-accent/6 to-transparent blur-3xl -translate-y-1/2" />
 
       <div className="max-w-[90rem] mx-auto relative">
         <div className="text-center mb-16 lg:mb-20">
@@ -63,7 +65,7 @@ export function Events() {
             <Link
               key={event.slug}
               to={`/events/${event.slug}`}
-              className="group block bg-white/60 backdrop-blur-sm overflow-hidden border border-gold-accent/10 hover:border-gold-accent/30 transition-colors"
+              className="group block bg-white overflow-hidden border border-border/70 hover:border-gold-accent/25 transition-colors shadow-sm hover:shadow-md"
               aria-label={`${event.title} 상세 보기`}
             >
               <div className="relative aspect-[5/4] overflow-hidden bg-muted">
