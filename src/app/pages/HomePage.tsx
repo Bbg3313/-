@@ -25,8 +25,8 @@ export function HomePage() {
     <div className="min-h-screen bg-background flex flex-col">
       <Header />
       <main className="flex-1">
-        <Events />
         <Hero />
+        <Events />
         <About />
         <Services />
         <Doctors />
