@@ -63,8 +63,9 @@ export function About() {
             </p>
 
             <p className="text-muted-foreground mb-12 leading-relaxed text-lg">
-              공장형 네트워크 병원과는 다른 시술 퀄리티를 보장합니다.{" "}
-              <span className="text-charcoal/55">
+              공장형 네트워크 병원과는 다른 시술 퀄리티를 보장합니다.
+              <br />
+              <span className="inline-block mt-1 text-[0.95em] text-charcoal/55 whitespace-nowrap">
                 보톡스 / 필러 / 레이저토닝 / 레이저 리프팅 / 실리프팅 / 다이어트 약 / 스킨부스터
               </span>
             </p>
