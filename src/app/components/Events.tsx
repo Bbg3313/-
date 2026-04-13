@@ -77,6 +77,14 @@ export function Events() {
           <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
             진행 중인 이벤트를 확인하세요. 썸네일을 누르면 상세 페이지로 이동합니다.
           </p>
+          <p className="mt-5">
+            <Link
+              to="/events"
+              className="text-sm font-medium text-gold-accent hover:underline underline-offset-4 decoration-gold-accent/50"
+            >
+              이벤트 전체 보기 →
+            </Link>
+          </p>
         </div>
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
