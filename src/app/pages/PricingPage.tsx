@@ -11,7 +11,9 @@ import {
   type PricingTable,
 } from "../../data/pricingData";
 
-const playfair = { fontFamily: "'Playfair Display', serif" } as const;
+/** 시술/가격 영역은 본문과 동일하게 Pretendard만 사용 */
+const PRICING_FONT =
+  '"Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", "Helvetica Neue", Arial, sans-serif';
 
 function padRow(row: string[], len: number): string[] {
   const next = [...row];
@@ -74,13 +76,11 @@ function SectionCard({ section }: { section: PricingSection }) {
   return (
     <section
       id={`pricing-${section.id}`}
-      className="scroll-mt-36 rounded-xl border border-border/70 bg-card/80 shadow-sm overflow-hidden"
+      className="scroll-mt-[13.5rem] sm:scroll-mt-[14.5rem] md:scroll-mt-[15.5rem] rounded-xl border border-border/70 bg-card/80 shadow-sm overflow-hidden"
     >
       <div className="px-5 sm:px-7 pt-6 sm:pt-8 pb-2">
         <p className="text-xs tracking-[0.2em] uppercase text-gold-accent mb-2">Price guide</p>
-        <h2 className="text-charcoal text-xl sm:text-2xl font-semibold tracking-tight" style={playfair}>
-          {section.title}
-        </h2>
+        <h2 className="text-charcoal text-xl sm:text-2xl font-semibold tracking-tight">{section.title}</h2>
         {section.description ? (
           <p className="mt-3 text-sm sm:text-base text-muted-foreground leading-relaxed">{section.description}</p>
         ) : null}
@@ -124,7 +124,10 @@ export function PricingPage() {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <Header />
-      <main className="flex-1 pt-28 md:pt-32 pb-16 px-4 sm:px-6">
+      <main
+        className="flex-1 pt-28 md:pt-32 pb-16 px-4 sm:px-6"
+        style={{ fontFamily: PRICING_FONT }}
+      >
         <article className="max-w-5xl mx-auto">
           <Link
             to="/"
@@ -135,7 +138,7 @@ export function PricingPage() {
 
           <header className="mb-8 sm:mb-10">
             <div className="w-12 h-px bg-primary/40 mb-6" />
-            <h1 className="text-charcoal text-3xl sm:text-4xl md:text-[2.75rem] font-semibold tracking-tight mb-4" style={playfair}>
+            <h1 className="text-charcoal text-3xl sm:text-4xl md:text-[2.75rem] font-semibold tracking-tight mb-4">
               시술 · 가격 안내
             </h1>
             <p className="text-muted-foreground text-base sm:text-lg leading-relaxed max-w-2xl">
@@ -143,9 +146,9 @@ export function PricingPage() {
             </p>
           </header>
 
-          <div className="sticky top-[4.25rem] md:top-[4.75rem] z-20 -mx-4 sm:-mx-6 px-4 sm:px-6 py-3 mb-8 bg-background/90 backdrop-blur-md border-y border-border/50">
+          <div className="sticky top-[7rem] sm:top-[8rem] md:top-[9rem] z-40 -mx-4 sm:-mx-6 px-4 sm:px-6 py-3 mb-8 bg-background/95 backdrop-blur-md border-b border-border/60 shadow-sm">
             <p className="sr-only">시술 카테고리 필터</p>
-            <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-thin [scrollbar-width:thin] items-center">
+            <div className="grid grid-cols-4 sm:grid-cols-6 gap-2 w-full max-w-5xl mx-auto">
               {PRICING_CATEGORIES.map((c) => {
                 const isOn = active === c.id;
                 return (
@@ -155,8 +158,8 @@ export function PricingPage() {
                     onClick={() => setActive(c.id)}
                     className={
                       isOn
-                        ? "shrink-0 rounded-full border border-gold-accent/50 bg-champagne/80 px-3.5 py-2 text-sm font-medium text-charcoal shadow-sm"
-                        : "shrink-0 rounded-full border border-border/70 bg-card px-3.5 py-2 text-sm font-medium text-muted-foreground hover:border-gold-accent/35 hover:text-charcoal transition-colors"
+                        ? "min-h-[2.5rem] w-full rounded-lg border border-gold-accent/50 bg-champagne/80 px-2 py-2 text-center text-xs sm:text-sm font-medium text-charcoal leading-snug shadow-sm transition-colors"
+                        : "min-h-[2.5rem] w-full rounded-lg border border-border/70 bg-card px-2 py-2 text-center text-xs sm:text-sm font-medium text-muted-foreground leading-snug hover:border-gold-accent/35 hover:text-charcoal transition-colors"
                     }
                   >
                     {c.label}
