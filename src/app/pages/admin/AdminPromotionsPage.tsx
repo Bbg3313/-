@@ -19,6 +19,269 @@ function slugify(value: string) {
     .replace(/\s+/g, "-");
 }
 
+function ImageUploadField({
+  label,
+  hint,
+  acceptMultiple,
+  onChange,
+  previewUrls,
+}: {
+  label: string;
+  hint?: string;
+  acceptMultiple?: boolean;
+  onChange: (files: File[]) => void;
+  previewUrls: string[];
+}) {
+  return (
+    <div className="md:col-span-2 rounded-lg border-2 border-dashed border-border/80 bg-background px-4 py-4 hover:border-gold-accent/35 transition-colors">
+      <p className="text-sm font-medium text-charcoal mb-1">{label}</p>
+      {hint ? <p className="text-xs text-muted-foreground mb-3">{hint}</p> : null}
+      <input
+        type="file"
+        accept="image/*"
+        multiple={acceptMultiple}
+        onChange={(e) => onChange(Array.from(e.target.files ?? []))}
+        className="w-full text-sm file:mr-3 file:rounded file:border-0 file:bg-champagne file:px-3 file:py-1.5 file:text-sm file:font-medium file:text-charcoal"
+      />
+      {previewUrls.length > 0 ? (
+        <div className="mt-3 flex flex-wrap gap-2">
+          {previewUrls.map((url) => (
+            <img key={url} src={url} alt="" className="h-20 w-auto max-w-[140px] rounded border border-border object-cover" />
+          ))}
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
+function PromotionEditRow({ item, onReload }: { item: Promotion; onReload: () => Promise<void> }) {
+  const [title, setTitle] = useState(item.title);
+  const [slug, setSlug] = useState(item.slug);
+  const [summary, setSummary] = useState(item.summary ?? "");
+  const [period, setPeriod] = useState(item.period ?? "");
+  const [content, setContent] = useState(item.content ?? "");
+  const [sortOrder, setSortOrder] = useState(item.sort_order);
+  const [published, setPublished] = useState(item.is_published);
+  const [detailUrls, setDetailUrls] = useState<string[]>(item.detail_images ?? []);
+  const [newThumb, setNewThumb] = useState<File | null>(null);
+  const [newThumbPreview, setNewThumbPreview] = useState<string | null>(null);
+  const [newDetailFiles, setNewDetailFiles] = useState<File[]>([]);
+  const [newDetailPreviews, setNewDetailPreviews] = useState<string[]>([]);
+  const [busy, setBusy] = useState(false);
+  const [msg, setMsg] = useState("");
+
+  useEffect(() => {
+    setTitle(item.title);
+    setSlug(item.slug);
+    setSummary(item.summary ?? "");
+    setPeriod(item.period ?? "");
+    setContent(item.content ?? "");
+    setSortOrder(item.sort_order);
+    setPublished(item.is_published);
+    setDetailUrls([...(item.detail_images ?? [])]);
+    setNewThumb(null);
+    setNewThumbPreview(null);
+    setNewDetailFiles([]);
+    setNewDetailPreviews([]);
+    setMsg("");
+  }, [item.id, item.updated_at]);
+
+  useEffect(() => {
+    if (!newThumb) {
+      setNewThumbPreview(null);
+      return;
+    }
+    const u = URL.createObjectURL(newThumb);
+    setNewThumbPreview(u);
+    return () => URL.revokeObjectURL(u);
+  }, [newThumb]);
+
+  useEffect(() => {
+    const urls = newDetailFiles.map((f) => URL.createObjectURL(f));
+    setNewDetailPreviews(urls);
+    return () => urls.forEach((u) => URL.revokeObjectURL(u));
+  }, [newDetailFiles]);
+
+  const save = async () => {
+    setBusy(true);
+    setMsg("");
+    try {
+      let thumbnail_url = item.thumbnail_url;
+      if (newThumb) {
+        thumbnail_url = await uploadImage("promotion-images", newThumb);
+      }
+      const uploaded: string[] = [];
+      for (const f of newDetailFiles) {
+        uploaded.push(await uploadImage("promotion-images", f));
+      }
+      const mergedDetails = [...detailUrls, ...uploaded];
+      await updatePromotion(item.id, {
+        title,
+        slug,
+        summary: summary || null,
+        period: period || null,
+        content: content || null,
+        thumbnail_url,
+        detail_images: mergedDetails.length ? mergedDetails : null,
+        sort_order: Number(sortOrder) || 0,
+        is_published: published,
+      });
+      await onReload();
+    } catch (e: unknown) {
+      setMsg(e instanceof Error ? e.message : "저장에 실패했습니다.");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const remove = async () => {
+    if (!window.confirm(`「${item.title}」프로모션을 삭제할까요?`)) return;
+    setBusy(true);
+    setMsg("");
+    try {
+      await deletePromotion(item.id);
+      await onReload();
+    } catch (e: unknown) {
+      setMsg(e instanceof Error ? e.message : "삭제에 실패했습니다.");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <div className="border border-border/70 bg-background p-4 sm:p-6 space-y-4">
+      <div className="grid gap-4 md:grid-cols-[160px_1fr]">
+        <div className="space-y-2">
+          <p className="text-xs font-medium text-muted-foreground">썸네일</p>
+          <div className="relative aspect-[4/3] w-full max-w-[200px] overflow-hidden rounded-lg border border-border bg-muted/30">
+            <img
+              src={newThumbPreview ?? item.thumbnail_url}
+              alt={title}
+              className="h-full w-full object-cover"
+            />
+          </div>
+          <label className="block">
+            <span className="mb-1 block text-xs text-muted-foreground">이미지 교체</span>
+            <input
+              type="file"
+              accept="image/*"
+              disabled={busy}
+              onChange={(e) => setNewThumb(e.target.files?.[0] ?? null)}
+              className="w-full text-xs file:mr-2 file:rounded file:border-0 file:bg-champagne file:px-2 file:py-1 file:text-charcoal"
+            />
+          </label>
+        </div>
+
+        <div className="space-y-3 min-w-0">
+          <input
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="제목"
+            className="w-full border border-border bg-background px-3 py-2 text-sm"
+          />
+          <input
+            value={slug}
+            onChange={(e) => setSlug(e.target.value)}
+            placeholder="slug (URL)"
+            className="w-full border border-border bg-background px-3 py-2 text-sm font-mono"
+          />
+          <input
+            value={summary}
+            onChange={(e) => setSummary(e.target.value)}
+            placeholder="요약"
+            className="w-full border border-border bg-background px-3 py-2 text-sm"
+          />
+          <textarea
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            placeholder="상세 본문"
+            className="w-full min-h-[100px] border border-border bg-background px-3 py-2 text-sm"
+          />
+          <div className="flex flex-wrap gap-3">
+            <input
+              value={period}
+              onChange={(e) => setPeriod(e.target.value)}
+              placeholder="기간"
+              className="w-40 border border-border bg-background px-3 py-2 text-sm"
+            />
+            <input
+              type="number"
+              value={sortOrder}
+              onChange={(e) => setSortOrder(Number(e.target.value))}
+              placeholder="정렬"
+              className="w-24 border border-border bg-background px-3 py-2 text-sm"
+            />
+            <label className="flex items-center gap-2 text-sm">
+              <input type="checkbox" checked={published} onChange={(e) => setPublished(e.target.checked)} />
+              게시
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <p className="text-xs font-medium text-muted-foreground mb-2">상세 이미지 (저장 시 서버에 반영)</p>
+        <div className="flex flex-wrap gap-2 mb-3">
+          {detailUrls.map((url, idx) => (
+            <div key={`${url}-${idx}`} className="group relative">
+              <img src={url} alt="" className="h-20 w-auto max-w-[120px] rounded border border-border object-cover" />
+              <button
+                type="button"
+                disabled={busy}
+                onClick={() => setDetailUrls((prev) => prev.filter((_, i) => i !== idx))}
+                className="absolute -right-1 -top-1 flex h-6 w-6 items-center justify-center rounded-full bg-destructive text-[11px] font-bold text-destructive-foreground shadow opacity-90 hover:opacity-100"
+                title="목록에서 제거"
+              >
+                ×
+              </button>
+            </div>
+          ))}
+        </div>
+        <label className="block rounded-lg border border-dashed border-border/80 bg-muted/10 px-3 py-3">
+          <span className="mb-2 block text-xs text-muted-foreground">이미지 추가 (복수 선택 가능)</span>
+          <input
+            type="file"
+            accept="image/*"
+            multiple
+            disabled={busy}
+            onChange={(e) => setNewDetailFiles(Array.from(e.target.files ?? []))}
+            className="w-full text-xs file:mr-2 file:rounded file:border-0 file:bg-champagne file:px-2 file:py-1 file:text-charcoal"
+          />
+        </label>
+        {newDetailPreviews.length > 0 ? (
+          <p className="mt-2 text-xs text-muted-foreground">새로 추가될 미리보기 {newDetailPreviews.length}장</p>
+        ) : null}
+        <div className="mt-2 flex flex-wrap gap-2">
+          {newDetailPreviews.map((u, i) => (
+            <img key={i} src={u} alt="" className="h-16 w-auto max-w-[100px] rounded border border-border object-cover opacity-80" />
+          ))}
+        </div>
+      </div>
+
+      {msg ? <p className="text-sm text-destructive">{msg}</p> : null}
+
+      <div className="flex flex-wrap gap-2 border-t border-border/50 pt-4">
+        <button
+          type="button"
+          disabled={busy}
+          onClick={() => void save()}
+          className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground disabled:opacity-60"
+        >
+          {busy ? "처리 중..." : "변경 저장"}
+        </button>
+        <button
+          type="button"
+          disabled={busy}
+          onClick={() => void remove()}
+          className="rounded-md border border-destructive/50 px-4 py-2 text-sm font-medium text-destructive hover:bg-destructive/5 disabled:opacity-60"
+        >
+          삭제
+        </button>
+      </div>
+    </div>
+  );
+}
+
 export function AdminPromotionsPage() {
   const [items, setItems] = useState<Promotion[]>([]);
   const [title, setTitle] = useState("");
@@ -28,7 +291,9 @@ export function AdminPromotionsPage() {
   const [sortOrder, setSortOrder] = useState(0);
   const [published, setPublished] = useState(true);
   const [thumbFile, setThumbFile] = useState<File | null>(null);
+  const [thumbPreview, setThumbPreview] = useState<string | null>(null);
   const [detailFiles, setDetailFiles] = useState<File[]>([]);
+  const [detailPreviews, setDetailPreviews] = useState<string[]>([]);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
 
@@ -37,14 +302,30 @@ export function AdminPromotionsPage() {
   const load = async () => {
     try {
       setItems(await fetchPromotionsAdmin());
-    } catch (e: any) {
-      setError(e?.message ?? "프로모션 목록을 불러오지 못했습니다.");
+    } catch (e: unknown) {
+      setError(e instanceof Error ? e.message : "프로모션 목록을 불러오지 못했습니다.");
     }
   };
 
   useEffect(() => {
-    load();
+    void load();
   }, []);
+
+  useEffect(() => {
+    if (!thumbFile) {
+      setThumbPreview(null);
+      return;
+    }
+    const u = URL.createObjectURL(thumbFile);
+    setThumbPreview(u);
+    return () => URL.revokeObjectURL(u);
+  }, [thumbFile]);
+
+  useEffect(() => {
+    const urls = detailFiles.map((f) => URL.createObjectURL(f));
+    setDetailPreviews(urls);
+    return () => urls.forEach((u) => URL.revokeObjectURL(u));
+  }, [detailFiles]);
 
   const onCreate = async (e: FormEvent) => {
     e.preventDefault();
@@ -78,8 +359,8 @@ export function AdminPromotionsPage() {
       setThumbFile(null);
       setDetailFiles([]);
       await load();
-    } catch (e: any) {
-      setError(e?.message ?? "프로모션 저장 중 오류가 발생했습니다.");
+    } catch (e: unknown) {
+      setError(e instanceof Error ? e.message : "프로모션 저장 중 오류가 발생했습니다.");
     } finally {
       setSaving(false);
     }
@@ -92,105 +373,98 @@ export function AdminPromotionsPage() {
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center justify-between mb-8">
             <h1 className="text-3xl font-semibold text-charcoal">프로모션 관리</h1>
-            <Link to="/admin" className="text-sm text-muted-foreground hover:text-gold-accent">← 관리자 홈</Link>
+            <Link to="/admin" className="text-sm text-muted-foreground hover:text-gold-accent">
+              ← 관리자 홈
+            </Link>
           </div>
 
-          <form onSubmit={onCreate} className="border border-border/70 bg-muted/20 p-6 grid md:grid-cols-2 gap-4 mb-8">
-            <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="제목" className="border border-border bg-background px-3 py-2 text-sm" required />
-            <input value={period} onChange={(e) => setPeriod(e.target.value)} placeholder="기간 (예: 2026.04)" className="border border-border bg-background px-3 py-2 text-sm" />
-            <input value={summary} onChange={(e) => setSummary(e.target.value)} placeholder="요약 문구" className="border border-border bg-background px-3 py-2 text-sm md:col-span-2" />
-            <textarea value={content} onChange={(e) => setContent(e.target.value)} placeholder="상세 내용" className="border border-border bg-background px-3 py-2 text-sm md:col-span-2 min-h-28" />
-            <input type="number" value={sortOrder} onChange={(e) => setSortOrder(Number(e.target.value))} placeholder="정렬순서" className="border border-border bg-background px-3 py-2 text-sm" />
-            <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={published} onChange={(e) => setPublished(e.target.checked)} /> 게시</label>
-            <input type="file" accept="image/*" onChange={(e) => setThumbFile(e.target.files?.[0] ?? null)} className="md:col-span-2 text-sm" />
-            <input type="file" accept="image/*" multiple onChange={(e) => setDetailFiles(Array.from(e.target.files ?? []))} className="md:col-span-2 text-sm" />
-            <p className="md:col-span-2 text-xs text-muted-foreground">자동 slug: {slug || "-"}</p>
-            {error && <p className="md:col-span-2 text-sm text-destructive">{error}</p>}
-            <button disabled={saving} className="md:col-span-2 bg-primary text-primary-foreground px-4 py-2 text-sm font-medium disabled:opacity-60">
-              {saving ? "저장 중..." : "프로모션 등록"}
-            </button>
-          </form>
+          <section className="mb-10 rounded-xl border border-border/70 bg-muted/15 p-6 sm:p-8">
+            <h2 className="text-lg font-semibold text-charcoal mb-1">새 프로모션 등록</h2>
+            <p className="text-sm text-muted-foreground mb-6">
+              썸네일은 필수입니다. 상세 이미지는 여러 장 선택할 수 있으며, 저장 시 Supabase Storage(
+              <code className="text-xs">promotion-images</code>)에 올라갑니다.
+            </p>
+            <form onSubmit={(e) => void onCreate(e)} className="grid md:grid-cols-2 gap-4">
+              <input
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                placeholder="제목 *"
+                className="border border-border bg-background px-3 py-2 text-sm"
+                required
+              />
+              <input
+                value={period}
+                onChange={(e) => setPeriod(e.target.value)}
+                placeholder="기간 (예: 2026.04)"
+                className="border border-border bg-background px-3 py-2 text-sm"
+              />
+              <input
+                value={summary}
+                onChange={(e) => setSummary(e.target.value)}
+                placeholder="요약 문구"
+                className="border border-border bg-background px-3 py-2 text-sm md:col-span-2"
+              />
+              <textarea
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
+                placeholder="상세 본문"
+                className="border border-border bg-background px-3 py-2 text-sm md:col-span-2 min-h-28"
+              />
+              <input
+                type="number"
+                value={sortOrder}
+                onChange={(e) => setSortOrder(Number(e.target.value))}
+                placeholder="정렬순서"
+                className="border border-border bg-background px-3 py-2 text-sm"
+              />
+              <label className="flex items-center gap-2 text-sm">
+                <input type="checkbox" checked={published} onChange={(e) => setPublished(e.target.checked)} />
+                게시
+              </label>
 
-          <div className="space-y-4">
-            {items.map((item) => (
-              <div key={item.id} className="border border-border/70 bg-background p-4 grid md:grid-cols-[170px_1fr_auto] gap-4">
-                <img src={item.thumbnail_url} alt={item.title} className="w-full h-28 object-cover border border-border" />
-                <div className="space-y-2">
-                  <input
-                    value={item.title}
-                    onChange={(e) => setItems((prev) => prev.map((x) => (x.id === item.id ? { ...x, title: e.target.value } : x)))}
-                    className="w-full border border-border px-3 py-2 text-sm"
-                  />
-                  <input
-                    value={item.slug}
-                    onChange={(e) => setItems((prev) => prev.map((x) => (x.id === item.id ? { ...x, slug: e.target.value } : x)))}
-                    className="w-full border border-border px-3 py-2 text-sm"
-                  />
-                  <input
-                    value={item.summary ?? ""}
-                    onChange={(e) => setItems((prev) => prev.map((x) => (x.id === item.id ? { ...x, summary: e.target.value } : x)))}
-                    className="w-full border border-border px-3 py-2 text-sm"
-                  />
-                  <div className="flex gap-3">
-                    <input
-                      value={item.period ?? ""}
-                      onChange={(e) => setItems((prev) => prev.map((x) => (x.id === item.id ? { ...x, period: e.target.value } : x)))}
-                      className="w-36 border border-border px-3 py-2 text-sm"
-                    />
-                    <input
-                      type="number"
-                      value={item.sort_order}
-                      onChange={(e) => setItems((prev) => prev.map((x) => (x.id === item.id ? { ...x, sort_order: Number(e.target.value) } : x)))}
-                      className="w-28 border border-border px-3 py-2 text-sm"
-                    />
-                    <label className="flex items-center gap-2 text-sm">
-                      <input
-                        type="checkbox"
-                        checked={item.is_published}
-                        onChange={(e) =>
-                          setItems((prev) => prev.map((x) => (x.id === item.id ? { ...x, is_published: e.target.checked } : x)))
-                        }
-                      />
-                      게시
-                    </label>
-                  </div>
-                </div>
-                <div className="flex md:flex-col gap-2">
-                  <button
-                    type="button"
-                    className="border border-border px-3 py-2 text-sm hover:border-gold-accent/40"
-                    onClick={async () => {
-                      await updatePromotion(item.id, {
-                        title: item.title,
-                        slug: item.slug,
-                        summary: item.summary,
-                        period: item.period,
-                        sort_order: item.sort_order,
-                        is_published: item.is_published,
-                      });
-                      await load();
-                    }}
-                  >
-                    수정
-                  </button>
-                  <button
-                    type="button"
-                    className="border border-destructive/40 text-destructive px-3 py-2 text-sm"
-                    onClick={async () => {
-                      await deletePromotion(item.id);
-                      await load();
-                    }}
-                  >
-                    삭제
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
+              <ImageUploadField
+                label="썸네일 이미지 *"
+                hint="목록·상단에 쓰이는 대표 이미지입니다."
+                onChange={(files) => setThumbFile(files[0] ?? null)}
+                previewUrls={thumbPreview ? [thumbPreview] : []}
+              />
+              <ImageUploadField
+                label="상세 이미지 (선택, 복수)"
+                hint="이벤트 상세 페이지에 세로로 나열됩니다."
+                acceptMultiple
+                onChange={(files) => setDetailFiles(files)}
+                previewUrls={detailPreviews}
+              />
+
+              <p className="md:col-span-2 text-xs text-muted-foreground">
+                URL용 자동 slug: <span className="font-mono text-charcoal">{slug || "—"}</span>
+              </p>
+              {error ? <p className="md:col-span-2 text-sm text-destructive">{error}</p> : null}
+              <button
+                type="submit"
+                disabled={saving}
+                className="md:col-span-2 rounded-md bg-primary text-primary-foreground px-4 py-3 text-sm font-medium disabled:opacity-60"
+              >
+                {saving ? "저장 중..." : "프로모션 등록"}
+              </button>
+            </form>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-semibold text-charcoal mb-4">등록된 프로모션</h2>
+            <div className="space-y-6">
+              {items.length === 0 ? (
+                <p className="text-sm text-muted-foreground border border-dashed border-border/70 rounded-lg p-8 text-center">
+                  아직 등록된 프로모션이 없습니다.
+                </p>
+              ) : (
+                items.map((item) => <PromotionEditRow key={item.id} item={item} onReload={load} />)
+              )}
+            </div>
+          </section>
         </div>
       </main>
       <Footer />
     </div>
   );
 }
-
