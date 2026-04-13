@@ -51,6 +51,16 @@ export function formatSupabaseClientError(err: unknown): string {
   if (lower.includes("relation ") && lower.includes("does not exist")) {
     return `DB 테이블이 없습니다. scripts/supabase-schema.sql 을 Supabase SQL Editor에서 실행했는지 확인하세요. ${combined ? `(${combined})` : ""}`;
   }
+  if (lower.includes("could not find the table") || lower.includes("schema cache")) {
+    return [
+      "Supabase에 `public.promotions`(또는 hero_banners) 테이블이 없거나, API 스키마 캐시에 아직 반영되지 않았습니다.",
+      "① SQL Editor에서 scripts/supabase-tables-hero-promotions.sql 전체를 실행하세요. (스토리지 SQL만 돌렸다면 이 단계가 빠진 겁니다.)",
+      "② 실행 후 10~30초 기다렸다가 관리자 페이지를 새로고침한 뒤 다시 저장해 보세요.",
+      combined ? `(원문: ${combined})` : "",
+    ]
+      .filter(Boolean)
+      .join(" ");
+  }
 
   if (combined) return combined;
   if (typeof err === "string") return err;

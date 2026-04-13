@@ -1,6 +1,8 @@
--- Run in Supabase SQL editor (전체 일괄 적용)
--- 테이블만 먼저: scripts/supabase-tables-hero-promotions.sql
--- 스토리지만: scripts/supabase-storage-buckets.sql
+-- =============================================================================
+-- "Could not find the table 'public.promotions' in the schema cache" 일 때
+-- Supabase → SQL Editor 에서 이 파일 전체를 실행하세요.
+-- (스토리지 버킷만 만들고 이 스크립트를 안 돌린 경우가 많습니다.)
+-- =============================================================================
 
 create table if not exists public.hero_banners (
   id uuid primary key default gen_random_uuid(),
@@ -47,32 +49,5 @@ drop policy if exists "admin_all_promotions" on public.promotions;
 create policy "admin_all_promotions" on public.promotions
 for all using (auth.role() = 'authenticated') with check (auth.role() = 'authenticated');
 
--- Storage buckets
-insert into storage.buckets (id, name, public)
-values ('hero-images', 'hero-images', true)
-on conflict (id) do nothing;
-
-insert into storage.buckets (id, name, public)
-values ('promotion-images', 'promotion-images', true)
-on conflict (id) do nothing;
-
--- Public read
-drop policy if exists "public_read_hero_images" on storage.objects;
-create policy "public_read_hero_images" on storage.objects
-for select using (bucket_id = 'hero-images');
-
-drop policy if exists "public_read_promotion_images" on storage.objects;
-create policy "public_read_promotion_images" on storage.objects
-for select using (bucket_id = 'promotion-images');
-
--- Authenticated write
-drop policy if exists "auth_write_hero_images" on storage.objects;
-create policy "auth_write_hero_images" on storage.objects
-for all using (bucket_id = 'hero-images' and auth.role() = 'authenticated')
-with check (bucket_id = 'hero-images' and auth.role() = 'authenticated');
-
-drop policy if exists "auth_write_promotion_images" on storage.objects;
-create policy "auth_write_promotion_images" on storage.objects
-for all using (bucket_id = 'promotion-images' and auth.role() = 'authenticated')
-with check (bucket_id = 'promotion-images' and auth.role() = 'authenticated');
-
+-- PostgREST가 새 테이블을 바로 인식하도록 (권한 오류 나면 이 줄만 제거 후 재시도)
+notify pgrst, 'reload schema';
