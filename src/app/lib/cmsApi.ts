@@ -10,12 +10,34 @@ function getClient() {
   return supabase;
 }
 
+function storageUploadErrorMessage(bucket: UploadBucket, raw: string): string {
+  const lower = raw.toLowerCase();
+  if (lower.includes("bucket not found") || lower.includes("not found")) {
+    return [
+      `스토리지 버킷 "${bucket}"이(가) Supabase에 없습니다.`,
+      "Supabase 대시보드 → Storage에서 버킷 이름을 정확히 만들거나,",
+      "SQL Editor에서 프로젝트의 scripts/supabase-storage-buckets.sql 파일 내용을 실행하세요.",
+      "(버킷 ID는 hero-images, promotion-images 이어야 합니다. 공개 Public 권장)",
+    ].join(" ");
+  }
+  if (lower.includes("row-level security") || lower.includes("rls") || lower.includes("policy")) {
+    return [
+      "스토리지 업로드가 권한 정책(RLS)에 막혔습니다.",
+      "관리자로 로그인한 뒤 다시 시도하고, scripts/supabase-storage-buckets.sql 의 storage 정책이 적용됐는지 확인하세요.",
+      `원본: ${raw}`,
+    ].join(" ");
+  }
+  return raw;
+}
+
 export async function uploadImage(bucket: UploadBucket, file: File) {
   const client = getClient();
   const ext = file.name.split(".").pop() || "png";
   const path = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
   const { error } = await client.storage.from(bucket).upload(path, file, { upsert: false });
-  if (error) throw error;
+  if (error) {
+    throw new Error(storageUploadErrorMessage(bucket, error.message ?? String(error)));
+  }
   const { data } = client.storage.from(bucket).getPublicUrl(path);
   return data.publicUrl;
 }
