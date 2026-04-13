@@ -22,12 +22,27 @@ export type PricingTable = {
   priceColumns?: number;
 };
 
+/** 제모: 할인가+할인율 / 정가(원가표와 동일) */
+export type LaserHairPriceCol =
+  | { kind: "single"; price: string }
+  | { kind: "tiered"; sale: string; discountPct: string; regular: string };
+
+export type LaserHairRow = {
+  area: string;
+  detail: string;
+  once: LaserHairPriceCol;
+  five: LaserHairPriceCol;
+  ten: LaserHairPriceCol;
+};
+
 export type PricingSection = {
   id: string;
   categoryId: PricingCategoryId;
   title: string;
   description?: string;
   tables: PricingTable[];
+  /** 여성·남성 제모 전용(할인율·정가 분리 표기) */
+  laserHairRows?: LaserHairRow[];
   footnotes?: string[];
 };
 
@@ -49,6 +64,14 @@ export const PRICING_CATEGORIES: {
   { id: "iv", label: "수액·실비치료" },
   { id: "noncovered", label: "비급여·제증명" },
 ];
+
+function hairSingle(price: string): LaserHairPriceCol {
+  return { kind: "single", price };
+}
+
+function hairTier(sale: string, discountPct: string, regular: string): LaserHairPriceCol {
+  return { kind: "tiered", sale, discountPct, regular };
+}
 
 export const PRICING_SECTIONS: PricingSection[] = [
   {
@@ -367,65 +390,165 @@ export const PRICING_SECTIONS: PricingSection[] = [
     id: "hair-female",
     categoryId: "hair",
     title: "여성 제모",
-    description: "할인가 / 일반가 순으로 안내된 부위는 원문 표기를 유지했습니다.",
-    tables: [
+    description: "윗줄: 할인가 및 할인율 · 아래: 정가(VAT 별도). 원내 수가표와 동일합니다.",
+    tables: [],
+    laserHairRows: [
       {
-        headers: ["부위", "세부", "1회", "5회", "10회"],
-        rows: [
-          ["얼굴", "[미간·인중·겨드랑이] 선택1", "15,000 / 10,000", "70,000 / 40,000", "130,000 / 70,000"],
-          ["", "[인중+겨드랑이·헤어라인·구레나룻·턱] 선택1", "20,000 / 15,000", "110,000 / 70,000", "220,000 / 130,000"],
-          ["", "이마 전체", "20,000", "80,000", "150,000"],
-          ["", "얼굴 하관", "40,000", "170,000", "300,000"],
-          ["", "얼굴 전체", "90,000 / 70,000", "430,000 / 300,000", "820,000 / 550,000"],
-          ["", "뒷목 부분 / 전체", "30,000 / 50,000", "120,000 / 210,000", "210,000 / 400,000"],
-          ["팔", "손등+손가락", "40,000", "160,000", "280,000"],
-          ["", "[팔 상완·팔 하완] 선택1", "57,000 / 40,000", "235,000 / 150,000", "415,000 / 250,000"],
-          ["", "팔 전체", "100,000", "420,000", "800,000"],
-          ["하체", "발등+발가락", "50,000", "210,000", "400,000"],
-          ["", "종아리", "70,000 / 50,000", "340,000 / 200,000", "625,000 / 350,000"],
-          ["", "허벅지", "80,000 / 50,000", "360,000 / 200,000", "680,000 / 350,000"],
-          ["", "다리 전체", "150,000", "670,000", "1,200,000"],
-          ["", "비키니라인", "145,000 / 100,000", "625,000 / 400,000", "1,200,000 / 700,000"],
-          ["", "브라질리언 (항문제외)", "180,000 / 120,000", "780,000 / 500,000", "1,500,000 / 900,000"],
-          ["상체", "베레나룻", "25,000", "100,000", "180,000"],
-          ["", "[복부 상완·복부 하완] 선택1", "70,000", "300,000", "550,000"],
-          ["", "복부 전체", "120,000", "520,000", "940,000"],
-          ["", "등 전체", "150,000", "670,000", "1,250,000"],
-        ],
-        priceColumns: 3,
+        area: "얼굴",
+        detail: "[ 미간 / 인중 / 겨드랑이 ] 선택1",
+        once: hairTier("15,000", "33%", "10,000"),
+        five: hairTier("70,000", "43%", "40,000"),
+        ten: hairTier("130,000", "46%", "70,000"),
       },
+      {
+        area: "",
+        detail: "[ 인중+겨드랑이 / 헤어라인 / 구레나룻 / 턱 ] 선택1",
+        once: hairTier("20,000", "25%", "15,000"),
+        five: hairTier("110,000", "36%", "70,000"),
+        ten: hairTier("220,000", "41%", "130,000"),
+      },
+      { area: "", detail: "이마 전체", once: hairSingle("20,000"), five: hairSingle("80,000"), ten: hairSingle("150,000") },
+      { area: "", detail: "얼굴 하관", once: hairSingle("40,000"), five: hairSingle("170,000"), ten: hairSingle("300,000") },
+      {
+        area: "",
+        detail: "얼굴 전체",
+        once: hairTier("90,000", "22%", "70,000"),
+        five: hairTier("430,000", "30%", "300,000"),
+        ten: hairTier("820,000", "33%", "550,000"),
+      },
+      { area: "", detail: "뒷목 부분", once: hairSingle("30,000"), five: hairSingle("120,000"), ten: hairSingle("210,000") },
+      { area: "", detail: "뒷목 전체", once: hairSingle("50,000"), five: hairSingle("210,000"), ten: hairSingle("400,000") },
+      { area: "팔", detail: "손등 + 손가락", once: hairSingle("40,000"), five: hairSingle("160,000"), ten: hairSingle("280,000") },
+      {
+        area: "",
+        detail: "[ 팔 상완 / 팔 하완 ] 선택1",
+        once: hairTier("57,000", "30%", "40,000"),
+        five: hairTier("235,000", "36%", "150,000"),
+        ten: hairTier("415,000", "40%", "250,000"),
+      },
+      { area: "", detail: "팔 전체", once: hairSingle("100,000"), five: hairSingle("420,000"), ten: hairSingle("800,000") },
+      { area: "하체", detail: "발등 + 발가락", once: hairSingle("50,000"), five: hairSingle("210,000"), ten: hairSingle("400,000") },
+      {
+        area: "",
+        detail: "종아리",
+        once: hairTier("70,000", "32%", "50,000"),
+        five: hairTier("340,000", "40%", "200,000"),
+        ten: hairTier("625,000", "44%", "350,000"),
+      },
+      {
+        area: "",
+        detail: "허벅지",
+        once: hairTier("80,000", "37%", "50,000"),
+        five: hairTier("360,000", "44%", "200,000"),
+        ten: hairTier("680,000", "48%", "350,000"),
+      },
+      { area: "", detail: "다리 전체", once: hairSingle("150,000"), five: hairSingle("670,000"), ten: hairSingle("1,200,000") },
+      {
+        area: "",
+        detail: "비키니라인",
+        once: hairTier("145,000", "31%", "100,000"),
+        five: hairTier("625,000", "36%", "400,000"),
+        ten: hairTier("1,200,000", "41%", "700,000"),
+      },
+      {
+        area: "",
+        detail: "브라질리언 (항문제외)",
+        once: hairTier("180,000", "31%", "120,000"),
+        five: hairTier("780,000", "36%", "500,000"),
+        ten: hairTier("1,500,000", "40%", "900,000"),
+      },
+      { area: "상체", detail: "베레나룻", once: hairSingle("25,000"), five: hairSingle("100,000"), ten: hairSingle("180,000") },
+      {
+        area: "",
+        detail: "[ 복부 상완 / 복부 하완 ] 선택1",
+        once: hairSingle("70,000"),
+        five: hairSingle("300,000"),
+        ten: hairSingle("550,000"),
+      },
+      { area: "", detail: "복부 전체", once: hairSingle("120,000"), five: hairSingle("520,000"), ten: hairSingle("940,000") },
+      { area: "", detail: "등 전체", once: hairSingle("150,000"), five: hairSingle("670,000"), ten: hairSingle("1,250,000") },
     ],
-    footnotes: ["원문의 할인율 표기(예: ?33%)는 상담 시 최종 안내를 확인해 주세요."],
   },
   {
     id: "hair-male",
     categoryId: "hair",
     title: "남성 제모",
-    tables: [
+    description: "윗줄: 할인가 및 할인율 · 아래: 정가(VAT 별도). 원내 수가표와 동일합니다.",
+    tables: [],
+    laserHairRows: [
       {
-        headers: ["부위", "세부", "1회", "5회", "10회"],
-        rows: [
-          ["얼굴", "[미간·인중·겨드랑이] 선택1", "30,000 / 20,000", "133,000 / 80,000", "260,000 / 150,000"],
-          ["", "[인중+겨드랑이·헤어라인·구레나룻·턱] 선택1", "45,000 / 30,000", "233,000 / 140,000", "460,000 / 260,000"],
-          ["", "이마 전체", "30,000", "120,000", "210,000"],
-          ["", "얼굴 하관 + 진정관리", "64,000 / 50,000", "285,000 / 200,000", "523,000 / 350,000"],
-          ["", "얼굴 전체 + 진정관리", "105,000 / 80,000", "500,000 / 350,000", "970,000 / 650,000"],
-          ["", "뒷목 부분 / 전체", "40,000 / 60,000", "170,000 / 270,000", "300,000 / 500,000"],
-          ["팔", "손등+손가락", "45,000", "200,000", "360,000"],
-          ["", "[팔 상완·팔 하완] 선택1", "72,000 / 50,000", "310,000 / 200,000", "583,000 / 350,000"],
-          ["", "팔 전체", "110,000", "470,000", "900,000"],
-          ["하체", "발등+발가락", "55,000", "240,000", "410,000"],
-          ["", "종아리", "88,000 / 60,000", "416,000 / 250,000", "800,000 / 450,000"],
-          ["", "허벅지", "95,000 / 60,000", "446,000 / 250,000", "865,000 / 450,000"],
-          ["", "다리 전체", "160,000", "720,000", "1,300,000"],
-          ["", "브라질리언 (항문제외)", "150,000 / 100,000", "625,000 / 400,000", "1,660,000 / 700,000"],
-          ["상체", "베레나룻", "30,000", "120,000", "210,000"],
-          ["", "[복부 상완·복부 하완] 선택1", "80,000", "300,000", "550,000"],
-          ["", "복부 전체", "150,000", "650,000", "1,200,000"],
-          ["", "등 전체", "200,000", "900,000", "1,600,000"],
-        ],
-        priceColumns: 3,
+        area: "얼굴",
+        detail: "[ 미간 / 인중 / 겨드랑이 ] 선택1",
+        once: hairTier("30,000", "33%", "20,000"),
+        five: hairTier("133,000", "40%", "80,000"),
+        ten: hairTier("260,000", "43%", "150,000"),
       },
+      {
+        area: "",
+        detail: "[ 인중+겨드랑이 / 헤어라인 / 구레나룻 / 턱 ] 선택1",
+        once: hairTier("45,000", "33%", "30,000"),
+        five: hairTier("233,000", "40%", "140,000"),
+        ten: hairTier("460,000", "43%", "260,000"),
+      },
+      { area: "", detail: "이마 전체", once: hairSingle("30,000"), five: hairSingle("120,000"), ten: hairSingle("210,000") },
+      {
+        area: "",
+        detail: "얼굴 하관 + 진정관리",
+        once: hairTier("64,000", "22%", "50,000"),
+        five: hairTier("285,000", "30%", "200,000"),
+        ten: hairTier("523,000", "33%", "350,000"),
+      },
+      {
+        area: "",
+        detail: "얼굴 전체 + 진정관리",
+        once: hairTier("105,000", "24%", "80,000"),
+        five: hairTier("500,000", "30%", "350,000"),
+        ten: hairTier("970,000", "33%", "650,000"),
+      },
+      { area: "", detail: "뒷목 부분", once: hairSingle("40,000"), five: hairSingle("170,000"), ten: hairSingle("300,000") },
+      { area: "", detail: "뒷목 전체", once: hairSingle("60,000"), five: hairSingle("270,000"), ten: hairSingle("500,000") },
+      { area: "팔", detail: "손등 + 손가락", once: hairSingle("45,000"), five: hairSingle("200,000"), ten: hairSingle("360,000") },
+      {
+        area: "",
+        detail: "[ 팔 상완 / 팔 하완 ] 선택1",
+        once: hairTier("72,000", "30%", "50,000"),
+        five: hairTier("310,000", "36%", "200,000"),
+        ten: hairTier("583,000", "40%", "350,000"),
+      },
+      { area: "", detail: "팔 전체", once: hairSingle("110,000"), five: hairSingle("470,000"), ten: hairSingle("900,000") },
+      { area: "하체", detail: "발등 + 발가락", once: hairSingle("55,000"), five: hairSingle("240,000"), ten: hairSingle("410,000") },
+      {
+        area: "",
+        detail: "종아리",
+        once: hairTier("88,000", "32%", "60,000"),
+        five: hairTier("416,000", "40%", "250,000"),
+        ten: hairTier("800,000", "44%", "450,000"),
+      },
+      {
+        area: "",
+        detail: "허벅지",
+        once: hairTier("95,000", "37%", "60,000"),
+        five: hairTier("446,000", "44%", "250,000"),
+        ten: hairTier("865,000", "48%", "450,000"),
+      },
+      { area: "", detail: "다리 전체", once: hairSingle("160,000"), five: hairSingle("720,000"), ten: hairSingle("1,300,000") },
+      {
+        area: "",
+        detail: "브라질리언 (항문제외)",
+        once: hairTier("150,000", "30%", "100,000"),
+        five: hairTier("625,000", "36%", "400,000"),
+        ten: hairTier("1,660,000", "40%", "700,000"),
+      },
+      { area: "상체", detail: "베레나룻", once: hairSingle("30,000"), five: hairSingle("120,000"), ten: hairSingle("210,000") },
+      {
+        area: "",
+        detail: "[ 복부 상완 / 복부 하완 ] 선택1",
+        once: hairSingle("80,000"),
+        five: hairSingle("300,000"),
+        ten: hairSingle("550,000"),
+      },
+      { area: "", detail: "복부 전체", once: hairSingle("150,000"), five: hairSingle("650,000"), ten: hairSingle("1,200,000") },
+      { area: "", detail: "등 전체", once: hairSingle("200,000"), five: hairSingle("900,000"), ten: hairSingle("1,600,000") },
     ],
   },
   {

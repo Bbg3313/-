@@ -6,6 +6,8 @@ import {
   PRICING_CATEGORIES,
   PRICING_SECTIONS,
   VAT_NOTE,
+  type LaserHairPriceCol,
+  type LaserHairRow,
   type PricingCategoryId,
   type PricingSection,
   type PricingTable,
@@ -19,6 +21,103 @@ function padRow(row: string[], len: number): string[] {
   const next = [...row];
   while (next.length < len) next.push("—");
   return next.slice(0, len);
+}
+
+function HairPriceCell({ col, align = "end" }: { col: LaserHairPriceCol; align?: "end" | "center" }) {
+  const wrap = align === "center" ? "items-center text-center" : "items-end text-right";
+
+  if (col.kind === "single") {
+    return (
+      <div className={`flex flex-col ${wrap}`}>
+        <span className="text-base font-semibold tabular-nums text-charcoal tracking-tight">{col.price}</span>
+      </div>
+    );
+  }
+
+  return (
+    <div className={`flex flex-col gap-1 ${wrap}`}>
+      <div className="tabular-nums leading-tight">
+        <span className="text-base font-semibold text-charcoal tracking-tight">{col.sale}</span>
+        <span className="ml-1.5 inline-block rounded bg-gold-accent/15 px-1.5 py-0.5 text-[11px] font-semibold text-gold-accent tabular-nums">
+          {col.discountPct}
+        </span>
+      </div>
+      <div className="text-[11px] tabular-nums text-muted-foreground/45 line-through decoration-muted-foreground/35">
+        {col.regular}
+      </div>
+    </div>
+  );
+}
+
+function LaserHairTableView({ rows }: { rows: LaserHairRow[] }) {
+  return (
+    <div className="space-y-3">
+      <p className="text-xs text-muted-foreground md:px-1">
+        할인가 옆 숫자는 할인율입니다. <span className="line-through opacity-60">취소선</span>은 정가 안내입니다.
+      </p>
+
+      {/* 모바일: 부위별 카드 */}
+      <div className="md:hidden space-y-3">
+        {rows.map((row, i) => (
+          <div
+            key={i}
+            className="rounded-xl border border-border/60 bg-background px-4 py-3.5 shadow-sm"
+          >
+            {row.area ? (
+              <p className="text-[11px] font-semibold uppercase tracking-wider text-gold-accent">{row.area}</p>
+            ) : null}
+            <p className={`text-sm font-medium text-charcoal leading-snug ${row.area ? "mt-1" : ""}`}>{row.detail}</p>
+            <div className="mt-3 grid grid-cols-3 gap-2">
+              {(
+                [
+                  ["1회", row.once],
+                  ["5회", row.five],
+                  ["10회", row.ten],
+                ] as const
+              ).map(([label, col]) => (
+                <div key={label} className="rounded-lg bg-muted/25 px-2 py-2.5">
+                  <p className="mb-2 text-center text-[10px] font-medium text-muted-foreground">{label}</p>
+                  <HairPriceCell col={col} align="center" />
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* 데스크톱: 표 */}
+      <div className="hidden md:block overflow-x-auto rounded-xl border border-border/60 bg-background">
+        <table className="w-full min-w-[720px] border-collapse text-left text-sm">
+          <thead>
+            <tr className="border-b border-border/50 bg-champagne/50 text-charcoal">
+              <th className="w-[4.5rem] whitespace-nowrap px-3 py-3 text-xs font-semibold">부위</th>
+              <th className="min-w-[11rem] px-3 py-3 text-xs font-semibold">세부</th>
+              <th className="w-[8.5rem] px-3 py-3 text-right text-xs font-semibold">1회</th>
+              <th className="w-[8.5rem] px-3 py-3 text-right text-xs font-semibold">5회</th>
+              <th className="w-[8.5rem] px-3 py-3 text-right text-xs font-semibold">10회</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((row, i) => (
+              <tr key={i} className="border-b border-border/35 last:border-0 hover:bg-muted/15">
+                <td className="align-top px-3 py-3 text-xs font-medium text-gold-accent">{row.area || " "}</td>
+                <td className="align-top px-3 py-3 text-sm text-charcoal leading-snug">{row.detail}</td>
+                <td className="align-top px-3 py-3">
+                  <HairPriceCell col={row.once} />
+                </td>
+                <td className="align-top px-3 py-3">
+                  <HairPriceCell col={row.five} />
+                </td>
+                <td className="align-top px-3 py-3">
+                  <HairPriceCell col={row.ten} />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
 }
 
 function PricingTableView({ table }: { table: PricingTable }) {
@@ -73,10 +172,13 @@ function PricingTableView({ table }: { table: PricingTable }) {
 }
 
 function SectionCard({ section }: { section: PricingSection }) {
+  const hasTables = section.tables.length > 0;
+  const hasLaser = Boolean(section.laserHairRows?.length);
+
   return (
     <section
       id={`pricing-${section.id}`}
-      className="scroll-mt-[13.5rem] sm:scroll-mt-[14.5rem] md:scroll-mt-[15.5rem] rounded-xl border border-border/70 bg-card/80 shadow-sm overflow-hidden"
+      className="scroll-mt-[14rem] sm:scroll-mt-[15rem] md:scroll-mt-[16rem] rounded-xl border border-border/70 bg-card/80 shadow-sm overflow-hidden"
     >
       <div className="px-5 sm:px-7 pt-6 sm:pt-8 pb-2">
         <p className="text-xs tracking-[0.2em] uppercase text-gold-accent mb-2">Price guide</p>
@@ -88,11 +190,14 @@ function SectionCard({ section }: { section: PricingSection }) {
 
       <div className="px-5 sm:px-7 pb-6 sm:pb-8 space-y-6">
         <p className="text-xs text-muted-foreground border-l-2 border-gold-accent/50 pl-3">{VAT_NOTE}</p>
-        <div className="space-y-5">
-          {section.tables.map((t, i) => (
-            <PricingTableView key={i} table={t} />
-          ))}
-        </div>
+        {hasLaser && section.laserHairRows ? <LaserHairTableView rows={section.laserHairRows} /> : null}
+        {hasTables ? (
+          <div className="space-y-5">
+            {section.tables.map((t, i) => (
+              <PricingTableView key={i} table={t} />
+            ))}
+          </div>
+        ) : null}
         {section.footnotes?.length ? (
           <ul className="space-y-2 text-xs sm:text-sm text-muted-foreground leading-relaxed list-disc pl-4 marker:text-gold-accent/80">
             {section.footnotes.map((line, i) => (
@@ -125,16 +230,19 @@ export function PricingPage() {
     <div className="min-h-screen bg-background flex flex-col">
       <Header />
       <main
-        className="flex-1 pt-28 md:pt-32 pb-16 px-4 sm:px-6"
+        className="flex-1 pb-16 px-4 sm:px-6 pt-44 sm:pt-48 md:pt-[13rem]"
         style={{ fontFamily: PRICING_FONT }}
       >
-        <article className="max-w-5xl mx-auto">
-          <Link
-            to="/"
-            className="inline-flex items-center py-1 text-sm leading-none text-muted-foreground hover:text-gold-accent transition-colors mb-6"
-          >
-            ← 홈으로
-          </Link>
+        <article className="max-w-5xl mx-auto relative">
+          {/* 헤더(z-50) 아래로 확실히 내리고, 스티키 카테고리와 겹치지 않게 여백 확보 */}
+          <div className="relative z-0 mb-6">
+            <Link
+              to="/"
+              className="inline-flex items-center rounded-md py-2 pr-3 text-sm leading-none text-muted-foreground hover:bg-muted/40 hover:text-gold-accent transition-colors"
+            >
+              ← 홈으로
+            </Link>
+          </div>
 
           <header className="mb-8 sm:mb-10">
             <div className="w-12 h-px bg-primary/40 mb-6" />
