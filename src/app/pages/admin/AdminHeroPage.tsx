@@ -2,7 +2,14 @@ import { FormEvent, useEffect, useState } from "react";
 import { Link } from "react-router";
 import { Header } from "../../components/Header";
 import { Footer } from "../../components/Footer";
-import { createHeroBanner, deleteHeroBanner, fetchHeroBannersAdmin, updateHeroBanner, uploadImage } from "../../lib/cmsApi";
+import {
+  createHeroBanner,
+  deleteHeroBanner,
+  fetchHeroBannersAdmin,
+  formatSupabaseClientError,
+  updateHeroBanner,
+  uploadImage,
+} from "../../lib/cmsApi";
 import type { HeroBanner } from "../../types/cms";
 
 export function AdminHeroPage() {
@@ -18,8 +25,8 @@ export function AdminHeroPage() {
   const load = async () => {
     try {
       setItems(await fetchHeroBannersAdmin());
-    } catch (e: any) {
-      setError(e?.message ?? "배너 목록을 불러오지 못했습니다.");
+    } catch (e: unknown) {
+      setError(formatSupabaseClientError(e));
     }
   };
 
@@ -47,8 +54,8 @@ export function AdminHeroPage() {
       setIsActive(true);
       setImageFile(null);
       await load();
-    } catch (e: any) {
-      setError(e?.message ?? "배너 저장 중 오류가 발생했습니다.");
+    } catch (e: unknown) {
+      setError(formatSupabaseClientError(e));
     } finally {
       setSaving(false);
     }

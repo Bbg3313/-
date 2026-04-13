@@ -6,6 +6,7 @@ import {
   createPromotion,
   deletePromotion,
   fetchPromotionsAdmin,
+  formatSupabaseClientError,
   updatePromotion,
   uploadImage,
 } from "../../lib/cmsApi";
@@ -128,7 +129,7 @@ function PromotionEditRow({ item, onReload }: { item: Promotion; onReload: () =>
       });
       await onReload();
     } catch (e: unknown) {
-      setMsg(e instanceof Error ? e.message : "저장에 실패했습니다.");
+      setMsg(formatSupabaseClientError(e));
     } finally {
       setBusy(false);
     }
@@ -142,7 +143,7 @@ function PromotionEditRow({ item, onReload }: { item: Promotion; onReload: () =>
       await deletePromotion(item.id);
       await onReload();
     } catch (e: unknown) {
-      setMsg(e instanceof Error ? e.message : "삭제에 실패했습니다.");
+      setMsg(formatSupabaseClientError(e));
     } finally {
       setBusy(false);
     }
@@ -258,7 +259,7 @@ function PromotionEditRow({ item, onReload }: { item: Promotion; onReload: () =>
         </div>
       </div>
 
-      {msg ? <p className="text-sm text-destructive">{msg}</p> : null}
+      {msg ? <p className="text-sm text-destructive whitespace-pre-wrap break-words">{msg}</p> : null}
 
       <div className="flex flex-wrap gap-2 border-t border-border/50 pt-4">
         <button
@@ -296,14 +297,20 @@ export function AdminPromotionsPage() {
   const [detailPreviews, setDetailPreviews] = useState<string[]>([]);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
+  /** 비우면 제목으로 자동 slug */
+  const [slugManual, setSlugManual] = useState("");
 
-  const slug = useMemo(() => slugify(title), [title]);
+  const slug = useMemo(() => {
+    const manual = slugManual.trim();
+    if (manual) return slugify(manual);
+    return slugify(title);
+  }, [title, slugManual]);
 
   const load = async () => {
     try {
       setItems(await fetchPromotionsAdmin());
     } catch (e: unknown) {
-      setError(e instanceof Error ? e.message : "프로모션 목록을 불러오지 못했습니다.");
+      setError(formatSupabaseClientError(e));
     }
   };
 
@@ -358,9 +365,10 @@ export function AdminPromotionsPage() {
       setPublished(true);
       setThumbFile(null);
       setDetailFiles([]);
+      setSlugManual("");
       await load();
     } catch (e: unknown) {
-      setError(e instanceof Error ? e.message : "프로모션 저장 중 오류가 발생했습니다.");
+      setError(formatSupabaseClientError(e));
     } finally {
       setSaving(false);
     }
@@ -436,10 +444,19 @@ export function AdminPromotionsPage() {
                 previewUrls={detailPreviews}
               />
 
+              <input
+                value={slugManual}
+                onChange={(e) => setSlugManual(e.target.value)}
+                placeholder="URL slug 직접 지정 (비우면 제목으로 자동 생성)"
+                className="border border-border bg-background px-3 py-2 text-sm md:col-span-2 font-mono"
+              />
               <p className="md:col-span-2 text-xs text-muted-foreground">
-                URL용 자동 slug: <span className="font-mono text-charcoal">{slug || "—"}</span>
+                저장 시 사용할 slug: <span className="font-mono text-charcoal">{slug || "—"}</span>
+                {slugManual.trim() ? "" : " · 제목을 바꿔도 slug가 겹치면 여기에 다른 값을 적어 주세요."}
               </p>
-              {error ? <p className="md:col-span-2 text-sm text-destructive">{error}</p> : null}
+              {error ? (
+                <p className="md:col-span-2 text-sm text-destructive whitespace-pre-wrap break-words">{error}</p>
+              ) : null}
               <button
                 type="submit"
                 disabled={saving}
