@@ -6,6 +6,7 @@ import { PrivacyPage } from "./pages/PrivacyPage";
 import { TermsPage } from "./pages/TermsPage";
 import { FloatingActions } from "./components/FloatingActions";
 import { EventDetailPage } from "./pages/EventDetailPage";
+import { EventsBoardPage } from "./pages/EventsBoardPage";
 import { PricingPage } from "./pages/PricingPage";
 import { AdminLoginPage } from "./pages/admin/AdminLoginPage";
 import { AdminHomePage } from "./pages/admin/AdminHomePage";
@@ -20,6 +21,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/notice" element={<NoticePage />} />
+        <Route path="/events" element={<EventsBoardPage />} />
         <Route path="/events/:slug" element={<EventDetailPage />} />
         <Route path="/promotions/:slug" element={<EventDetailPage />} />
         <Route path="/pricing" element={<PricingPage />} />

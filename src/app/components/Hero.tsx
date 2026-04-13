@@ -6,7 +6,7 @@ import { fetchActiveHeroBanners } from "../lib/cmsApi";
 import type { HeroBanner } from "../types/cms";
 
 export function Hero() {
-  const isExternalBoard = /^https?:\/\//.test(SITE_LINKS.eventBoard);
+  const isExternalReservation = /^https?:\/\//.test(SITE_LINKS.reservation);
   const [banners, setBanners] = useState<HeroBanner[]>([]);
   const [index, setIndex] = useState(0);
 
@@ -87,9 +87,9 @@ export function Hero() {
 
           {/* CTA */}
           <div className="flex">
-            {isExternalBoard ? (
+            {isExternalReservation ? (
               <a
-                href={SITE_LINKS.eventBoard}
+                href={SITE_LINKS.reservation}
                 target="_blank"
                 rel="noreferrer"
                 className="group relative inline-flex items-center justify-center px-10 py-4 bg-primary text-primary-foreground overflow-hidden transition-all duration-500 hover:shadow-2xl"
@@ -99,7 +99,7 @@ export function Hero() {
               </a>
             ) : (
               <Link
-                to={SITE_LINKS.eventBoard}
+                to={SITE_LINKS.reservation}
                 className="group relative inline-flex items-center justify-center px-10 py-4 bg-primary text-primary-foreground overflow-hidden transition-all duration-500 hover:shadow-2xl"
               >
                 <span className="relative z-10 tracking-wider uppercase text-sm">예약 상담</span>

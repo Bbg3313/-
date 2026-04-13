@@ -45,7 +45,7 @@ export function Header() {
 
         <ul className="hidden md:flex items-center gap-10">
           <li>
-            <Link to="/#events" className={`text-sm tracking-wider uppercase transition-colors duration-300 ${navClass}`}>
+            <Link to="/events" className={`text-sm tracking-wider uppercase transition-colors duration-300 ${navClass}`}>
               이벤트
             </Link>
           </li>

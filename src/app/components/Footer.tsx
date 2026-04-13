@@ -3,13 +3,15 @@ import { Link } from "react-router";
 import { Instagram } from "lucide-react";
 import logo from "../../imports/logo.svg";
 import { SITE_LOGO_IMG_CLASS } from "../config/logo";
+import { SITE_LINKS } from "../config/siteLinks";
 import { SOCIAL_LINKS } from "../config/socialLinks";
 import { useHomeLogoClick } from "../hooks/useHomeLogoClick";
 import { NaverBlogIcon } from "./icons/NaverBlogIcon";
 import { cn } from "./ui/utils";
 
 const footerLinks = [
-  { to: "/notice", label: "공지사항" },
+  { to: SITE_LINKS.eventBoard, label: "이벤트" },
+  { to: SITE_LINKS.noticeBoard, label: "공지사항" },
   { to: "/privacy", label: "개인정보처리방침" },
   { to: "/terms", label: "서비스이용약관" },
 ] as const;

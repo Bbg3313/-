@@ -3,7 +3,7 @@ import { Link } from "react-router";
 import { SITE_LINKS } from "../config/siteLinks";
 
 export function Services() {
-  const isExternalBoard = /^https?:\/\//.test(SITE_LINKS.eventBoard);
+  const isExternalReservation = /^https?:\/\//.test(SITE_LINKS.reservation);
   const services = [
     {
       title: "일반 피부과",
@@ -207,9 +207,9 @@ export function Services() {
 
         {/* CTA section */}
         <div className="mt-24 text-center">
-          {isExternalBoard ? (
+          {isExternalReservation ? (
             <a
-              href={SITE_LINKS.eventBoard}
+              href={SITE_LINKS.reservation}
               target="_blank"
               rel="noreferrer"
               className="group relative inline-flex px-12 py-4 bg-primary text-primary-foreground overflow-hidden transition-all duration-500 hover:shadow-lg"
@@ -219,7 +219,7 @@ export function Services() {
             </a>
           ) : (
             <Link
-              to={SITE_LINKS.eventBoard}
+              to={SITE_LINKS.reservation}
               className="group relative inline-flex px-12 py-4 bg-primary text-primary-foreground overflow-hidden transition-all duration-500 hover:shadow-lg"
             >
               <span className="relative z-10 tracking-wider text-sm uppercase">상담 예약하기</span>

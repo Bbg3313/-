@@ -52,7 +52,7 @@ export function EventDetailPage() {
             </p>
           )}
 
-          <Link to="/#events" className="text-gold-accent hover:underline underline-offset-2">
+          <Link to="/events" className="text-gold-accent hover:underline underline-offset-2">
             이벤트 목록으로 돌아가기
           </Link>
         </div>

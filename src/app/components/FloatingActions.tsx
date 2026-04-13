@@ -20,7 +20,9 @@ export function FloatingActions() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const isEventsActive = location.pathname.startsWith("/events") || location.pathname === "/notice";
+  const isEventsBoardActive =
+    location.pathname === "/events" || location.pathname.startsWith("/promotions");
+  const isNoticeActive = location.pathname === "/notice";
   const isExternalEventBoard = /^https?:\/\//.test(SITE_LINKS.eventBoard);
 
   return (
@@ -32,7 +34,7 @@ export function FloatingActions() {
             target="_blank"
             rel="noreferrer"
             className={`group inline-flex items-center gap-3.5 rounded-full px-5 py-3.5 shadow-lg border transition-colors ${
-              isEventsActive
+              isEventsBoardActive
                 ? "bg-primary text-primary-foreground border-primary"
                 : "bg-background/90 text-charcoal border-border hover:border-gold-accent/40"
             }`}
@@ -52,7 +54,7 @@ export function FloatingActions() {
           <Link
             to={SITE_LINKS.eventBoard}
             className={`group inline-flex items-center gap-3.5 rounded-full px-5 py-3.5 shadow-lg border transition-colors ${
-              isEventsActive
+              isEventsBoardActive
                 ? "bg-primary text-primary-foreground border-primary"
                 : "bg-background/90 text-charcoal border-border hover:border-gold-accent/40"
             }`}
@@ -87,35 +89,22 @@ export function FloatingActions() {
           <span className="text-[15px] font-semibold tracking-wide">예약</span>
         </a>
 
-        {isExternalEventBoard ? (
-          <a
-            href={SITE_LINKS.eventBoard}
-            target="_blank"
-            rel="noreferrer"
-            className="group inline-flex items-center gap-3.5 rounded-full px-5 py-3.5 shadow-lg border border-border bg-background/90 text-charcoal hover:border-gold-accent/40 transition-colors"
-            aria-label="상담 게시판으로 이동(새 탭)"
-          >
-            <Icon>
-              <svg viewBox="0 0 24 24" className="w-5 h-5 text-gold-accent" fill="none" stroke="currentColor" strokeWidth="1.6">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M7 8h10M7 12h6m-8 8l3.2-2.1c.4-.3.9-.4 1.4-.4h7.9A2.5 2.5 0 0 0 20 15V7A2.5 2.5 0 0 0 17.5 4h-11A2.5 2.5 0 0 0 4 6.5V15a2.5 2.5 0 0 0 2.5 2.5H7V20z" />
-              </svg>
-            </Icon>
-            <span className="text-[15px] font-semibold tracking-wide">상담</span>
-          </a>
-        ) : (
-          <Link
-            to={SITE_LINKS.eventBoard}
-            className="group inline-flex items-center gap-3.5 rounded-full px-5 py-3.5 shadow-lg border border-border bg-background/90 text-charcoal hover:border-gold-accent/40 transition-colors"
-            aria-label="상담 게시판으로 이동"
-          >
-            <Icon>
-              <svg viewBox="0 0 24 24" className="w-5 h-5 text-gold-accent" fill="none" stroke="currentColor" strokeWidth="1.6">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M7 8h10M7 12h6m-8 8l3.2-2.1c.4-.3.9-.4 1.4-.4h7.9A2.5 2.5 0 0 0 20 15V7A2.5 2.5 0 0 0 17.5 4h-11A2.5 2.5 0 0 0 4 6.5V15a2.5 2.5 0 0 0 2.5 2.5H7V20z" />
-              </svg>
-            </Icon>
-            <span className="text-[15px] font-semibold tracking-wide">상담</span>
-          </Link>
-        )}
+        <Link
+          to={SITE_LINKS.noticeBoard}
+          className={`group inline-flex items-center gap-3.5 rounded-full px-5 py-3.5 shadow-lg border transition-colors ${
+            isNoticeActive
+              ? "border-primary bg-primary text-primary-foreground"
+              : "border-border bg-background/90 text-charcoal hover:border-gold-accent/40"
+          }`}
+          aria-label="공지사항으로 이동"
+        >
+          <Icon>
+            <svg viewBox="0 0 24 24" className="w-5 h-5 text-gold-accent" fill="none" stroke="currentColor" strokeWidth="1.6">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M7 8h10M7 12h6m-8 8l3.2-2.1c.4-.3.9-.4 1.4-.4h7.9A2.5 2.5 0 0 0 20 15V7A2.5 2.5 0 0 0 17.5 4h-11A2.5 2.5 0 0 0 4 6.5V15a2.5 2.5 0 0 0 2.5 2.5H7V20z" />
+            </svg>
+          </Icon>
+          <span className="text-[15px] font-semibold tracking-wide">공지</span>
+        </Link>
 
         <button
           type="button"
