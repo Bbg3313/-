@@ -4,6 +4,7 @@ import { Link, useLocation } from "react-router";
 import { SITE_LOGO_IMG_CLASS } from "../config/logo";
 import { useHomeLogoClick } from "../hooks/useHomeLogoClick";
 import { LanguageSwitcher } from "./LanguageSwitcher";
+import { SITE_LINKS } from "../config/siteLinks";
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -11,6 +12,7 @@ export function Header() {
   const onHomeLogoClick = useHomeLogoClick();
   const isHome = location.pathname === "/";
   const solid = !isHome || isScrolled;
+  const isExternalReservation = /^https?:\/\//.test(SITE_LINKS.reservation);
 
   useEffect(() => {
     if (!isHome) return;
@@ -60,9 +62,23 @@ export function Header() {
             </Link>
           </li>
           <li>
-            <Link to="/#contact" className={`text-sm tracking-wider uppercase transition-colors duration-300 ${navClass}`}>
-              예약·문의
-            </Link>
+            {isExternalReservation ? (
+              <a
+                href={SITE_LINKS.reservation}
+                target="_blank"
+                rel="noreferrer"
+                className={`text-sm tracking-wider uppercase transition-colors duration-300 ${navClass}`}
+              >
+                예약·문의
+              </a>
+            ) : (
+              <Link
+                to={SITE_LINKS.reservation}
+                className={`text-sm tracking-wider uppercase transition-colors duration-300 ${navClass}`}
+              >
+                예약·문의
+              </Link>
+            )}
           </li>
           <li>
             <Link to="/pricing" className={`text-sm tracking-wider uppercase transition-colors duration-300 ${navClass}`}>

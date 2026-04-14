@@ -5,7 +5,10 @@
 
 const envEventBoard =
   typeof import.meta.env.VITE_EVENT_BOARD_URL === "string" ? import.meta.env.VITE_EVENT_BOARD_URL.trim() : "";
-const envReservation =
+/** 메인 예약 CTA·히어로 등 기본 목적지 (비우면 내부 /reservation) */
+const envReservationTarget =
+  typeof import.meta.env.VITE_RESERVATION_URL === "string" ? import.meta.env.VITE_RESERVATION_URL.trim() : "";
+const envNaverReservation =
   typeof import.meta.env.VITE_NAVER_RESERVATION_URL === "string" ? import.meta.env.VITE_NAVER_RESERVATION_URL.trim() : "";
 const envNaverTalk =
   typeof import.meta.env.VITE_NAVER_TALK_URL === "string" ? import.meta.env.VITE_NAVER_TALK_URL.trim() : "";
@@ -17,6 +20,8 @@ const envKakaoChannel =
 const FILE_EVENT_BOARD_URL = "/events";
 /** 공지사항 페이지 */
 export const NOTICE_BOARD_PATH = "/notice";
+/** 사이트 내 예약·문의 안내 페이지 경로 (라우트와 동일하게 유지) */
+export const RESERVATION_PAGE_PATH = "/reservation";
 const FILE_NAVER_RESERVATION_URL =
   "https://map.naver.com/p/entry/place/1084784069?placePath=/home?from=map&fromPanelNum=1&additionalHeight=76&timestamp=202604071448&locale=ko&svcName=map_pcv5&c=16.52,0,0,0,dh";
 const FILE_NAVER_TALK_URL = "https://talk.naver.com/ct/w42fn5?frm=mnmb&frm=nmb_detail#nafullscreen";
@@ -27,7 +32,10 @@ export const SITE_LINKS = {
   eventBoard: envEventBoard || FILE_EVENT_BOARD_URL,
   /** 공지사항 */
   noticeBoard: NOTICE_BOARD_PATH,
-  reservation: envReservation || FILE_NAVER_RESERVATION_URL,
+  /** 예약 안내(기본 내부 페이지, env로 외부 URL로 덮어쓸 수 있음) */
+  reservation: envReservationTarget || RESERVATION_PAGE_PATH,
+  /** 네이버 플레이스 예약(상담 채널 카드 등) */
+  naverReservation: envNaverReservation || FILE_NAVER_RESERVATION_URL,
   naverTalk: envNaverTalk || FILE_NAVER_TALK_URL,
   kakaoChannel: envKakaoChannel || FILE_KAKAO_CHANNEL_URL,
 } as const;

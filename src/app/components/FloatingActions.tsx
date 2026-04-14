@@ -24,6 +24,9 @@ export function FloatingActions() {
     location.pathname === "/events" || location.pathname.startsWith("/promotions");
   const isNoticeActive = location.pathname === "/notice";
   const isExternalEventBoard = /^https?:\/\//.test(SITE_LINKS.eventBoard);
+  const isExternalReservation = /^https?:\/\//.test(SITE_LINKS.reservation);
+  const isReservationActive =
+    !isExternalReservation && location.pathname === SITE_LINKS.reservation;
 
   return (
     <div className="fixed right-4 bottom-4 sm:right-6 sm:bottom-6 z-50">
@@ -72,22 +75,43 @@ export function FloatingActions() {
           </Link>
         )}
 
-        <a
-          href={SITE_LINKS.reservation}
-          target="_blank"
-          rel="noreferrer"
-          className="group inline-flex items-center gap-3.5 rounded-full px-5 py-3.5 shadow-lg border border-border bg-background/90 text-charcoal hover:border-gold-accent/40 transition-colors"
-          aria-label="네이버로 예약하기(새 탭)"
-        >
-          <Icon>
-            <svg viewBox="0 0 24 24" className="w-5 h-5 text-gold-accent" fill="none" stroke="currentColor" strokeWidth="1.6">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M8 4v3M16 4v3M4.5 9h15" />
-              <path strokeLinecap="round" strokeLinejoin="round" d="M6.5 6.5h11A2.5 2.5 0 0 1 20 9v10A2.5 2.5 0 0 1 17.5 21h-11A2.5 2.5 0 0 1 4 19V9a2.5 2.5 0 0 1 2.5-2.5z" />
-              <path strokeLinecap="round" strokeLinejoin="round" d="M8.6 14.2l2 2 4.8-5.2" />
-            </svg>
-          </Icon>
-          <span className="text-[15px] font-semibold tracking-wide">예약</span>
-        </a>
+        {isExternalReservation ? (
+          <a
+            href={SITE_LINKS.reservation}
+            target="_blank"
+            rel="noreferrer"
+            className="group inline-flex items-center gap-3.5 rounded-full px-5 py-3.5 shadow-lg border border-border bg-background/90 text-charcoal hover:border-gold-accent/40 transition-colors"
+            aria-label="예약 페이지로 이동(새 탭)"
+          >
+            <Icon>
+              <svg viewBox="0 0 24 24" className="w-5 h-5 text-gold-accent" fill="none" stroke="currentColor" strokeWidth="1.6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8 4v3M16 4v3M4.5 9h15" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6.5 6.5h11A2.5 2.5 0 0 1 20 9v10A2.5 2.5 0 0 1 17.5 21h-11A2.5 2.5 0 0 1 4 19V9a2.5 2.5 0 0 1 2.5-2.5z" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8.6 14.2l2 2 4.8-5.2" />
+              </svg>
+            </Icon>
+            <span className="text-[15px] font-semibold tracking-wide">예약</span>
+          </a>
+        ) : (
+          <Link
+            to={SITE_LINKS.reservation}
+            className={`group inline-flex items-center gap-3.5 rounded-full px-5 py-3.5 shadow-lg border transition-colors ${
+              isReservationActive
+                ? "bg-primary text-primary-foreground border-primary"
+                : "border-border bg-background/90 text-charcoal hover:border-gold-accent/40"
+            }`}
+            aria-label="예약·문의 페이지로 이동"
+          >
+            <Icon>
+              <svg viewBox="0 0 24 24" className="w-5 h-5 text-gold-accent" fill="none" stroke="currentColor" strokeWidth="1.6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8 4v3M16 4v3M4.5 9h15" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6.5 6.5h11A2.5 2.5 0 0 1 20 9v10A2.5 2.5 0 0 1 17.5 21h-11A2.5 2.5 0 0 1 4 19V9a2.5 2.5 0 0 1 2.5-2.5z" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8.6 14.2l2 2 4.8-5.2" />
+              </svg>
+            </Icon>
+            <span className="text-[15px] font-semibold tracking-wide">예약</span>
+          </Link>
+        )}
 
         <Link
           to={SITE_LINKS.noticeBoard}
