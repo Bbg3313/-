@@ -289,6 +289,7 @@ function SectionCard({ section }: { section: PricingSection }) {
 export function PricingPage() {
   const [active, setActive] = useState<PricingCategoryId | "all">("all");
   const [scrollActive, setScrollActive] = useState<PricingCategoryId>(PRICING_CATEGORIES[0].id);
+  const categoryRailRef = useRef<HTMLDivElement | null>(null);
   const categoryRefs = useRef<Record<PricingCategoryId, HTMLButtonElement | null>>(
     Object.fromEntries(PRICING_CATEGORIES.map((c) => [c.id, null])) as Record<PricingCategoryId, HTMLButtonElement | null>,
   );
@@ -337,9 +338,11 @@ export function PricingPage() {
 
   useEffect(() => {
     const currentId = active === "all" ? scrollActive : active;
+    const rail = categoryRailRef.current;
     const btn = categoryRefs.current[currentId as PricingCategoryId];
-    if (!btn) return;
-    btn.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+    if (!rail || !btn) return;
+    const targetLeft = btn.offsetLeft - (rail.clientWidth - btn.clientWidth) / 2;
+    rail.scrollTo({ left: Math.max(0, targetLeft), behavior: "smooth" });
   }, [active, scrollActive]);
 
   return (
@@ -366,13 +369,16 @@ export function PricingPage() {
               시술 · 가격 안내
             </h1>
             <p className="text-muted-foreground text-base sm:text-lg leading-relaxed max-w-2xl">
-              비급여 시술 항목을 카테고리별로 정리했습니다. 개인 피부 상태와 시술 범위에 따라 달라질 수 있으니, 정확한 견적은 내원 상담을 권장드립니다.
+              개인 피부 상태와 시술 범위에 따라 달라질 수 있으니, 정확한 견적은 내원 상담을 권장드립니다.
             </p>
           </header>
 
           <div className="sticky top-[7rem] sm:top-[8rem] md:top-[9rem] z-40 -mx-4 sm:-mx-6 px-4 sm:px-6 py-3 mb-8 bg-background/95 backdrop-blur-md border-b border-border/60 shadow-sm">
             <p className="sr-only">시술 카테고리 필터</p>
-            <div className="mx-auto flex w-full gap-2 overflow-x-auto pb-1 md:grid md:max-w-5xl md:grid-cols-6 md:overflow-visible md:pb-0">
+            <div
+              ref={categoryRailRef}
+              className="mx-auto flex w-full gap-2 overflow-x-auto pb-1 md:grid md:max-w-5xl md:grid-cols-6 md:overflow-visible md:pb-0"
+            >
               {PRICING_CATEGORIES.map((c) => {
                 const isOn = active === "all" ? scrollActive === c.id : active === c.id;
                 return (

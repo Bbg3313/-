@@ -19,18 +19,10 @@ export function ReservationPage() {
 
           <div className="text-center mb-14 lg:mb-16">
             <div className="w-12 h-px bg-gold-accent mx-auto mb-8" />
-            <h1
-              className="mb-4 text-charcoal tracking-tight"
-              style={{
-                fontFamily: "'Playfair Display', serif",
-                fontSize: "clamp(2.5rem, 5vw, 3.5rem)",
-                lineHeight: "1.1",
-                fontWeight: "500",
-              }}
-            >
+            <h1 className="mb-4 text-charcoal tracking-tight text-3xl sm:text-4xl md:text-[2.75rem] font-semibold leading-tight">
               예약·문의
             </h1>
-            <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+            <p className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto [word-break:keep-all]">
               오시는 길과 진료 시간을 확인하신 뒤, 편하신 채널로 예약해 주세요.
             </p>
           </div>

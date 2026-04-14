@@ -22,7 +22,9 @@ export function ConsultationChannelsSection({
         <h2 className="mb-3 text-[clamp(1.35rem,2.8vw,1.75rem)] font-semibold leading-snug tracking-tight text-charcoal">
           {heading}
         </h2>
-        <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">{description}</p>
+        <p className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto [word-break:keep-all]">
+          {description}
+        </p>
       </div>
 
       <div className="grid sm:grid-cols-2 xl:grid-cols-4 gap-4">
@@ -35,8 +37,8 @@ export function ConsultationChannelsSection({
           <div className="flex items-start gap-3">
             <span className="inline-flex items-center justify-center w-9 h-9 rounded-md bg-emerald-50 text-emerald-600 text-lg">🗓️</span>
             <div>
-              <p className="text-xs text-muted-foreground mb-1">상담없이 바로 예약</p>
-              <p className="text-charcoal font-semibold tracking-tight">네이버 예약 &gt;</p>
+              <p className="text-xs text-muted-foreground mb-1 [word-break:keep-all]">상담없이 바로 예약</p>
+              <p className="text-charcoal font-semibold tracking-tight [word-break:keep-all]">네이버 예약 &gt;</p>
             </div>
           </div>
         </a>
@@ -52,8 +54,8 @@ export function ConsultationChannelsSection({
               N톡
             </span>
             <div>
-              <p className="text-xs text-muted-foreground mb-1">예약과 상담을 동시에</p>
-              <p className="text-charcoal font-semibold tracking-tight">네이버 톡톡 상담 &gt;</p>
+              <p className="text-xs text-muted-foreground mb-1 [word-break:keep-all]">예약과 상담을 동시에</p>
+              <p className="text-charcoal font-semibold tracking-tight [word-break:keep-all]">네이버 톡톡 상담 &gt;</p>
             </div>
           </div>
         </a>
@@ -69,8 +71,8 @@ export function ConsultationChannelsSection({
               TALK
             </span>
             <div>
-              <p className="text-xs text-muted-foreground mb-1">다양한 혜택 알림</p>
-              <p className="text-charcoal font-semibold tracking-tight">카카오톡 상담 &gt;</p>
+              <p className="text-xs text-muted-foreground mb-1 [word-break:keep-all]">다양한 혜택 알림</p>
+              <p className="text-charcoal font-semibold tracking-tight [word-break:keep-all]">카카오톡 상담 &gt;</p>
             </div>
           </div>
         </a>
@@ -82,7 +84,7 @@ export function ConsultationChannelsSection({
           <div className="flex items-start gap-3">
             <span className="inline-flex items-center justify-center w-9 h-9 rounded-md bg-fuchsia-50 text-fuchsia-600 text-lg">📞</span>
             <div>
-              <p className="text-xs text-muted-foreground mb-1">실시간 전화 상담</p>
+              <p className="text-xs text-muted-foreground mb-1 [word-break:keep-all]">실시간 전화 상담</p>
               <p className="text-charcoal font-semibold tracking-tight">054-772-8575 &gt;</p>
             </div>
           </div>

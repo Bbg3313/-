@@ -36,8 +36,19 @@ export function FloatingActions() {
     !isExternalReservation && location.pathname === SITE_LINKS.reservation;
 
   return (
-    <div className="hidden fixed bottom-16 right-3 z-50 md:bottom-6 md:right-6 md:block">
-      <div className="flex flex-col gap-2 md:gap-3.5">
+    <div className="fixed bottom-20 right-3 z-50 md:bottom-6 md:right-6">
+      <button
+        type="button"
+        onClick={handleTop}
+        className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border bg-background/90 text-charcoal shadow-lg transition-colors hover:border-gold-accent/40 md:hidden"
+        aria-label="맨 위로"
+      >
+        <svg viewBox="0 0 24 24" className={fabSvgClass} fill="none" stroke="currentColor" strokeWidth="1.8">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M12 5l-6 6m6-6l6 6M12 5v14" />
+        </svg>
+      </button>
+
+      <div className="hidden flex-col gap-2 md:flex md:gap-3.5">
         {isExternalEventBoard ? (
           <a
             href={SITE_LINKS.eventBoard}

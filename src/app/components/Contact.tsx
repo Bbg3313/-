@@ -138,13 +138,13 @@ export function Contact() {
   return (
     <section id="contact" className="py-20 sm:py-24 lg:py-32 px-6 bg-background relative">
       <div className="max-w-[90rem] mx-auto">
-        <div className="max-w-3xl mx-auto mb-16 lg:mb-20 text-center">
+        <div className="mx-auto mb-16 max-w-3xl text-center lg:mb-20">
           <div className="w-12 h-px bg-gold-accent mb-8 mx-auto" />
           <h2
-            className="mb-6 text-charcoal tracking-tight"
+            className="mb-6 w-full text-center text-charcoal tracking-tight"
             style={{
               fontFamily: "'Playfair Display', serif",
-              fontSize: "3.5rem",
+              fontSize: "clamp(2.35rem, 8vw, 3.5rem)",
               lineHeight: "1.1",
               fontWeight: "500",
             }}

@@ -260,33 +260,33 @@ export function Header() {
           <li>
             <Link
               to="/events"
-              className={`flex flex-col items-center justify-center gap-1.5 px-1 py-2.5 text-[11px] font-semibold leading-tight transition-colors ${
+              className={`flex flex-col items-center justify-center gap-1.5 px-1 py-2.5 text-[11px] font-semibold leading-tight whitespace-nowrap transition-colors ${
                 isEventsActive ? "text-gold-accent" : "text-muted-foreground"
               }`}
             >
-              <Ticket className="h-4 w-4" />
+              <Ticket className="h-4 w-4 text-gold-accent/80" />
               이벤트
             </Link>
           </li>
           <li>
             <Link
               to="/#about"
-              className={`flex flex-col items-center justify-center gap-1.5 px-1 py-2.5 text-[11px] font-semibold leading-tight transition-colors ${
+              className={`flex flex-col items-center justify-center gap-1.5 px-1 py-2.5 text-[11px] font-semibold leading-tight whitespace-nowrap transition-colors ${
                 isAboutActive ? "text-gold-accent" : "text-muted-foreground"
               }`}
             >
-              <Hospital className="h-4 w-4" />
+              <Hospital className="h-4 w-4 text-gold-accent/80" />
               병원소개
             </Link>
           </li>
           <li>
             <Link
               to="/#doctors"
-              className={`flex flex-col items-center justify-center gap-1.5 px-1 py-2.5 text-[11px] font-semibold leading-tight transition-colors ${
+              className={`flex flex-col items-center justify-center gap-1.5 px-1 py-2.5 text-[11px] font-semibold leading-tight whitespace-nowrap transition-colors ${
                 isDoctorsActive ? "text-gold-accent" : "text-muted-foreground"
               }`}
             >
-              <Stethoscope className="h-4 w-4" />
+              <Stethoscope className="h-4 w-4 text-gold-accent/80" />
               의료진
             </Link>
           </li>
@@ -296,19 +296,19 @@ export function Header() {
                 href={SITE_LINKS.reservation}
                 target="_blank"
                 rel="noreferrer"
-                className="flex flex-col items-center justify-center gap-1.5 px-1 py-2.5 text-[11px] font-semibold leading-tight text-muted-foreground transition-colors hover:text-gold-accent"
+                className="flex flex-col items-center justify-center gap-1.5 px-1 py-2.5 text-[11px] font-semibold leading-tight whitespace-nowrap text-muted-foreground transition-colors hover:text-gold-accent"
               >
-                <Sparkles className="h-4 w-4" />
+                <Sparkles className="h-4 w-4 text-gold-accent/80" />
                 예약·문의
               </a>
             ) : (
               <Link
                 to={SITE_LINKS.reservation}
-                className={`flex flex-col items-center justify-center gap-1.5 px-1 py-2.5 text-[11px] font-semibold leading-tight transition-colors ${
+                className={`flex flex-col items-center justify-center gap-1.5 px-1 py-2.5 text-[11px] font-semibold leading-tight whitespace-nowrap transition-colors ${
                   isReservationActive ? "text-gold-accent" : "text-muted-foreground"
                 }`}
               >
-                <Sparkles className="h-4 w-4" />
+                <Sparkles className="h-4 w-4 text-gold-accent/80" />
                 예약·문의
               </Link>
             )}
@@ -316,11 +316,11 @@ export function Header() {
           <li>
             <Link
               to="/pricing"
-              className={`flex flex-col items-center justify-center gap-1.5 px-1 py-2.5 text-[11px] font-semibold leading-tight transition-colors ${
+              className={`flex flex-col items-center justify-center gap-1.5 px-1 py-2.5 text-[11px] font-semibold leading-tight whitespace-nowrap transition-colors ${
                 isPricingActive ? "text-gold-accent" : "text-muted-foreground"
               }`}
             >
-              <CalendarDays className="h-4 w-4" />
+              <CalendarDays className="h-4 w-4 text-gold-accent/80" />
               시술/가격
             </Link>
           </li>
