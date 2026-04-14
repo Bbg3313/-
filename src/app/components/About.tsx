@@ -251,39 +251,6 @@ export function About() {
                     </li>
                   ))}
                 </ul>
-
-                <div className="relative shrink-0 border-t border-gold-accent/12 bg-gradient-to-b from-white/35 to-[#faf8f5]/50 px-4 py-4 sm:px-5 sm:py-4">
-                  <div
-                    className="pointer-events-none absolute inset-0 opacity-[0.14]"
-                    style={{
-                      backgroundImage:
-                        "radial-gradient(circle at 1px 1px, rgba(165, 124, 72, 0.2) 1px, transparent 0)",
-                      backgroundSize: "18px 18px",
-                    }}
-                  />
-                  <div className="relative flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between sm:gap-x-6 sm:gap-y-0 sm:text-left">
-                    <div className="flex shrink-0 items-start gap-3">
-                      <div
-                        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-gold-accent/28 bg-white/75 text-[9px] font-semibold tracking-[0.28em] text-gold-accent shadow-[inset_0_1px_0_rgba(255,255,255,0.9)] sm:h-9 sm:w-9"
-                        aria-hidden
-                      >
-                        YM
-                      </div>
-                      <p
-                        className="text-sm leading-snug text-charcoal/90 whitespace-normal sm:whitespace-nowrap"
-                        style={{ fontFamily: "'Playfair Display', serif", fontWeight: 500, fontStyle: "italic" }}
-                      >
-                        The art of understated elegance.
-                      </p>
-                    </div>
-                    <p className="min-w-0 flex-1 text-xs leading-relaxed text-muted-foreground sm:px-2 sm:text-center lg:px-4 lg:text-sm">
-                      과하지 않은 완성도와 섬세한 배려로, 오래 머무는 아름다움을 지향합니다.
-                    </p>
-                    <p className="shrink-0 self-start text-[9px] font-medium uppercase tracking-[0.32em] text-gold-accent/75 whitespace-nowrap">
-                      Yonsei Mi · Gyeongju
-                    </p>
-                  </div>
-                </div>
               </div>
             </Reveal>
           </div>
