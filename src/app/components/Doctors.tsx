@@ -35,11 +35,13 @@ export function Doctors() {
           >
             Meet Our Specialists
           </h2>
-          <p className="text-xl text-charcoal/90 leading-relaxed font-medium mb-4">
+          <p className="text-lg sm:text-xl text-charcoal/90 leading-relaxed font-medium mb-4 [word-break:keep-all]">
             20년의 숙련도, 확신 있는 결과.
           </p>
-          <p className="text-lg text-muted-foreground leading-relaxed">
-            상담부터 시술, 사후 관리까지 대표원장이 직접 책임집니다.
+          <p className="mx-auto max-w-[32ch] text-base sm:text-lg text-muted-foreground leading-relaxed [word-break:keep-all]">
+            상담부터 시술, 사후 관리까지
+            <br className="sm:hidden" />
+            대표원장이 직접 책임집니다.
           </p>
         </div>
 

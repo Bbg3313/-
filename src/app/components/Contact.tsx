@@ -65,7 +65,9 @@ export function ContactInner({ hideReservationCta = false }: ContactInnerProps) 
                 )}
               </button>
             </div>
-            <p className="text-sm text-muted-foreground mt-2 leading-relaxed">(경주역 우체국 옆 GS편의점 2층)</p>
+            <p className="text-sm text-muted-foreground mt-2 leading-relaxed [word-break:keep-all]">
+              (경주역 우체국 옆 GS편의점 2층)
+            </p>
           </div>
 
           <div
@@ -149,7 +151,7 @@ export function Contact() {
           >
             Visit Us
           </h2>
-          <p className="text-lg text-muted-foreground leading-relaxed">
+          <p className="text-base sm:text-lg text-muted-foreground leading-relaxed [word-break:keep-all]">
             오시는 길, 진료 시간, 예약 안내를 확인하세요
           </p>
         </div>

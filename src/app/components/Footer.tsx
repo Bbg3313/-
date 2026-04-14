@@ -23,7 +23,7 @@ function InfoLine({ label, children }: { label: string; children: ReactNode }) {
       <span className="text-muted-foreground/45 select-none font-light" aria-hidden>
         |
       </span>
-      <span className="text-left sm:text-center min-w-0">{children}</span>
+      <span className="min-w-0 text-left sm:text-center [word-break:keep-all]">{children}</span>
     </li>
   );
 }
@@ -130,7 +130,7 @@ export function Footer({ className }: FooterProps) {
 
           <div className="mt-7 w-full max-w-3xl mx-auto border border-border/60 bg-background/60 backdrop-blur-sm px-5 py-4">
             <p className="text-center text-xs tracking-widest text-charcoal/80 font-medium mb-2">주의사항</p>
-            <p className="text-center text-xs sm:text-sm text-muted-foreground leading-relaxed">
+            <p className="text-center text-xs sm:text-sm text-muted-foreground leading-relaxed [word-break:keep-all]">
               해당 수술 및 시술의 결과는 개인마다 차이가 있을 수 있습니다. 개인에 따라 피부 트러블, 붓기, 출혈, 염증, 멍,
               신경손상 등 부작용이 발생할 수 있으므로 주의를 요합니다.
             </p>

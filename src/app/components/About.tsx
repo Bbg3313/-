@@ -201,13 +201,13 @@ export function About() {
             </Reveal>
 
             <Reveal delay={0.1} className="shrink-0">
-              <p className="mb-4 w-full max-w-none text-lg font-normal leading-[1.72] text-charcoal/88 sm:text-xl">
+              <p className="mb-4 w-full max-w-none text-base sm:text-xl font-normal leading-[1.72] text-charcoal/88 [word-break:keep-all]">
                 안녕하세요 연세미의원입니다. 진료과 1인 대표원장의 상담 및 시술 책임제 병원으로서 경주의 아름다움을 선도하고 있는 병원입니다.
               </p>
             </Reveal>
 
             <Reveal delay={0.14} className="shrink-0">
-              <p className="mb-7 w-full max-w-none border-l border-gold-accent/35 pl-5 text-base font-normal leading-relaxed text-muted-foreground">
+              <p className="mb-7 w-full max-w-none border-l border-gold-accent/35 pl-5 text-[15px] sm:text-base font-normal leading-relaxed text-muted-foreground [word-break:keep-all]">
                 공장형 네트워크 병원과는 다른 시술 퀄리티를 보장합니다.
               </p>
             </Reveal>
@@ -246,7 +246,9 @@ export function About() {
                         <h3 className="mb-1.5 text-sm font-semibold leading-snug tracking-tight text-charcoal">
                           {item.title}
                         </h3>
-                        <p className="text-sm font-normal leading-relaxed text-muted-foreground">{item.body}</p>
+                        <p className="text-sm font-normal leading-relaxed text-muted-foreground [word-break:keep-all]">
+                          {item.body}
+                        </p>
                       </div>
                     </li>
                   ))}

@@ -74,7 +74,7 @@ export function Events() {
           >
             Events
           </h2>
-          <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto [word-break:keep-all]">
             이달의 혜택을 확인해보세요
           </p>
           <p className="mt-5">
@@ -105,7 +105,7 @@ export function Events() {
               </div>
               <div className="p-5 lg:p-6">
                 <p className="text-xs tracking-widest uppercase text-gold-accent mb-2">{event.period}</p>
-                <p className="text-charcoal font-semibold leading-snug line-clamp-2 text-[15px] lg:text-base">
+                <p className="text-charcoal font-semibold leading-snug line-clamp-2 text-[15px] lg:text-base [word-break:keep-all]">
                   {event.title}
                 </p>
               </div>

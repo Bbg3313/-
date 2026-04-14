@@ -75,12 +75,12 @@ export function Hero() {
           </h1>
 
           {/* Subheadline - Korean */}
-          <p className="text-white/90 text-[1.65rem] md:text-[1.75rem] mb-8 leading-relaxed">
+          <p className="max-w-[24ch] text-white/90 text-[1.35rem] sm:text-[1.65rem] md:text-[1.75rem] mb-8 leading-relaxed [word-break:keep-all]">
             건강하고 아름다운 피부를 위한 전문 클리닉
           </p>
 
           {/* Description */}
-          <p className="text-white/70 text-lg mb-12 leading-relaxed max-w-xl">
+          <p className="text-white/70 text-base sm:text-lg mb-12 leading-relaxed max-w-xl [word-break:keep-all]">
             피부과 전문의의 체계적인 진료와 최신 의료 장비로
             여러분의 피부 건강을 책임집니다
           </p>

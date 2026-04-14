@@ -65,7 +65,7 @@ export function Services() {
           >
             Medical Services
           </h2>
-          <p className="text-muted-foreground text-lg leading-relaxed">
+          <p className="text-muted-foreground text-base sm:text-lg leading-relaxed [word-break:keep-all]">
             피부과 전문의의 전문적인 진료와 최신 시술로 건강하고 아름다운 피부를 만들어드립니다.
           </p>
         </div>
@@ -91,7 +91,7 @@ export function Services() {
                 >
                   {services[0].title}
                 </h3>
-                <p className="text-[0.95rem] leading-relaxed text-white/80 whitespace-normal sm:whitespace-nowrap">
+                <p className="text-[0.9rem] sm:text-[0.95rem] leading-relaxed text-white/80 whitespace-normal sm:whitespace-nowrap [word-break:keep-all]">
                   {services[0].description}
                 </p>
               </div>
@@ -119,7 +119,7 @@ export function Services() {
                     >
                       {service.title}
                     </h3>
-                    <p className="text-sm leading-relaxed text-white/80 whitespace-normal sm:whitespace-nowrap">
+                    <p className="text-sm leading-relaxed text-white/80 whitespace-normal sm:whitespace-nowrap [word-break:keep-all]">
                       {service.description}
                     </p>
                   </div>
@@ -147,7 +147,7 @@ export function Services() {
                 >
                   {services[3].title}
                 </h3>
-                <p className="text-sm leading-relaxed text-white/80 whitespace-normal sm:whitespace-nowrap">
+                <p className="text-sm leading-relaxed text-white/80 whitespace-normal sm:whitespace-nowrap [word-break:keep-all]">
                   {services[3].description}
                 </p>
               </div>
@@ -172,7 +172,7 @@ export function Services() {
                 >
                   {services[4].title}
                 </h3>
-                <p className="text-sm leading-relaxed text-white/80 whitespace-normal sm:whitespace-nowrap">
+                <p className="text-sm leading-relaxed text-white/80 whitespace-normal sm:whitespace-nowrap [word-break:keep-all]">
                   {services[4].description}
                 </p>
               </div>
@@ -197,7 +197,7 @@ export function Services() {
                 >
                   {services[5].title}
                 </h3>
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-white/80 text-sm leading-relaxed [word-break:keep-all]">
                   {services[5].description}
                 </p>
               </div>
