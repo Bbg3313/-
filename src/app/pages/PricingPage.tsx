@@ -158,52 +158,83 @@ function PricingTableView({ table }: { table: PricingTable }) {
   const colWidthsPct = pricingColumnWidths(colCount, labelCols, priceCols);
 
   return (
-    <div className="overflow-x-auto rounded-lg border border-border/60 bg-background">
-      <table className="w-full min-w-[640px] max-w-full table-fixed border-collapse text-left text-sm">
-        <colgroup>
-          {colWidthsPct.map((w, i) => (
-            <col key={i} style={{ width: `${w}%` }} />
-          ))}
-        </colgroup>
-        <thead>
-          <tr className="bg-champagne/50 text-charcoal">
-            {table.headers.map((h, i) => (
-              <th
-                key={i}
-                scope="col"
-                className={
-                  i < labelCols
-                    ? "border-b border-border/50 px-3 py-3 text-left align-middle text-xs font-semibold tracking-tight break-words sm:px-4 sm:text-sm"
-                    : "border-b border-border/50 px-3 py-3 text-right align-middle text-xs font-semibold tabular-nums tracking-tight sm:px-4 sm:text-sm whitespace-nowrap"
-                }
-              >
-                {h || " "}
-              </th>
+    <div className="space-y-3">
+      <div className="md:hidden space-y-2.5">
+        {table.rows.map((raw, ri) => {
+          const row = padRow(raw, colCount);
+          return (
+            <div key={ri} className="rounded-lg border border-border/60 bg-background px-3.5 py-3">
+              <div className="grid grid-cols-2 gap-x-3 gap-y-2">
+                {row.map((cell, ci) => {
+                  const isPriceCol = ci >= labelCols;
+                  return (
+                    <div key={ci}>
+                      <p className="text-[11px] text-muted-foreground">{table.headers[ci] || " "}</p>
+                      <p
+                        className={
+                          isPriceCol
+                            ? "mt-0.5 text-sm font-normal text-charcoal tabular-nums"
+                            : "mt-0.5 text-sm text-muted-foreground break-words"
+                        }
+                      >
+                        {cell === "" ? "—" : cell}
+                      </p>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="hidden md:block overflow-x-auto rounded-lg border border-border/60 bg-background">
+        <table className="w-full min-w-[640px] max-w-full table-fixed border-collapse text-left text-sm">
+          <colgroup>
+            {colWidthsPct.map((w, i) => (
+              <col key={i} style={{ width: `${w}%` }} />
             ))}
-          </tr>
-        </thead>
-        <tbody>
-          {table.rows.map((raw, ri) => {
-            const row = padRow(raw, colCount);
-            return (
-              <tr key={ri} className="border-b border-border/40 transition-colors last:border-0 hover:bg-muted/25">
-                {row.map((cell, ci) => (
-                  <td
-                    key={ci}
-                    className={
-                      ci < labelCols
-                        ? "px-3 py-2.5 align-middle break-words text-muted-foreground sm:px-4"
-                        : "px-3 py-2.5 text-right align-middle tabular-nums text-charcoal sm:px-4 whitespace-nowrap"
-                    }
-                  >
-                    {cell === "" ? "\u00a0" : cell}
-                  </td>
-                ))}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+          </colgroup>
+          <thead>
+            <tr className="bg-champagne/50 text-charcoal">
+              {table.headers.map((h, i) => (
+                <th
+                  key={i}
+                  scope="col"
+                  className={
+                    i < labelCols
+                      ? "border-b border-border/50 px-3 py-3 text-left align-middle text-xs font-semibold tracking-tight break-words sm:px-4 sm:text-sm"
+                      : "border-b border-border/50 px-3 py-3 text-right align-middle text-xs font-semibold tabular-nums tracking-tight sm:px-4 sm:text-sm whitespace-nowrap"
+                  }
+                >
+                  {h || " "}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {table.rows.map((raw, ri) => {
+              const row = padRow(raw, colCount);
+              return (
+                <tr key={ri} className="border-b border-border/40 transition-colors last:border-0 hover:bg-muted/25">
+                  {row.map((cell, ci) => (
+                    <td
+                      key={ci}
+                      className={
+                        ci < labelCols
+                          ? "px-3 py-2.5 align-middle break-words text-muted-foreground sm:px-4"
+                          : "px-3 py-2.5 text-right align-middle tabular-nums text-charcoal sm:px-4 whitespace-nowrap"
+                      }
+                    >
+                      {cell === "" ? "\u00a0" : cell}
+                    </td>
+                  ))}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
