@@ -1,7 +1,12 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 import { Link } from "react-router";
+import { Check, Copy } from "lucide-react";
 import { SITE_LINKS } from "../config/siteLinks";
 import { ConsultationChannelsSection } from "./ConsultationChannelsSection";
+
+/** 지도·내비 등에 붙여넣기 좋은 한 줄 주소 */
+const CLINIC_ADDRESS_FOR_CLIPBOARD =
+  "경북 경주시 화랑로 132, 2층 연세미의원 (경주역 우체국 옆 GS편의점 2층)";
 
 const GOOGLE_MAPS_EMBED_SRC =
   "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3234.1930747588513!2d129.212623776708!3d35.844268972535126!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x35664e4195c7c2cf%3A0xa3a7117464dabddd!2z7Jew7IS466-47J2Y7JuQIOqyveyjvO2UvOu2gOqzvA!5e0!3m2!1sko!2skr!4v1775533999427!5m2!1sko!2skr";
@@ -13,6 +18,17 @@ export type ContactInnerProps = {
 
 export function ContactInner({ hideReservationCta = false }: ContactInnerProps) {
   const isExternalReservation = /^https?:\/\//.test(SITE_LINKS.reservation);
+  const [addressCopied, setAddressCopied] = useState(false);
+
+  const copyAddress = useCallback(async () => {
+    try {
+      await navigator.clipboard.writeText(CLINIC_ADDRESS_FOR_CLIPBOARD);
+      setAddressCopied(true);
+      window.setTimeout(() => setAddressCopied(false), 2000);
+    } catch {
+      setAddressCopied(false);
+    }
+  }, []);
 
   return (
     <div className="grid lg:grid-cols-2 gap-8 lg:gap-10 items-stretch">
@@ -33,7 +49,29 @@ export function ContactInner({ hideReservationCta = false }: ContactInnerProps) 
         <div className="h-full grid grid-rows-[auto_auto_1fr] gap-5">
           <div className="border border-gold-accent/20 bg-background/35 p-5">
             <p className="text-xs tracking-[0.18em] text-gold-accent uppercase mb-2">Address</p>
-            <p className="text-charcoal font-medium leading-relaxed">경북 경주시 화랑로 132, 2층 연세미의원</p>
+            <div className="flex items-start gap-3">
+              <p className="min-w-0 flex-1 text-charcoal font-medium leading-relaxed">
+                경북 경주시 화랑로 132, 2층 연세미의원
+              </p>
+              <button
+                type="button"
+                onClick={copyAddress}
+                className="group inline-flex shrink-0 items-center gap-1.5 rounded-md border border-gold-accent/35 bg-background/60 px-2.5 py-1.5 text-xs font-medium text-charcoal transition-colors hover:border-gold-accent/60 hover:bg-background"
+                aria-label={addressCopied ? "주소가 복사되었습니다" : "주소 복사"}
+              >
+                {addressCopied ? (
+                  <>
+                    <Check className="h-3.5 w-3.5 text-gold-accent" aria-hidden />
+                    복사됨
+                  </>
+                ) : (
+                  <>
+                    <Copy className="h-3.5 w-3.5 text-gold-accent opacity-80 group-hover:opacity-100" aria-hidden />
+                    복사
+                  </>
+                )}
+              </button>
+            </div>
             <p className="text-sm text-muted-foreground mt-2 leading-relaxed">(경주역 우체국 옆 GS편의점 2층)</p>
           </div>
 
