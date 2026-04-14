@@ -30,7 +30,7 @@ export function ContactInner({ hideReservationCta = false }: ContactInnerProps) 
   }, []);
 
   return (
-    <div className="grid lg:grid-cols-2 gap-8 lg:gap-10 items-stretch">
+    <div className="mx-auto grid w-full max-w-6xl items-stretch gap-8 lg:grid-cols-2 lg:gap-10">
       <div className="min-h-[300px] sm:min-h-[360px] lg:min-h-[560px]">
         <div className="border border-border/70 overflow-hidden bg-muted h-full">
           <iframe

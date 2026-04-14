@@ -311,16 +311,17 @@ export function PricingPage() {
     if (active !== "all") return;
 
     const updateScrollCategory = () => {
-      const threshold = 240;
+      const anchorY = window.innerWidth < 768 ? 170 : 240;
       let current = PRICING_CATEGORIES[0].id;
+      let bestDistance = Number.POSITIVE_INFINITY;
 
       for (const section of PRICING_SECTIONS) {
         const el = document.getElementById(`pricing-${section.id}`);
         if (!el) continue;
-        if (el.getBoundingClientRect().top <= threshold) {
+        const distance = Math.abs(el.getBoundingClientRect().top - anchorY);
+        if (distance < bestDistance) {
+          bestDistance = distance;
           current = section.categoryId;
-        } else {
-          break;
         }
       }
 
@@ -373,7 +374,7 @@ export function PricingPage() {
             </p>
           </header>
 
-          <div className="sticky top-[7rem] sm:top-[8rem] md:top-[9rem] z-40 -mx-4 sm:-mx-6 px-4 sm:px-6 py-3 mb-8 bg-background/95 backdrop-blur-md border-b border-border/60 shadow-sm">
+          <div className="sticky top-[5.5rem] sm:top-[6.4rem] md:top-[9rem] z-40 -mx-4 sm:-mx-6 px-4 sm:px-6 py-3 mb-8 bg-background/95 backdrop-blur-md border-b border-border/60 shadow-sm">
             <p className="sr-only">시술 카테고리 필터</p>
             <div
               ref={categoryRailRef}
