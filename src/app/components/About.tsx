@@ -229,35 +229,30 @@ export function About() {
             </Reveal>
 
             <Reveal delay={0.22} className="mt-auto">
-              <div className="rounded-xl border border-gold-accent/20 bg-white/25 p-6 shadow-[0_20px_50px_-28px_rgba(45,38,32,0.2)] backdrop-blur-md sm:p-8">
-                <ul className="space-y-10">
+              <div className="rounded-xl border border-gold-accent/15 bg-white/35 p-4 shadow-[0_12px_40px_-28px_rgba(45,38,32,0.14)] backdrop-blur-sm sm:p-6">
+                <div className="grid grid-cols-3 divide-x divide-gold-accent/15">
                   {features.map((item) => (
-                    <li key={item.title} className="flex gap-5 sm:gap-6">
+                    <div
+                      key={item.title}
+                      className="flex min-w-0 flex-col items-center gap-2 px-1.5 text-center sm:gap-2.5 sm:px-3 md:px-5"
+                    >
                       <div
-                        className="relative flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-amber-200/90 text-[#3d3319] shadow-[0_4px_16px_-4px_rgba(100,72,28,0.35),inset_0_1px_0_rgba(255,255,255,0.55)] ring-1 ring-inset ring-white/40 transition-[transform,box-shadow] duration-300 hover:scale-[1.03] hover:shadow-[0_6px_20px_-4px_rgba(100,72,28,0.42),inset_0_1px_0_rgba(255,255,255,0.6)]"
-                        style={{
-                          background:
-                            "linear-gradient(145deg, #fdf6e4 0%, #f0dfa8 28%, #d4b76a 55%, #b8943f 78%, #9a7828 100%)",
-                        }}
+                        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-gold-accent/25 bg-white/90 text-gold-accent shadow-[inset_0_1px_0_rgba(255,255,255,0.95)] sm:h-10 sm:w-10"
                         aria-hidden
                       >
-                        <span
-                          className="pointer-events-none absolute inset-0 rounded-lg opacity-70"
-                          style={{
-                            background:
-                              "linear-gradient(165deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.08) 38%, transparent 52%, rgba(80,55,20,0.12) 100%)",
-                          }}
-                        />
-                        <span className="pointer-events-none absolute inset-[2px] rounded-[5px] ring-1 ring-amber-950/[0.06]" />
-                        <span className="relative drop-shadow-[0_1px_0_rgba(255,255,255,0.35)]">{item.icon}</span>
+                        <span className="[&_svg]:block [&_svg]:h-[0.92rem] [&_svg]:w-[0.92rem] [&_svg]:stroke-[1.25] sm:[&_svg]:h-[1.05rem] sm:[&_svg]:w-[1.05rem]">
+                          {item.icon}
+                        </span>
                       </div>
-                      <div className="min-w-0 pt-0.5">
-                        <h3 className="mb-2 text-base font-semibold tracking-tight text-charcoal">{item.title}</h3>
-                        <p className="text-sm font-normal leading-relaxed text-muted-foreground sm:text-[15px]">{item.body}</p>
-                      </div>
-                    </li>
+                      <h3 className="text-[11px] font-semibold leading-tight tracking-tight text-charcoal sm:text-sm">
+                        {item.title}
+                      </h3>
+                      <p className="text-[10px] font-normal leading-snug text-muted-foreground sm:text-xs sm:leading-relaxed">
+                        {item.body}
+                      </p>
+                    </div>
                   ))}
-                </ul>
+                </div>
               </div>
             </Reveal>
           </div>
