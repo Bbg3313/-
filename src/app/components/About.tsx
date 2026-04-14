@@ -252,6 +252,55 @@ export function About() {
                 </ul>
               </div>
             </Reveal>
+
+            {/* 하단 여백: 카드를 늘리지 않고 장식·브랜드 무드로 채움 */}
+            <div className="mt-auto w-full shrink-0 pt-10 lg:pt-12">
+              <Reveal delay={0.26}>
+                <div className="relative overflow-hidden rounded-2xl border border-gold-accent/18 bg-gradient-to-br from-white/55 via-[#faf8f5]/90 to-white/40 p-7 shadow-[0_18px_48px_-28px_rgba(42,36,30,0.14)] ring-1 ring-black/[0.03] sm:p-9">
+                  <div
+                    className="pointer-events-none absolute inset-0 opacity-[0.22]"
+                    style={{
+                      backgroundImage:
+                        "radial-gradient(circle at 1px 1px, rgba(165, 124, 72, 0.22) 1px, transparent 0)",
+                      backgroundSize: "22px 22px",
+                    }}
+                  />
+                  <div className="pointer-events-none absolute -right-8 top-1/2 h-48 w-48 -translate-y-1/2 rounded-full bg-gold-accent/[0.06] blur-2xl" />
+                  <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-gold-accent/35 to-transparent" />
+
+                  <div className="relative flex flex-col items-center text-center">
+                    <div
+                      className="mb-5 flex h-[3.25rem] w-[3.25rem] items-center justify-center rounded-full border border-gold-accent/30 bg-white/70 text-[11px] font-semibold tracking-[0.32em] text-gold-accent shadow-[inset_0_1px_0_rgba(255,255,255,0.9)]"
+                      aria-hidden
+                    >
+                      YM
+                    </div>
+                    <p
+                      className="mb-3 max-w-md text-[1.05rem] leading-snug text-charcoal/92 sm:text-[1.15rem]"
+                      style={{ fontFamily: "'Playfair Display', serif", fontWeight: 500, fontStyle: "italic" }}
+                    >
+                      The art of understated elegance.
+                    </p>
+                    <div className="mb-4 flex items-center gap-3" aria-hidden>
+                      <span className="h-px w-10 bg-gradient-to-r from-transparent to-gold-accent/45" />
+                      <span className="inline-block h-1 w-1 rotate-45 border border-gold-accent/50 bg-white/80" />
+                      <span className="h-px w-10 bg-gradient-to-l from-transparent to-gold-accent/45" />
+                    </div>
+                    <p className="max-w-sm text-[13px] font-normal leading-relaxed tracking-wide text-muted-foreground sm:text-sm">
+                      과하지 않은 완성도와 섬세한 배려로, 오래 머무는 아름다움을 지향합니다.
+                    </p>
+                    <p className="mt-5 text-[10px] font-medium uppercase tracking-[0.38em] text-gold-accent/75">
+                      Yonsei Mi · Gyeongju
+                    </p>
+                  </div>
+
+                  <div className="pointer-events-none absolute bottom-3 left-4 right-4 flex justify-between opacity-40">
+                    <span className="h-6 w-6 border-b border-l border-gold-accent/35" />
+                    <span className="h-6 w-6 border-b border-r border-gold-accent/35" />
+                  </div>
+                </div>
+              </Reveal>
+            </div>
           </div>
         </div>
       </div>

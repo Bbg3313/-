@@ -75,7 +75,7 @@ export function Events() {
             Events
           </h2>
           <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-            진행 중인 이벤트를 확인하세요. 썸네일을 누르면 상세 페이지로 이동합니다.
+            이달의 혜택을 확인해보세요
           </p>
           <p className="mt-5">
             <Link

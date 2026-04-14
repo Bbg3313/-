@@ -69,7 +69,7 @@ export function EventsBoardPage() {
               Events
             </h1>
             <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-              진행 중인 이벤트·프로모션만 모아 두었습니다. 카드를 누르면 상세 페이지로 이동합니다.
+              이달의 혜택을 확인해보세요
             </p>
           </div>
 
