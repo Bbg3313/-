@@ -4,9 +4,8 @@ import { Check, Copy } from "lucide-react";
 import { SITE_LINKS } from "../config/siteLinks";
 import { ConsultationChannelsSection } from "./ConsultationChannelsSection";
 
-/** 지도·내비 등에 붙여넣기 좋은 한 줄 주소 */
-const CLINIC_ADDRESS_FOR_CLIPBOARD =
-  "경북 경주시 화랑로 132, 2층 연세미의원 (경주역 우체국 옆 GS편의점 2층)";
+/** 주소 복사 버튼에 넣을 도로명(번지까지) */
+const CLINIC_ADDRESS_FOR_CLIPBOARD = "경북 경주시 화랑로 132";
 
 const GOOGLE_MAPS_EMBED_SRC =
   "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3234.1930747588513!2d129.212623776708!3d35.844268972535126!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x35664e4195c7c2cf%3A0xa3a7117464dabddd!2z7Jew7IS466-47J2Y7JuQIOqyveyjvO2UvOu2gOqzvA!5e0!3m2!1sko!2skr!4v1775533999427!5m2!1sko!2skr";

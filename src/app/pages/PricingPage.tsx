@@ -29,7 +29,7 @@ function HairPriceCell({ col, align = "end" }: { col: LaserHairPriceCol; align?:
   if (col.kind === "single") {
     return (
       <div className={`flex flex-col ${wrap}`}>
-        <span className="text-base font-semibold tabular-nums text-charcoal tracking-tight">{col.price}</span>
+        <span className="text-sm font-normal tabular-nums text-charcoal">{col.price}</span>
       </div>
     );
   }
@@ -37,12 +37,12 @@ function HairPriceCell({ col, align = "end" }: { col: LaserHairPriceCol; align?:
   return (
     <div className={`flex flex-col gap-1 ${wrap}`}>
       <div className="tabular-nums leading-tight">
-        <span className="text-base font-semibold text-charcoal tracking-tight">{col.sale}</span>
-        <span className="ml-1.5 inline-block rounded bg-gold-accent/15 px-1.5 py-0.5 text-[11px] font-semibold text-gold-accent tabular-nums">
+        <span className="text-sm font-normal text-charcoal">{col.sale}</span>
+        <span className="ml-1.5 inline-block rounded bg-gold-accent/15 px-1.5 py-0.5 text-[10px] font-medium text-gold-accent tabular-nums">
           {col.discountPct}
         </span>
       </div>
-      <div className="text-[11px] tabular-nums text-muted-foreground/45 line-through decoration-muted-foreground/35">
+      <div className="text-xs tabular-nums text-muted-foreground/50 line-through decoration-muted-foreground/35">
         {col.regular}
       </div>
     </div>
@@ -76,9 +76,9 @@ function LaserHairTableView({ rows }: { rows: LaserHairRow[] }) {
             className="rounded-xl border border-border/60 bg-background px-4 py-3.5 shadow-sm"
           >
             {row.area ? (
-              <p className="text-[11px] font-semibold uppercase tracking-wider text-gold-accent">{row.area}</p>
+              <p className="text-xs font-medium uppercase tracking-wider text-gold-accent">{row.area}</p>
             ) : null}
-            <p className={`text-sm font-medium text-charcoal leading-snug ${row.area ? "mt-1" : ""}`}>{row.detail}</p>
+            <p className={`text-sm font-normal text-charcoal leading-snug ${row.area ? "mt-1" : ""}`}>{row.detail}</p>
             <div className="mt-3 grid grid-cols-3 gap-2">
               {(
                 [
@@ -113,7 +113,7 @@ function LaserHairTableView({ rows }: { rows: LaserHairRow[] }) {
             {rows.map((row, i) => (
               <tr key={i} className="border-b border-border/35 last:border-0 hover:bg-muted/15">
                 <td className="align-top px-3 py-3 text-xs font-medium text-gold-accent">{row.area || " "}</td>
-                <td className="align-top px-3 py-3 text-sm text-charcoal leading-snug">{row.detail}</td>
+                <td className="align-top px-3 py-3 text-sm font-normal text-muted-foreground leading-snug">{row.detail}</td>
                 <td className="align-top px-3 py-3">
                   <HairPriceCell col={row.once} />
                 </td>

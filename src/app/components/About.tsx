@@ -113,10 +113,10 @@ export function About() {
       <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold-accent/25 to-transparent" />
 
       <div className="relative mx-auto max-w-7xl">
-        <div className="grid gap-16 lg:grid-cols-2 lg:items-stretch lg:gap-20 xl:gap-24">
-          {/* Left: 세로 flex로 하단 2컷이 남는 높이까지 늘어나 오른쪽 카드 하단과 맞춤 */}
+        <div className="grid gap-16 lg:grid-cols-[minmax(0,1.12fr)_minmax(0,0.88fr)] lg:items-stretch lg:gap-16 xl:gap-20">
+          {/* Left: 이미지는 고정 비율(짤림 최소화), 남는 세로는 스페이서로 흡수해 오른쪽과 하단만 맞춤 */}
           <Reveal className="flex h-full min-h-0 flex-col">
-            <div className="relative mx-auto flex min-h-0 w-full max-w-xl flex-1 flex-col gap-5 sm:gap-6 lg:mx-0 lg:max-w-none">
+            <div className="relative mx-auto flex w-full max-w-xl flex-1 flex-col gap-5 sm:gap-6 lg:mx-0 lg:max-w-none">
               <div className="pointer-events-none absolute -left-3 -top-3 h-14 w-14 border-l border-t border-gold-accent/40 sm:-left-4 sm:-top-4" />
               <div className="pointer-events-none absolute -bottom-3 -right-3 h-14 w-14 border-b border-r border-gold-accent/40 sm:-bottom-4 sm:-right-4" />
 
@@ -138,20 +138,19 @@ export function About() {
                 </LuxImageCard>
               </motion.div>
 
-              <div className="grid min-h-0 flex-1 grid-cols-2 gap-4 sm:gap-5 lg:min-h-[12rem]">
+              <div className="grid shrink-0 grid-cols-2 gap-4 sm:gap-5">
                 <motion.div
                   initial={{ opacity: 0, y: 16 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.7, delay: 0.08, ease: easeLux }}
-                  className="min-h-0"
                 >
-                  <LuxImageCard className="h-full min-h-[11rem] sm:min-h-[13rem]">
-                    <div className="relative h-full min-h-[11rem] sm:min-h-[13rem]">
+                  <LuxImageCard>
+                    <div className="relative aspect-[4/5]">
                       <ImageWithFallback
                         src="/images/about-clinic-room.png"
                         alt="시술실"
-                        className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1s] ease-out group-hover:scale-[1.03]"
+                        className="h-full w-full object-cover transition-transform duration-[1s] ease-out group-hover:scale-[1.03]"
                       />
                     </div>
                   </LuxImageCard>
@@ -161,19 +160,20 @@ export function About() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.7, delay: 0.16, ease: easeLux }}
-                  className="min-h-0"
                 >
-                  <LuxImageCard className="h-full min-h-[11rem] sm:min-h-[13rem]">
-                    <div className="relative h-full min-h-[11rem] sm:min-h-[13rem]">
+                  <LuxImageCard>
+                    <div className="relative aspect-[4/5]">
                       <ImageWithFallback
                         src="/images/about-clinic-lobby.png"
                         alt="로비"
-                        className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1s] ease-out group-hover:scale-[1.03]"
+                        className="h-full w-full object-cover transition-transform duration-[1s] ease-out group-hover:scale-[1.03]"
                       />
                     </div>
                   </LuxImageCard>
                 </motion.div>
               </div>
+
+              <div className="hidden min-h-0 flex-1 lg:block" aria-hidden />
             </div>
           </Reveal>
 
@@ -185,10 +185,20 @@ export function About() {
             </Reveal>
 
             <Reveal delay={0.05}>
-              <h2 className="mb-8 max-w-[22ch] text-[clamp(1.65rem,3.8vw,2.35rem)] font-semibold leading-[1.2] tracking-tight text-charcoal">
+              <h2
+                className="mb-8 max-w-[20ch] text-charcoal tracking-[-0.02em]"
+                style={{
+                  fontFamily: "'Playfair Display', serif",
+                  fontSize: "clamp(2.35rem, 4.2vw, 3.35rem)",
+                  lineHeight: 1.12,
+                  fontWeight: 500,
+                }}
+              >
                 Where Science
                 <br />
-                <span className="font-semibold text-gold-accent">Meets Beauty</span>
+                <span className="bg-gradient-to-r from-charcoal via-charcoal to-gold-accent/75 bg-clip-text text-transparent">
+                  Meets Beauty
+                </span>
               </h2>
             </Reveal>
 
@@ -223,8 +233,23 @@ export function About() {
                 <ul className="space-y-10">
                   {features.map((item) => (
                     <li key={item.title} className="flex gap-5 sm:gap-6">
-                      <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-lg border border-gold-accent/30 bg-gradient-to-br from-white/90 to-champagne/80 text-gold-accent shadow-sm transition-shadow duration-300 hover:shadow-md">
-                        {item.icon}
+                      <div
+                        className="relative flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-amber-200/90 text-[#3d3319] shadow-[0_4px_16px_-4px_rgba(100,72,28,0.35),inset_0_1px_0_rgba(255,255,255,0.55)] ring-1 ring-inset ring-white/40 transition-[transform,box-shadow] duration-300 hover:scale-[1.03] hover:shadow-[0_6px_20px_-4px_rgba(100,72,28,0.42),inset_0_1px_0_rgba(255,255,255,0.6)]"
+                        style={{
+                          background:
+                            "linear-gradient(145deg, #fdf6e4 0%, #f0dfa8 28%, #d4b76a 55%, #b8943f 78%, #9a7828 100%)",
+                        }}
+                        aria-hidden
+                      >
+                        <span
+                          className="pointer-events-none absolute inset-0 rounded-lg opacity-70"
+                          style={{
+                            background:
+                              "linear-gradient(165deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.08) 38%, transparent 52%, rgba(80,55,20,0.12) 100%)",
+                          }}
+                        />
+                        <span className="pointer-events-none absolute inset-[2px] rounded-[5px] ring-1 ring-amber-950/[0.06]" />
+                        <span className="relative drop-shadow-[0_1px_0_rgba(255,255,255,0.35)]">{item.icon}</span>
                       </div>
                       <div className="min-w-0 pt-0.5">
                         <h3 className="mb-2 text-base font-semibold tracking-tight text-charcoal">{item.title}</h3>
