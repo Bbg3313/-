@@ -228,33 +228,28 @@ export function About() {
               </div>
             </Reveal>
 
-            <Reveal delay={0.22} className="mt-auto w-full">
-              <div className="w-full rounded-xl border border-gold-accent/15 bg-white/40 p-4 shadow-[0_12px_40px_-28px_rgba(45,38,32,0.14)] backdrop-blur-sm sm:p-5 md:p-6">
-                <div className="grid w-full grid-cols-3 divide-x divide-gold-accent/15">
+            <Reveal delay={0.22} className="mt-8 w-full">
+              <div className="w-full rounded-xl border border-gold-accent/15 bg-white/40 px-4 py-1 shadow-[0_8px_28px_-20px_rgba(45,38,32,0.12)] backdrop-blur-sm sm:px-5 sm:py-0">
+                <ul className="divide-y divide-gold-accent/12">
                   {features.map((item) => (
-                    <div
-                      key={item.title}
-                      className="flex min-w-0 flex-col items-stretch gap-2.5 px-2 py-1 text-center sm:gap-3 sm:px-4 md:px-6"
-                    >
-                      <div className="flex justify-center">
-                        <div
-                          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-gold-accent/25 bg-white/90 text-gold-accent shadow-[inset_0_1px_0_rgba(255,255,255,0.95)] sm:h-11 sm:w-11"
-                          aria-hidden
-                        >
-                          <span className="[&_svg]:block [&_svg]:h-[1rem] [&_svg]:w-[1rem] [&_svg]:stroke-[1.25] sm:[&_svg]:h-[1.1rem] sm:[&_svg]:w-[1.1rem]">
-                            {item.icon}
-                          </span>
-                        </div>
+                    <li key={item.title} className="flex gap-4 py-4 sm:gap-5 sm:py-5">
+                      <div
+                        className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-gold-accent/25 bg-white/90 text-gold-accent shadow-[inset_0_1px_0_rgba(255,255,255,0.95)] sm:h-11 sm:w-11"
+                        aria-hidden
+                      >
+                        <span className="[&_svg]:block [&_svg]:h-[1rem] [&_svg]:w-[1rem] [&_svg]:stroke-[1.25] sm:[&_svg]:h-[1.1rem] sm:[&_svg]:w-[1.1rem]">
+                          {item.icon}
+                        </span>
                       </div>
-                      <h3 className="text-xs font-semibold leading-snug tracking-tight text-charcoal sm:text-[13px] md:text-sm">
-                        {item.title}
-                      </h3>
-                      <p className="grow text-center text-[11px] font-normal leading-relaxed text-muted-foreground sm:text-xs md:text-[13px] md:leading-relaxed">
-                        {item.body}
-                      </p>
-                    </div>
+                      <div className="min-w-0 flex-1">
+                        <h3 className="mb-1.5 text-sm font-semibold leading-snug tracking-tight text-charcoal">
+                          {item.title}
+                        </h3>
+                        <p className="text-sm font-normal leading-relaxed text-muted-foreground">{item.body}</p>
+                      </div>
+                    </li>
                   ))}
-                </div>
+                </ul>
               </div>
             </Reveal>
           </div>
