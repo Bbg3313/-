@@ -75,6 +75,17 @@ export function LanguageSwitcher() {
     }, 150);
   };
 
+  const resetToOriginalKorean = () => {
+    const expired = "Thu, 01 Jan 1970 00:00:00 GMT";
+    document.cookie = `googtrans=;expires=${expired};path=/`;
+    document.cookie = `googtrans=;expires=${expired};path=/;domain=${window.location.hostname}`;
+    if (window.location.hostname.includes(".")) {
+      const rootDomain = window.location.hostname.split(".").slice(-2).join(".");
+      document.cookie = `googtrans=;expires=${expired};path=/;domain=.${rootDomain}`;
+    }
+    window.location.reload();
+  };
+
   return (
     <>
       <div className="relative">
@@ -105,7 +116,11 @@ export function LanguageSwitcher() {
                 type="button"
                 onClick={() => {
                   setSelected(lang);
-                  applyLanguageWithRetry(lang.code);
+                  if (lang.code === "ko") {
+                    resetToOriginalKorean();
+                  } else {
+                    applyLanguageWithRetry(lang.code);
+                  }
                   setOpen(false);
                 }}
                 className="w-full flex items-center gap-2 px-3 py-2 text-left text-sm hover:bg-muted/60 transition-colors"

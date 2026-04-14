@@ -35,8 +35,6 @@ export function ReservationPage() {
             </p>
           </div>
 
-          <ContactInner hideReservationCta />
-
           <ConsultationChannelsSection
             heading="예약·상담 채널"
             description={
@@ -45,6 +43,8 @@ export function ReservationPage() {
               </>
             }
           />
+
+          <ContactInner hideReservationCta />
         </article>
       </main>
       <Footer className="mt-auto" />

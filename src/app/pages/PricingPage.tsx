@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
@@ -21,6 +21,14 @@ function padRow(row: string[], len: number): string[] {
   const next = [...row];
   while (next.length < len) next.push("—");
   return next.slice(0, len);
+}
+
+function normalizeMixedKoreanPrice(text: string): string {
+  return text.replace(/(\d+)\s*만(?:\s*(\d{1,3}(?:,\d{3})*|\d+))?/g, (_, man: string, extra?: string) => {
+    const extraNum = extra ? Number(extra.replace(/,/g, "")) : 0;
+    const total = Number(man) * 10000 + extraNum;
+    return Number.isFinite(total) ? total.toLocaleString("ko-KR") : _;
+  });
 }
 
 /** table-layout:fixed + colgroup용 — 카드마다 열 픽셀이 달라지지 않게 % 고정 */
@@ -48,7 +56,7 @@ function HairPriceCell({ col, align = "end" }: { col: LaserHairPriceCol; align?:
   if (col.kind === "single") {
     return (
       <div className={`flex flex-col ${wrap}`}>
-        <span className="text-sm font-normal tabular-nums text-charcoal">{col.price}</span>
+        <span className="text-sm font-normal tabular-nums text-charcoal">{normalizeMixedKoreanPrice(col.price)}</span>
       </div>
     );
   }
@@ -56,13 +64,13 @@ function HairPriceCell({ col, align = "end" }: { col: LaserHairPriceCol; align?:
   return (
     <div className={`flex flex-col gap-1 ${wrap}`}>
       <div className="tabular-nums leading-tight">
-        <span className="text-sm font-normal text-charcoal">{col.sale}</span>
+        <span className="text-sm font-normal text-charcoal">{normalizeMixedKoreanPrice(col.sale)}</span>
         <span className="ml-1.5 inline-block rounded bg-gold-accent/15 px-1.5 py-0.5 text-[10px] font-medium text-gold-accent tabular-nums">
           {col.discountPct}
         </span>
       </div>
       <div className="text-xs tabular-nums text-muted-foreground/50 line-through decoration-muted-foreground/35">
-        {col.regular}
+        {normalizeMixedKoreanPrice(col.regular)}
       </div>
     </div>
   );
@@ -177,7 +185,7 @@ function PricingTableView({ table }: { table: PricingTable }) {
                             : "mt-0.5 text-sm text-muted-foreground break-words"
                         }
                       >
-                        {cell === "" ? "—" : cell}
+                        {cell === "" ? "—" : normalizeMixedKoreanPrice(cell)}
                       </p>
                     </div>
                   );
@@ -226,7 +234,7 @@ function PricingTableView({ table }: { table: PricingTable }) {
                           : "px-3 py-2.5 text-right align-middle tabular-nums text-charcoal sm:px-4 whitespace-nowrap"
                       }
                     >
-                      {cell === "" ? "\u00a0" : cell}
+                      {cell === "" ? "\u00a0" : normalizeMixedKoreanPrice(cell)}
                     </td>
                   ))}
                 </tr>
@@ -281,6 +289,9 @@ function SectionCard({ section }: { section: PricingSection }) {
 export function PricingPage() {
   const [active, setActive] = useState<PricingCategoryId | "all">("all");
   const [scrollActive, setScrollActive] = useState<PricingCategoryId>(PRICING_CATEGORIES[0].id);
+  const categoryRefs = useRef<Record<PricingCategoryId, HTMLButtonElement | null>>(
+    Object.fromEntries(PRICING_CATEGORIES.map((c) => [c.id, null])) as Record<PricingCategoryId, HTMLButtonElement | null>,
+  );
 
   const visible = useMemo(() => {
     if (active === "all") return PRICING_SECTIONS;
@@ -324,11 +335,18 @@ export function PricingPage() {
     };
   }, [active]);
 
+  useEffect(() => {
+    const currentId = active === "all" ? scrollActive : active;
+    const btn = categoryRefs.current[currentId as PricingCategoryId];
+    if (!btn) return;
+    btn.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+  }, [active, scrollActive]);
+
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <Header />
       <main
-        className="flex-1 pb-16 px-4 sm:px-6 pt-44 sm:pt-48 md:pt-[13rem]"
+        className="flex-1 pt-32 md:pt-36 pb-16 px-6"
         style={{ fontFamily: PRICING_FONT }}
       >
         <article className="max-w-5xl mx-auto relative">
@@ -336,7 +354,7 @@ export function PricingPage() {
           <div className="relative z-0 mb-6">
             <Link
               to="/"
-              className="inline-flex items-center rounded-md py-2 pr-3 text-sm leading-none text-muted-foreground hover:bg-muted/40 hover:text-gold-accent transition-colors"
+              className="inline-flex items-center py-1 text-sm leading-none text-muted-foreground hover:text-gold-accent transition-colors"
             >
               ← 홈으로
             </Link>
@@ -354,7 +372,7 @@ export function PricingPage() {
 
           <div className="sticky top-[7rem] sm:top-[8rem] md:top-[9rem] z-40 -mx-4 sm:-mx-6 px-4 sm:px-6 py-3 mb-8 bg-background/95 backdrop-blur-md border-b border-border/60 shadow-sm">
             <p className="sr-only">시술 카테고리 필터</p>
-            <div className="grid grid-cols-4 sm:grid-cols-6 gap-2 w-full max-w-5xl mx-auto">
+            <div className="mx-auto flex w-full gap-2 overflow-x-auto pb-1 md:grid md:max-w-5xl md:grid-cols-6 md:overflow-visible md:pb-0">
               {PRICING_CATEGORIES.map((c) => {
                 const isOn = active === "all" ? scrollActive === c.id : active === c.id;
                 return (
@@ -362,10 +380,13 @@ export function PricingPage() {
                     key={c.id}
                     type="button"
                     onClick={() => setActive(c.id)}
+                    ref={(el) => {
+                      categoryRefs.current[c.id] = el;
+                    }}
                     className={
                       isOn
-                        ? "min-h-[2.5rem] w-full rounded-lg border border-gold-accent/50 bg-champagne/80 px-2 py-2 text-center text-xs sm:text-sm font-medium text-charcoal leading-snug shadow-sm transition-colors"
-                        : "min-h-[2.5rem] w-full rounded-lg border border-border/70 bg-card px-2 py-2 text-center text-xs sm:text-sm font-medium text-muted-foreground leading-snug hover:border-gold-accent/35 hover:text-charcoal transition-colors"
+                        ? "min-h-[2.5rem] shrink-0 whitespace-nowrap rounded-lg border border-gold-accent/50 bg-champagne/80 px-3 py-2 text-center text-xs font-medium text-charcoal leading-snug shadow-sm transition-colors md:w-full md:px-2 md:text-sm"
+                        : "min-h-[2.5rem] shrink-0 whitespace-nowrap rounded-lg border border-border/70 bg-card px-3 py-2 text-center text-xs font-medium text-muted-foreground leading-snug transition-colors hover:border-gold-accent/35 hover:text-charcoal md:w-full md:px-2 md:text-sm"
                     }
                   >
                     {c.label}

@@ -193,17 +193,20 @@ export function Header() {
               </div>
               <div className="px-6 py-4 space-y-1">
                 <SheetClose asChild>
-                  <Link to="/events" className="block rounded-md px-3 py-3 text-sm text-charcoal hover:bg-muted/40">
+                  <Link to="/events" className="flex items-center gap-2 rounded-md px-3 py-3 text-sm text-charcoal hover:bg-muted/40">
+                    <Ticket className="h-4 w-4 text-gold-accent/80" />
                     이벤트
                   </Link>
                 </SheetClose>
                 <SheetClose asChild>
-                  <Link to="/#about" className="block rounded-md px-3 py-3 text-sm text-charcoal hover:bg-muted/40">
+                  <Link to="/#about" className="flex items-center gap-2 rounded-md px-3 py-3 text-sm text-charcoal hover:bg-muted/40">
+                    <Hospital className="h-4 w-4 text-gold-accent/80" />
                     병원소개
                   </Link>
                 </SheetClose>
                 <SheetClose asChild>
-                  <Link to="/#doctors" className="block rounded-md px-3 py-3 text-sm text-charcoal hover:bg-muted/40">
+                  <Link to="/#doctors" className="flex items-center gap-2 rounded-md px-3 py-3 text-sm text-charcoal hover:bg-muted/40">
+                    <Stethoscope className="h-4 w-4 text-gold-accent/80" />
                     의료진
                   </Link>
                 </SheetClose>
@@ -213,22 +216,25 @@ export function Header() {
                     target="_blank"
                     rel="noreferrer"
                     onClick={() => setMobileOpen(false)}
-                    className="block rounded-md px-3 py-3 text-sm text-charcoal hover:bg-muted/40"
+                    className="flex items-center gap-2 rounded-md px-3 py-3 text-sm text-charcoal hover:bg-muted/40"
                   >
+                    <Sparkles className="h-4 w-4 text-gold-accent/80" />
                     예약·문의
                   </a>
                 ) : (
                   <SheetClose asChild>
                     <Link
                       to={SITE_LINKS.reservation}
-                      className="block rounded-md px-3 py-3 text-sm text-charcoal hover:bg-muted/40"
+                      className="flex items-center gap-2 rounded-md px-3 py-3 text-sm text-charcoal hover:bg-muted/40"
                     >
+                      <Sparkles className="h-4 w-4 text-gold-accent/80" />
                       예약·문의
                     </Link>
                   </SheetClose>
                 )}
                 <SheetClose asChild>
-                  <Link to="/pricing" className="block rounded-md px-3 py-3 text-sm text-charcoal hover:bg-muted/40">
+                  <Link to="/pricing" className="flex items-center gap-2 rounded-md px-3 py-3 text-sm text-charcoal hover:bg-muted/40">
+                    <CalendarDays className="h-4 w-4 text-gold-accent/80" />
                     시술/가격
                   </Link>
                 </SheetClose>
@@ -249,38 +255,38 @@ export function Header() {
       </nav>
     </header>
 
-      <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-border/70 bg-background/95 backdrop-blur-md md:hidden">
+      <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-border/70 bg-background/95 pb-[max(0.2rem,env(safe-area-inset-bottom))] backdrop-blur-md md:hidden">
         <ul className="mx-auto grid max-w-7xl grid-cols-5">
           <li>
             <Link
               to="/events"
-              className={`flex flex-col items-center justify-center gap-1 px-1 py-2 text-[10px] font-medium leading-tight transition-colors ${
+              className={`flex flex-col items-center justify-center gap-1.5 px-1 py-2.5 text-[11px] font-semibold leading-tight transition-colors ${
                 isEventsActive ? "text-gold-accent" : "text-muted-foreground"
               }`}
             >
-              <Ticket className="h-3.5 w-3.5" />
+              <Ticket className="h-4 w-4" />
               이벤트
             </Link>
           </li>
           <li>
             <Link
               to="/#about"
-              className={`flex flex-col items-center justify-center gap-1 px-1 py-2 text-[10px] font-medium leading-tight transition-colors ${
+              className={`flex flex-col items-center justify-center gap-1.5 px-1 py-2.5 text-[11px] font-semibold leading-tight transition-colors ${
                 isAboutActive ? "text-gold-accent" : "text-muted-foreground"
               }`}
             >
-              <Hospital className="h-3.5 w-3.5" />
+              <Hospital className="h-4 w-4" />
               병원소개
             </Link>
           </li>
           <li>
             <Link
               to="/#doctors"
-              className={`flex flex-col items-center justify-center gap-1 px-1 py-2 text-[10px] font-medium leading-tight transition-colors ${
+              className={`flex flex-col items-center justify-center gap-1.5 px-1 py-2.5 text-[11px] font-semibold leading-tight transition-colors ${
                 isDoctorsActive ? "text-gold-accent" : "text-muted-foreground"
               }`}
             >
-              <Stethoscope className="h-3.5 w-3.5" />
+              <Stethoscope className="h-4 w-4" />
               의료진
             </Link>
           </li>
@@ -290,31 +296,31 @@ export function Header() {
                 href={SITE_LINKS.reservation}
                 target="_blank"
                 rel="noreferrer"
-                className="flex flex-col items-center justify-center gap-1 px-1 py-2 text-[10px] font-medium leading-tight text-muted-foreground transition-colors hover:text-gold-accent"
+                className="flex flex-col items-center justify-center gap-1.5 px-1 py-2.5 text-[11px] font-semibold leading-tight text-muted-foreground transition-colors hover:text-gold-accent"
               >
-                <Sparkles className="h-3.5 w-3.5" />
-                예약문의
+                <Sparkles className="h-4 w-4" />
+                예약·문의
               </a>
             ) : (
               <Link
                 to={SITE_LINKS.reservation}
-                className={`flex flex-col items-center justify-center gap-1 px-1 py-2 text-[10px] font-medium leading-tight transition-colors ${
+                className={`flex flex-col items-center justify-center gap-1.5 px-1 py-2.5 text-[11px] font-semibold leading-tight transition-colors ${
                   isReservationActive ? "text-gold-accent" : "text-muted-foreground"
                 }`}
               >
-                <Sparkles className="h-3.5 w-3.5" />
-                예약문의
+                <Sparkles className="h-4 w-4" />
+                예약·문의
               </Link>
             )}
           </li>
           <li>
             <Link
               to="/pricing"
-              className={`flex flex-col items-center justify-center gap-1 px-1 py-2 text-[10px] font-medium leading-tight transition-colors ${
+              className={`flex flex-col items-center justify-center gap-1.5 px-1 py-2.5 text-[11px] font-semibold leading-tight transition-colors ${
                 isPricingActive ? "text-gold-accent" : "text-muted-foreground"
               }`}
             >
-              <CalendarDays className="h-3.5 w-3.5" />
+              <CalendarDays className="h-4 w-4" />
               시술/가격
             </Link>
           </li>

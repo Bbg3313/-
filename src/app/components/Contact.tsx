@@ -49,25 +49,19 @@ export function ContactInner({ hideReservationCta = false }: ContactInnerProps) 
           <div className="border border-gold-accent/20 bg-background/35 p-5">
             <p className="text-xs tracking-[0.18em] text-gold-accent uppercase mb-2">Address</p>
             <div className="flex items-start gap-3">
-              <p className="min-w-0 flex-1 text-charcoal font-medium leading-relaxed">
+              <p className="min-w-0 flex-1 overflow-x-auto whitespace-nowrap text-charcoal font-medium leading-relaxed">
                 경북 경주시 화랑로 132, 2층 연세미의원
               </p>
               <button
                 type="button"
                 onClick={copyAddress}
-                className="group inline-flex shrink-0 items-center gap-1.5 rounded-md border border-gold-accent/35 bg-background/60 px-2.5 py-1.5 text-xs font-medium text-charcoal transition-colors hover:border-gold-accent/60 hover:bg-background"
+                className="group inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-md border border-gold-accent/35 bg-background/60 text-charcoal transition-colors hover:border-gold-accent/60 hover:bg-background"
                 aria-label={addressCopied ? "주소가 복사되었습니다" : "주소 복사"}
               >
                 {addressCopied ? (
-                  <>
-                    <Check className="h-3.5 w-3.5 text-gold-accent" aria-hidden />
-                    복사됨
-                  </>
+                  <Check className="h-4 w-4 text-gold-accent" aria-hidden />
                 ) : (
-                  <>
-                    <Copy className="h-3.5 w-3.5 text-gold-accent opacity-80 group-hover:opacity-100" aria-hidden />
-                    복사
-                  </>
+                  <Copy className="h-4 w-4 text-gold-accent opacity-80 group-hover:opacity-100" aria-hidden />
                 )}
               </button>
             </div>

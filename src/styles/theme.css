@@ -202,11 +202,37 @@
   display: none !important;
 }
 
+iframe.goog-te-banner-frame,
+iframe.skiptranslate,
+.skiptranslate iframe {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+.goog-te-balloon-frame,
+.VIpgJd-ZVi9od-ORHb-OEVmcd,
+.VIpgJd-ZVi9od-aZ2wEe-wOHMyf {
+  display: none !important;
+  visibility: hidden !important;
+}
+
 body {
+  top: 0 !important;
+}
+
+html {
   top: 0 !important;
 }
 
 .goog-logo-link,
 .goog-te-gadget span {
   display: none !important;
+}
+
+#goog-gt-tt,
+.goog-tooltip,
+.goog-text-highlight {
+  display: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
 }

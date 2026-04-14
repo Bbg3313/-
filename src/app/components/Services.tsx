@@ -81,17 +81,17 @@ export function Services() {
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-12">
+              <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-12">
                 <p className="text-white/60 text-sm tracking-widest mb-3 uppercase">
                   {services[0].subtitle}
                 </p>
                 <h3
-                  className="text-white mb-4"
-                  style={{ fontFamily: "'Playfair Display', serif", fontSize: "2.5rem", lineHeight: "1.2", fontWeight: "600" }}
+                  className="mb-4 text-white text-[1.9rem] leading-[1.2] sm:text-[2.5rem]"
+                  style={{ fontFamily: "'Playfair Display', serif", fontWeight: "600" }}
                 >
                   {services[0].title}
                 </h3>
-                <p className="text-white/80 leading-relaxed text-[0.95rem] whitespace-nowrap">
+                <p className="text-[0.95rem] leading-relaxed text-white/80 whitespace-normal sm:whitespace-nowrap">
                   {services[0].description}
                 </p>
               </div>
@@ -119,7 +119,7 @@ export function Services() {
                     >
                       {service.title}
                     </h3>
-                    <p className="text-white/80 text-sm leading-relaxed whitespace-nowrap">
+                    <p className="text-sm leading-relaxed text-white/80 whitespace-normal sm:whitespace-nowrap">
                       {service.description}
                     </p>
                   </div>
@@ -147,7 +147,7 @@ export function Services() {
                 >
                   {services[3].title}
                 </h3>
-                <p className="text-white/80 text-sm leading-relaxed whitespace-nowrap">
+                <p className="text-sm leading-relaxed text-white/80 whitespace-normal sm:whitespace-nowrap">
                   {services[3].description}
                 </p>
               </div>
@@ -172,7 +172,7 @@ export function Services() {
                 >
                   {services[4].title}
                 </h3>
-                <p className="text-white/80 text-sm leading-relaxed whitespace-nowrap">
+                <p className="text-sm leading-relaxed text-white/80 whitespace-normal sm:whitespace-nowrap">
                   {services[4].description}
                 </p>
               </div>
