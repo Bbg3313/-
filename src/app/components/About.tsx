@@ -261,8 +261,8 @@ export function About() {
                       backgroundSize: "18px 18px",
                     }}
                   />
-                  <div className="relative flex flex-col items-center gap-3 text-center sm:flex-row sm:flex-wrap sm:items-center sm:justify-center sm:gap-x-5 sm:gap-y-2 sm:text-left lg:flex-nowrap lg:justify-between lg:gap-4">
-                    <div className="flex flex-col items-center gap-2 sm:flex-row sm:items-center sm:gap-3 sm:shrink-0">
+                  <div className="relative flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between sm:gap-x-6 sm:gap-y-0 sm:text-left">
+                    <div className="flex shrink-0 items-start gap-3">
                       <div
                         className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-gold-accent/28 bg-white/75 text-[9px] font-semibold tracking-[0.28em] text-gold-accent shadow-[inset_0_1px_0_rgba(255,255,255,0.9)] sm:h-9 sm:w-9"
                         aria-hidden
@@ -270,16 +270,16 @@ export function About() {
                         YM
                       </div>
                       <p
-                        className="max-w-[11rem] text-sm leading-snug text-charcoal/90"
+                        className="text-sm leading-snug text-charcoal/90 whitespace-normal sm:whitespace-nowrap"
                         style={{ fontFamily: "'Playfair Display', serif", fontWeight: 500, fontStyle: "italic" }}
                       >
                         The art of understated elegance.
                       </p>
                     </div>
-                    <p className="max-w-[16rem] text-xs leading-relaxed text-muted-foreground sm:max-w-[14rem] sm:text-right lg:text-sm">
+                    <p className="min-w-0 flex-1 text-xs leading-relaxed text-muted-foreground sm:px-2 sm:text-center lg:px-4 lg:text-sm">
                       과하지 않은 완성도와 섬세한 배려로, 오래 머무는 아름다움을 지향합니다.
                     </p>
-                    <p className="w-full shrink-0 text-[9px] font-medium uppercase tracking-[0.32em] text-gold-accent/75 sm:w-auto sm:text-left">
+                    <p className="shrink-0 self-start text-[9px] font-medium uppercase tracking-[0.32em] text-gold-accent/75 whitespace-nowrap">
                       Yonsei Mi · Gyeongju
                     </p>
                   </div>
