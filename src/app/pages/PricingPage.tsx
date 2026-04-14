@@ -23,6 +23,25 @@ function padRow(row: string[], len: number): string[] {
   return next.slice(0, len);
 }
 
+/** table-layout:fixed + colgroup용 — 카드마다 열 픽셀이 달라지지 않게 % 고정 */
+function pricingColumnWidths(colCount: number, labelCols: number, priceCols: number): number[] {
+  if (colCount === 0) return [];
+  if (labelCols === 0) {
+    const eq = 100 / colCount;
+    return Array.from({ length: colCount }, () => eq);
+  }
+  let labelTotalPct = 36;
+  if (priceCols >= 5) labelTotalPct = 22;
+  else if (priceCols === 4) labelTotalPct = 26;
+  else if (priceCols === 3) labelTotalPct = 36;
+  else if (priceCols === 2) labelTotalPct = 40;
+  else if (priceCols === 1) labelTotalPct = 46;
+
+  const perLabel = labelTotalPct / labelCols;
+  const perPrice = priceCols > 0 ? (100 - labelTotalPct) / priceCols : 0;
+  return Array.from({ length: colCount }, (_, i) => (i < labelCols ? perLabel : perPrice));
+}
+
 function HairPriceCell({ col, align = "end" }: { col: LaserHairPriceCol; align?: "end" | "center" }) {
   const wrap = align === "center" ? "items-center text-center" : "items-end text-right";
 
@@ -136,10 +155,16 @@ function PricingTableView({ table }: { table: PricingTable }) {
   const colCount = table.headers.length;
   const priceCols = table.priceColumns ?? 0;
   const labelCols = Math.max(0, colCount - priceCols);
+  const colWidthsPct = pricingColumnWidths(colCount, labelCols, priceCols);
 
   return (
     <div className="overflow-x-auto rounded-lg border border-border/60 bg-background">
-      <table className="w-full min-w-[520px] text-sm text-left border-collapse">
+      <table className="w-full min-w-[640px] max-w-full table-fixed border-collapse text-left text-sm">
+        <colgroup>
+          {colWidthsPct.map((w, i) => (
+            <col key={i} style={{ width: `${w}%` }} />
+          ))}
+        </colgroup>
         <thead>
           <tr className="bg-champagne/50 text-charcoal">
             {table.headers.map((h, i) => (
@@ -148,8 +173,8 @@ function PricingTableView({ table }: { table: PricingTable }) {
                 scope="col"
                 className={
                   i < labelCols
-                    ? "px-3 sm:px-4 py-3 font-semibold tracking-tight border-b border-border/50"
-                    : "px-3 sm:px-4 py-3 font-semibold tracking-tight border-b border-border/50 text-right tabular-nums whitespace-nowrap"
+                    ? "border-b border-border/50 px-3 py-3 text-left align-middle text-xs font-semibold tracking-tight break-words sm:px-4 sm:text-sm"
+                    : "border-b border-border/50 px-3 py-3 text-right align-middle text-xs font-semibold tabular-nums tracking-tight sm:px-4 sm:text-sm whitespace-nowrap"
                 }
               >
                 {h || " "}
@@ -161,17 +186,17 @@ function PricingTableView({ table }: { table: PricingTable }) {
           {table.rows.map((raw, ri) => {
             const row = padRow(raw, colCount);
             return (
-              <tr key={ri} className="border-b border-border/40 last:border-0 hover:bg-muted/25 transition-colors">
+              <tr key={ri} className="border-b border-border/40 transition-colors last:border-0 hover:bg-muted/25">
                 {row.map((cell, ci) => (
                   <td
                     key={ci}
                     className={
                       ci < labelCols
-                        ? "px-3 sm:px-4 py-2.5 text-muted-foreground align-top"
-                        : "px-3 sm:px-4 py-2.5 text-right tabular-nums text-charcoal align-top whitespace-nowrap"
+                        ? "px-3 py-2.5 align-middle break-words text-muted-foreground sm:px-4"
+                        : "px-3 py-2.5 text-right align-middle tabular-nums text-charcoal sm:px-4 whitespace-nowrap"
                     }
                   >
-                    {cell === "" ? " " : cell}
+                    {cell === "" ? "\u00a0" : cell}
                   </td>
                 ))}
               </tr>
