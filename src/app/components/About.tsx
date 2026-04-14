@@ -113,10 +113,10 @@ export function About() {
       <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold-accent/25 to-transparent" />
 
       <div className="relative mx-auto w-full max-w-[90rem]">
-        <div className="grid gap-12 lg:grid-cols-2 lg:items-stretch lg:gap-12 xl:gap-16">
-          {/* Left: 이미지는 고정 비율(짤림 최소화), 남는 세로는 스페이서로 흡수해 오른쪽과 하단만 맞춤 */}
-          <Reveal className="flex h-full min-h-0 flex-col">
-            <div className="relative mx-auto flex w-full max-w-xl flex-1 flex-col gap-5 sm:gap-6 lg:mx-0 lg:max-w-none">
+        <div className="grid gap-12 lg:grid-cols-2 lg:items-start lg:gap-12 xl:gap-16">
+          {/* Left: 이미지 스택 높이만 사용(빈 스페이서 없음) — 행 높이는 이미지 쪽이 우선 */}
+          <Reveal className="flex min-h-0 flex-col">
+            <div className="relative mx-auto flex w-full max-w-xl flex-col gap-5 sm:gap-6 lg:mx-0 lg:max-w-none">
               <div className="pointer-events-none absolute -left-3 -top-3 h-14 w-14 border-l border-t border-gold-accent/40 sm:-left-4 sm:-top-4" />
               <div className="pointer-events-none absolute -bottom-3 -right-3 h-14 w-14 border-b border-r border-gold-accent/40 sm:-bottom-4 sm:-right-4" />
 
@@ -172,25 +172,21 @@ export function About() {
                   </LuxImageCard>
                 </motion.div>
               </div>
-
-              <div className="hidden min-h-0 flex-1 lg:block" aria-hidden />
             </div>
           </Reveal>
 
-          {/* Right — 열 너비 전부 사용, 불필요한 max-width 제거 */}
-          <div className="flex h-full min-h-0 w-full min-w-0 flex-col lg:pl-2 xl:pl-4">
+          {/* Right — 짧을 때는 열 하단에 붙여 이미지 하단과 맞춤 */}
+          <div className="flex min-h-0 w-full min-w-0 flex-col lg:self-end lg:pl-2 xl:pl-4">
             <Reveal>
-              <p className="mb-5 text-[11px] font-medium uppercase tracking-[0.35em] text-gold-accent/90">Yonsei Mi Clinic</p>
-              <div className="mb-7 h-px w-20 bg-gradient-to-r from-gold-accent via-gold-accent/60 to-transparent" />
+              <p className="mb-3 text-[11px] font-medium uppercase tracking-[0.35em] text-gold-accent/90 lg:mb-2">Yonsei Mi Clinic</p>
+              <div className="mb-5 h-px w-20 bg-gradient-to-r from-gold-accent via-gold-accent/60 to-transparent lg:mb-4" />
             </Reveal>
 
             <Reveal delay={0.05}>
               <h2
-                className="mb-7 w-full text-charcoal tracking-[-0.02em] text-balance"
+                className="mb-5 w-full text-[clamp(2.1rem,3.6vw,3.15rem)] leading-[1.12] text-charcoal tracking-[-0.02em] text-balance lg:mb-3 lg:text-[clamp(1.65rem,2.35vw,2.4rem)]"
                 style={{
                   fontFamily: "'Playfair Display', serif",
-                  fontSize: "clamp(2.1rem, 3.6vw, 3.15rem)",
-                  lineHeight: 1.12,
                   fontWeight: 500,
                 }}
               >
@@ -203,24 +199,24 @@ export function About() {
             </Reveal>
 
             <Reveal delay={0.1}>
-              <p className="mb-4 w-full max-w-none text-lg font-normal leading-[1.72] text-charcoal/88 sm:text-xl">
+              <p className="mb-3 w-full max-w-none text-lg font-normal leading-[1.65] text-charcoal/88 sm:text-xl lg:mb-2.5 lg:text-[1.05rem] lg:leading-[1.62]">
                 안녕하세요 연세미의원입니다. 진료과 1인 대표원장의 상담 및 시술 책임제 병원으로서 경주의 아름다움을 선도하고 있는 병원입니다.
               </p>
             </Reveal>
 
             <Reveal delay={0.14}>
-              <p className="mb-7 w-full max-w-none border-l border-gold-accent/35 pl-5 text-base font-normal leading-relaxed text-muted-foreground">
+              <p className="mb-5 w-full max-w-none border-l border-gold-accent/35 pl-4 text-[15px] font-normal leading-snug text-muted-foreground lg:mb-4 lg:pl-4 lg:text-sm lg:leading-relaxed">
                 공장형 네트워크 병원과는 다른 시술 퀄리티를 보장합니다.
               </p>
             </Reveal>
 
             <Reveal delay={0.18}>
-              <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.28em] text-muted-foreground/80">Signature care</p>
-              <div className="mb-9 grid w-full grid-cols-2 gap-2 sm:grid-cols-4 lg:grid-cols-7">
+              <p className="mb-1.5 text-[10px] font-semibold uppercase tracking-[0.28em] text-muted-foreground/80">Signature care</p>
+              <div className="mb-5 grid w-full grid-cols-2 gap-1.5 sm:grid-cols-4 sm:gap-2 lg:mb-4 lg:grid-cols-7">
                 {services.map((label) => (
                   <span
                     key={label}
-                    className="flex min-h-[2.35rem] items-center justify-center rounded-md border border-gold-accent/25 bg-white/55 px-2 py-2 text-center text-[11px] font-medium leading-tight tracking-wide text-charcoal/75 shadow-sm backdrop-blur-sm transition-colors hover:border-gold-accent/45 hover:text-charcoal sm:text-xs"
+                    className="flex min-h-[2.05rem] items-center justify-center rounded-md border border-gold-accent/25 bg-white/55 px-1.5 py-1.5 text-center text-[10px] font-medium leading-tight tracking-wide text-charcoal/75 shadow-sm backdrop-blur-sm transition-colors hover:border-gold-accent/45 hover:text-charcoal sm:min-h-[2.2rem] sm:px-2 sm:py-2 sm:text-[11px] lg:min-h-[2rem] lg:py-1.5 lg:text-[11px]"
                   >
                     {label}
                   </span>
@@ -228,79 +224,66 @@ export function About() {
               </div>
             </Reveal>
 
-            <Reveal delay={0.22} className="mt-8 w-full">
-              <div className="w-full rounded-xl border border-gold-accent/15 bg-white/40 px-4 py-1 shadow-[0_8px_28px_-20px_rgba(45,38,32,0.12)] backdrop-blur-sm sm:px-5 sm:py-0">
-                <ul className="divide-y divide-gold-accent/12">
+            <Reveal delay={0.22} className="mt-4 w-full lg:mt-3">
+              <div className="w-full overflow-hidden rounded-xl border border-gold-accent/15 bg-white/40 shadow-[0_8px_28px_-20px_rgba(45,38,32,0.12)] backdrop-blur-sm">
+                <ul className="divide-y divide-gold-accent/12 px-3.5 sm:px-4">
                   {features.map((item) => (
-                    <li key={item.title} className="flex gap-4 py-4 sm:gap-5 sm:py-5">
+                    <li key={item.title} className="flex gap-3 py-3 sm:gap-4 lg:py-2.5">
                       <div
-                        className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-gold-accent/25 bg-white/90 text-gold-accent shadow-[inset_0_1px_0_rgba(255,255,255,0.95)] sm:h-11 sm:w-11"
+                        className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-gold-accent/25 bg-white/90 text-gold-accent shadow-[inset_0_1px_0_rgba(255,255,255,0.95)] sm:h-10 sm:w-10"
                         aria-hidden
                       >
-                        <span className="[&_svg]:block [&_svg]:h-[1rem] [&_svg]:w-[1rem] [&_svg]:stroke-[1.25] sm:[&_svg]:h-[1.1rem] sm:[&_svg]:w-[1.1rem]">
+                        <span className="[&_svg]:block [&_svg]:h-[0.95rem] [&_svg]:w-[0.95rem] [&_svg]:stroke-[1.25] sm:[&_svg]:h-[1rem] sm:[&_svg]:w-[1rem]">
                           {item.icon}
                         </span>
                       </div>
                       <div className="min-w-0 flex-1">
-                        <h3 className="mb-1.5 text-sm font-semibold leading-snug tracking-tight text-charcoal">
+                        <h3 className="mb-1 text-[13px] font-semibold leading-snug tracking-tight text-charcoal sm:text-sm">
                           {item.title}
                         </h3>
-                        <p className="text-sm font-normal leading-relaxed text-muted-foreground">{item.body}</p>
+                        <p className="text-[12px] font-normal leading-relaxed text-muted-foreground sm:text-sm lg:leading-snug">
+                          {item.body}
+                        </p>
                       </div>
                     </li>
                   ))}
                 </ul>
-              </div>
-            </Reveal>
 
-            {/* 하단 여백: 카드를 늘리지 않고 장식·브랜드 무드로 채움 */}
-            <div className="mt-auto w-full shrink-0 pt-10 lg:pt-12">
-              <Reveal delay={0.26}>
-                <div className="relative overflow-hidden rounded-2xl border border-gold-accent/18 bg-gradient-to-br from-white/55 via-[#faf8f5]/90 to-white/40 p-7 shadow-[0_18px_48px_-28px_rgba(42,36,30,0.14)] ring-1 ring-black/[0.03] sm:p-9">
+                {/* 브랜드 무드: 별도 카드 대신 한 카드 하단 푸터로 합쳐 세로 높이 절감 */}
+                <div className="relative border-t border-gold-accent/12 bg-gradient-to-b from-white/35 to-[#faf8f5]/50 px-3.5 py-2.5 sm:px-4 sm:py-3 lg:py-2">
                   <div
-                    className="pointer-events-none absolute inset-0 opacity-[0.22]"
+                    className="pointer-events-none absolute inset-0 opacity-[0.14]"
                     style={{
                       backgroundImage:
-                        "radial-gradient(circle at 1px 1px, rgba(165, 124, 72, 0.22) 1px, transparent 0)",
-                      backgroundSize: "22px 22px",
+                        "radial-gradient(circle at 1px 1px, rgba(165, 124, 72, 0.2) 1px, transparent 0)",
+                      backgroundSize: "18px 18px",
                     }}
                   />
-                  <div className="pointer-events-none absolute -right-8 top-1/2 h-48 w-48 -translate-y-1/2 rounded-full bg-gold-accent/[0.06] blur-2xl" />
-                  <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-gold-accent/35 to-transparent" />
-
-                  <div className="relative flex flex-col items-center text-center">
-                    <div
-                      className="mb-5 flex h-[3.25rem] w-[3.25rem] items-center justify-center rounded-full border border-gold-accent/30 bg-white/70 text-[11px] font-semibold tracking-[0.32em] text-gold-accent shadow-[inset_0_1px_0_rgba(255,255,255,0.9)]"
-                      aria-hidden
-                    >
-                      YM
+                  <div className="relative flex flex-col items-center gap-2 text-center sm:flex-row sm:flex-wrap sm:items-center sm:justify-center sm:gap-x-4 sm:gap-y-2 sm:text-left lg:flex-nowrap lg:justify-between lg:gap-3">
+                    <div className="flex flex-col items-center gap-1.5 sm:flex-row sm:items-center sm:gap-2.5 sm:shrink-0">
+                      <div
+                        className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-gold-accent/28 bg-white/75 text-[8px] font-semibold tracking-[0.26em] text-gold-accent shadow-[inset_0_1px_0_rgba(255,255,255,0.9)] sm:h-8 sm:w-8 sm:text-[9px]"
+                        aria-hidden
+                      >
+                        YM
+                      </div>
+                      <p
+                        className="text-[12px] leading-snug text-charcoal/90 sm:max-w-[10.5rem] sm:text-[13px]"
+                        style={{ fontFamily: "'Playfair Display', serif", fontWeight: 500, fontStyle: "italic" }}
+                      >
+                        The art of understated elegance.
+                      </p>
                     </div>
-                    <p
-                      className="mb-3 max-w-md text-[1.05rem] leading-snug text-charcoal/92 sm:text-[1.15rem]"
-                      style={{ fontFamily: "'Playfair Display', serif", fontWeight: 500, fontStyle: "italic" }}
-                    >
-                      The art of understated elegance.
-                    </p>
-                    <div className="mb-4 flex items-center gap-3" aria-hidden>
-                      <span className="h-px w-10 bg-gradient-to-r from-transparent to-gold-accent/45" />
-                      <span className="inline-block h-1 w-1 rotate-45 border border-gold-accent/50 bg-white/80" />
-                      <span className="h-px w-10 bg-gradient-to-l from-transparent to-gold-accent/45" />
-                    </div>
-                    <p className="max-w-sm text-[13px] font-normal leading-relaxed tracking-wide text-muted-foreground sm:text-sm">
+                    <p className="max-w-[18rem] text-[10px] leading-snug text-muted-foreground sm:max-w-[14rem] sm:text-[11px] lg:max-w-[12rem] lg:text-right">
                       과하지 않은 완성도와 섬세한 배려로, 오래 머무는 아름다움을 지향합니다.
                     </p>
-                    <p className="mt-5 text-[10px] font-medium uppercase tracking-[0.38em] text-gold-accent/75">
+                    <p className="w-full shrink-0 text-[8px] font-medium uppercase tracking-[0.3em] text-gold-accent/75 sm:w-auto sm:text-left lg:text-[9px]">
                       Yonsei Mi · Gyeongju
                     </p>
                   </div>
-
-                  <div className="pointer-events-none absolute bottom-3 left-4 right-4 flex justify-between opacity-40">
-                    <span className="h-6 w-6 border-b border-l border-gold-accent/35" />
-                    <span className="h-6 w-6 border-b border-r border-gold-accent/35" />
-                  </div>
                 </div>
-              </Reveal>
-            </div>
+              </div>
+            </Reveal>
           </div>
         </div>
       </div>
