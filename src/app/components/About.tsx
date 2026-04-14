@@ -112,8 +112,8 @@ export function About() {
       <div className="pointer-events-none absolute top-24 right-[-10%] h-[min(32rem,50vw)] w-[min(32rem,50vw)] rounded-full bg-gold-accent/[0.07] blur-3xl" />
       <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold-accent/25 to-transparent" />
 
-      <div className="relative mx-auto max-w-7xl">
-        <div className="grid gap-16 lg:grid-cols-[minmax(0,1.12fr)_minmax(0,0.88fr)] lg:items-stretch lg:gap-16 xl:gap-20">
+      <div className="relative mx-auto w-full max-w-[90rem]">
+        <div className="grid gap-12 lg:grid-cols-2 lg:items-stretch lg:gap-12 xl:gap-16">
           {/* Left: 이미지는 고정 비율(짤림 최소화), 남는 세로는 스페이서로 흡수해 오른쪽과 하단만 맞춤 */}
           <Reveal className="flex h-full min-h-0 flex-col">
             <div className="relative mx-auto flex w-full max-w-xl flex-1 flex-col gap-5 sm:gap-6 lg:mx-0 lg:max-w-none">
@@ -128,11 +128,11 @@ export function About() {
                 className="shrink-0"
               >
                 <LuxImageCard>
-                  <div className="relative aspect-[16/10] sm:aspect-[16/9]">
+                  <div className="relative w-full bg-gradient-to-b from-[#f4f1ec] to-[#e9e4dc]">
                     <ImageWithFallback
                       src="/images/about-clinic-main.png"
                       alt="연세미의원 로고와 인테리어"
-                      className="h-full w-full object-cover transition-transform duration-[1.15s] ease-out group-hover:scale-[1.02]"
+                      className="mx-auto block h-auto w-full max-h-[min(68vh,680px)] object-contain object-bottom transition-transform duration-[1.15s] ease-out group-hover:scale-[1.01]"
                     />
                   </div>
                 </LuxImageCard>
@@ -177,19 +177,19 @@ export function About() {
             </div>
           </Reveal>
 
-          {/* Right — Pretendard 통일, 하단 카드는 열이 늘어날 때 아래로 붙여 왼쪽 이미지 하단과 맞춤 */}
-          <div className="flex h-full min-h-0 flex-col">
+          {/* Right — 열 너비 전부 사용, 불필요한 max-width 제거 */}
+          <div className="flex h-full min-h-0 w-full min-w-0 flex-col lg:pl-2 xl:pl-4">
             <Reveal>
-              <p className="mb-6 text-[11px] font-medium uppercase tracking-[0.35em] text-gold-accent/90">Yonsei Mi Clinic</p>
-              <div className="mb-8 h-px w-16 bg-gradient-to-r from-gold-accent via-gold-accent/60 to-transparent" />
+              <p className="mb-5 text-[11px] font-medium uppercase tracking-[0.35em] text-gold-accent/90">Yonsei Mi Clinic</p>
+              <div className="mb-7 h-px w-20 bg-gradient-to-r from-gold-accent via-gold-accent/60 to-transparent" />
             </Reveal>
 
             <Reveal delay={0.05}>
               <h2
-                className="mb-8 max-w-[20ch] text-charcoal tracking-[-0.02em]"
+                className="mb-7 w-full text-charcoal tracking-[-0.02em] text-balance"
                 style={{
                   fontFamily: "'Playfair Display', serif",
-                  fontSize: "clamp(2.35rem, 4.2vw, 3.35rem)",
+                  fontSize: "clamp(2.1rem, 3.6vw, 3.15rem)",
                   lineHeight: 1.12,
                   fontWeight: 500,
                 }}
@@ -203,24 +203,24 @@ export function About() {
             </Reveal>
 
             <Reveal delay={0.1}>
-              <p className="mb-5 max-w-prose text-lg font-normal leading-[1.75] text-charcoal/88 sm:text-xl">
+              <p className="mb-4 w-full max-w-none text-lg font-normal leading-[1.72] text-charcoal/88 sm:text-xl">
                 안녕하세요 연세미의원입니다. 진료과 1인 대표원장의 상담 및 시술 책임제 병원으로서 경주의 아름다움을 선도하고 있는 병원입니다.
               </p>
             </Reveal>
 
             <Reveal delay={0.14}>
-              <p className="mb-8 max-w-prose border-l border-gold-accent/35 pl-5 text-base font-normal leading-relaxed text-muted-foreground">
+              <p className="mb-7 w-full max-w-none border-l border-gold-accent/35 pl-5 text-base font-normal leading-relaxed text-muted-foreground">
                 공장형 네트워크 병원과는 다른 시술 퀄리티를 보장합니다.
               </p>
             </Reveal>
 
             <Reveal delay={0.18}>
               <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.28em] text-muted-foreground/80">Signature care</p>
-              <div className="mb-12 flex flex-wrap gap-2">
+              <div className="mb-9 grid w-full grid-cols-2 gap-2 sm:grid-cols-4 lg:grid-cols-7">
                 {services.map((label) => (
                   <span
                     key={label}
-                    className="inline-flex rounded-md border border-gold-accent/25 bg-white/45 px-3 py-1.5 text-[11px] font-medium tracking-wide text-charcoal/70 shadow-sm backdrop-blur-sm transition-colors hover:border-gold-accent/45 hover:text-charcoal"
+                    className="flex min-h-[2.35rem] items-center justify-center rounded-md border border-gold-accent/25 bg-white/55 px-2 py-2 text-center text-[11px] font-medium leading-tight tracking-wide text-charcoal/75 shadow-sm backdrop-blur-sm transition-colors hover:border-gold-accent/45 hover:text-charcoal sm:text-xs"
                   >
                     {label}
                   </span>
@@ -228,26 +228,28 @@ export function About() {
               </div>
             </Reveal>
 
-            <Reveal delay={0.22} className="mt-auto">
-              <div className="rounded-xl border border-gold-accent/15 bg-white/35 p-4 shadow-[0_12px_40px_-28px_rgba(45,38,32,0.14)] backdrop-blur-sm sm:p-6">
-                <div className="grid grid-cols-3 divide-x divide-gold-accent/15">
+            <Reveal delay={0.22} className="mt-auto w-full">
+              <div className="w-full rounded-xl border border-gold-accent/15 bg-white/40 p-4 shadow-[0_12px_40px_-28px_rgba(45,38,32,0.14)] backdrop-blur-sm sm:p-5 md:p-6">
+                <div className="grid w-full grid-cols-3 divide-x divide-gold-accent/15">
                   {features.map((item) => (
                     <div
                       key={item.title}
-                      className="flex min-w-0 flex-col items-center gap-2 px-1.5 text-center sm:gap-2.5 sm:px-3 md:px-5"
+                      className="flex min-w-0 flex-col items-stretch gap-2.5 px-2 py-1 text-center sm:gap-3 sm:px-4 md:px-6"
                     >
-                      <div
-                        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-gold-accent/25 bg-white/90 text-gold-accent shadow-[inset_0_1px_0_rgba(255,255,255,0.95)] sm:h-10 sm:w-10"
-                        aria-hidden
-                      >
-                        <span className="[&_svg]:block [&_svg]:h-[0.92rem] [&_svg]:w-[0.92rem] [&_svg]:stroke-[1.25] sm:[&_svg]:h-[1.05rem] sm:[&_svg]:w-[1.05rem]">
-                          {item.icon}
-                        </span>
+                      <div className="flex justify-center">
+                        <div
+                          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-gold-accent/25 bg-white/90 text-gold-accent shadow-[inset_0_1px_0_rgba(255,255,255,0.95)] sm:h-11 sm:w-11"
+                          aria-hidden
+                        >
+                          <span className="[&_svg]:block [&_svg]:h-[1rem] [&_svg]:w-[1rem] [&_svg]:stroke-[1.25] sm:[&_svg]:h-[1.1rem] sm:[&_svg]:w-[1.1rem]">
+                            {item.icon}
+                          </span>
+                        </div>
                       </div>
-                      <h3 className="text-[11px] font-semibold leading-tight tracking-tight text-charcoal sm:text-sm">
+                      <h3 className="text-xs font-semibold leading-snug tracking-tight text-charcoal sm:text-[13px] md:text-sm">
                         {item.title}
                       </h3>
-                      <p className="text-[10px] font-normal leading-snug text-muted-foreground sm:text-xs sm:leading-relaxed">
+                      <p className="grow text-center text-[11px] font-normal leading-relaxed text-muted-foreground sm:text-xs md:text-[13px] md:leading-relaxed">
                         {item.body}
                       </p>
                     </div>
