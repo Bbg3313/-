@@ -224,6 +224,19 @@ html {
   top: 0 !important;
 }
 
+html,
+body {
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+}
+
+body.translated-ltr,
+body.translated-rtl {
+  position: static !important;
+  top: 0 !important;
+}
+
 .goog-logo-link,
 .goog-te-gadget span {
   display: none !important;
