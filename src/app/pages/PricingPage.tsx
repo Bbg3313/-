@@ -49,12 +49,24 @@ function HairPriceCell({ col, align = "end" }: { col: LaserHairPriceCol; align?:
   );
 }
 
+function laserHairRowsAllSingle(rows: LaserHairRow[]) {
+  return rows.every(
+    (r) => r.once.kind === "single" && r.five.kind === "single" && r.ten.kind === "single",
+  );
+}
+
 function LaserHairTableView({ rows }: { rows: LaserHairRow[] }) {
+  const allSingle = laserHairRowsAllSingle(rows);
+
   return (
     <div className="space-y-3">
-      <p className="text-xs text-muted-foreground md:px-1">
-        할인가 옆 숫자는 할인율입니다. <span className="line-through opacity-60">취소선</span>은 정가 안내입니다.
-      </p>
+      {!allSingle ? (
+        <p className="text-xs text-muted-foreground md:px-1">
+          할인가 옆 숫자는 할인율입니다. <span className="line-through opacity-60">취소선</span>은 정가 안내입니다.
+        </p>
+      ) : (
+        <p className="text-xs text-muted-foreground md:px-1">금액 단위: 원, VAT 10% 별도.</p>
+      )}
 
       {/* 모바일: 부위별 카드 */}
       <div className="md:hidden space-y-3">

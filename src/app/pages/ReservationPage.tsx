@@ -12,25 +12,25 @@ export function ReservationPage() {
         <article className="max-w-[90rem] mx-auto">
           <Link
             to="/"
-            className="inline-flex items-center py-1 text-sm leading-none text-muted-foreground hover:text-gold-accent transition-colors"
+            className="inline-flex items-center py-1 text-sm leading-none text-muted-foreground hover:text-gold-accent transition-colors mb-8"
           >
             ← 홈으로
           </Link>
 
-          <div className="max-w-3xl mx-auto mt-10 mb-12 lg:mb-16 text-center">
-            <div className="w-12 h-px bg-gold-accent mb-8 mx-auto" />
+          <div className="text-center mb-14 lg:mb-16">
+            <div className="w-12 h-px bg-gold-accent mx-auto mb-8" />
             <h1
               className="mb-4 text-charcoal tracking-tight"
               style={{
                 fontFamily: "'Playfair Display', serif",
-                fontSize: "clamp(2.25rem, 5vw, 3.5rem)",
+                fontSize: "clamp(2.5rem, 5vw, 3.5rem)",
                 lineHeight: "1.1",
                 fontWeight: "500",
               }}
             >
               예약·문의
             </h1>
-            <p className="text-lg text-muted-foreground leading-relaxed">
+            <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
               오시는 길과 진료 시간을 확인하신 뒤, 편하신 채널로 예약해 주세요.
             </p>
           </div>

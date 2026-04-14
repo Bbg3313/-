@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router";
 import { SITE_LINKS } from "../config/siteLinks";
+import { ConsultationChannelsSection } from "./ConsultationChannelsSection";
 
 const GOOGLE_MAPS_EMBED_SRC =
   "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3234.1930747588513!2d129.212623776708!3d35.844268972535126!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x35664e4195c7c2cf%3A0xa3a7117464dabddd!2z7Jew7IS466-47J2Y7JuQIOqyveyjvO2UvOu2gOqzvA!5e0!3m2!1sko!2skr!4v1775533999427!5m2!1sko!2skr";
@@ -123,6 +124,8 @@ export function Contact() {
         </div>
 
         <ContactInner />
+
+        <ConsultationChannelsSection />
       </div>
     </section>
   );

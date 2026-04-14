@@ -19,8 +19,18 @@ export function ConsultationChannelsSection({
   return (
     <section className="mt-14 border border-border/70 bg-muted/30 p-6 sm:p-8 md:p-10">
       <div className="text-center mb-8">
-        <h2 className="text-charcoal text-2xl md:text-3xl font-semibold tracking-tight mb-3">{heading}</h2>
-        <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">{description}</p>
+        <h2
+          className="text-charcoal tracking-tight mb-3"
+          style={{
+            fontFamily: "'Playfair Display', serif",
+            fontSize: "clamp(1.75rem, 3.5vw, 2.25rem)",
+            lineHeight: "1.15",
+            fontWeight: "500",
+          }}
+        >
+          {heading}
+        </h2>
+        <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">{description}</p>
       </div>
 
       <div className="grid sm:grid-cols-2 xl:grid-cols-4 gap-4">
