@@ -280,6 +280,7 @@ function SectionCard({ section }: { section: PricingSection }) {
 
 export function PricingPage() {
   const [active, setActive] = useState<PricingCategoryId | "all">("all");
+  const [scrollActive, setScrollActive] = useState<PricingCategoryId>(PRICING_CATEGORIES[0].id);
 
   const visible = useMemo(() => {
     if (active === "all") return PRICING_SECTIONS;
@@ -292,6 +293,35 @@ export function PricingPage() {
     if (!first) return;
     const el = document.getElementById(`pricing-${first.id}`);
     el?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, [active]);
+
+  useEffect(() => {
+    if (active !== "all") return;
+
+    const updateScrollCategory = () => {
+      const threshold = 240;
+      let current = PRICING_CATEGORIES[0].id;
+
+      for (const section of PRICING_SECTIONS) {
+        const el = document.getElementById(`pricing-${section.id}`);
+        if (!el) continue;
+        if (el.getBoundingClientRect().top <= threshold) {
+          current = section.categoryId;
+        } else {
+          break;
+        }
+      }
+
+      setScrollActive((prev) => (prev === current ? prev : current));
+    };
+
+    updateScrollCategory();
+    window.addEventListener("scroll", updateScrollCategory, { passive: true });
+    window.addEventListener("resize", updateScrollCategory);
+    return () => {
+      window.removeEventListener("scroll", updateScrollCategory);
+      window.removeEventListener("resize", updateScrollCategory);
+    };
   }, [active]);
 
   return (
@@ -326,7 +356,7 @@ export function PricingPage() {
             <p className="sr-only">시술 카테고리 필터</p>
             <div className="grid grid-cols-4 sm:grid-cols-6 gap-2 w-full max-w-5xl mx-auto">
               {PRICING_CATEGORIES.map((c) => {
-                const isOn = active === c.id;
+                const isOn = active === "all" ? scrollActive === c.id : active === c.id;
                 return (
                   <button
                     key={c.id}

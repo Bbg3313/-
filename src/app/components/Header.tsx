@@ -1,7 +1,7 @@
 import logo from "../../imports/logo.svg";
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router";
-import { MenuIcon } from "lucide-react";
+import { CalendarDays, Hospital, MenuIcon, Sparkles, Stethoscope, Ticket } from "lucide-react";
 import { SITE_LOGO_IMG_CLASS } from "../config/logo";
 import { useHomeLogoClick } from "../hooks/useHomeLogoClick";
 import { LanguageSwitcher } from "./LanguageSwitcher";
@@ -254,30 +254,33 @@ export function Header() {
           <li>
             <Link
               to="/events"
-              className={`flex flex-col items-center justify-center px-1 py-2 text-[10px] font-medium leading-tight transition-colors ${
+              className={`flex flex-col items-center justify-center gap-1 px-1 py-2 text-[10px] font-medium leading-tight transition-colors ${
                 isEventsActive ? "text-gold-accent" : "text-muted-foreground"
               }`}
             >
+              <Ticket className="h-3.5 w-3.5" />
               이벤트
             </Link>
           </li>
           <li>
             <Link
               to="/#about"
-              className={`flex flex-col items-center justify-center px-1 py-2 text-[10px] font-medium leading-tight transition-colors ${
+              className={`flex flex-col items-center justify-center gap-1 px-1 py-2 text-[10px] font-medium leading-tight transition-colors ${
                 isAboutActive ? "text-gold-accent" : "text-muted-foreground"
               }`}
             >
+              <Hospital className="h-3.5 w-3.5" />
               병원소개
             </Link>
           </li>
           <li>
             <Link
               to="/#doctors"
-              className={`flex flex-col items-center justify-center px-1 py-2 text-[10px] font-medium leading-tight transition-colors ${
+              className={`flex flex-col items-center justify-center gap-1 px-1 py-2 text-[10px] font-medium leading-tight transition-colors ${
                 isDoctorsActive ? "text-gold-accent" : "text-muted-foreground"
               }`}
             >
+              <Stethoscope className="h-3.5 w-3.5" />
               의료진
             </Link>
           </li>
@@ -287,17 +290,19 @@ export function Header() {
                 href={SITE_LINKS.reservation}
                 target="_blank"
                 rel="noreferrer"
-                className="flex flex-col items-center justify-center px-1 py-2 text-[10px] font-medium leading-tight text-muted-foreground transition-colors hover:text-gold-accent"
+                className="flex flex-col items-center justify-center gap-1 px-1 py-2 text-[10px] font-medium leading-tight text-muted-foreground transition-colors hover:text-gold-accent"
               >
+                <Sparkles className="h-3.5 w-3.5" />
                 예약문의
               </a>
             ) : (
               <Link
                 to={SITE_LINKS.reservation}
-                className={`flex flex-col items-center justify-center px-1 py-2 text-[10px] font-medium leading-tight transition-colors ${
+                className={`flex flex-col items-center justify-center gap-1 px-1 py-2 text-[10px] font-medium leading-tight transition-colors ${
                   isReservationActive ? "text-gold-accent" : "text-muted-foreground"
                 }`}
               >
+                <Sparkles className="h-3.5 w-3.5" />
                 예약문의
               </Link>
             )}
@@ -305,10 +310,11 @@ export function Header() {
           <li>
             <Link
               to="/pricing"
-              className={`flex flex-col items-center justify-center px-1 py-2 text-[10px] font-medium leading-tight transition-colors ${
+              className={`flex flex-col items-center justify-center gap-1 px-1 py-2 text-[10px] font-medium leading-tight transition-colors ${
                 isPricingActive ? "text-gold-accent" : "text-muted-foreground"
               }`}
             >
+              <CalendarDays className="h-3.5 w-3.5" />
               시술/가격
             </Link>
           </li>

@@ -36,7 +36,7 @@ export function FloatingActions() {
     !isExternalReservation && location.pathname === SITE_LINKS.reservation;
 
   return (
-    <div className="fixed bottom-16 right-3 z-50 md:bottom-6 md:right-6">
+    <div className="hidden fixed bottom-16 right-3 z-50 md:bottom-6 md:right-6 md:block">
       <div className="flex flex-col gap-2 md:gap-3.5">
         {isExternalEventBoard ? (
           <a

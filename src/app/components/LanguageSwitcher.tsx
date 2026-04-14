@@ -13,16 +13,10 @@ const LANG_OPTIONS = [
   { code: "vi", label: "Tiếng Việt", flag: "https://flagcdn.com/w40/vn.png" },
 ] as const;
 
-function applyLanguage(lang: string) {
-  const combo = document.querySelector<HTMLSelectElement>(".goog-te-combo");
-  if (!combo) return;
-  combo.value = lang;
-  combo.dispatchEvent(new Event("change"));
-}
-
 export function LanguageSwitcher() {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState<(typeof LANG_OPTIONS)[number]>(LANG_OPTIONS[0]);
+  const [isTranslateReady, setIsTranslateReady] = useState(false);
 
   const selectedLabel = useMemo(() => selected.label, [selected]);
 
@@ -48,15 +42,50 @@ export function LanguageSwitcher() {
     document.body.appendChild(script);
   }, []);
 
+  useEffect(() => {
+    let tries = 0;
+    const maxTries = 40;
+    const timer = window.setInterval(() => {
+      const combo = document.querySelector<HTMLSelectElement>(".goog-te-combo");
+      if (combo) {
+        setIsTranslateReady(true);
+        window.clearInterval(timer);
+        return;
+      }
+      tries += 1;
+      if (tries >= maxTries) window.clearInterval(timer);
+    }, 200);
+    return () => window.clearInterval(timer);
+  }, []);
+
+  const applyLanguageWithRetry = (lang: string) => {
+    let tries = 0;
+    const maxTries = 20;
+    const timer = window.setInterval(() => {
+      const combo = document.querySelector<HTMLSelectElement>(".goog-te-combo");
+      if (!combo) {
+        tries += 1;
+        if (tries >= maxTries) window.clearInterval(timer);
+        return;
+      }
+      combo.value = lang;
+      combo.dispatchEvent(new Event("change"));
+      setIsTranslateReady(true);
+      window.clearInterval(timer);
+    }, 150);
+  };
+
   return (
     <>
       <div className="relative">
         <button
           type="button"
           onClick={() => setOpen((prev) => !prev)}
-          className="inline-flex items-center gap-2.5 px-3 py-2.5 border border-border bg-background/90 backdrop-blur-sm text-charcoal hover:border-gold-accent/50 transition-colors min-w-[156px] justify-between"
+          className="inline-flex items-center gap-2.5 px-3 py-2.5 border border-border bg-background/90 backdrop-blur-sm text-charcoal hover:border-gold-accent/50 transition-colors min-w-[156px] justify-between disabled:cursor-not-allowed disabled:opacity-70"
           aria-haspopup="listbox"
           aria-expanded={open}
+          disabled={!isTranslateReady}
+          title={!isTranslateReady ? "번역 도구 로딩 중" : undefined}
         >
           <span className="inline-flex items-center gap-2">
             <img src={selected.flag} alt={selectedLabel} className="w-[18px] h-[13px] object-cover border border-border/60" />
@@ -76,7 +105,7 @@ export function LanguageSwitcher() {
                 type="button"
                 onClick={() => {
                   setSelected(lang);
-                  applyLanguage(lang.code);
+                  applyLanguageWithRetry(lang.code);
                   setOpen(false);
                 }}
                 className="w-full flex items-center gap-2 px-3 py-2 text-left text-sm hover:bg-muted/60 transition-colors"
