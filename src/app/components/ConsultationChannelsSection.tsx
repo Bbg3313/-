@@ -17,8 +17,8 @@ export function ConsultationChannelsSection({
   ),
 }: ConsultationChannelsSectionProps) {
   return (
-    <section className="mt-8 border border-border/70 bg-muted/30 p-4 sm:mt-14 sm:p-8 md:p-10">
-      <div className="mb-5 text-center sm:mb-8">
+    <section className="mt-4 border border-border/70 bg-muted/30 px-4 pt-4 pb-2 sm:mt-6 sm:px-6 sm:pt-5 sm:pb-2.5 md:px-8 md:pt-6 md:pb-3">
+      <div className="mb-3 text-center sm:mb-4">
         <h2 className="mb-3 text-[clamp(1.35rem,2.8vw,1.75rem)] font-semibold leading-snug tracking-tight text-charcoal">
           {heading}
         </h2>

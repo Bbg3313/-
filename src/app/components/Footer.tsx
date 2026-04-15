@@ -86,7 +86,7 @@ export function Footer({ className }: FooterProps) {
   return (
     <footer className={cn("mt-auto", className)}>
       <div className="border-t border-border bg-muted/50">
-        <div className="mx-auto flex max-w-xl flex-col items-center px-6 py-6 md:py-12">
+        <div className="mx-auto flex max-w-xl flex-col items-center px-6 pt-2 pb-6 md:pt-3 md:pb-12">
           {/* 로고: 정확히 가로 중앙 정렬 */}
           <div className="w-full flex justify-center">
             <Link

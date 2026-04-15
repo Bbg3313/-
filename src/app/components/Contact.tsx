@@ -30,9 +30,9 @@ export function ContactInner({ hideReservationCta = false }: ContactInnerProps) 
   }, []);
 
   return (
-    <div className="mx-auto grid w-full min-w-0 max-w-full grid-cols-1 content-stretch items-stretch gap-5 lg:grid-cols-2 lg:gap-10">
+    <div className="mx-auto box-border grid w-full min-w-0 max-w-full grid-cols-1 content-stretch items-stretch gap-5 lg:grid-cols-2 lg:gap-10">
       <div className="min-h-[300px] w-full min-w-0 max-w-full sm:min-h-[360px] lg:min-h-[560px]">
-        <div className="h-full w-full min-w-0 overflow-hidden border border-border/70 bg-muted">
+        <div className="box-border h-full w-full min-w-0 max-w-full overflow-hidden border border-border/70 bg-muted">
           <iframe
             src={GOOGLE_MAPS_EMBED_SRC}
             className="block h-full min-h-[300px] w-full min-w-0 max-w-full border-0 sm:min-h-[360px] lg:min-h-[560px]"
@@ -44,12 +44,12 @@ export function ContactInner({ hideReservationCta = false }: ContactInnerProps) 
         </div>
       </div>
 
-      <div className="h-full min-h-[300px] w-full min-w-0 max-w-full border border-border/60 bg-champagne p-6 shadow-sm sm:min-h-[360px] sm:p-7 lg:min-h-[560px] lg:p-8">
-        <div className="h-full grid grid-rows-[auto_auto_1fr] gap-5">
-          <div className="border border-gold-accent/20 bg-background/35 p-5">
+      <div className="box-border h-full min-h-[300px] w-full min-w-0 max-w-full border border-border/60 bg-champagne p-5 shadow-sm sm:min-h-[360px] sm:p-6 lg:min-h-[560px] lg:p-8">
+        <div className="grid h-full min-w-0 max-w-full grid-rows-[auto_auto_1fr] gap-4 sm:gap-5">
+          <div className="min-w-0 max-w-full border border-gold-accent/20 bg-background/35 p-4 sm:p-5">
             <p className="text-xs tracking-[0.18em] text-gold-accent uppercase mb-2">Address</p>
-            <div className="flex items-start gap-3">
-              <p className="min-w-0 flex-1 overflow-x-auto whitespace-nowrap text-charcoal font-medium leading-relaxed">
+            <div className="flex min-w-0 max-w-full items-start gap-2 sm:gap-3">
+              <p className="min-w-0 max-w-full flex-1 text-charcoal font-medium leading-relaxed [word-break:keep-all] [overflow-wrap:anywhere]">
                 경북 경주시 화랑로 132, 2층 연세미의원
               </p>
               <button
@@ -71,8 +71,8 @@ export function ContactInner({ hideReservationCta = false }: ContactInnerProps) 
           </div>
 
           <div
-            className={`grid gap-4 items-center border border-gold-accent/20 bg-background/35 p-5 ${
-              hideReservationCta ? "" : "sm:grid-cols-[1fr_auto]"
+            className={`min-w-0 max-w-full grid gap-4 border border-gold-accent/20 bg-background/35 p-4 sm:p-5 ${
+              hideReservationCta ? "items-start" : "items-center sm:grid-cols-[1fr_auto]"
             }`}
           >
             <div>
@@ -103,7 +103,7 @@ export function ContactInner({ hideReservationCta = false }: ContactInnerProps) 
               ))}
           </div>
 
-          <div className="border border-gold-accent/20 bg-background/35 p-5">
+          <div className="min-w-0 max-w-full border border-gold-accent/20 bg-background/35 p-4 sm:p-5">
             <p className="text-xs tracking-[0.18em] text-gold-accent uppercase mb-3">Hours</p>
             <dl className="space-y-2.5 text-sm">
               <div className="flex items-center justify-between gap-4">
@@ -138,7 +138,7 @@ export function Contact() {
   return (
     <section
       id="contact"
-      className="relative w-full min-w-0 overflow-x-visible bg-background px-[max(1.5rem,env(safe-area-inset-left,0px),env(safe-area-inset-right,0px))] py-12 sm:py-24 lg:py-32"
+      className="relative w-full min-w-0 overflow-x-hidden bg-background pl-[max(1.5rem,env(safe-area-inset-left,0px))] pr-[max(1.5rem,env(safe-area-inset-right,0px))] pt-12 pb-1 sm:pt-24 sm:pb-2 lg:pt-32 lg:pb-3"
     >
       <div className="mx-auto box-border w-full min-w-0 max-w-6xl">
         <div className="mx-auto mb-8 max-w-3xl text-center md:mb-16 lg:mb-20">

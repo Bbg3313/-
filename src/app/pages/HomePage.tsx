@@ -32,7 +32,7 @@ export function HomePage() {
         <Doctors />
         <Contact />
       </main>
-      <Footer className="mt-6 md:mt-16" />
+      <Footer className="mt-0" />
     </div>
   );
 }

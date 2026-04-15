@@ -131,6 +131,7 @@ const services = [
   "실리프팅",
   "다이어트 약",
   "스킨부스터",
+  "Yonsei Mi Clinic",
 ];
 
 const features = [
@@ -230,7 +231,7 @@ export function About() {
               </p>
             </Reveal>
 
-            <Reveal delay={0.15} className="shrink-0 lg:hidden">
+            <Reveal delay={0.15} className="mt-8 shrink-0 sm:mt-10 lg:hidden">
               <AboutGalleryShell className="mb-6 sm:mb-8">
                 <AboutGalleryImages />
               </AboutGalleryShell>
@@ -238,11 +239,15 @@ export function About() {
 
             <Reveal delay={0.17} className="shrink-0">
               <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.28em] text-muted-foreground/80">Signature care</p>
-              <div className="mb-6 grid w-full grid-cols-2 gap-2 sm:mb-9 sm:grid-cols-4 lg:grid-cols-7">
+              <div className="mb-6 grid w-full grid-cols-2 gap-2 sm:mb-9 sm:grid-cols-4 lg:grid-cols-8">
                 {services.map((label) => (
                   <span
                     key={label}
-                    className="flex min-h-[2.35rem] items-center justify-center rounded-md border border-gold-accent/25 bg-white/55 px-2 py-2 text-center text-[11px] font-medium leading-tight tracking-wide text-charcoal/75 shadow-sm backdrop-blur-sm transition-colors hover:border-gold-accent/45 hover:text-charcoal sm:text-xs"
+                    className={
+                      label === "Yonsei Mi Clinic"
+                        ? "flex min-h-[2.35rem] items-center justify-center rounded-md border border-gold-accent/40 bg-champagne/70 px-2 py-2 text-center text-[10px] font-semibold leading-snug tracking-tight text-charcoal/90 shadow-sm backdrop-blur-sm transition-colors hover:border-gold-accent/55 hover:text-charcoal sm:text-[11px]"
+                        : "flex min-h-[2.35rem] items-center justify-center rounded-md border border-gold-accent/25 bg-white/55 px-2 py-2 text-center text-[11px] font-medium leading-tight tracking-wide text-charcoal/75 shadow-sm backdrop-blur-sm transition-colors hover:border-gold-accent/45 hover:text-charcoal sm:text-xs"
+                    }
                   >
                     {label}
                   </span>

@@ -70,8 +70,8 @@ export function Services() {
           </p>
         </div>
 
-        {/* 모바일만: 3열, 열당 2장 세로 스택 (총 6장) — 카드·글자 크게 */}
-        <div className="grid grid-cols-3 gap-3 sm:gap-4 md:hidden">
+        {/* 모바일만: 3열 — 각 열에 사진 2장을 가로로 나란히 (총 6장) */}
+        <div className="grid grid-cols-3 gap-2 sm:gap-3 md:hidden">
           {(
             [
               [services[0], services[1]],
@@ -79,24 +79,24 @@ export function Services() {
               [services[4], services[5]],
             ] as const
           ).map((pair, col) => (
-            <div key={col} className="flex min-h-0 flex-col gap-2.5 sm:gap-3">
+            <div
+              key={col}
+              className="flex min-h-[17.5rem] flex-row divide-x divide-border/40 overflow-hidden rounded-xl border border-border/50 bg-card shadow-md sm:min-h-[19.5rem]"
+            >
               {pair.map((service) => (
-                <div
-                  key={service.title}
-                  className="group relative min-h-[13.5rem] flex-1 overflow-hidden rounded-xl border border-border/50 bg-card shadow-md sm:min-h-[15.5rem]"
-                >
+                <div key={service.title} className="group relative min-h-0 min-w-0 flex-1">
                   <ImageWithFallback
                     src={service.image}
                     alt={service.title}
                     className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/15 to-transparent" />
-                  <div className="absolute inset-x-0 bottom-0 p-2.5 pb-3 pt-10 sm:p-3 sm:pb-3.5 sm:pt-12">
-                    <p className="line-clamp-1 text-[10px] font-medium uppercase tracking-wide text-white/65 sm:text-xs">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/12 to-transparent" />
+                  <div className="absolute inset-x-0 bottom-0 px-1 pb-2 pt-9 sm:px-1.5 sm:pb-2.5 sm:pt-10">
+                    <p className="line-clamp-1 text-[7px] font-medium uppercase tracking-wide text-white/65 sm:text-[8px]">
                       {service.subtitle}
                     </p>
                     <h3
-                      className="mt-1 line-clamp-2 text-xs font-semibold leading-snug text-white [word-break:keep-all] sm:text-sm sm:leading-tight"
+                      className="mt-0.5 line-clamp-3 text-[9px] font-semibold leading-tight text-white [word-break:keep-all] sm:text-[10px]"
                       style={{ fontFamily: "'Playfair Display', serif" }}
                     >
                       {service.title}

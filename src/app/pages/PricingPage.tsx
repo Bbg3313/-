@@ -149,25 +149,25 @@ function LaserHairTableView({ rows }: { rows: LaserHairRow[] }) {
         <table className={`w-full min-w-[720px] border-collapse text-left ${TEXT_SM} text-charcoal`}>
           <thead>
             <tr className="border-b border-border/50 bg-champagne/50">
-              <th className={`w-[4.5rem] whitespace-nowrap ${CELL} text-left ${TH_BASE}`}>부위</th>
-              <th className={`min-w-[11rem] ${CELL} text-left ${TH_BASE} ${KO_WRAP}`}>세부</th>
-              <th className={`w-[8.5rem] ${CELL} text-right ${TH_BASE} tabular-nums`}>1회</th>
-              <th className={`w-[8.5rem] ${CELL} text-right ${TH_BASE} tabular-nums`}>5회</th>
-              <th className={`w-[8.5rem] ${CELL} text-right ${TH_BASE} tabular-nums`}>10회</th>
+              <th className={`w-[4.5rem] whitespace-nowrap ${CELL} align-bottom text-left ${TH_BASE}`}>부위</th>
+              <th className={`min-w-[11rem] ${CELL} align-bottom text-left ${TH_BASE} ${KO_WRAP}`}>세부</th>
+              <th className={`w-[8.5rem] ${CELL} align-bottom text-right ${TH_BASE} tabular-nums`}>1회</th>
+              <th className={`w-[8.5rem] ${CELL} align-bottom text-right ${TH_BASE} tabular-nums`}>5회</th>
+              <th className={`w-[8.5rem] ${CELL} align-bottom text-right ${TH_BASE} tabular-nums`}>10회</th>
             </tr>
           </thead>
           <tbody>
             {rows.map((row, i) => (
               <tr key={i} className="border-b border-border/35 last:border-0 hover:bg-muted/15">
-                <td className={`${CELL} align-middle ${TEXT_XS_MED} text-gold-accent`}>{row.area || "\u00a0"}</td>
-                <td className={`${CELL} align-middle ${TEXT_SM_MUTED} ${KO_WRAP}`}>{row.detail}</td>
-                <td className={`${CELL} align-middle`}>
+                <td className={`${CELL} align-bottom ${TEXT_XS_MED} text-gold-accent`}>{row.area || "\u00a0"}</td>
+                <td className={`${CELL} align-bottom ${TEXT_SM_MUTED} ${KO_WRAP}`}>{row.detail}</td>
+                <td className={`${CELL} align-bottom`}>
                   <HairPriceCell col={row.once} />
                 </td>
-                <td className={`${CELL} align-middle`}>
+                <td className={`${CELL} align-bottom`}>
                   <HairPriceCell col={row.five} />
                 </td>
-                <td className={`${CELL} align-middle`}>
+                <td className={`${CELL} align-bottom`}>
                   <HairPriceCell col={row.ten} />
                 </td>
               </tr>
@@ -279,8 +279,8 @@ function PricingTableView({ table }: { table: PricingTable }) {
                   scope="col"
                   className={
                     i < labelCols
-                      ? `border-b border-border/50 ${CELL} text-left align-middle ${TH_BASE} ${KO_WRAP}`
-                      : `border-b border-border/50 ${CELL} text-right align-middle ${TH_BASE} tabular-nums whitespace-nowrap`
+                      ? `border-b border-border/50 ${CELL} text-left align-bottom ${TH_BASE} ${KO_WRAP}`
+                      : `border-b border-border/50 ${CELL} text-right align-bottom ${TH_BASE} tabular-nums whitespace-nowrap`
                   }
                 >
                   {h || " "}
@@ -298,8 +298,8 @@ function PricingTableView({ table }: { table: PricingTable }) {
                       key={ci}
                       className={
                         ci < labelCols
-                          ? `${CELL} align-middle text-muted-foreground ${KO_WRAP}`
-                          : `${CELL} text-right align-middle tabular-nums text-charcoal whitespace-nowrap ${KO_PRICE}`
+                          ? `${CELL} align-bottom text-muted-foreground ${KO_WRAP}`
+                          : `${CELL} text-right align-bottom tabular-nums text-charcoal whitespace-nowrap ${KO_PRICE}`
                       }
                     >
                       {cell === "" ? "\u00a0" : normalizeMixedKoreanPrice(cell)}
@@ -322,7 +322,7 @@ function SectionCard({ section }: { section: PricingSection }) {
   return (
     <section
       id={`pricing-${section.id}`}
-      className="scroll-mt-[14rem] sm:scroll-mt-[15rem] md:scroll-mt-[16rem] rounded-xl border border-border/70 bg-card/80 shadow-sm overflow-hidden"
+      className="scroll-mt-[15.5rem] sm:scroll-mt-[18.5rem] md:scroll-mt-[20rem] rounded-xl border border-border/70 bg-card/80 shadow-sm overflow-hidden"
     >
       <div className="px-4 sm:px-6 pt-5 sm:pt-6 pb-1">
         <p className={`${TEXT_XS_MED} uppercase tracking-[0.2em] text-gold-accent mb-1`}>Price guide</p>
@@ -381,7 +381,7 @@ export function PricingPage() {
     if (active !== "all") return;
 
     const updateScrollCategory = () => {
-      const anchorY = window.innerWidth < 768 ? 170 : 240;
+      const anchorY = window.innerWidth < 640 ? 200 : window.innerWidth < 768 ? 220 : 280;
       let current = PRICING_CATEGORIES[0].id;
       let bestDistance = Number.POSITIVE_INFINITY;
 
@@ -430,7 +430,7 @@ export function PricingPage() {
     <div className="min-h-screen bg-background flex flex-col">
       <Header />
       <main
-        className="flex-1 px-6 pb-24 pt-32 md:pb-16 md:pt-36"
+        className="flex-1 overflow-x-visible px-6 pb-24 pt-32 md:pb-16 md:pt-36"
         style={{ fontFamily: PRICING_FONT }}
       >
         <div className="max-w-5xl mx-auto relative">
@@ -458,34 +458,34 @@ export function PricingPage() {
         </div>
 
         {/* 본문 article 밖 — 스크롤 시 헤더(z-50) 아래 고정 */}
-        <div className="sticky z-[45] -mx-6 mb-6 border-b border-border/60 bg-background/95 pt-1.5 pb-2 shadow-sm backdrop-blur-md supports-[backdrop-filter]:bg-background/88 sm:pt-2 md:pt-2.5 top-[max(5.75rem,calc(env(safe-area-inset-top,0px)+5.35rem))] sm:top-[max(6.85rem,calc(env(safe-area-inset-top,0px)+6.1rem))] md:top-[max(9.35rem,calc(env(safe-area-inset-top,0px)+8.85rem))]">
-          <div className="px-6">
-            <p className="sr-only">시술 카테고리 필터</p>
-            <div
-              ref={categoryRailRef}
-              className="mx-auto flex w-full max-w-5xl gap-1.5 overflow-x-auto overscroll-x-contain scroll-pl-2 scroll-pr-2 pb-0.5 [-webkit-overflow-scrolling:touch] md:grid md:grid-cols-6 md:overflow-visible md:scroll-pl-0 md:scroll-pr-0 md:pb-0"
-            >
-              {PRICING_CATEGORIES.map((c) => {
-                const isOn = active === "all" ? scrollActive === c.id : active === c.id;
-                return (
-                  <button
-                    key={c.id}
-                    type="button"
-                    onClick={() => setActive(c.id)}
-                    ref={(el) => {
-                      categoryRefs.current[c.id] = el;
-                    }}
-                    className={
-                      isOn
-                        ? `min-h-[2.25rem] shrink-0 whitespace-nowrap rounded-md border border-gold-accent/50 bg-champagne/80 px-2.5 py-1.5 text-center ${TEXT_XS_MED} text-charcoal shadow-sm transition-colors md:w-full md:whitespace-normal md:px-2 md:py-2 md:text-sm md:font-medium md:leading-5 ${KO_WRAP}`
-                        : `min-h-[2.25rem] shrink-0 whitespace-nowrap rounded-md border border-border/70 bg-card px-2.5 py-1.5 text-center ${TEXT_XS_MED} text-muted-foreground transition-colors hover:border-gold-accent/35 hover:text-charcoal md:w-full md:whitespace-normal md:px-2 md:py-2 md:text-sm md:font-medium md:leading-5 ${KO_WRAP}`
-                    }
-                  >
-                    {c.label}
-                  </button>
-                );
-              })}
-            </div>
+        <div
+          className="sticky z-[45] mb-6 w-full overflow-visible border-b border-border/60 bg-background/95 pt-2 pb-2.5 shadow-[0_6px_16px_-6px_rgba(0,0,0,0.12)] backdrop-blur-md supports-[backdrop-filter]:bg-background/88 sm:pt-2.5 sm:pb-3 md:pt-3 md:pb-3.5 top-[max(5.75rem,calc(env(safe-area-inset-top,0px)+5.35rem))] sm:top-[max(7.85rem,calc(env(safe-area-inset-top,0px)+7.5rem))] md:top-[max(9.35rem,calc(env(safe-area-inset-top,0px)+8.85rem))] lg:top-[max(9.5rem,calc(env(safe-area-inset-top,0px)+9.05rem))]"
+        >
+          <p className="sr-only">시술 카테고리 필터</p>
+          <div
+            ref={categoryRailRef}
+            className="mx-auto flex w-full max-w-5xl gap-1.5 overflow-x-auto overflow-y-visible overscroll-x-contain scroll-pl-1 scroll-pr-1 py-0.5 [-webkit-overflow-scrolling:touch] sm:scroll-pl-2 sm:scroll-pr-2 md:grid md:grid-cols-6 md:overflow-visible md:scroll-pl-0 md:scroll-pr-0 md:py-0"
+          >
+            {PRICING_CATEGORIES.map((c) => {
+              const isOn = active === "all" ? scrollActive === c.id : active === c.id;
+              return (
+                <button
+                  key={c.id}
+                  type="button"
+                  onClick={() => setActive(c.id)}
+                  ref={(el) => {
+                    categoryRefs.current[c.id] = el;
+                  }}
+                  className={
+                    isOn
+                      ? `flex min-h-[2.65rem] min-w-0 shrink-0 items-center justify-center rounded-md border border-gold-accent/50 bg-champagne/80 px-1.5 py-1.5 text-center text-balance ${TEXT_XS_MED} leading-tight text-charcoal shadow-sm transition-colors [overflow-wrap:anywhere] sm:min-h-[2.75rem] sm:px-2.5 md:w-full md:px-2 md:py-2 md:text-sm md:font-medium md:leading-5 ${KO_WRAP} md:[overflow-wrap:normal]`
+                      : `flex min-h-[2.65rem] min-w-0 shrink-0 items-center justify-center rounded-md border border-border/70 bg-card px-1.5 py-1.5 text-center text-balance ${TEXT_XS_MED} leading-tight text-muted-foreground transition-colors [overflow-wrap:anywhere] hover:border-gold-accent/35 hover:text-charcoal sm:min-h-[2.75rem] sm:px-2.5 md:w-full md:px-2 md:py-2 md:text-sm md:font-medium md:leading-5 ${KO_WRAP} md:[overflow-wrap:normal]`
+                  }
+                >
+                  <span className="line-clamp-3 w-full max-w-full sm:line-clamp-2 md:line-clamp-none">{c.label}</span>
+                </button>
+              );
+            })}
           </div>
         </div>
 
