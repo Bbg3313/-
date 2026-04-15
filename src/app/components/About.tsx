@@ -124,13 +124,14 @@ function AboutGalleryShell({ children, className = "" }: { children: ReactNode; 
 }
 
 const services = [
-  "보톡스/필러",
+  "보톡스",
+  "필러",
+  "스킨부스터",
   "레이저토닝",
   "레이저 리프팅",
   "실리프팅",
   "화상",
   "티눈",
-  "스킨부스터",
 ];
 
 const features = [
