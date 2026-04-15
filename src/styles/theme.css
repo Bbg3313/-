@@ -243,6 +243,16 @@ body.translated-rtl {
   display: none !important;
 }
 
+/* 커스텀 언어 버튼: 숨겨진 Google Translate 가젯이 모바일 터치를 가로채지 않도록 */
+#google_translate_element,
+#google_translate_element * {
+  pointer-events: none !important;
+}
+
+.goog-te-gadget {
+  pointer-events: none !important;
+}
+
 #goog-gt-tt,
 .goog-tooltip,
 .goog-text-highlight {

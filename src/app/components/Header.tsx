@@ -121,7 +121,7 @@ export function Header() {
           <LanguageSwitcher />
         </div>
 
-        <div className="flex items-center gap-1.5 md:hidden">
+        <div className="flex shrink-0 items-center gap-1.5 md:hidden">
           <LanguageSwitcher />
           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
             <SheetTrigger asChild>
