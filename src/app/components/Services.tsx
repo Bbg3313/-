@@ -70,40 +70,30 @@ export function Services() {
           </p>
         </div>
 
-        {/* 모바일만: 3열 — 각 열에 사진 2장을 가로로 나란히 (총 6장) */}
-        <div className="grid grid-cols-3 gap-2 sm:gap-3 md:hidden">
-          {(
-            [
-              [services[0], services[1]],
-              [services[2], services[3]],
-              [services[4], services[5]],
-            ] as const
-          ).map((pair, col) => (
+        {/* 모바일만: 2열 그리드 — 시술 6개가 3행으로 배치 */}
+        <div className="grid grid-cols-2 gap-3 sm:gap-4 md:hidden">
+          {services.map((service) => (
             <div
-              key={col}
-              className="flex min-h-[17.5rem] flex-row divide-x divide-border/40 overflow-hidden rounded-xl border border-border/50 bg-card shadow-md sm:min-h-[19.5rem]"
+              key={service.title}
+              className="group relative aspect-[4/5] min-h-[11rem] overflow-hidden rounded-xl border border-border/50 bg-card shadow-md sm:min-h-[12rem]"
             >
-              {pair.map((service) => (
-                <div key={service.title} className="group relative min-h-0 min-w-0 flex-1">
-                  <ImageWithFallback
-                    src={service.image}
-                    alt={service.title}
-                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/12 to-transparent" />
-                  <div className="absolute inset-x-0 bottom-0 px-1 pb-2 pt-9 sm:px-1.5 sm:pb-2.5 sm:pt-10">
-                    <p className="line-clamp-1 text-[7px] font-medium uppercase tracking-wide text-white/65 sm:text-[8px]">
-                      {service.subtitle}
-                    </p>
-                    <h3
-                      className="mt-0.5 line-clamp-3 text-[9px] font-semibold leading-tight text-white [word-break:keep-all] sm:text-[10px]"
-                      style={{ fontFamily: "'Playfair Display', serif" }}
-                    >
-                      {service.title}
-                    </h3>
-                  </div>
-                </div>
-              ))}
+              <ImageWithFallback
+                src={service.image}
+                alt={service.title}
+                className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/82 via-black/15 to-transparent" />
+              <div className="absolute inset-x-0 bottom-0 px-1.5 pb-2 pt-8 sm:px-2 sm:pb-2.5 sm:pt-9">
+                <p className="line-clamp-1 text-[8px] font-medium uppercase tracking-wide text-white/70 sm:text-[9px]">
+                  {service.subtitle}
+                </p>
+                <h3
+                  className="mt-0.5 line-clamp-2 text-[10px] font-semibold leading-tight text-white [word-break:keep-all] sm:text-[11px]"
+                  style={{ fontFamily: "'Playfair Display', serif" }}
+                >
+                  {service.title}
+                </h3>
+              </div>
             </div>
           ))}
         </div>

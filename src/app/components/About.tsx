@@ -123,6 +123,9 @@ function AboutGalleryShell({ children, className = "" }: { children: ReactNode; 
   );
 }
 
+/** 시그니처 케어 그리드 마지막 칸 — 클리닉(의원·클리닉) 표기 */
+const SIGNATURE_BRAND_CHIP = "연세미 클리닉";
+
 const services = [
   "보톡스",
   "필러",
@@ -131,7 +134,7 @@ const services = [
   "실리프팅",
   "다이어트 약",
   "스킨부스터",
-  "Yonsei Mi Clinic",
+  SIGNATURE_BRAND_CHIP,
 ];
 
 const features = [
@@ -244,7 +247,7 @@ export function About() {
                   <span
                     key={label}
                     className={
-                      label === "Yonsei Mi Clinic"
+                      label === SIGNATURE_BRAND_CHIP
                         ? "flex min-h-[2.35rem] items-center justify-center rounded-md border border-gold-accent/40 bg-champagne/70 px-2 py-2 text-center text-[10px] font-semibold leading-snug tracking-tight text-charcoal/90 shadow-sm backdrop-blur-sm transition-colors hover:border-gold-accent/55 hover:text-charcoal sm:text-[11px]"
                         : "flex min-h-[2.35rem] items-center justify-center rounded-md border border-gold-accent/25 bg-white/55 px-2 py-2 text-center text-[11px] font-medium leading-tight tracking-wide text-charcoal/75 shadow-sm backdrop-blur-sm transition-colors hover:border-gold-accent/45 hover:text-charcoal sm:text-xs"
                     }

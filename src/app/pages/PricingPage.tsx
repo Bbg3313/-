@@ -134,9 +134,14 @@ function LaserHairTableView({ rows }: { rows: LaserHairRow[] }) {
                   ["10회", row.ten],
                 ] as const
               ).map(([label, col]) => (
-                <div key={label} className="rounded-md bg-muted/25 px-1.5 py-1.5">
-                  <p className={`mb-1 text-center ${TEXT_XS_MED} text-muted-foreground`}>{label}</p>
-                  <HairPriceCell col={col} align="center" />
+                <div
+                  key={label}
+                  className="flex min-h-[4.25rem] items-end justify-between gap-1 rounded-md bg-muted/25 px-1.5 py-2 sm:min-h-[4.5rem]"
+                >
+                  <p className={`shrink-0 ${TEXT_XS_MED} text-muted-foreground`}>{label}</p>
+                  <div className="min-w-0 flex-1">
+                    <HairPriceCell col={col} align="end" />
+                  </div>
                 </div>
               ))}
             </div>
@@ -219,9 +224,12 @@ function PricingTableView({ table }: { table: PricingTable }) {
                     if (hi === 0 || !h?.trim()) return null;
                     const cell = row[hi] ?? "";
                     return (
-                      <div key={hi} className="rounded-md bg-muted/25 px-2 py-1.5">
-                        <p className={`${TEXT_XS_MUTED} ${KO_WRAP}`}>{h}</p>
-                        <p className={`mt-0.5 ${TEXT_SM} text-right tabular-nums text-charcoal ${KO_PRICE}`}>
+                      <div
+                        key={hi}
+                        className="flex min-h-[4.25rem] items-end justify-between gap-2 rounded-md bg-muted/25 px-2 py-2 sm:min-h-[4.5rem]"
+                      >
+                        <p className={`shrink-0 ${TEXT_XS_MED} text-muted-foreground ${KO_WRAP}`}>{h}</p>
+                        <p className={`min-w-0 ${TEXT_SM} text-right tabular-nums text-charcoal ${KO_PRICE}`}>
                           {cell === "" ? "—" : normalizeMixedKoreanPrice(cell)}
                         </p>
                       </div>
