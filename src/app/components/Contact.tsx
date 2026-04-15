@@ -30,7 +30,7 @@ export function ContactInner({ hideReservationCta = false }: ContactInnerProps) 
   }, []);
 
   return (
-    <div className="mx-auto grid w-full max-w-6xl items-stretch gap-8 lg:grid-cols-2 lg:gap-10">
+    <div className="grid w-full items-stretch justify-items-stretch gap-8 lg:grid-cols-2 lg:gap-10">
       <div className="min-h-[300px] sm:min-h-[360px] lg:min-h-[560px]">
         <div className="border border-border/70 overflow-hidden bg-muted h-full">
           <iframe
@@ -137,7 +137,7 @@ export function ContactInner({ hideReservationCta = false }: ContactInnerProps) 
 export function Contact() {
   return (
     <section id="contact" className="py-20 sm:py-24 lg:py-32 px-6 bg-background relative">
-      <div className="max-w-[90rem] mx-auto">
+      <div className="mx-auto w-full max-w-6xl">
         <div className="mx-auto mb-16 max-w-3xl text-center lg:mb-20">
           <div className="w-12 h-px bg-gold-accent mb-8 mx-auto" />
           <h2

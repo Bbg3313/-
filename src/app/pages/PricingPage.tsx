@@ -353,7 +353,7 @@ export function PricingPage() {
         className="flex-1 pt-32 md:pt-36 pb-16 px-6"
         style={{ fontFamily: PRICING_FONT }}
       >
-        <article className="max-w-5xl mx-auto relative">
+        <div className="max-w-5xl mx-auto relative">
           {/* 헤더(z-50) 아래로 확실히 내리고, 스티키 카테고리와 겹치지 않게 여백 확보 */}
           <div className="relative z-0 mb-6">
             <Link
@@ -373,36 +373,39 @@ export function PricingPage() {
               개인 피부 상태와 시술 범위에 따라 달라질 수 있으니, 정확한 견적은 내원 상담을 권장드립니다.
             </p>
           </header>
+        </div>
 
-          <div className="sticky top-[5.5rem] sm:top-[6.4rem] md:top-[9rem] z-40 -mx-4 sm:-mx-6 px-4 sm:px-6 py-3 mb-8 bg-background/95 backdrop-blur-md border-b border-border/60 shadow-sm">
-            <p className="sr-only">시술 카테고리 필터</p>
-            <div
-              ref={categoryRailRef}
-              className="mx-auto flex w-full gap-2 overflow-x-auto pb-1 md:grid md:max-w-5xl md:grid-cols-6 md:overflow-visible md:pb-0"
-            >
-              {PRICING_CATEGORIES.map((c) => {
-                const isOn = active === "all" ? scrollActive === c.id : active === c.id;
-                return (
-                  <button
-                    key={c.id}
-                    type="button"
-                    onClick={() => setActive(c.id)}
-                    ref={(el) => {
-                      categoryRefs.current[c.id] = el;
-                    }}
-                    className={
-                      isOn
-                        ? "min-h-[2.5rem] shrink-0 whitespace-nowrap rounded-lg border border-gold-accent/50 bg-champagne/80 px-3 py-2 text-center text-xs font-medium text-charcoal leading-snug shadow-sm transition-colors md:w-full md:px-2 md:text-sm"
-                        : "min-h-[2.5rem] shrink-0 whitespace-nowrap rounded-lg border border-border/70 bg-card px-3 py-2 text-center text-xs font-medium text-muted-foreground leading-snug transition-colors hover:border-gold-accent/35 hover:text-charcoal md:w-full md:px-2 md:text-sm"
-                    }
-                  >
-                    {c.label}
-                  </button>
-                );
-              })}
-            </div>
+        {/* 본문 article 밖 — 스크롤 시 헤더(z-50) 아래 고정 */}
+        <div className="sticky top-[5.25rem] sm:top-[6.25rem] md:top-[8.75rem] z-[45] -mx-6 px-6 py-3 mb-8 border-b border-border/60 bg-background/95 shadow-sm backdrop-blur-md">
+          <p className="sr-only">시술 카테고리 필터</p>
+          <div
+            ref={categoryRailRef}
+            className="mx-auto flex w-full max-w-5xl gap-2 overflow-x-auto pb-1 md:grid md:grid-cols-6 md:overflow-visible md:pb-0"
+          >
+            {PRICING_CATEGORIES.map((c) => {
+              const isOn = active === "all" ? scrollActive === c.id : active === c.id;
+              return (
+                <button
+                  key={c.id}
+                  type="button"
+                  onClick={() => setActive(c.id)}
+                  ref={(el) => {
+                    categoryRefs.current[c.id] = el;
+                  }}
+                  className={
+                    isOn
+                      ? "min-h-[2.5rem] shrink-0 whitespace-nowrap rounded-lg border border-gold-accent/50 bg-champagne/80 px-3 py-2 text-center text-xs font-medium text-charcoal leading-snug shadow-sm transition-colors md:w-full md:px-2 md:text-sm"
+                      : "min-h-[2.5rem] shrink-0 whitespace-nowrap rounded-lg border border-border/70 bg-card px-3 py-2 text-center text-xs font-medium text-muted-foreground leading-snug transition-colors hover:border-gold-accent/35 hover:text-charcoal md:w-full md:px-2 md:text-sm"
+                  }
+                >
+                  {c.label}
+                </button>
+              );
+            })}
           </div>
+        </div>
 
+        <article className="max-w-5xl mx-auto relative">
           <div className="space-y-8 sm:space-y-10">
             {visible.length === 0 ? (
               <p className="text-muted-foreground">이 카테고리에 등록된 항목이 없습니다.</p>

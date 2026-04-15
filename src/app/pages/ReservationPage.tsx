@@ -36,7 +36,9 @@ export function ReservationPage() {
             }
           />
 
-          <ContactInner hideReservationCta />
+          <div className="mx-auto w-full max-w-6xl">
+            <ContactInner hideReservationCta />
+          </div>
         </article>
       </main>
       <Footer className="mt-auto" />

@@ -228,7 +228,8 @@ html,
 body {
   width: 100% !important;
   max-width: 100% !important;
-  overflow-x: hidden !important;
+  /* hidden은 스크롤 컨테이너를 만들어 position:sticky가 깨질 수 있음 — clip은 가로만 막고 세로 스티키 유지 */
+  overflow-x: clip !important;
 }
 
 body.translated-ltr,
