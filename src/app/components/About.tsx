@@ -131,7 +131,7 @@ const services = [
   "레이저 리프팅",
   "실리프팅",
   "화상",
-  "티눈",
+  "연세미의원",
 ];
 
 const features = [
@@ -243,7 +243,11 @@ export function About() {
                 {services.map((label) => (
                   <span
                     key={label}
-                    className="flex min-h-[2.35rem] items-center justify-center rounded-md border border-gold-accent/25 bg-white/55 px-2 py-2 text-center text-[11px] font-medium leading-snug tracking-wide text-charcoal/75 break-keep [word-break:keep-all] shadow-sm backdrop-blur-sm transition-colors hover:border-gold-accent/45 hover:text-charcoal sm:text-xs"
+                    className={
+                      label === "연세미의원"
+                        ? "flex min-h-[2.35rem] items-center justify-center rounded-md border border-gold-accent/45 bg-gradient-to-br from-[#fff8ea] via-[#f6e7c5] to-[#ead3a0] px-2 py-2 text-center text-[11px] font-semibold leading-snug tracking-wide text-charcoal break-keep [word-break:keep-all] shadow-[0_8px_18px_-12px_rgba(120,90,38,0.55),inset_0_1px_0_rgba(255,255,255,0.72)] transition-colors hover:border-gold-accent/70 sm:text-xs"
+                        : "flex min-h-[2.35rem] items-center justify-center rounded-md border border-gold-accent/25 bg-white/55 px-2 py-2 text-center text-[11px] font-medium leading-snug tracking-wide text-charcoal/75 break-keep [word-break:keep-all] shadow-sm backdrop-blur-sm transition-colors hover:border-gold-accent/45 hover:text-charcoal sm:text-xs"
+                    }
                   >
                     {label}
                   </span>
