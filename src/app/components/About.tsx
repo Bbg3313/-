@@ -120,7 +120,8 @@ export function About() {
               <div className="pointer-events-none absolute -left-3 -top-3 h-14 w-14 border-l border-t border-gold-accent/40 sm:-left-4 sm:-top-4" />
               <div className="pointer-events-none absolute -bottom-3 -right-3 h-14 w-14 border-b border-r border-gold-accent/40 sm:-bottom-4 sm:-right-4" />
 
-              <div className="grid shrink-0 grid-cols-3 gap-2 sm:gap-4 lg:gap-5">
+              {/* 모바일·태블릿: 세 장 한 줄 */}
+              <div className="grid shrink-0 grid-cols-3 gap-2 sm:gap-4 lg:hidden">
                 {(
                   [
                     {
@@ -168,6 +169,62 @@ export function About() {
                     </LuxImageCard>
                   </motion.div>
                 ))}
+              </div>
+
+              {/* 데스크톱(lg+): 상단 메인 + 하단 2열 (기존 웹 레이아웃) */}
+              <div className="hidden min-h-0 w-full flex-col gap-3 sm:gap-5 lg:flex lg:gap-6">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-40px" }}
+                  transition={{ duration: 0.85, ease: easeLux }}
+                  className="shrink-0"
+                >
+                  <LuxImageCard>
+                    <div className="relative w-full bg-gradient-to-b from-[#f4f1ec] to-[#e9e4dc]">
+                      <ImageWithFallback
+                        src="/images/about-clinic-main.png"
+                        alt="연세미의원 로고와 인테리어"
+                        className="mx-auto block h-auto w-full max-h-[min(68vh,680px)] object-contain object-bottom transition-transform duration-[1.15s] ease-out group-hover:scale-[1.01]"
+                      />
+                    </div>
+                  </LuxImageCard>
+                </motion.div>
+
+                <div className="grid shrink-0 grid-cols-2 gap-3 sm:gap-5">
+                  <motion.div
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.7, delay: 0.08, ease: easeLux }}
+                  >
+                    <LuxImageCard>
+                      <div className="relative aspect-[4/5]">
+                        <ImageWithFallback
+                          src="/images/about-clinic-room.png"
+                          alt="시술실"
+                          className="h-full w-full object-cover transition-transform duration-[1s] ease-out group-hover:scale-[1.03]"
+                        />
+                      </div>
+                    </LuxImageCard>
+                  </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.7, delay: 0.16, ease: easeLux }}
+                  >
+                    <LuxImageCard>
+                      <div className="relative aspect-[4/5]">
+                        <ImageWithFallback
+                          src="/images/about-clinic-lobby.png"
+                          alt="로비"
+                          className="h-full w-full object-cover transition-transform duration-[1s] ease-out group-hover:scale-[1.03]"
+                        />
+                      </div>
+                    </LuxImageCard>
+                  </motion.div>
+                </div>
               </div>
             </div>
           </Reveal>
