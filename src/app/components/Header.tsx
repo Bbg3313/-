@@ -19,6 +19,12 @@ const MOBILE_SHEET_QUICK = {
   calendarEmoji: "\uD83D\uDCC5",
 } as const;
 
+/** Google 번역 시 라벨이 길어져도 겹치지 않도록 — nowrap 금지, 2줄까지·칸 축소 허용 */
+const MOBILE_TABBAR_ITEM =
+  "flex min-h-[2.85rem] w-full min-w-0 flex-col items-center justify-center gap-0.5 px-0.5 py-1.5 text-center transition-colors sm:min-h-[3.1rem] sm:gap-1 sm:py-2";
+const MOBILE_TABBAR_LABEL =
+  "line-clamp-2 w-full min-w-0 max-w-full text-balance break-keep text-[9px] font-semibold leading-[1.2] sm:text-[10px]";
+
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -255,73 +261,76 @@ export function Header() {
       </nav>
     </header>
 
-      <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-border/70 bg-background/95 pb-[max(0.2rem,env(safe-area-inset-bottom))] backdrop-blur-md md:hidden">
-        <ul className="mx-auto grid max-w-7xl grid-cols-5">
-          <li>
+      <nav
+        data-mobile-tabbar
+        className="fixed inset-x-0 bottom-0 z-40 border-t border-border/70 bg-background/95 pb-[max(0.35rem,env(safe-area-inset-bottom))] pt-1 backdrop-blur-md md:hidden"
+      >
+        <ul className="mx-auto grid w-full max-w-7xl grid-cols-[repeat(5,minmax(0,1fr))]">
+          <li className="min-w-0">
             <Link
               to="/events"
-              className={`flex flex-col items-center justify-center gap-1.5 px-1 py-2.5 text-[11px] font-semibold leading-tight whitespace-nowrap transition-colors ${
+              className={`${MOBILE_TABBAR_ITEM} ${
                 isEventsActive ? "text-gold-accent" : "text-muted-foreground"
               }`}
             >
-              <Ticket className="h-4 w-4 text-gold-accent/80" />
-              이벤트
+              <Ticket className="h-4 w-4 shrink-0 text-gold-accent/80" aria-hidden />
+              <span className={MOBILE_TABBAR_LABEL}>이벤트</span>
             </Link>
           </li>
-          <li>
+          <li className="min-w-0">
             <Link
               to="/#about"
-              className={`flex flex-col items-center justify-center gap-1.5 px-1 py-2.5 text-[11px] font-semibold leading-tight whitespace-nowrap transition-colors ${
+              className={`${MOBILE_TABBAR_ITEM} ${
                 isAboutActive ? "text-gold-accent" : "text-muted-foreground"
               }`}
             >
-              <Hospital className="h-4 w-4 text-gold-accent/80" />
-              병원소개
+              <Hospital className="h-4 w-4 shrink-0 text-gold-accent/80" aria-hidden />
+              <span className={MOBILE_TABBAR_LABEL}>병원소개</span>
             </Link>
           </li>
-          <li>
+          <li className="min-w-0">
             <Link
               to="/#doctors"
-              className={`flex flex-col items-center justify-center gap-1.5 px-1 py-2.5 text-[11px] font-semibold leading-tight whitespace-nowrap transition-colors ${
+              className={`${MOBILE_TABBAR_ITEM} ${
                 isDoctorsActive ? "text-gold-accent" : "text-muted-foreground"
               }`}
             >
-              <Stethoscope className="h-4 w-4 text-gold-accent/80" />
-              의료진
+              <Stethoscope className="h-4 w-4 shrink-0 text-gold-accent/80" aria-hidden />
+              <span className={MOBILE_TABBAR_LABEL}>의료진</span>
             </Link>
           </li>
-          <li>
+          <li className="min-w-0">
             {isExternalReservation ? (
               <a
                 href={SITE_LINKS.reservation}
                 target="_blank"
                 rel="noreferrer"
-                className="flex flex-col items-center justify-center gap-1.5 px-1 py-2.5 text-[11px] font-semibold leading-tight whitespace-nowrap text-muted-foreground transition-colors hover:text-gold-accent"
+                className={`${MOBILE_TABBAR_ITEM} text-muted-foreground hover:text-gold-accent`}
               >
-                <Sparkles className="h-4 w-4 text-gold-accent/80" />
-                예약·문의
+                <Sparkles className="h-4 w-4 shrink-0 text-gold-accent/80" aria-hidden />
+                <span className={MOBILE_TABBAR_LABEL}>예약·문의</span>
               </a>
             ) : (
               <Link
                 to={SITE_LINKS.reservation}
-                className={`flex flex-col items-center justify-center gap-1.5 px-1 py-2.5 text-[11px] font-semibold leading-tight whitespace-nowrap transition-colors ${
+                className={`${MOBILE_TABBAR_ITEM} ${
                   isReservationActive ? "text-gold-accent" : "text-muted-foreground"
                 }`}
               >
-                <Sparkles className="h-4 w-4 text-gold-accent/80" />
-                예약·문의
+                <Sparkles className="h-4 w-4 shrink-0 text-gold-accent/80" aria-hidden />
+                <span className={MOBILE_TABBAR_LABEL}>예약·문의</span>
               </Link>
             )}
           </li>
-          <li>
+          <li className="min-w-0">
             <Link
               to="/pricing"
-              className={`flex flex-col items-center justify-center gap-1.5 px-1 py-2.5 text-[11px] font-semibold leading-tight whitespace-nowrap transition-colors ${
+              className={`${MOBILE_TABBAR_ITEM} ${
                 isPricingActive ? "text-gold-accent" : "text-muted-foreground"
               }`}
             >
-              <CalendarDays className="h-4 w-4 text-gold-accent/80" />
-              시술/가격
+              <CalendarDays className="h-4 w-4 shrink-0 text-gold-accent/80" aria-hidden />
+              <span className={MOBILE_TABBAR_LABEL}>시술/가격</span>
             </Link>
           </li>
         </ul>

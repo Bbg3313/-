@@ -430,7 +430,7 @@ export function PricingPage() {
     <div className="min-h-screen bg-background flex flex-col">
       <Header />
       <main
-        className="flex-1 pt-32 md:pt-36 pb-16 px-6"
+        className="flex-1 px-6 pb-24 pt-32 md:pb-16 md:pt-36"
         style={{ fontFamily: PRICING_FONT }}
       >
         <div className="max-w-5xl mx-auto relative">

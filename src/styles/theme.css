@@ -253,6 +253,12 @@ body.translated-rtl {
   pointer-events: none !important;
 }
 
+/* Google 번역이 <font>로 감쌀 때 하단 탭 글자 크기·줄 높이가 튀지 않도록 */
+[data-mobile-tabbar] font {
+  font-size: inherit !important;
+  line-height: inherit !important;
+}
+
 #goog-gt-tt,
 .goog-tooltip,
 .goog-text-highlight {
