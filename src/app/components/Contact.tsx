@@ -30,12 +30,12 @@ export function ContactInner({ hideReservationCta = false }: ContactInnerProps) 
   }, []);
 
   return (
-    <div className="grid w-full items-stretch justify-items-stretch gap-8 lg:grid-cols-2 lg:gap-10">
-      <div className="min-h-[300px] sm:min-h-[360px] lg:min-h-[560px]">
-        <div className="border border-border/70 overflow-hidden bg-muted h-full">
+    <div className="mx-auto grid w-full min-w-0 max-w-full grid-cols-1 content-stretch items-stretch gap-8 lg:grid-cols-2 lg:gap-10">
+      <div className="min-h-[300px] w-full min-w-0 max-w-full sm:min-h-[360px] lg:min-h-[560px]">
+        <div className="h-full w-full min-w-0 overflow-hidden border border-border/70 bg-muted">
           <iframe
             src={GOOGLE_MAPS_EMBED_SRC}
-            className="w-full h-full min-h-[300px] sm:min-h-[360px] lg:min-h-[560px] border-0 block"
+            className="block h-full min-h-[300px] w-full min-w-0 max-w-full border-0 sm:min-h-[360px] lg:min-h-[560px]"
             allowFullScreen
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
@@ -44,7 +44,7 @@ export function ContactInner({ hideReservationCta = false }: ContactInnerProps) 
         </div>
       </div>
 
-      <div className="bg-champagne p-6 sm:p-7 lg:p-8 shadow-sm border border-border/60 h-full min-h-[300px] sm:min-h-[360px] lg:min-h-[560px]">
+      <div className="h-full min-h-[300px] w-full min-w-0 max-w-full border border-border/60 bg-champagne p-6 shadow-sm sm:min-h-[360px] sm:p-7 lg:min-h-[560px] lg:p-8">
         <div className="h-full grid grid-rows-[auto_auto_1fr] gap-5">
           <div className="border border-gold-accent/20 bg-background/35 p-5">
             <p className="text-xs tracking-[0.18em] text-gold-accent uppercase mb-2">Address</p>
@@ -136,8 +136,11 @@ export function ContactInner({ hideReservationCta = false }: ContactInnerProps) 
 
 export function Contact() {
   return (
-    <section id="contact" className="py-20 sm:py-24 lg:py-32 px-6 bg-background relative">
-      <div className="mx-auto w-full max-w-6xl">
+    <section
+      id="contact"
+      className="relative w-full min-w-0 overflow-x-clip bg-background px-[max(1.5rem,env(safe-area-inset-left,0px),env(safe-area-inset-right,0px))] py-20 sm:py-24 lg:py-32"
+    >
+      <div className="mx-auto box-border w-full min-w-0 max-w-6xl">
         <div className="mx-auto mb-16 max-w-3xl text-center lg:mb-20">
           <div className="w-12 h-px bg-gold-accent mb-8 mx-auto" />
           <h2
