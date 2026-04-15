@@ -98,7 +98,7 @@ export function About() {
   return (
     <section
       id="about"
-      className="relative overflow-hidden py-24 sm:py-28 lg:py-36 px-6 bg-champagne text-charcoal"
+      className="relative overflow-hidden bg-champagne px-6 py-14 text-charcoal sm:py-28 lg:py-36"
       style={{ fontFamily: ABOUT_BODY_FONT }}
     >
       <div
@@ -113,10 +113,10 @@ export function About() {
       <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold-accent/25 to-transparent" />
 
       <div className="relative mx-auto w-full max-w-[90rem]">
-        <div className="grid min-h-0 gap-12 lg:grid-cols-2 lg:items-stretch lg:gap-12 xl:gap-16">
+        <div className="grid min-h-0 gap-6 md:gap-10 lg:grid-cols-2 lg:items-stretch lg:gap-12 xl:gap-16">
           {/* Left: 이미지 스택 (비율 유지). 행 높이는 stretch로 오른쪽과 맞춤 */}
           <Reveal className="flex min-h-0 h-full flex-col">
-            <div className="relative mx-auto flex h-full min-h-0 w-full max-w-xl flex-col gap-5 sm:gap-6 lg:mx-0 lg:max-w-none">
+            <div className="relative mx-auto flex h-full min-h-0 w-full max-w-xl flex-col gap-3 sm:gap-5 lg:mx-0 lg:max-w-none lg:gap-6">
               <div className="pointer-events-none absolute -left-3 -top-3 h-14 w-14 border-l border-t border-gold-accent/40 sm:-left-4 sm:-top-4" />
               <div className="pointer-events-none absolute -bottom-3 -right-3 h-14 w-14 border-b border-r border-gold-accent/40 sm:-bottom-4 sm:-right-4" />
 
@@ -138,7 +138,7 @@ export function About() {
                 </LuxImageCard>
               </motion.div>
 
-              <div className="grid shrink-0 grid-cols-2 gap-4 sm:gap-5">
+              <div className="grid shrink-0 grid-cols-2 gap-3 sm:gap-5">
                 <motion.div
                   initial={{ opacity: 0, y: 16 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -178,13 +178,13 @@ export function About() {
           {/* Right: 상단 카피는 원래 스타일. 특징+푸터 카드만 lg에서 flex-1로 남는 높이까지 채움 */}
           <div className="flex min-h-0 w-full min-w-0 flex-col lg:h-full lg:min-h-0 lg:pl-2 xl:pl-4">
             <Reveal className="shrink-0">
-              <p className="mb-5 text-[11px] font-medium uppercase tracking-[0.35em] text-gold-accent/90">Yonsei Mi Clinic</p>
-              <div className="mb-7 h-px w-20 bg-gradient-to-r from-gold-accent via-gold-accent/60 to-transparent" />
+              <p className="mb-3 text-[11px] font-medium uppercase tracking-[0.35em] text-gold-accent/90 md:mb-5">Yonsei Mi Clinic</p>
+              <div className="mb-4 h-px w-20 bg-gradient-to-r from-gold-accent via-gold-accent/60 to-transparent md:mb-7" />
             </Reveal>
 
             <Reveal delay={0.05} className="shrink-0">
               <h2
-                className="mb-7 w-full text-charcoal tracking-[-0.02em] text-balance"
+                className="mb-4 w-full text-balance text-charcoal tracking-[-0.02em] md:mb-7"
                 style={{
                   fontFamily: "'Playfair Display', serif",
                   fontSize: "clamp(2.1rem, 3.6vw, 3.15rem)",
@@ -201,20 +201,32 @@ export function About() {
             </Reveal>
 
             <Reveal delay={0.1} className="shrink-0">
-              <p className="mb-4 w-full max-w-none text-base sm:text-xl font-normal leading-[1.72] text-charcoal/88 [word-break:keep-all]">
+              <p className="mb-3 w-full max-w-none text-base font-normal leading-[1.72] text-charcoal/88 [word-break:keep-all] sm:mb-4 sm:text-xl">
                 안녕하세요 연세미의원입니다. 진료과 1인 대표원장의 상담 및 시술 책임제 병원으로서 경주의 아름다움을 선도하고 있는 병원입니다.
               </p>
             </Reveal>
 
             <Reveal delay={0.14} className="shrink-0">
-              <p className="mb-7 w-full max-w-none border-l border-gold-accent/35 pl-5 text-[15px] sm:text-base font-normal leading-relaxed text-muted-foreground [word-break:keep-all]">
+              <p className="mb-4 w-full max-w-none border-l border-gold-accent/35 pl-5 text-[15px] font-normal leading-relaxed text-muted-foreground [word-break:keep-all] sm:mb-6 sm:text-base">
                 공장형 네트워크 병원과는 다른 시술 퀄리티를 보장합니다.
               </p>
             </Reveal>
 
-            <Reveal delay={0.18} className="shrink-0">
+            <Reveal delay={0.17} className="shrink-0">
+              <LuxImageCard className="mb-5 md:mb-8 lg:mb-10">
+                <div className="relative aspect-[16/10] w-full sm:aspect-[2/1]">
+                  <ImageWithFallback
+                    src="/images/about-clinic-lobby.png"
+                    alt="연세미의원 병원 내부"
+                    className="h-full w-full object-cover transition-transform duration-[1s] ease-out group-hover:scale-[1.02]"
+                  />
+                </div>
+              </LuxImageCard>
+            </Reveal>
+
+            <Reveal delay={0.2} className="shrink-0">
               <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.28em] text-muted-foreground/80">Signature care</p>
-              <div className="mb-9 grid w-full grid-cols-2 gap-2 sm:grid-cols-4 lg:grid-cols-7">
+              <div className="mb-6 grid w-full grid-cols-2 gap-2 sm:mb-9 sm:grid-cols-4 lg:grid-cols-7">
                 {services.map((label) => (
                   <span
                     key={label}
@@ -226,13 +238,13 @@ export function About() {
               </div>
             </Reveal>
 
-            <Reveal delay={0.22} className="mt-8 w-full shrink-0 lg:mt-8 lg:flex lg:min-h-0 lg:flex-1 lg:flex-col">
+            <Reveal delay={0.24} className="mt-5 w-full shrink-0 md:mt-8 lg:mt-8 lg:flex lg:min-h-0 lg:flex-1 lg:flex-col">
               <div className="flex min-h-0 w-full flex-1 flex-col overflow-hidden rounded-xl border border-gold-accent/15 bg-white/40 px-4 py-1 shadow-[0_8px_28px_-20px_rgba(45,38,32,0.12)] backdrop-blur-sm sm:px-5 sm:py-0">
                 <ul className="flex min-h-0 flex-1 flex-col divide-y divide-gold-accent/12 lg:min-h-0">
                   {features.map((item) => (
                     <li
                       key={item.title}
-                      className="flex min-h-0 flex-1 gap-4 py-4 sm:gap-5 sm:py-5 lg:min-h-0 lg:items-center"
+                      className="flex min-h-0 flex-1 gap-3 py-3 sm:gap-5 sm:py-5 lg:min-h-0 lg:items-center"
                     >
                       <div
                         className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-gold-accent/25 bg-white/90 text-gold-accent shadow-[inset_0_1px_0_rgba(255,255,255,0.95)] sm:mt-0 sm:h-11 sm:w-11"

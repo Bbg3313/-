@@ -30,7 +30,7 @@ export function ContactInner({ hideReservationCta = false }: ContactInnerProps) 
   }, []);
 
   return (
-    <div className="mx-auto grid w-full min-w-0 max-w-full grid-cols-1 content-stretch items-stretch gap-8 lg:grid-cols-2 lg:gap-10">
+    <div className="mx-auto grid w-full min-w-0 max-w-full grid-cols-1 content-stretch items-stretch gap-5 lg:grid-cols-2 lg:gap-10">
       <div className="min-h-[300px] w-full min-w-0 max-w-full sm:min-h-[360px] lg:min-h-[560px]">
         <div className="h-full w-full min-w-0 overflow-hidden border border-border/70 bg-muted">
           <iframe
@@ -138,13 +138,13 @@ export function Contact() {
   return (
     <section
       id="contact"
-      className="relative w-full min-w-0 overflow-x-clip bg-background px-[max(1.5rem,env(safe-area-inset-left,0px),env(safe-area-inset-right,0px))] py-20 sm:py-24 lg:py-32"
+      className="relative w-full min-w-0 overflow-x-clip bg-background px-[max(1.5rem,env(safe-area-inset-left,0px),env(safe-area-inset-right,0px))] py-12 sm:py-24 lg:py-32"
     >
       <div className="mx-auto box-border w-full min-w-0 max-w-6xl">
-        <div className="mx-auto mb-16 max-w-3xl text-center lg:mb-20">
-          <div className="w-12 h-px bg-gold-accent mb-8 mx-auto" />
+        <div className="mx-auto mb-8 max-w-3xl text-center md:mb-16 lg:mb-20">
+          <div className="mx-auto mb-4 h-px w-12 bg-gold-accent md:mb-8" />
           <h2
-            className="mb-6 w-full text-center text-charcoal tracking-tight"
+            className="mb-3 w-full text-center text-charcoal tracking-tight md:mb-6"
             style={{
               fontFamily: "'Playfair Display', serif",
               fontSize: "clamp(2.35rem, 8vw, 3.5rem)",

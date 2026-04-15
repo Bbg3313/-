@@ -51,16 +51,16 @@ export function Services() {
   ];
 
   return (
-    <section id="services" className="py-20 sm:py-24 lg:py-32 px-6 bg-background relative">
+    <section id="services" className="relative bg-background px-6 py-12 sm:py-24 lg:py-32">
       {/* Subtle decorative element */}
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
 
       <div className="max-w-7xl mx-auto">
         {/* Header with elegant typography */}
-        <div className="max-w-2xl mb-24">
-          <div className="w-12 h-px bg-primary mb-8" />
+        <div className="mb-10 max-w-2xl md:mb-20 lg:mb-24">
+          <div className="mb-4 h-px w-12 bg-primary md:mb-8" />
           <h2
-            className="mb-6 text-foreground tracking-tight"
+            className="mb-3 text-foreground tracking-tight md:mb-6"
             style={{ fontFamily: "'Playfair Display', serif", fontSize: "3.5rem", lineHeight: "1.1", fontWeight: "600" }}
           >
             Medical Services
@@ -70,8 +70,34 @@ export function Services() {
           </p>
         </div>
 
-        {/* Masonry grid layout */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-12 gap-6 auto-rows-auto">
+        {/* 모바일만: 6장 3열×2행 한눈에 (md 이상은 아래 메이슨리 유지) */}
+        <div className="grid grid-cols-3 gap-2 sm:gap-3 md:hidden">
+          {services.map((service) => (
+            <div
+              key={service.title}
+              className="group relative aspect-[4/5] overflow-hidden rounded-lg border border-border/40 bg-card shadow-sm"
+            >
+              <ImageWithFallback
+                src={service.image}
+                alt={service.title}
+                className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" />
+              <div className="absolute inset-x-0 bottom-0 p-2 pt-6">
+                <p className="text-[9px] font-medium uppercase tracking-wide text-white/55 line-clamp-1">{service.subtitle}</p>
+                <h3
+                  className="mt-0.5 line-clamp-2 text-[11px] font-semibold leading-tight text-white [word-break:keep-all]"
+                  style={{ fontFamily: "'Playfair Display', serif" }}
+                >
+                  {service.title}
+                </h3>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Masonry grid layout — 태블릿·데스크톱 */}
+        <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-12 gap-6 auto-rows-auto">
           {/* Large card - spans 7 columns */}
           <div className="lg:col-span-7 group">
             <div className="relative h-[600px] overflow-hidden bg-card shadow-sm hover:shadow-xl transition-all duration-700">
@@ -206,7 +232,7 @@ export function Services() {
         </div>
 
         {/* CTA section */}
-        <div className="mt-24 text-center">
+        <div className="mt-12 text-center md:mt-24">
           {isExternalReservation ? (
             <a
               href={SITE_LINKS.reservation}

@@ -20,12 +20,12 @@ const DIRECTOR = {
 
 export function Doctors() {
   return (
-    <section id="doctors" className="py-20 sm:py-24 lg:py-32 px-6 bg-background relative">
+    <section id="doctors" className="relative bg-background px-6 py-12 sm:py-24 lg:py-32">
       <div className="max-w-6xl mx-auto">
-        <div className="max-w-3xl mx-auto mb-16 lg:mb-20 text-center">
-          <div className="w-12 h-px bg-gold-accent mb-8 mx-auto" />
+        <div className="mx-auto mb-8 max-w-3xl text-center md:mb-16 lg:mb-20">
+          <div className="mx-auto mb-4 h-px w-12 bg-gold-accent md:mb-8" />
           <h2
-            className="mb-6 text-charcoal tracking-tight"
+            className="mb-3 text-charcoal tracking-tight md:mb-6"
             style={{
               fontFamily: "'Playfair Display', serif",
               fontSize: "3.5rem",
@@ -35,7 +35,7 @@ export function Doctors() {
           >
             Meet Our Specialists
           </h2>
-          <p className="text-lg sm:text-xl text-charcoal/90 leading-relaxed font-medium mb-4 [word-break:keep-all]">
+          <p className="mb-3 text-lg font-medium leading-relaxed text-charcoal/90 [word-break:keep-all] sm:mb-4 sm:text-xl">
             20년의 숙련도, 확신 있는 결과.
           </p>
           <p className="mx-auto max-w-[32ch] text-base sm:text-lg text-muted-foreground leading-relaxed [word-break:keep-all]">
@@ -45,10 +45,10 @@ export function Doctors() {
           </p>
         </div>
 
-        <div className="w-full grid lg:grid-cols-[minmax(0,420px)_minmax(0,600px)] justify-center gap-12 lg:gap-20 xl:gap-24 items-start lg:items-stretch lg:translate-x-10 xl:translate-x-14">
+        <div className="grid w-full items-start justify-center gap-6 lg:grid-cols-[minmax(0,420px)_minmax(0,600px)] lg:items-stretch lg:gap-20 lg:translate-x-10 xl:gap-24 xl:translate-x-14">
           <div className="flex justify-center lg:justify-end lg:items-end w-full">
             <div className="relative w-full max-w-md lg:h-full">
-              <div className="relative h-[560px] lg:h-full overflow-hidden bg-muted shadow-xl">
+              <div className="relative h-[min(52vh,420px)] overflow-hidden bg-muted shadow-xl sm:h-[480px] md:h-[560px] lg:h-full">
                 <ImageWithFallback
                   src={DIRECTOR.image}
                   alt={`${DIRECTOR.name} ${DIRECTOR.role}`}
@@ -59,7 +59,7 @@ export function Doctors() {
           </div>
 
           <div className="pt-0 lg:pt-4 max-w-xl mx-auto w-full lg:max-w-none lg:mx-0 lg:pl-6 xl:pl-8">
-            <p className="text-sm tracking-[0.15em] text-gold-accent mb-6 font-medium">
+            <p className="mb-4 text-sm font-medium tracking-[0.15em] text-gold-accent md:mb-6">
               [ 의료진 소개 ]
             </p>
             <h3
@@ -76,9 +76,9 @@ export function Doctors() {
                 {DIRECTOR.role}
               </span>
             </h3>
-            <div className="mb-10 pb-10 border-b border-charcoal/10" />
+            <div className="mb-6 border-b border-charcoal/10 pb-6 md:mb-10 md:pb-10" />
 
-            <ul className="space-y-3.5">
+            <ul className="space-y-2.5 md:space-y-3.5">
               {DIRECTOR.credentials.map((line) => (
                 <li key={line} className="flex items-start gap-3.5">
                   <span

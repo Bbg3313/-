@@ -17,8 +17,8 @@ export function ConsultationChannelsSection({
   ),
 }: ConsultationChannelsSectionProps) {
   return (
-    <section className="mt-14 border border-border/70 bg-muted/30 p-6 sm:p-8 md:p-10">
-      <div className="text-center mb-8">
+    <section className="mt-8 border border-border/70 bg-muted/30 p-4 sm:mt-14 sm:p-8 md:p-10">
+      <div className="mb-5 text-center sm:mb-8">
         <h2 className="mb-3 text-[clamp(1.35rem,2.8vw,1.75rem)] font-semibold leading-snug tracking-tight text-charcoal">
           {heading}
         </h2>
@@ -27,12 +27,12 @@ export function ConsultationChannelsSection({
         </p>
       </div>
 
-      <div className="grid sm:grid-cols-2 xl:grid-cols-4 gap-4">
+      <div className="grid gap-2.5 sm:grid-cols-2 sm:gap-4 xl:grid-cols-4">
         <a
           href={SITE_LINKS.naverReservation}
           target="_blank"
           rel="noreferrer"
-          className="group bg-background border border-border/70 px-5 py-5 hover:border-gold-accent/40 hover:shadow-sm transition-all"
+          className="group border border-border/70 bg-background px-4 py-4 transition-all hover:border-gold-accent/40 hover:shadow-sm sm:px-5 sm:py-5"
         >
           <div className="flex items-start gap-3">
             <span className="inline-flex items-center justify-center w-9 h-9 rounded-md bg-emerald-50 text-emerald-600 text-lg">🗓️</span>
@@ -47,7 +47,7 @@ export function ConsultationChannelsSection({
           href={SITE_LINKS.naverTalk}
           target="_blank"
           rel="noreferrer"
-          className="group bg-background border border-border/70 px-5 py-5 hover:border-gold-accent/40 hover:shadow-sm transition-all"
+          className="group border border-border/70 bg-background px-4 py-4 transition-all hover:border-gold-accent/40 hover:shadow-sm sm:px-5 sm:py-5"
         >
           <div className="flex items-start gap-3">
             <span className="inline-flex items-center justify-center w-9 h-9 rounded-md bg-[#03C75A]/10 border border-[#03C75A]/20 text-[#03C75A] text-[11px] font-bold tracking-tight">
@@ -64,7 +64,7 @@ export function ConsultationChannelsSection({
           href={SITE_LINKS.kakaoChannel}
           target="_blank"
           rel="noreferrer"
-          className="group bg-background border border-border/70 px-5 py-5 hover:border-gold-accent/40 hover:shadow-sm transition-all"
+          className="group border border-border/70 bg-background px-4 py-4 transition-all hover:border-gold-accent/40 hover:shadow-sm sm:px-5 sm:py-5"
         >
           <div className="flex items-start gap-3">
             <span className="inline-flex items-center justify-center w-9 h-9 rounded-md bg-[#FEE500]/70 border border-[#FEE500] text-[#191919] text-[10px] font-bold tracking-tight">
@@ -79,7 +79,7 @@ export function ConsultationChannelsSection({
 
         <a
           href="tel:0547728575"
-          className="group bg-background border border-border/70 px-5 py-5 hover:border-gold-accent/40 hover:shadow-sm transition-all"
+          className="group border border-border/70 bg-background px-4 py-4 transition-all hover:border-gold-accent/40 hover:shadow-sm sm:px-5 sm:py-5"
         >
           <div className="flex items-start gap-3">
             <span className="inline-flex items-center justify-center w-9 h-9 rounded-md bg-fuchsia-50 text-fuchsia-600 text-lg">📞</span>

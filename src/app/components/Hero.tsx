@@ -46,14 +46,14 @@ export function Hero() {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 py-32 w-full">
+      <div className="relative z-10 mx-auto w-full max-w-7xl px-6 py-20 md:py-28 lg:py-32">
         <div className="max-w-2xl">
           {/* Gold accent line */}
-          <div className="w-16 h-0.5 bg-gradient-to-r from-gold-accent to-transparent mb-8" />
+          <div className="mb-4 h-0.5 w-16 bg-gradient-to-r from-gold-accent to-transparent md:mb-8" />
 
           {/* Main headline - elegant serif */}
           <h1
-            className="text-white mb-8 tracking-tight leading-tight"
+            className="mb-4 text-white tracking-tight leading-tight md:mb-8"
             style={{
               fontFamily: "'Playfair Display', serif",
               fontSize: "4.5rem",
@@ -75,12 +75,12 @@ export function Hero() {
           </h1>
 
           {/* Subheadline - Korean */}
-          <p className="max-w-[24ch] text-white/90 text-[1.35rem] sm:text-[1.65rem] md:text-[1.75rem] mb-8 leading-relaxed [word-break:keep-all]">
+          <p className="mb-4 max-w-[24ch] text-[1.35rem] leading-relaxed text-white/90 [word-break:keep-all] sm:mb-8 sm:text-[1.65rem] md:text-[1.75rem]">
             건강하고 아름다운 피부를 위한 전문 클리닉
           </p>
 
           {/* Description */}
-          <p className="text-white/70 text-base sm:text-lg mb-12 leading-relaxed max-w-xl [word-break:keep-all]">
+          <p className="mb-8 max-w-xl text-base leading-relaxed text-white/70 [word-break:keep-all] sm:text-lg md:mb-12">
             피부과 전문의의 체계적인 진료와 최신 의료 장비로
             여러분의 피부 건강을 책임집니다
           </p>
@@ -111,10 +111,10 @@ export function Hero() {
       </div>
 
       {/* Scroll indicator */}
-      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 z-10">
-        <div className="flex flex-col items-center gap-2 text-white/60">
+      <div className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 md:bottom-12">
+        <div className="flex flex-col items-center gap-1.5 text-white/60 md:gap-2">
           <span className="text-xs tracking-widest uppercase">Scroll</span>
-          <div className="w-px h-16 bg-gradient-to-b from-white/60 to-transparent" />
+          <div className="h-12 w-px bg-gradient-to-b from-white/60 to-transparent md:h-16" />
         </div>
       </div>
     </section>

@@ -54,17 +54,17 @@ export function Events() {
     : EVENTS;
 
   return (
-    <section id="events" className="py-20 sm:py-24 lg:py-32 px-6 bg-background relative overflow-hidden">
+    <section id="events" className="relative overflow-hidden bg-background px-6 py-12 sm:py-24 lg:py-32">
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/15 to-transparent" />
       <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/15 to-transparent" />
       <div className="absolute top-1/2 left-0 w-96 h-96 bg-gradient-radial from-gold-accent/6 to-transparent blur-3xl -translate-y-1/2" />
       <div className="absolute top-1/2 right-0 w-96 h-96 bg-gradient-radial from-gold-accent/6 to-transparent blur-3xl -translate-y-1/2" />
 
       <div className="max-w-[90rem] mx-auto relative">
-        <div className="text-center mb-16 lg:mb-20">
-          <div className="w-12 h-px bg-gold-accent mx-auto mb-8" />
+        <div className="mb-8 text-center md:mb-16 lg:mb-20">
+          <div className="mx-auto mb-4 h-px w-12 bg-gold-accent md:mb-8" />
           <h2
-            className="mb-6 text-charcoal tracking-tight"
+            className="mb-3 text-charcoal tracking-tight md:mb-6"
             style={{
               fontFamily: "'Playfair Display', serif",
               fontSize: "3.5rem",
@@ -77,7 +77,7 @@ export function Events() {
           <p className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto [word-break:keep-all]">
             이달의 혜택을 확인해보세요
           </p>
-          <p className="mt-5">
+          <p className="mt-3 md:mt-5">
             <Link
               to="/events"
               className="text-sm font-medium text-gold-accent hover:underline underline-offset-4 decoration-gold-accent/50"
@@ -87,7 +87,7 @@ export function Events() {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+        <div className="grid grid-cols-2 gap-3 md:gap-6 lg:grid-cols-4 lg:gap-8">
           {cards.map((event) => (
             <Link
               key={event.slug}
@@ -103,8 +103,8 @@ export function Events() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </div>
-              <div className="p-5 lg:p-6">
-                <p className="text-xs tracking-widest uppercase text-gold-accent mb-2">{event.period}</p>
+              <div className="p-3.5 md:p-5 lg:p-6">
+                <p className="mb-1 text-xs uppercase tracking-widest text-gold-accent md:mb-2">{event.period}</p>
                 <p className="text-charcoal font-semibold leading-snug line-clamp-2 text-[15px] lg:text-base [word-break:keep-all]">
                   {event.title}
                 </p>
