@@ -412,8 +412,18 @@ export function PricingPage() {
     const rail = categoryRailRef.current;
     const btn = categoryRefs.current[currentId as PricingCategoryId];
     if (!rail || !btn) return;
-    const targetLeft = btn.offsetLeft - (rail.clientWidth - btn.clientWidth) / 2;
-    rail.scrollTo({ left: Math.max(0, targetLeft), behavior: "smooth" });
+    const railRect = rail.getBoundingClientRect();
+    const btnRect = btn.getBoundingClientRect();
+    const margin = 10;
+    let delta = 0;
+    if (btnRect.left < railRect.left + margin) {
+      delta = btnRect.left - railRect.left - margin;
+    } else if (btnRect.right > railRect.right - margin) {
+      delta = btnRect.right - railRect.right + margin;
+    }
+    if (delta !== 0) {
+      rail.scrollBy({ left: delta, behavior: "smooth" });
+    }
   }, [active, scrollActive]);
 
   return (
@@ -446,32 +456,34 @@ export function PricingPage() {
         </div>
 
         {/* 본문 article 밖 — 스크롤 시 헤더(z-50) 아래 고정 */}
-        <div className="sticky top-[5.25rem] sm:top-[6.25rem] md:top-[8.75rem] z-[45] -mx-6 px-6 py-3 mb-8 border-b border-border/60 bg-background/95 shadow-sm backdrop-blur-md">
-          <p className="sr-only">시술 카테고리 필터</p>
-          <div
-            ref={categoryRailRef}
-            className="mx-auto flex w-full max-w-5xl gap-2 overflow-x-auto pb-1 md:grid md:grid-cols-6 md:overflow-visible md:pb-0"
-          >
-            {PRICING_CATEGORIES.map((c) => {
-              const isOn = active === "all" ? scrollActive === c.id : active === c.id;
-              return (
-                <button
-                  key={c.id}
-                  type="button"
-                  onClick={() => setActive(c.id)}
-                  ref={(el) => {
-                    categoryRefs.current[c.id] = el;
-                  }}
-                  className={
-                    isOn
-                      ? `min-h-[2.5rem] shrink-0 whitespace-nowrap rounded-lg border border-gold-accent/50 bg-champagne/80 px-3 py-2 text-center text-xs font-medium leading-snug text-charcoal shadow-sm transition-colors md:w-full md:whitespace-normal md:px-2 md:text-sm md:leading-snug ${KO_WRAP}`
-                      : `min-h-[2.5rem] shrink-0 whitespace-nowrap rounded-lg border border-border/70 bg-card px-3 py-2 text-center text-xs font-medium leading-snug text-muted-foreground transition-colors hover:border-gold-accent/35 hover:text-charcoal md:w-full md:whitespace-normal md:px-2 md:text-sm md:leading-snug ${KO_WRAP}`
-                  }
-                >
-                  {c.label}
-                </button>
-              );
-            })}
+        <div className="sticky z-[45] -mx-6 mb-8 border-b border-border/60 bg-background/95 pt-2 pb-3 shadow-sm backdrop-blur-md supports-[backdrop-filter]:bg-background/88 sm:pt-2.5 md:pt-3 top-[max(5.75rem,calc(env(safe-area-inset-top,0px)+5.35rem))] sm:top-[max(6.85rem,calc(env(safe-area-inset-top,0px)+6.1rem))] md:top-[max(9.35rem,calc(env(safe-area-inset-top,0px)+8.85rem))]">
+          <div className="px-6">
+            <p className="sr-only">시술 카테고리 필터</p>
+            <div
+              ref={categoryRailRef}
+              className="mx-auto flex w-full max-w-5xl gap-2 overflow-x-auto overscroll-x-contain scroll-pl-2 scroll-pr-2 pb-1 [-webkit-overflow-scrolling:touch] md:grid md:grid-cols-6 md:overflow-visible md:scroll-pl-0 md:scroll-pr-0 md:pb-0"
+            >
+              {PRICING_CATEGORIES.map((c) => {
+                const isOn = active === "all" ? scrollActive === c.id : active === c.id;
+                return (
+                  <button
+                    key={c.id}
+                    type="button"
+                    onClick={() => setActive(c.id)}
+                    ref={(el) => {
+                      categoryRefs.current[c.id] = el;
+                    }}
+                    className={
+                      isOn
+                        ? `min-h-[2.5rem] shrink-0 whitespace-nowrap rounded-lg border border-gold-accent/50 bg-champagne/80 px-3 py-2 text-center text-xs font-medium leading-snug text-charcoal shadow-sm transition-colors md:w-full md:whitespace-normal md:px-2 md:text-sm md:leading-snug ${KO_WRAP}`
+                        : `min-h-[2.5rem] shrink-0 whitespace-nowrap rounded-lg border border-border/70 bg-card px-3 py-2 text-center text-xs font-medium leading-snug text-muted-foreground transition-colors hover:border-gold-accent/35 hover:text-charcoal md:w-full md:whitespace-normal md:px-2 md:text-sm md:leading-snug ${KO_WRAP}`
+                    }
+                  >
+                    {c.label}
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
 
