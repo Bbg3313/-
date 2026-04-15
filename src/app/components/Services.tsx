@@ -70,28 +70,40 @@ export function Services() {
           </p>
         </div>
 
-        {/* 모바일만: 6장 3열×2행 한눈에 (md 이상은 아래 메이슨리 유지) */}
-        <div className="grid grid-cols-3 gap-2 sm:gap-3 md:hidden">
-          {services.map((service) => (
-            <div
-              key={service.title}
-              className="group relative aspect-[4/5] overflow-hidden rounded-lg border border-border/40 bg-card shadow-sm"
-            >
-              <ImageWithFallback
-                src={service.image}
-                alt={service.title}
-                className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" />
-              <div className="absolute inset-x-0 bottom-0 p-2 pt-6">
-                <p className="text-[9px] font-medium uppercase tracking-wide text-white/55 line-clamp-1">{service.subtitle}</p>
-                <h3
-                  className="mt-0.5 line-clamp-2 text-[11px] font-semibold leading-tight text-white [word-break:keep-all]"
-                  style={{ fontFamily: "'Playfair Display', serif" }}
+        {/* 모바일만: 3열, 열당 2장 세로 스택 (총 6장) — 카드·글자 크게 */}
+        <div className="grid grid-cols-3 gap-3 sm:gap-4 md:hidden">
+          {(
+            [
+              [services[0], services[1]],
+              [services[2], services[3]],
+              [services[4], services[5]],
+            ] as const
+          ).map((pair, col) => (
+            <div key={col} className="flex min-h-0 flex-col gap-2.5 sm:gap-3">
+              {pair.map((service) => (
+                <div
+                  key={service.title}
+                  className="group relative min-h-[13.5rem] flex-1 overflow-hidden rounded-xl border border-border/50 bg-card shadow-md sm:min-h-[15.5rem]"
                 >
-                  {service.title}
-                </h3>
-              </div>
+                  <ImageWithFallback
+                    src={service.image}
+                    alt={service.title}
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/15 to-transparent" />
+                  <div className="absolute inset-x-0 bottom-0 p-2.5 pb-3 pt-10 sm:p-3 sm:pb-3.5 sm:pt-12">
+                    <p className="line-clamp-1 text-[10px] font-medium uppercase tracking-wide text-white/65 sm:text-xs">
+                      {service.subtitle}
+                    </p>
+                    <h3
+                      className="mt-1 line-clamp-2 text-xs font-semibold leading-snug text-white [word-break:keep-all] sm:text-sm sm:leading-tight"
+                      style={{ fontFamily: "'Playfair Display', serif" }}
+                    >
+                      {service.title}
+                    </h3>
+                  </div>
+                </div>
+              ))}
             </div>
           ))}
         </div>

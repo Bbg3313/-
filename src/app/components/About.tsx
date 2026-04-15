@@ -51,6 +51,78 @@ function LuxImageCard({ className = "", children }: { className?: string; childr
   );
 }
 
+/** 병원 소개 사진 스택 — 데스크톱·모바일 동일 마크업(크기·비율 동일) */
+function AboutGalleryImages() {
+  return (
+    <>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-40px" }}
+        transition={{ duration: 0.85, ease: easeLux }}
+        className="shrink-0"
+      >
+        <LuxImageCard>
+          <div className="relative w-full bg-gradient-to-b from-[#f4f1ec] to-[#e9e4dc]">
+            <ImageWithFallback
+              src="/images/about-clinic-main.png"
+              alt="연세미의원 로고와 인테리어"
+              className="mx-auto block h-auto w-full max-h-[min(68vh,680px)] object-contain object-bottom transition-transform duration-[1.15s] ease-out group-hover:scale-[1.01]"
+            />
+          </div>
+        </LuxImageCard>
+      </motion.div>
+
+      <div className="grid shrink-0 grid-cols-2 gap-3 sm:gap-5">
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, delay: 0.08, ease: easeLux }}
+        >
+          <LuxImageCard>
+            <div className="relative aspect-[4/5]">
+              <ImageWithFallback
+                src="/images/about-clinic-room.png"
+                alt="시술실"
+                className="h-full w-full object-cover transition-transform duration-[1s] ease-out group-hover:scale-[1.03]"
+              />
+            </div>
+          </LuxImageCard>
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, delay: 0.16, ease: easeLux }}
+        >
+          <LuxImageCard>
+            <div className="relative aspect-[4/5]">
+              <ImageWithFallback
+                src="/images/about-clinic-lobby.png"
+                alt="로비"
+                className="h-full w-full object-cover transition-transform duration-[1s] ease-out group-hover:scale-[1.03]"
+              />
+            </div>
+          </LuxImageCard>
+        </motion.div>
+      </div>
+    </>
+  );
+}
+
+function AboutGalleryShell({ children, className = "" }: { children: ReactNode; className?: string }) {
+  return (
+    <div
+      className={`relative mx-auto flex h-full min-h-0 w-full max-w-xl flex-col gap-3 sm:gap-5 lg:mx-0 lg:max-w-none lg:gap-6 ${className}`}
+    >
+      <div className="pointer-events-none absolute -left-3 -top-3 h-14 w-14 border-l border-t border-gold-accent/40 sm:-left-4 sm:-top-4" />
+      <div className="pointer-events-none absolute -bottom-3 -right-3 h-14 w-14 border-b border-r border-gold-accent/40 sm:-bottom-4 sm:-right-4" />
+      {children}
+    </div>
+  );
+}
+
 const services = [
   "보톡스",
   "필러",
@@ -114,119 +186,11 @@ export function About() {
 
       <div className="relative mx-auto w-full max-w-[90rem]">
         <div className="grid min-h-0 gap-6 md:gap-10 lg:grid-cols-2 lg:items-stretch lg:gap-12 xl:gap-16">
-          {/* Left: 이미지 스택 (비율 유지). 행 높이는 stretch로 오른쪽과 맞춤 */}
-          <Reveal className="flex min-h-0 h-full flex-col">
-            <div className="relative mx-auto flex h-full min-h-0 w-full max-w-xl flex-col gap-3 sm:gap-5 lg:mx-0 lg:max-w-none lg:gap-6">
-              <div className="pointer-events-none absolute -left-3 -top-3 h-14 w-14 border-l border-t border-gold-accent/40 sm:-left-4 sm:-top-4" />
-              <div className="pointer-events-none absolute -bottom-3 -right-3 h-14 w-14 border-b border-r border-gold-accent/40 sm:-bottom-4 sm:-right-4" />
-
-              {/* 모바일·태블릿: 세 장 한 줄 */}
-              <div className="grid shrink-0 grid-cols-3 gap-2 sm:gap-4 lg:hidden">
-                {(
-                  [
-                    {
-                      src: "/images/about-clinic-main.png",
-                      alt: "연세미의원 로고와 인테리어",
-                      contain: true as const,
-                    },
-                    {
-                      src: "/images/about-clinic-room.png",
-                      alt: "시술실",
-                      contain: false as const,
-                    },
-                    {
-                      src: "/images/about-clinic-lobby.png",
-                      alt: "로비",
-                      contain: false as const,
-                    },
-                  ] as const
-                ).map((item, i) => (
-                  <motion.div
-                    key={item.src}
-                    initial={{ opacity: 0, y: 16 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-24px" }}
-                    transition={{ duration: 0.7, delay: i * 0.08, ease: easeLux }}
-                  >
-                    <LuxImageCard>
-                      {item.contain ? (
-                        <div className="relative aspect-[4/5] w-full bg-gradient-to-b from-[#f4f1ec] to-[#e9e4dc]">
-                          <ImageWithFallback
-                            src={item.src}
-                            alt={item.alt}
-                            className="mx-auto block h-full w-full object-contain object-bottom transition-transform duration-[1s] ease-out group-hover:scale-[1.02]"
-                          />
-                        </div>
-                      ) : (
-                        <div className="relative aspect-[4/5]">
-                          <ImageWithFallback
-                            src={item.src}
-                            alt={item.alt}
-                            className="h-full w-full object-cover transition-transform duration-[1s] ease-out group-hover:scale-[1.03]"
-                          />
-                        </div>
-                      )}
-                    </LuxImageCard>
-                  </motion.div>
-                ))}
-              </div>
-
-              {/* 데스크톱(lg+): 상단 메인 + 하단 2열 (기존 웹 레이아웃) */}
-              <div className="hidden min-h-0 w-full flex-col gap-3 sm:gap-5 lg:flex lg:gap-6">
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-40px" }}
-                  transition={{ duration: 0.85, ease: easeLux }}
-                  className="shrink-0"
-                >
-                  <LuxImageCard>
-                    <div className="relative w-full bg-gradient-to-b from-[#f4f1ec] to-[#e9e4dc]">
-                      <ImageWithFallback
-                        src="/images/about-clinic-main.png"
-                        alt="연세미의원 로고와 인테리어"
-                        className="mx-auto block h-auto w-full max-h-[min(68vh,680px)] object-contain object-bottom transition-transform duration-[1.15s] ease-out group-hover:scale-[1.01]"
-                      />
-                    </div>
-                  </LuxImageCard>
-                </motion.div>
-
-                <div className="grid shrink-0 grid-cols-2 gap-3 sm:gap-5">
-                  <motion.div
-                    initial={{ opacity: 0, y: 16 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.7, delay: 0.08, ease: easeLux }}
-                  >
-                    <LuxImageCard>
-                      <div className="relative aspect-[4/5]">
-                        <ImageWithFallback
-                          src="/images/about-clinic-room.png"
-                          alt="시술실"
-                          className="h-full w-full object-cover transition-transform duration-[1s] ease-out group-hover:scale-[1.03]"
-                        />
-                      </div>
-                    </LuxImageCard>
-                  </motion.div>
-                  <motion.div
-                    initial={{ opacity: 0, y: 16 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.7, delay: 0.16, ease: easeLux }}
-                  >
-                    <LuxImageCard>
-                      <div className="relative aspect-[4/5]">
-                        <ImageWithFallback
-                          src="/images/about-clinic-lobby.png"
-                          alt="로비"
-                          className="h-full w-full object-cover transition-transform duration-[1s] ease-out group-hover:scale-[1.03]"
-                        />
-                      </div>
-                    </LuxImageCard>
-                  </motion.div>
-                </div>
-              </div>
-            </div>
+          {/* Left: 데스크톱(lg+)만 — 사진 스택. 모바일은 오른쪽 시그니처 케어 위에 동일 블록 삽입 */}
+          <Reveal className="hidden min-h-0 h-full w-full flex-col lg:flex">
+            <AboutGalleryShell>
+              <AboutGalleryImages />
+            </AboutGalleryShell>
           </Reveal>
 
           {/* Right: 상단 카피는 원래 스타일. 특징+푸터 카드만 lg에서 flex-1로 남는 높이까지 채움 */}
@@ -264,6 +228,12 @@ export function About() {
               <p className="mb-4 w-full max-w-none border-l border-gold-accent/35 pl-5 text-[15px] font-normal leading-relaxed text-muted-foreground [word-break:keep-all] sm:mb-6 sm:text-base">
                 공장형 네트워크 병원과는 다른 시술 퀄리티를 보장합니다.
               </p>
+            </Reveal>
+
+            <Reveal delay={0.15} className="shrink-0 lg:hidden">
+              <AboutGalleryShell className="mb-6 sm:mb-8">
+                <AboutGalleryImages />
+              </AboutGalleryShell>
             </Reveal>
 
             <Reveal delay={0.17} className="shrink-0">
