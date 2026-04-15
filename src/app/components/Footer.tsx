@@ -23,7 +23,7 @@ function InfoLine({ label, children }: { label: string; children: ReactNode }) {
       <span className="text-muted-foreground/45 select-none font-light" aria-hidden>
         |
       </span>
-      <span className="min-w-0 text-left sm:text-center [word-break:keep-all]">{children}</span>
+      <span className="min-w-0 text-center [word-break:keep-all]">{children}</span>
     </li>
   );
 }
@@ -98,42 +98,44 @@ export function Footer({ className }: FooterProps) {
               <img
                 src={logo}
                 alt="연세미의원"
-                className={`${SITE_LOGO_IMG_CLASS} mx-auto translate-x-1 opacity-95 group-hover:opacity-100 transition-opacity`}
+                className={`${SITE_LOGO_IMG_CLASS} mx-auto opacity-95 group-hover:opacity-100 transition-opacity`}
               />
             </Link>
           </div>
 
           <div className="my-4 h-px w-12 shrink-0 bg-gold-accent/35 md:my-7" aria-hidden />
 
-          <ul className="text-center space-y-2.5 w-full max-w-md mx-auto">
-            <InfoLine label="대표자">심형경</InfoLine>
-            <InfoLine label="사업자등록번호">587-10-03051</InfoLine>
-            <InfoLine label="주소">경북 경주시 화랑로 132, 2층 연세미의원</InfoLine>
-            <InfoLine label="전화">
-              <a
-                href="tel:0547728575"
-                className="text-gold-accent font-medium hover:underline underline-offset-2 transition-colors"
-              >
-                054-772-8575
-              </a>
-            </InfoLine>
-          </ul>
+          <div className="flex w-full max-w-md flex-col items-stretch gap-6 mx-auto">
+            <ul className="space-y-2.5 text-center">
+              <InfoLine label="대표자">심형경</InfoLine>
+              <InfoLine label="사업자등록번호">587-10-03051</InfoLine>
+              <InfoLine label="주소">경북 경주시 화랑로 132, 2층 연세미의원</InfoLine>
+              <InfoLine label="전화">
+                <a
+                  href="tel:0547728575"
+                  className="text-gold-accent font-medium hover:underline underline-offset-2 transition-colors"
+                >
+                  054-772-8575
+                </a>
+              </InfoLine>
+            </ul>
 
-          <div className="mt-6 flex flex-wrap justify-center gap-4">
-            <SocialButton href={SOCIAL_LINKS.instagram} label="인스타그램" variant="instagram">
-              <Instagram className="h-[22px] w-[22px]" strokeWidth={2} />
-            </SocialButton>
-            <SocialButton href={SOCIAL_LINKS.naverBlog} label="네이버 블로그" variant="naver">
-              <NaverBlogIcon className="h-[26px] w-[26px] text-white" />
-            </SocialButton>
-          </div>
+            <div className="flex flex-wrap justify-center gap-4">
+              <SocialButton href={SOCIAL_LINKS.instagram} label="인스타그램" variant="instagram">
+                <Instagram className="h-[22px] w-[22px]" strokeWidth={2} />
+              </SocialButton>
+              <SocialButton href={SOCIAL_LINKS.naverBlog} label="네이버 블로그" variant="naver">
+                <NaverBlogIcon className="h-[26px] w-[26px] text-white" />
+              </SocialButton>
+            </div>
 
-          <div className="mt-7 w-full max-w-3xl mx-auto border border-border/60 bg-background/60 backdrop-blur-sm px-5 py-4">
-            <p className="text-center text-xs tracking-widest text-charcoal/80 font-medium mb-2">주의사항</p>
-            <p className="text-center text-xs sm:text-sm text-muted-foreground leading-relaxed [word-break:keep-all]">
-              해당 수술 및 시술의 결과는 개인마다 차이가 있을 수 있습니다. 개인에 따라 피부 트러블, 붓기, 출혈, 염증, 멍,
-              신경손상 등 부작용이 발생할 수 있으므로 주의를 요합니다.
-            </p>
+            <div className="border border-border/60 bg-background/60 px-5 py-4 backdrop-blur-sm">
+              <p className="text-center text-xs tracking-widest text-charcoal/80 font-medium mb-2">주의사항</p>
+              <p className="text-center text-xs sm:text-sm text-muted-foreground leading-relaxed [word-break:keep-all]">
+                해당 수술 및 시술의 결과는 개인마다 차이가 있을 수 있습니다. 개인에 따라 피부 트러블, 붓기, 출혈, 염증, 멍,
+                신경손상 등 부작용이 발생할 수 있으므로 주의를 요합니다.
+              </p>
+            </div>
           </div>
 
           <nav

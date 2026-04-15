@@ -138,7 +138,7 @@ export function Contact() {
   return (
     <section
       id="contact"
-      className="relative w-full min-w-0 overflow-x-clip bg-background px-[max(1.5rem,env(safe-area-inset-left,0px),env(safe-area-inset-right,0px))] py-12 sm:py-24 lg:py-32"
+      className="relative w-full min-w-0 overflow-x-visible bg-background px-[max(1.5rem,env(safe-area-inset-left,0px),env(safe-area-inset-right,0px))] py-12 sm:py-24 lg:py-32"
     >
       <div className="mx-auto box-border w-full min-w-0 max-w-6xl">
         <div className="mx-auto mb-8 max-w-3xl text-center md:mb-16 lg:mb-20">

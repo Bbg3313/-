@@ -22,6 +22,19 @@ const KO_WRAP = "break-keep [word-break:keep-all] [overflow-wrap:anywhere]";
 /** 금액 열: 숫자·콤마가 어색하게 끊기지 않게 anywhere 제외 */
 const KO_PRICE = "break-keep [word-break:keep-all]";
 
+/** 시술/가격: 본문 sm·보조 xs 두 단계만, 줄간격 통일 */
+const LEAD_SM = "leading-5";
+const LEAD_XS = "leading-5";
+const CELL = "px-3 py-2 sm:px-3.5 sm:py-2";
+const TEXT_SM = `text-sm font-normal ${LEAD_SM}`;
+const TEXT_SM_MUTED = `text-sm font-normal ${LEAD_SM} text-muted-foreground`;
+const TEXT_XS = `text-xs font-normal ${LEAD_XS}`;
+const TEXT_XS_MED = `text-xs font-medium ${LEAD_XS}`;
+const TEXT_XS_SEMI = `text-xs font-semibold ${LEAD_XS}`;
+const TEXT_XS_MUTED = `text-xs font-normal ${LEAD_XS} text-muted-foreground`;
+const TH_BASE = `${TEXT_XS_SEMI} text-charcoal tracking-tight`;
+const CARD_INNER = "rounded-lg border border-border/60 bg-background px-3 py-2.5";
+
 function padRow(row: string[], len: number): string[] {
   const next = [...row];
   while (next.length < len) next.push("—");
@@ -61,7 +74,7 @@ function HairPriceCell({ col, align = "end" }: { col: LaserHairPriceCol; align?:
   if (col.kind === "single") {
     return (
       <div className={`flex flex-col ${wrap}`}>
-        <span className={`text-sm font-normal tabular-nums text-charcoal ${KO_PRICE}`}>
+        <span className={`${TEXT_SM} tabular-nums text-charcoal ${KO_PRICE}`}>
           {normalizeMixedKoreanPrice(col.price)}
         </span>
       </div>
@@ -70,20 +83,18 @@ function HairPriceCell({ col, align = "end" }: { col: LaserHairPriceCol; align?:
 
   const saleRow =
     align === "center"
-      ? "flex flex-wrap items-baseline justify-center gap-x-1 gap-y-0.5 tabular-nums leading-tight"
-      : "flex flex-wrap items-baseline justify-end gap-x-1 gap-y-0.5 tabular-nums leading-tight";
+      ? `flex flex-wrap items-center justify-center gap-x-1 gap-y-0.5 tabular-nums ${LEAD_SM}`
+      : `flex flex-wrap items-center justify-end gap-x-1 gap-y-0.5 tabular-nums ${LEAD_SM}`;
 
   return (
-    <div className={`flex flex-col gap-1 ${wrap}`}>
+    <div className={`flex flex-col gap-0.5 ${wrap}`}>
       <div className={saleRow}>
-        <span className={`text-sm font-normal text-charcoal ${KO_PRICE}`}>{normalizeMixedKoreanPrice(col.sale)}</span>
-        <span className="shrink-0 rounded bg-gold-accent/15 px-1.5 py-0.5 text-[10px] font-medium text-gold-accent tabular-nums whitespace-nowrap">
+        <span className={`${TEXT_SM} text-charcoal ${KO_PRICE}`}>{normalizeMixedKoreanPrice(col.sale)}</span>
+        <span className={`shrink-0 rounded bg-gold-accent/15 px-1 py-0.5 ${TEXT_XS_MED} text-gold-accent tabular-nums whitespace-nowrap`}>
           {col.discountPct}
         </span>
       </div>
-      <div
-        className={`text-xs tabular-nums text-muted-foreground/50 line-through decoration-muted-foreground/35 ${KO_PRICE}`}
-      >
+      <div className={`${TEXT_XS} tabular-nums text-muted-foreground/50 line-through decoration-muted-foreground/35 ${KO_PRICE}`}>
         {normalizeMixedKoreanPrice(col.regular)}
       </div>
     </div>
@@ -100,29 +111,22 @@ function LaserHairTableView({ rows }: { rows: LaserHairRow[] }) {
   const allSingle = laserHairRowsAllSingle(rows);
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-2">
       {!allSingle ? (
-        <p className={`text-xs text-muted-foreground md:px-1 ${KO_WRAP}`}>
+        <p className={`${TEXT_XS_MUTED} md:px-0.5 ${KO_WRAP}`}>
           할인가 옆 숫자는 할인율입니다. <span className="line-through opacity-60">취소선</span>은 정가 안내입니다.
         </p>
       ) : (
-        <p className={`text-xs text-muted-foreground md:px-1 ${KO_WRAP}`}>금액 단위: 원, VAT 10% 별도.</p>
+        <p className={`${TEXT_XS_MUTED} md:px-0.5 ${KO_WRAP}`}>금액 단위: 원, VAT 10% 별도.</p>
       )}
 
       {/* 모바일: 부위별 카드 */}
-      <div className="md:hidden space-y-3">
+      <div className="md:hidden space-y-2">
         {rows.map((row, i) => (
-          <div
-            key={i}
-            className="rounded-xl border border-border/60 bg-background px-4 py-3.5 shadow-sm"
-          >
-            {row.area ? (
-              <p className="text-xs font-medium uppercase tracking-wider text-gold-accent">{row.area}</p>
-            ) : null}
-            <p className={`text-sm font-normal text-charcoal leading-snug ${row.area ? "mt-1" : ""} ${KO_WRAP}`}>
-              {row.detail}
-            </p>
-            <div className="mt-3 grid grid-cols-3 gap-2">
+          <div key={i} className={`${CARD_INNER} shadow-sm`}>
+            {row.area ? <p className={`${TEXT_XS_MED} uppercase tracking-wider text-gold-accent`}>{row.area}</p> : null}
+            <p className={`${TEXT_SM} text-charcoal ${row.area ? "mt-0.5" : ""} ${KO_WRAP}`}>{row.detail}</p>
+            <div className="mt-2 grid grid-cols-3 gap-1.5">
               {(
                 [
                   ["1회", row.once],
@@ -130,8 +134,8 @@ function LaserHairTableView({ rows }: { rows: LaserHairRow[] }) {
                   ["10회", row.ten],
                 ] as const
               ).map(([label, col]) => (
-                <div key={label} className="rounded-lg bg-muted/25 px-2 py-2.5">
-                  <p className="mb-2 text-center text-[10px] font-medium text-muted-foreground">{label}</p>
+                <div key={label} className="rounded-md bg-muted/25 px-1.5 py-1.5">
+                  <p className={`mb-1 text-center ${TEXT_XS_MED} text-muted-foreground`}>{label}</p>
                   <HairPriceCell col={col} align="center" />
                 </div>
               ))}
@@ -142,30 +146,28 @@ function LaserHairTableView({ rows }: { rows: LaserHairRow[] }) {
 
       {/* 데스크톱: 표 */}
       <div className="hidden md:block overflow-x-auto rounded-xl border border-border/60 bg-background">
-        <table className="w-full min-w-[720px] border-collapse text-left text-sm">
+        <table className={`w-full min-w-[720px] border-collapse text-left ${TEXT_SM} text-charcoal`}>
           <thead>
-            <tr className="border-b border-border/50 bg-champagne/50 text-charcoal">
-              <th className="w-[4.5rem] whitespace-nowrap px-3 py-3 text-xs font-semibold">부위</th>
-              <th className={`min-w-[11rem] px-3 py-3 text-xs font-semibold ${KO_WRAP}`}>세부</th>
-              <th className="w-[8.5rem] px-3 py-3 text-right text-xs font-semibold">1회</th>
-              <th className="w-[8.5rem] px-3 py-3 text-right text-xs font-semibold">5회</th>
-              <th className="w-[8.5rem] px-3 py-3 text-right text-xs font-semibold">10회</th>
+            <tr className="border-b border-border/50 bg-champagne/50">
+              <th className={`w-[4.5rem] whitespace-nowrap ${CELL} text-left ${TH_BASE}`}>부위</th>
+              <th className={`min-w-[11rem] ${CELL} text-left ${TH_BASE} ${KO_WRAP}`}>세부</th>
+              <th className={`w-[8.5rem] ${CELL} text-right ${TH_BASE} tabular-nums`}>1회</th>
+              <th className={`w-[8.5rem] ${CELL} text-right ${TH_BASE} tabular-nums`}>5회</th>
+              <th className={`w-[8.5rem] ${CELL} text-right ${TH_BASE} tabular-nums`}>10회</th>
             </tr>
           </thead>
           <tbody>
             {rows.map((row, i) => (
               <tr key={i} className="border-b border-border/35 last:border-0 hover:bg-muted/15">
-                <td className="align-top px-3 py-3 text-xs font-medium text-gold-accent">{row.area || " "}</td>
-                <td className={`align-top px-3 py-3 text-sm font-normal text-muted-foreground leading-snug ${KO_WRAP}`}>
-                  {row.detail}
-                </td>
-                <td className="align-top px-3 py-3">
+                <td className={`${CELL} align-middle ${TEXT_XS_MED} text-gold-accent`}>{row.area || "\u00a0"}</td>
+                <td className={`${CELL} align-middle ${TEXT_SM_MUTED} ${KO_WRAP}`}>{row.detail}</td>
+                <td className={`${CELL} align-middle`}>
                   <HairPriceCell col={row.once} />
                 </td>
-                <td className="align-top px-3 py-3">
+                <td className={`${CELL} align-middle`}>
                   <HairPriceCell col={row.five} />
                 </td>
-                <td className="align-top px-3 py-3">
+                <td className={`${CELL} align-middle`}>
                   <HairPriceCell col={row.ten} />
                 </td>
               </tr>
@@ -205,21 +207,21 @@ function PricingTableView({ table }: { table: PricingTable }) {
   }, [paddedRows, labelCols]);
 
   return (
-    <div className="space-y-3">
-      <div className="md:hidden space-y-2.5">
+    <div className="space-y-2">
+      <div className="md:hidden space-y-2">
         {mobileRows.map(({ row, display }, ri) => (
-          <div key={ri} className="rounded-lg border border-border/60 bg-background px-3.5 py-3">
+          <div key={ri} className={CARD_INNER}>
             {priceOnlyMobile ? (
               <>
-                <p className={`text-sm font-semibold leading-snug text-charcoal ${KO_WRAP}`}>{table.headers[0] || " "}</p>
-                <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3">
+                <p className={`text-sm font-semibold ${LEAD_SM} text-charcoal ${KO_WRAP}`}>{table.headers[0] || " "}</p>
+                <div className="mt-2 grid grid-cols-2 gap-1.5 sm:grid-cols-3">
                   {table.headers.map((h, hi) => {
                     if (hi === 0 || !h?.trim()) return null;
                     const cell = row[hi] ?? "";
                     return (
-                      <div key={hi} className="rounded-md bg-muted/25 px-2.5 py-2">
-                        <p className={`text-[11px] leading-tight text-muted-foreground ${KO_WRAP}`}>{h}</p>
-                        <p className={`mt-1 text-sm font-normal tabular-nums text-charcoal ${KO_PRICE}`}>
+                      <div key={hi} className="rounded-md bg-muted/25 px-2 py-1.5">
+                        <p className={`${TEXT_XS_MUTED} ${KO_WRAP}`}>{h}</p>
+                        <p className={`mt-0.5 ${TEXT_SM} text-right tabular-nums text-charcoal ${KO_PRICE}`}>
                           {cell === "" ? "—" : normalizeMixedKoreanPrice(cell)}
                         </p>
                       </div>
@@ -241,14 +243,14 @@ function PricingTableView({ table }: { table: PricingTable }) {
                   return (
                     <div
                       key={ci}
-                      className="border-b border-border/35 py-2.5 first:pt-0 last:border-b-0 last:pb-0"
+                      className="border-b border-border/35 py-2 first:pt-0 last:border-b-0 last:pb-0"
                     >
-                      <dt className={`text-[11px] font-medium text-muted-foreground ${KO_WRAP}`}>{header.trim() || "\u00a0"}</dt>
+                      <dt className={`${TEXT_XS_MED} text-muted-foreground ${KO_WRAP}`}>{header.trim() || "\u00a0"}</dt>
                       <dd
-                        className={`mt-1 text-sm leading-snug ${
+                        className={`mt-0.5 ${TEXT_SM} ${
                           isPriceCol
-                            ? `text-right font-normal tabular-nums text-charcoal ${KO_PRICE}`
-                            : `text-charcoal/90 ${KO_WRAP}`
+                            ? `text-right tabular-nums text-charcoal ${KO_PRICE}`
+                            : `text-charcoal ${KO_WRAP}`
                         }`}
                       >
                         {cellOut}
@@ -263,22 +265,22 @@ function PricingTableView({ table }: { table: PricingTable }) {
       </div>
 
       <div className="hidden md:block overflow-x-auto rounded-lg border border-border/60 bg-background">
-        <table className="w-full min-w-[640px] max-w-full table-fixed border-collapse text-left text-sm">
+        <table className={`w-full min-w-[640px] max-w-full table-fixed border-collapse text-left ${TEXT_SM} text-charcoal`}>
           <colgroup>
             {colWidthsPct.map((w, i) => (
               <col key={i} style={{ width: `${w}%` }} />
             ))}
           </colgroup>
           <thead>
-            <tr className="bg-champagne/50 text-charcoal">
+            <tr className="bg-champagne/50">
               {table.headers.map((h, i) => (
                 <th
                   key={i}
                   scope="col"
                   className={
                     i < labelCols
-                      ? `border-b border-border/50 px-3 py-3 text-left align-middle text-xs font-semibold tracking-tight sm:px-4 sm:text-sm ${KO_WRAP}`
-                      : "border-b border-border/50 px-3 py-3 text-right align-middle text-xs font-semibold tabular-nums tracking-tight sm:px-4 sm:text-sm whitespace-nowrap"
+                      ? `border-b border-border/50 ${CELL} text-left align-middle ${TH_BASE} ${KO_WRAP}`
+                      : `border-b border-border/50 ${CELL} text-right align-middle ${TH_BASE} tabular-nums whitespace-nowrap`
                   }
                 >
                   {h || " "}
@@ -296,8 +298,8 @@ function PricingTableView({ table }: { table: PricingTable }) {
                       key={ci}
                       className={
                         ci < labelCols
-                          ? `px-3 py-2.5 align-middle text-muted-foreground sm:px-4 ${KO_WRAP}`
-                          : `px-3 py-2.5 text-right align-middle tabular-nums text-charcoal sm:px-4 whitespace-nowrap ${KO_PRICE}`
+                          ? `${CELL} align-middle text-muted-foreground ${KO_WRAP}`
+                          : `${CELL} text-right align-middle tabular-nums text-charcoal whitespace-nowrap ${KO_PRICE}`
                       }
                     >
                       {cell === "" ? "\u00a0" : normalizeMixedKoreanPrice(cell)}
@@ -322,28 +324,26 @@ function SectionCard({ section }: { section: PricingSection }) {
       id={`pricing-${section.id}`}
       className="scroll-mt-[14rem] sm:scroll-mt-[15rem] md:scroll-mt-[16rem] rounded-xl border border-border/70 bg-card/80 shadow-sm overflow-hidden"
     >
-      <div className="px-5 sm:px-7 pt-6 sm:pt-8 pb-2">
-        <p className="text-xs tracking-[0.2em] uppercase text-gold-accent mb-2">Price guide</p>
-        <h2 className={`text-charcoal text-xl font-semibold tracking-tight sm:text-2xl ${KO_WRAP}`}>{section.title}</h2>
+      <div className="px-4 sm:px-6 pt-5 sm:pt-6 pb-1">
+        <p className={`${TEXT_XS_MED} uppercase tracking-[0.2em] text-gold-accent mb-1`}>Price guide</p>
+        <h2 className={`text-charcoal text-lg font-semibold tracking-tight sm:text-xl ${LEAD_SM} ${KO_WRAP}`}>{section.title}</h2>
         {section.description ? (
-          <p className={`mt-3 text-sm leading-relaxed text-muted-foreground sm:text-base ${KO_WRAP}`}>
-            {section.description}
-          </p>
+          <p className={`mt-2 ${TEXT_SM_MUTED} ${KO_WRAP}`}>{section.description}</p>
         ) : null}
       </div>
 
-      <div className="px-5 sm:px-7 pb-6 sm:pb-8 space-y-6">
-        <p className={`text-xs text-muted-foreground border-l-2 border-gold-accent/50 pl-3 ${KO_WRAP}`}>{VAT_NOTE}</p>
+      <div className="px-4 sm:px-6 pb-5 sm:pb-6 space-y-4">
+        <p className={`${TEXT_XS_MUTED} border-l-2 border-gold-accent/50 pl-2.5 ${KO_WRAP}`}>{VAT_NOTE}</p>
         {hasLaser && section.laserHairRows ? <LaserHairTableView rows={section.laserHairRows} /> : null}
         {hasTables ? (
-          <div className="space-y-5">
+          <div className="space-y-3">
             {section.tables.map((t, i) => (
               <PricingTableView key={i} table={t} />
             ))}
           </div>
         ) : null}
         {section.footnotes?.length ? (
-          <ul className="space-y-2 text-xs sm:text-sm text-muted-foreground leading-relaxed list-disc pl-4 marker:text-gold-accent/80">
+          <ul className={`space-y-1.5 ${TEXT_XS_MUTED} list-disc pl-4 marker:text-gold-accent/80`}>
             {section.footnotes.map((line, i) => (
               <li key={i} className={KO_WRAP}>
                 {line}
@@ -438,30 +438,32 @@ export function PricingPage() {
           <div className="relative z-0 mb-6">
             <Link
               to="/"
-              className="inline-flex items-center py-1 text-sm leading-none text-muted-foreground hover:text-gold-accent transition-colors"
+              className={`inline-flex items-center py-1 ${TEXT_SM_MUTED} hover:text-gold-accent transition-colors`}
             >
               ← 홈으로
             </Link>
           </div>
 
-          <header className="mb-8 sm:mb-10">
-            <div className="w-12 h-px bg-primary/40 mb-6" />
-            <h1 className={`text-charcoal text-3xl font-semibold tracking-tight sm:text-4xl md:text-[2.75rem] mb-4 ${KO_WRAP}`}>
+          <header className="mb-6 sm:mb-8">
+            <div className="w-12 h-px bg-primary/40 mb-4 sm:mb-5" />
+            <h1
+              className={`text-charcoal text-2xl font-semibold tracking-tight sm:text-3xl md:text-[2.25rem] mb-3 ${LEAD_SM} ${KO_WRAP}`}
+            >
               시술 · 가격 안내
             </h1>
-            <p className={`max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg ${KO_WRAP}`}>
+            <p className={`max-w-2xl ${TEXT_SM_MUTED} ${KO_WRAP}`}>
               개인 피부 상태와 시술 범위에 따라 달라질 수 있으니, 정확한 견적은 내원 상담을 권장드립니다.
             </p>
           </header>
         </div>
 
         {/* 본문 article 밖 — 스크롤 시 헤더(z-50) 아래 고정 */}
-        <div className="sticky z-[45] -mx-6 mb-8 border-b border-border/60 bg-background/95 pt-2 pb-3 shadow-sm backdrop-blur-md supports-[backdrop-filter]:bg-background/88 sm:pt-2.5 md:pt-3 top-[max(5.75rem,calc(env(safe-area-inset-top,0px)+5.35rem))] sm:top-[max(6.85rem,calc(env(safe-area-inset-top,0px)+6.1rem))] md:top-[max(9.35rem,calc(env(safe-area-inset-top,0px)+8.85rem))]">
+        <div className="sticky z-[45] -mx-6 mb-6 border-b border-border/60 bg-background/95 pt-1.5 pb-2 shadow-sm backdrop-blur-md supports-[backdrop-filter]:bg-background/88 sm:pt-2 md:pt-2.5 top-[max(5.75rem,calc(env(safe-area-inset-top,0px)+5.35rem))] sm:top-[max(6.85rem,calc(env(safe-area-inset-top,0px)+6.1rem))] md:top-[max(9.35rem,calc(env(safe-area-inset-top,0px)+8.85rem))]">
           <div className="px-6">
             <p className="sr-only">시술 카테고리 필터</p>
             <div
               ref={categoryRailRef}
-              className="mx-auto flex w-full max-w-5xl gap-2 overflow-x-auto overscroll-x-contain scroll-pl-2 scroll-pr-2 pb-1 [-webkit-overflow-scrolling:touch] md:grid md:grid-cols-6 md:overflow-visible md:scroll-pl-0 md:scroll-pr-0 md:pb-0"
+              className="mx-auto flex w-full max-w-5xl gap-1.5 overflow-x-auto overscroll-x-contain scroll-pl-2 scroll-pr-2 pb-0.5 [-webkit-overflow-scrolling:touch] md:grid md:grid-cols-6 md:overflow-visible md:scroll-pl-0 md:scroll-pr-0 md:pb-0"
             >
               {PRICING_CATEGORIES.map((c) => {
                 const isOn = active === "all" ? scrollActive === c.id : active === c.id;
@@ -475,8 +477,8 @@ export function PricingPage() {
                     }}
                     className={
                       isOn
-                        ? `min-h-[2.5rem] shrink-0 whitespace-nowrap rounded-lg border border-gold-accent/50 bg-champagne/80 px-3 py-2 text-center text-xs font-medium leading-snug text-charcoal shadow-sm transition-colors md:w-full md:whitespace-normal md:px-2 md:text-sm md:leading-snug ${KO_WRAP}`
-                        : `min-h-[2.5rem] shrink-0 whitespace-nowrap rounded-lg border border-border/70 bg-card px-3 py-2 text-center text-xs font-medium leading-snug text-muted-foreground transition-colors hover:border-gold-accent/35 hover:text-charcoal md:w-full md:whitespace-normal md:px-2 md:text-sm md:leading-snug ${KO_WRAP}`
+                        ? `min-h-[2.25rem] shrink-0 whitespace-nowrap rounded-md border border-gold-accent/50 bg-champagne/80 px-2.5 py-1.5 text-center ${TEXT_XS_MED} text-charcoal shadow-sm transition-colors md:w-full md:whitespace-normal md:px-2 md:py-2 md:text-sm md:font-medium md:leading-5 ${KO_WRAP}`
+                        : `min-h-[2.25rem] shrink-0 whitespace-nowrap rounded-md border border-border/70 bg-card px-2.5 py-1.5 text-center ${TEXT_XS_MED} text-muted-foreground transition-colors hover:border-gold-accent/35 hover:text-charcoal md:w-full md:whitespace-normal md:px-2 md:py-2 md:text-sm md:font-medium md:leading-5 ${KO_WRAP}`
                     }
                   >
                     {c.label}
@@ -488,7 +490,7 @@ export function PricingPage() {
         </div>
 
         <article className="max-w-5xl mx-auto relative">
-          <div className="space-y-8 sm:space-y-10">
+          <div className="space-y-6 sm:space-y-7">
             {visible.length === 0 ? (
               <p className="text-muted-foreground">이 카테고리에 등록된 항목이 없습니다.</p>
             ) : (
@@ -496,7 +498,7 @@ export function PricingPage() {
             )}
           </div>
 
-          <aside className={`mt-12 rounded-lg border border-dashed border-border/80 bg-muted/20 px-5 py-5 text-sm leading-relaxed text-muted-foreground sm:mt-16 ${KO_WRAP}`}>
+          <aside className={`mt-10 sm:mt-12 rounded-lg border border-dashed border-border/80 bg-muted/20 px-4 py-3.5 ${TEXT_SM_MUTED} sm:px-5 ${KO_WRAP}`}>
             시술 전 충분한 상담으로 맞춤 계획을 안내해 드립니다. VAT는 표기된 금액에 별도이며, 보험 적용 여부는 항목에 따라 다릅니다.
           </aside>
         </article>

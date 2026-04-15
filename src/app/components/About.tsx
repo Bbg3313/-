@@ -120,57 +120,54 @@ export function About() {
               <div className="pointer-events-none absolute -left-3 -top-3 h-14 w-14 border-l border-t border-gold-accent/40 sm:-left-4 sm:-top-4" />
               <div className="pointer-events-none absolute -bottom-3 -right-3 h-14 w-14 border-b border-r border-gold-accent/40 sm:-bottom-4 sm:-right-4" />
 
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-40px" }}
-                transition={{ duration: 0.85, ease: easeLux }}
-                className="shrink-0"
-              >
-                <LuxImageCard>
-                  <div className="relative w-full bg-gradient-to-b from-[#f4f1ec] to-[#e9e4dc]">
-                    <ImageWithFallback
-                      src="/images/about-clinic-main.png"
-                      alt="연세미의원 로고와 인테리어"
-                      className="mx-auto block h-auto w-full max-h-[min(68vh,680px)] object-contain object-bottom transition-transform duration-[1.15s] ease-out group-hover:scale-[1.01]"
-                    />
-                  </div>
-                </LuxImageCard>
-              </motion.div>
-
-              <div className="grid shrink-0 grid-cols-2 gap-3 sm:gap-5">
-                <motion.div
-                  initial={{ opacity: 0, y: 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.7, delay: 0.08, ease: easeLux }}
-                >
-                  <LuxImageCard>
-                    <div className="relative aspect-[4/5]">
-                      <ImageWithFallback
-                        src="/images/about-clinic-room.png"
-                        alt="시술실"
-                        className="h-full w-full object-cover transition-transform duration-[1s] ease-out group-hover:scale-[1.03]"
-                      />
-                    </div>
-                  </LuxImageCard>
-                </motion.div>
-                <motion.div
-                  initial={{ opacity: 0, y: 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.7, delay: 0.16, ease: easeLux }}
-                >
-                  <LuxImageCard>
-                    <div className="relative aspect-[4/5]">
-                      <ImageWithFallback
-                        src="/images/about-clinic-lobby.png"
-                        alt="로비"
-                        className="h-full w-full object-cover transition-transform duration-[1s] ease-out group-hover:scale-[1.03]"
-                      />
-                    </div>
-                  </LuxImageCard>
-                </motion.div>
+              <div className="grid shrink-0 grid-cols-3 gap-2 sm:gap-4 lg:gap-5">
+                {(
+                  [
+                    {
+                      src: "/images/about-clinic-main.png",
+                      alt: "연세미의원 로고와 인테리어",
+                      contain: true as const,
+                    },
+                    {
+                      src: "/images/about-clinic-room.png",
+                      alt: "시술실",
+                      contain: false as const,
+                    },
+                    {
+                      src: "/images/about-clinic-lobby.png",
+                      alt: "로비",
+                      contain: false as const,
+                    },
+                  ] as const
+                ).map((item, i) => (
+                  <motion.div
+                    key={item.src}
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-24px" }}
+                    transition={{ duration: 0.7, delay: i * 0.08, ease: easeLux }}
+                  >
+                    <LuxImageCard>
+                      {item.contain ? (
+                        <div className="relative aspect-[4/5] w-full bg-gradient-to-b from-[#f4f1ec] to-[#e9e4dc]">
+                          <ImageWithFallback
+                            src={item.src}
+                            alt={item.alt}
+                            className="mx-auto block h-full w-full object-contain object-bottom transition-transform duration-[1s] ease-out group-hover:scale-[1.02]"
+                          />
+                        </div>
+                      ) : (
+                        <div className="relative aspect-[4/5]">
+                          <ImageWithFallback
+                            src={item.src}
+                            alt={item.alt}
+                            className="h-full w-full object-cover transition-transform duration-[1s] ease-out group-hover:scale-[1.03]"
+                          />
+                        </div>
+                      )}
+                    </LuxImageCard>
+                  </motion.div>
+                ))}
               </div>
             </div>
           </Reveal>
@@ -213,18 +210,6 @@ export function About() {
             </Reveal>
 
             <Reveal delay={0.17} className="shrink-0">
-              <LuxImageCard className="mb-5 md:mb-8 lg:mb-10">
-                <div className="relative aspect-[16/10] w-full sm:aspect-[2/1]">
-                  <ImageWithFallback
-                    src="/images/about-clinic-lobby.png"
-                    alt="연세미의원 병원 내부"
-                    className="h-full w-full object-cover transition-transform duration-[1s] ease-out group-hover:scale-[1.02]"
-                  />
-                </div>
-              </LuxImageCard>
-            </Reveal>
-
-            <Reveal delay={0.2} className="shrink-0">
               <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.28em] text-muted-foreground/80">Signature care</p>
               <div className="mb-6 grid w-full grid-cols-2 gap-2 sm:mb-9 sm:grid-cols-4 lg:grid-cols-7">
                 {services.map((label) => (
