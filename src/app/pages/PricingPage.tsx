@@ -69,12 +69,12 @@ function pricingColumnWidths(colCount: number, labelCols: number, priceCols: num
 }
 
 function HairPriceCell({ col, align = "end" }: { col: LaserHairPriceCol; align?: "end" | "center" }) {
-  const wrap = align === "center" ? "items-center text-center" : "items-end text-right";
+  const wrap = align === "center" ? "items-center text-center" : "items-end justify-end text-right";
 
   if (col.kind === "single") {
     return (
-      <div className={`flex flex-col ${wrap}`}>
-        <span className={`${TEXT_SM} tabular-nums text-charcoal ${KO_PRICE}`}>
+      <div className={`flex w-full min-h-0 flex-col justify-end ${wrap}`}>
+        <span className={`${TEXT_SM} tabular-nums leading-5 text-charcoal ${KO_PRICE}`}>
           {normalizeMixedKoreanPrice(col.price)}
         </span>
       </div>
@@ -84,10 +84,10 @@ function HairPriceCell({ col, align = "end" }: { col: LaserHairPriceCol; align?:
   const saleRow =
     align === "center"
       ? `flex flex-wrap items-center justify-center gap-x-1 gap-y-0.5 tabular-nums ${LEAD_SM}`
-      : `flex flex-wrap items-center justify-end gap-x-1 gap-y-0.5 tabular-nums ${LEAD_SM}`;
+      : `flex flex-wrap items-end justify-end gap-x-1 gap-y-0.5 tabular-nums ${LEAD_SM}`;
 
   return (
-    <div className={`flex flex-col gap-0.5 ${wrap}`}>
+    <div className={`flex w-full min-h-0 flex-col justify-end gap-0.5 ${wrap}`}>
       <div className={saleRow}>
         <span className={`${TEXT_SM} text-charcoal ${KO_PRICE}`}>{normalizeMixedKoreanPrice(col.sale)}</span>
         <span className={`shrink-0 rounded bg-gold-accent/15 px-1 py-0.5 ${TEXT_XS_MED} text-gold-accent tabular-nums whitespace-nowrap`}>
@@ -136,10 +136,10 @@ function LaserHairTableView({ rows }: { rows: LaserHairRow[] }) {
               ).map(([label, col]) => (
                 <div
                   key={label}
-                  className="flex min-h-[4.25rem] items-end justify-between gap-1 rounded-md bg-muted/25 px-1.5 py-2 sm:min-h-[4.5rem]"
+                  className="flex min-h-[4.25rem] flex-row items-baseline justify-between gap-1 rounded-md bg-muted/25 px-1.5 py-2 sm:min-h-[4.5rem]"
                 >
-                  <p className={`shrink-0 ${TEXT_XS_MED} text-muted-foreground`}>{label}</p>
-                  <div className="min-w-0 flex-1">
+                  <p className={`shrink-0 ${TEXT_XS_MED} leading-5 text-muted-foreground`}>{label}</p>
+                  <div className="min-w-0 flex-1 text-right">
                     <HairPriceCell col={col} align="end" />
                   </div>
                 </div>
@@ -154,25 +154,25 @@ function LaserHairTableView({ rows }: { rows: LaserHairRow[] }) {
         <table className={`w-full min-w-[720px] border-collapse text-left ${TEXT_SM} text-charcoal`}>
           <thead>
             <tr className="border-b border-border/50 bg-champagne/50">
-              <th className={`w-[4.5rem] whitespace-nowrap ${CELL} align-bottom text-left ${TH_BASE}`}>부위</th>
-              <th className={`min-w-[11rem] ${CELL} align-bottom text-left ${TH_BASE} ${KO_WRAP}`}>세부</th>
-              <th className={`w-[8.5rem] ${CELL} align-bottom text-right ${TH_BASE} tabular-nums`}>1회</th>
-              <th className={`w-[8.5rem] ${CELL} align-bottom text-right ${TH_BASE} tabular-nums`}>5회</th>
-              <th className={`w-[8.5rem] ${CELL} align-bottom text-right ${TH_BASE} tabular-nums`}>10회</th>
+              <th className={`w-[4.5rem] whitespace-nowrap ${CELL} align-middle text-left ${TH_BASE}`}>부위</th>
+              <th className={`min-w-[11rem] ${CELL} align-middle text-left ${TH_BASE} ${KO_WRAP}`}>세부</th>
+              <th className={`w-[8.5rem] ${CELL} align-middle text-right ${TH_BASE} tabular-nums`}>1회</th>
+              <th className={`w-[8.5rem] ${CELL} align-middle text-right ${TH_BASE} tabular-nums`}>5회</th>
+              <th className={`w-[8.5rem] ${CELL} align-middle text-right ${TH_BASE} tabular-nums`}>10회</th>
             </tr>
           </thead>
           <tbody>
             {rows.map((row, i) => (
               <tr key={i} className="border-b border-border/35 last:border-0 hover:bg-muted/15">
-                <td className={`${CELL} align-bottom ${TEXT_XS_MED} text-gold-accent`}>{row.area || "\u00a0"}</td>
-                <td className={`${CELL} align-bottom ${TEXT_SM_MUTED} ${KO_WRAP}`}>{row.detail}</td>
-                <td className={`${CELL} align-bottom`}>
+                <td className={`${CELL} align-middle ${TEXT_XS_MED} text-gold-accent`}>{row.area || "\u00a0"}</td>
+                <td className={`${CELL} align-middle ${TEXT_SM_MUTED} ${KO_WRAP}`}>{row.detail}</td>
+                <td className={`${CELL} align-middle`}>
                   <HairPriceCell col={row.once} />
                 </td>
-                <td className={`${CELL} align-bottom`}>
+                <td className={`${CELL} align-middle`}>
                   <HairPriceCell col={row.five} />
                 </td>
-                <td className={`${CELL} align-bottom`}>
+                <td className={`${CELL} align-middle`}>
                   <HairPriceCell col={row.ten} />
                 </td>
               </tr>
@@ -226,10 +226,14 @@ function PricingTableView({ table }: { table: PricingTable }) {
                     return (
                       <div
                         key={hi}
-                        className="flex min-h-[4.25rem] items-end justify-between gap-2 rounded-md bg-muted/25 px-2 py-2 sm:min-h-[4.5rem]"
+                        className="flex min-h-[4.25rem] flex-row items-baseline justify-between gap-2 rounded-md bg-muted/25 px-2 py-2 sm:min-h-[4.5rem]"
                       >
-                        <p className={`shrink-0 ${TEXT_XS_MED} text-muted-foreground ${KO_WRAP}`}>{h}</p>
-                        <p className={`min-w-0 ${TEXT_SM} text-right tabular-nums text-charcoal ${KO_PRICE}`}>
+                        <p className={`shrink-0 ${TEXT_XS_MED} leading-5 text-muted-foreground ${KO_WRAP}`}>
+                          {h}
+                        </p>
+                        <p
+                          className={`min-w-0 ${TEXT_SM} text-right tabular-nums leading-5 text-charcoal ${KO_PRICE}`}
+                        >
                           {cell === "" ? "—" : normalizeMixedKoreanPrice(cell)}
                         </p>
                       </div>
@@ -251,14 +255,22 @@ function PricingTableView({ table }: { table: PricingTable }) {
                   return (
                     <div
                       key={ci}
-                      className="border-b border-border/35 py-2 first:pt-0 last:border-b-0 last:pb-0"
+                      className={`border-b border-border/35 py-2 first:pt-0 last:border-b-0 last:pb-0 ${
+                        isPriceCol ? "flex min-h-[2.75rem] flex-row items-baseline justify-between gap-3" : ""
+                      }`}
                     >
-                      <dt className={`${TEXT_XS_MED} text-muted-foreground ${KO_WRAP}`}>{header.trim() || "\u00a0"}</dt>
+                      <dt
+                        className={`${TEXT_XS_MED} text-muted-foreground ${KO_WRAP} ${
+                          isPriceCol ? "shrink-0 leading-5" : ""
+                        }`}
+                      >
+                        {header.trim() || "\u00a0"}
+                      </dt>
                       <dd
-                        className={`mt-0.5 ${TEXT_SM} ${
+                        className={`${TEXT_SM} leading-5 ${
                           isPriceCol
-                            ? `text-right tabular-nums text-charcoal ${KO_PRICE}`
-                            : `text-charcoal ${KO_WRAP}`
+                            ? `min-w-0 flex-1 text-right tabular-nums text-charcoal ${KO_PRICE}`
+                            : `mt-0.5 text-charcoal ${KO_WRAP}`
                         }`}
                       >
                         {cellOut}
@@ -287,8 +299,8 @@ function PricingTableView({ table }: { table: PricingTable }) {
                   scope="col"
                   className={
                     i < labelCols
-                      ? `border-b border-border/50 ${CELL} text-left align-bottom ${TH_BASE} ${KO_WRAP}`
-                      : `border-b border-border/50 ${CELL} text-right align-bottom ${TH_BASE} tabular-nums whitespace-nowrap`
+                      ? `border-b border-border/50 ${CELL} text-left align-middle ${TH_BASE} ${KO_WRAP}`
+                      : `border-b border-border/50 ${CELL} text-right align-middle ${TH_BASE} tabular-nums whitespace-nowrap`
                   }
                 >
                   {h || " "}
@@ -306,8 +318,8 @@ function PricingTableView({ table }: { table: PricingTable }) {
                       key={ci}
                       className={
                         ci < labelCols
-                          ? `${CELL} align-bottom text-muted-foreground ${KO_WRAP}`
-                          : `${CELL} text-right align-bottom tabular-nums text-charcoal whitespace-nowrap ${KO_PRICE}`
+                          ? `${CELL} align-middle text-muted-foreground ${KO_WRAP}`
+                          : `${CELL} text-right align-middle tabular-nums text-charcoal whitespace-nowrap ${KO_PRICE}`
                       }
                     >
                       {cell === "" ? "\u00a0" : normalizeMixedKoreanPrice(cell)}
