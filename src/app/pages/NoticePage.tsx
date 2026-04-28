@@ -3,32 +3,7 @@ import { Link } from "react-router";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 import { fetchPublishedNotices } from "../lib/cmsApi";
-import type { Notice, NoticeAttachment } from "../types/cms";
-
-const MINOR_CONSENT_FALLBACK_URL = "/files/minor-consent-form.pdf";
-
-function toAttachments(value: Notice["attachments"]): NoticeAttachment[] {
-  return Array.isArray(value) ? value : [];
-}
-
-function getPreferredAttachment(notice: Notice): NoticeAttachment | null {
-  const files = toAttachments(notice.attachments);
-  if (files.length === 0) return null;
-  const pdf = files.find(
-    (file) =>
-      file.name.toLowerCase().endsWith(".pdf") ||
-      file.mime_type?.toLowerCase().includes("pdf") ||
-      file.url.toLowerCase().includes(".pdf")
-  );
-  return pdf ?? files[0];
-}
-
-function getNoticeDownloadUrl(notice: Notice): string | null {
-  const preferred = getPreferredAttachment(notice);
-  if (preferred?.url) return preferred.url;
-  if (notice.title.includes("미성년자") && notice.title.includes("동의서")) return MINOR_CONSENT_FALLBACK_URL;
-  return null;
-}
+import type { Notice } from "../types/cms";
 
 export function NoticePage() {
   const [items, setItems] = useState<Notice[]>([]);
@@ -73,7 +48,6 @@ export function NoticePage() {
               </p>
             ) : (
               items.map((item, idx) => {
-                const downloadUrl = getNoticeDownloadUrl(item);
                 return (
                   <div
                     key={item.id}
@@ -84,15 +58,6 @@ export function NoticePage() {
                       <Link to={`/notice/${item.slug}`} className="truncate font-medium hover:text-gold-accent">
                         {item.title}
                       </Link>
-                      {downloadUrl ? (
-                        <a
-                          href={downloadUrl}
-                          download
-                          className="shrink-0 rounded border border-gold-accent/40 px-2 py-1 text-xs text-gold-accent hover:bg-gold-accent/10"
-                        >
-                          파일 다운로드
-                        </a>
-                      ) : null}
                     </div>
                     <span className="text-right text-muted-foreground">연세미의원</span>
                   </div>
