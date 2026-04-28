@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
-import { fetchNoticeBySlug } from "../lib/cmsApi";
+import { fetchNoticeBySlug, formatSupabaseClientError } from "../lib/cmsApi";
 import type { Notice, NoticeAttachment } from "../types/cms";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 
@@ -33,6 +33,8 @@ function getNoticeDownload(notice: Notice | null): { name: string; url: string }
 export function NoticeDetailPage() {
   const { slug } = useParams();
   const [notice, setNotice] = useState<Notice | null>(null);
+  const [downloading, setDownloading] = useState(false);
+  const [downloadError, setDownloadError] = useState("");
 
   useEffect(() => {
     if (!slug) return;
@@ -43,6 +45,31 @@ export function NoticeDetailPage() {
 
   const images = toImages(notice?.images ?? null);
   const downloadFile = getNoticeDownload(notice);
+
+  const handleDownload = async () => {
+    if (!downloadFile || downloading) return;
+    setDownloading(true);
+    setDownloadError("");
+    try {
+      const response = await fetch(downloadFile.url);
+      if (!response.ok) {
+        throw new Error(`다운로드 실패 (${response.status})`);
+      }
+      const blob = await response.blob();
+      const objectUrl = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = objectUrl;
+      a.download = downloadFile.name;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(objectUrl);
+    } catch (e: unknown) {
+      setDownloadError(formatSupabaseClientError(e));
+    } finally {
+      setDownloading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
@@ -59,18 +86,20 @@ export function NoticeDetailPage() {
                 <div className="flex flex-wrap items-end justify-between gap-3">
                   <h1 className="text-2xl font-semibold tracking-tight text-charcoal sm:text-3xl">{notice.title}</h1>
                   {downloadFile ? (
-                    <a
-                      href={downloadFile.url}
-                      download={downloadFile.name}
+                    <button
+                      type="button"
+                      onClick={() => void handleDownload()}
+                      disabled={downloading}
                       className="rounded border border-gold-accent/40 px-3 py-1.5 text-sm font-medium text-gold-accent hover:bg-gold-accent/10"
                     >
-                      동의서 다운로드
-                    </a>
+                      {downloading ? "다운로드 중..." : "동의서 다운로드"}
+                    </button>
                   ) : null}
                 </div>
                 <div className="mt-3 text-sm text-muted-foreground">
                   <span>글쓴이: 연세미의원</span>
                 </div>
+                {downloadError ? <p className="mt-2 text-sm text-destructive">{downloadError}</p> : null}
               </header>
 
               <div className="space-y-6 px-5 py-6 sm:px-7">

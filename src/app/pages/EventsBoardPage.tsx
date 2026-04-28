@@ -89,11 +89,11 @@ export function EventsBoardPage() {
                 className="group block bg-white overflow-hidden border border-border/70 hover:border-gold-accent/25 transition-colors shadow-sm hover:shadow-md"
                 aria-label={`${event.title} 상세 보기`}
               >
-                <div className="relative aspect-[5/4] overflow-hidden bg-muted">
+                <div className="relative aspect-[5/4] overflow-hidden bg-muted/40">
                   <ImageWithFallback
                     src={event.thumbnail}
                     alt={event.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-[1.02]"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 </div>
