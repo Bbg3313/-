@@ -1,7 +1,7 @@
 import logo from "../../imports/logo.svg";
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router";
-import { CalendarDays, Hospital, MenuIcon, Sparkles, Stethoscope, Ticket } from "lucide-react";
+import { Bell, CalendarDays, Hospital, MenuIcon, Sparkles, Stethoscope, Ticket } from "lucide-react";
 import { SITE_LOGO_IMG_CLASS } from "../config/logo";
 import { useHomeLogoClick } from "../hooks/useHomeLogoClick";
 import { LanguageSwitcher } from "./LanguageSwitcher";
@@ -34,6 +34,7 @@ export function Header() {
   const solid = !isHome || isScrolled || mobileOpen;
   const isExternalReservation = /^https?:\/\//.test(SITE_LINKS.reservation);
   const isEventsActive = location.pathname === "/events";
+  const isNoticeActive = location.pathname === "/notice" || location.pathname.startsWith("/notice/");
   const isAboutActive = isHome && location.hash === "#about";
   const isDoctorsActive = isHome && location.hash === "#doctors";
   const isPricingActive = location.pathname === "/pricing";
@@ -75,6 +76,11 @@ export function Header() {
           <li>
             <Link to="/events" className={`text-sm tracking-wider uppercase transition-colors duration-300 ${navClass}`}>
               이벤트
+            </Link>
+          </li>
+          <li>
+            <Link to="/notice" className={`text-sm tracking-wider uppercase transition-colors duration-300 ${navClass}`}>
+              공지사항
             </Link>
           </li>
           <li>
@@ -205,6 +211,12 @@ export function Header() {
                   </Link>
                 </SheetClose>
                 <SheetClose asChild>
+                  <Link to="/notice" className="flex items-center gap-2 rounded-md px-3 py-3 text-sm text-charcoal hover:bg-muted/40">
+                    <Bell className="h-4 w-4 text-gold-accent/80" />
+                    공지사항
+                  </Link>
+                </SheetClose>
+                <SheetClose asChild>
                   <Link to="/#about" className="flex items-center gap-2 rounded-md px-3 py-3 text-sm text-charcoal hover:bg-muted/40">
                     <Hospital className="h-4 w-4 text-gold-accent/80" />
                     병원소개
@@ -265,7 +277,7 @@ export function Header() {
         data-mobile-tabbar
         className="fixed inset-x-0 bottom-0 z-40 border-t border-border/70 bg-background/95 pb-[max(0.35rem,env(safe-area-inset-bottom))] pt-1 backdrop-blur-md md:hidden"
       >
-        <ul className="mx-auto grid w-full max-w-7xl grid-cols-[repeat(5,minmax(0,1fr))]">
+        <ul className="mx-auto grid w-full max-w-7xl grid-cols-[repeat(6,minmax(0,1fr))]">
           <li className="min-w-0">
             <Link
               to="/events"
@@ -275,6 +287,17 @@ export function Header() {
             >
               <Ticket className="h-4 w-4 shrink-0 text-gold-accent/80" aria-hidden />
               <span className={MOBILE_TABBAR_LABEL}>이벤트</span>
+            </Link>
+          </li>
+          <li className="min-w-0">
+            <Link
+              to="/notice"
+              className={`${MOBILE_TABBAR_ITEM} ${
+                isNoticeActive ? "text-gold-accent" : "text-muted-foreground"
+              }`}
+            >
+              <Bell className="h-4 w-4 shrink-0 text-gold-accent/80" aria-hidden />
+              <span className={MOBILE_TABBAR_LABEL}>공지사항</span>
             </Link>
           </li>
           <li className="min-w-0">

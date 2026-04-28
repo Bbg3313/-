@@ -28,8 +28,23 @@ create table if not exists public.promotions (
   updated_at timestamptz not null default now()
 );
 
+create table if not exists public.notices (
+  id uuid primary key default gen_random_uuid(),
+  slug text not null unique,
+  title text not null,
+  content text,
+  author text not null default '연세미의원',
+  sort_order int not null default 0,
+  is_published boolean not null default true,
+  images jsonb,
+  attachments jsonb,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
 alter table public.hero_banners enable row level security;
 alter table public.promotions enable row level security;
+alter table public.notices enable row level security;
 
 drop policy if exists "public_read_hero_active" on public.hero_banners;
 create policy "public_read_hero_active" on public.hero_banners
@@ -47,6 +62,14 @@ drop policy if exists "admin_all_promotions" on public.promotions;
 create policy "admin_all_promotions" on public.promotions
 for all using (auth.role() = 'authenticated') with check (auth.role() = 'authenticated');
 
+drop policy if exists "public_read_published_notices" on public.notices;
+create policy "public_read_published_notices" on public.notices
+for select using (is_published = true);
+
+drop policy if exists "admin_all_notices" on public.notices;
+create policy "admin_all_notices" on public.notices
+for all using (auth.role() = 'authenticated') with check (auth.role() = 'authenticated');
+
 -- Storage buckets
 insert into storage.buckets (id, name, public)
 values ('hero-images', 'hero-images', true)
@@ -54,6 +77,10 @@ on conflict (id) do nothing;
 
 insert into storage.buckets (id, name, public)
 values ('promotion-images', 'promotion-images', true)
+on conflict (id) do nothing;
+
+insert into storage.buckets (id, name, public)
+values ('notice-files', 'notice-files', true)
 on conflict (id) do nothing;
 
 -- Public read
@@ -65,6 +92,10 @@ drop policy if exists "public_read_promotion_images" on storage.objects;
 create policy "public_read_promotion_images" on storage.objects
 for select using (bucket_id = 'promotion-images');
 
+drop policy if exists "public_read_notice_files" on storage.objects;
+create policy "public_read_notice_files" on storage.objects
+for select using (bucket_id = 'notice-files');
+
 -- Authenticated write
 drop policy if exists "auth_write_hero_images" on storage.objects;
 create policy "auth_write_hero_images" on storage.objects
@@ -75,4 +106,9 @@ drop policy if exists "auth_write_promotion_images" on storage.objects;
 create policy "auth_write_promotion_images" on storage.objects
 for all using (bucket_id = 'promotion-images' and auth.role() = 'authenticated')
 with check (bucket_id = 'promotion-images' and auth.role() = 'authenticated');
+
+drop policy if exists "auth_write_notice_files" on storage.objects;
+create policy "auth_write_notice_files" on storage.objects
+for all using (bucket_id = 'notice-files' and auth.role() = 'authenticated')
+with check (bucket_id = 'notice-files' and auth.role() = 'authenticated');
 

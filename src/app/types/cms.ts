@@ -24,3 +24,24 @@ export type Promotion = {
   updated_at: string;
 };
 
+export type NoticeAttachment = {
+  name: string;
+  url: string;
+  mime_type: string | null;
+  size_bytes: number | null;
+};
+
+export type Notice = {
+  id: string;
+  slug: string;
+  title: string;
+  content: string | null;
+  author: string;
+  sort_order: number;
+  is_published: boolean;
+  images: string[] | null;
+  attachments: NoticeAttachment[] | null;
+  created_at: string;
+  updated_at: string;
+};
+

@@ -30,8 +30,23 @@ create table if not exists public.promotions (
   updated_at timestamptz not null default now()
 );
 
+create table if not exists public.notices (
+  id uuid primary key default gen_random_uuid(),
+  slug text not null unique,
+  title text not null,
+  content text,
+  author text not null default '연세미의원',
+  sort_order int not null default 0,
+  is_published boolean not null default true,
+  images jsonb,
+  attachments jsonb,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
 alter table public.hero_banners enable row level security;
 alter table public.promotions enable row level security;
+alter table public.notices enable row level security;
 
 drop policy if exists "public_read_hero_active" on public.hero_banners;
 create policy "public_read_hero_active" on public.hero_banners
@@ -47,6 +62,14 @@ for all using (auth.role() = 'authenticated') with check (auth.role() = 'authent
 
 drop policy if exists "admin_all_promotions" on public.promotions;
 create policy "admin_all_promotions" on public.promotions
+for all using (auth.role() = 'authenticated') with check (auth.role() = 'authenticated');
+
+drop policy if exists "public_read_published_notices" on public.notices;
+create policy "public_read_published_notices" on public.notices
+for select using (is_published = true);
+
+drop policy if exists "admin_all_notices" on public.notices;
+create policy "admin_all_notices" on public.notices
 for all using (auth.role() = 'authenticated') with check (auth.role() = 'authenticated');
 
 -- PostgREST가 새 테이블을 바로 인식하도록 (권한 오류 나면 이 줄만 제거 후 재시도)

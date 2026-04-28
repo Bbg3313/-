@@ -1,7 +1,7 @@
-import type { HeroBanner, Promotion } from "../types/cms";
+import type { HeroBanner, Notice, Promotion } from "../types/cms";
 import { supabase } from "./supabase";
 
-type UploadBucket = "hero-images" | "promotion-images";
+type UploadBucket = "hero-images" | "promotion-images" | "notice-files";
 
 function getClient() {
   if (!supabase) {
@@ -83,7 +83,7 @@ function storageUploadErrorMessage(bucket: UploadBucket, raw: string): string {
       `스토리지 버킷 "${bucket}"이(가) Supabase에 없습니다.`,
       "Supabase 대시보드 → Storage에서 버킷 이름을 정확히 만들거나,",
       "SQL Editor에서 프로젝트의 scripts/supabase-storage-buckets.sql 파일 내용을 실행하세요.",
-      "(버킷 ID는 hero-images, promotion-images 이어야 합니다. 공개 Public 권장)",
+      "(버킷 ID는 hero-images, promotion-images, notice-files 이어야 합니다. 공개 Public 권장)",
     ].join(" ");
   }
   if (lower.includes("row-level security") || lower.includes("rls") || lower.includes("policy")) {
@@ -189,6 +189,59 @@ export async function updatePromotion(id: string, payload: Partial<Promotion>) {
 export async function deletePromotion(id: string) {
   const client = getClient();
   const { error } = await client.from("promotions").delete().eq("id", id);
+  if (error) throwDb(error);
+}
+
+export async function fetchPublishedNotices() {
+  const client = getClient();
+  const { data, error } = await client
+    .from("notices")
+    .select("*")
+    .eq("is_published", true)
+    .order("sort_order", { ascending: false })
+    .order("created_at", { ascending: false });
+  if (error) throwDb(error);
+  return (data ?? []) as Notice[];
+}
+
+export async function fetchNoticeBySlug(slug: string) {
+  const client = getClient();
+  const { data, error } = await client
+    .from("notices")
+    .select("*")
+    .eq("slug", slug)
+    .eq("is_published", true)
+    .maybeSingle();
+  if (error) throwDb(error);
+  return (data ?? null) as Notice | null;
+}
+
+export async function fetchNoticesAdmin() {
+  const client = getClient();
+  const { data, error } = await client
+    .from("notices")
+    .select("*")
+    .order("sort_order", { ascending: false })
+    .order("created_at", { ascending: false });
+  if (error) throwDb(error);
+  return (data ?? []) as Notice[];
+}
+
+export async function createNotice(payload: Partial<Notice>) {
+  const client = getClient();
+  const { error } = await client.from("notices").insert(payload);
+  if (error) throwDb(error);
+}
+
+export async function updateNotice(id: string, payload: Partial<Notice>) {
+  const client = getClient();
+  const { error } = await client.from("notices").update(payload).eq("id", id);
+  if (error) throwDb(error);
+}
+
+export async function deleteNotice(id: string) {
+  const client = getClient();
+  const { error } = await client.from("notices").delete().eq("id", id);
   if (error) throwDb(error);
 }
 

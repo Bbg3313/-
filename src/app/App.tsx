@@ -15,6 +15,8 @@ import { AdminHomePage } from "./pages/admin/AdminHomePage";
 import { AdminHeroPage } from "./pages/admin/AdminHeroPage";
 import { AdminPromotionsPage } from "./pages/admin/AdminPromotionsPage";
 import { RequireAdmin } from "./components/admin/RequireAdmin";
+import { AdminNoticesPage } from "./pages/admin/AdminNoticesPage";
+import { NoticeDetailPage } from "./pages/NoticeDetailPage";
 
 export default function App() {
   return (
@@ -23,6 +25,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/notice" element={<NoticePage />} />
+        <Route path="/notice/:slug" element={<NoticeDetailPage />} />
         <Route path={RESERVATION_PAGE_PATH} element={<ReservationPage />} />
         <Route path="/events" element={<EventsBoardPage />} />
         <Route path="/events/:slug" element={<EventDetailPage />} />
@@ -52,6 +55,14 @@ export default function App() {
           element={
             <RequireAdmin>
               <AdminPromotionsPage />
+            </RequireAdmin>
+          }
+        />
+        <Route
+          path="/admin/notices"
+          element={
+            <RequireAdmin>
+              <AdminNoticesPage />
             </RequireAdmin>
           }
         />
