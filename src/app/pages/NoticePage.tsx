@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
-import { ConsultationChannelsSection } from "../components/ConsultationChannelsSection";
 import { fetchPublishedNotices } from "../lib/cmsApi";
 import type { Notice, NoticeAttachment } from "../types/cms";
 
@@ -90,7 +89,6 @@ export function NoticePage() {
             )}
           </div>
 
-          <ConsultationChannelsSection />
         </article>
       </main>
       <Footer className="mt-auto" />

@@ -27,14 +27,7 @@ export function ReservationPage() {
             </p>
           </div>
 
-          <ConsultationChannelsSection
-            heading="예약·상담 채널"
-            description={
-              <>
-                네이버 예약, 톡톡, 카카오톡, 전화 중 원하시는 방법을 선택해 주세요.
-              </>
-            }
-          />
+          <ConsultationChannelsSection showHeader={false} />
 
           <div className="mx-auto w-full max-w-6xl">
             <ContactInner hideReservationCta />

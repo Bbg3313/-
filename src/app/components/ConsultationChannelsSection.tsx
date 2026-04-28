@@ -4,6 +4,7 @@ import { SITE_LINKS } from "../config/siteLinks";
 type ConsultationChannelsSectionProps = {
   heading?: string;
   description?: ReactNode;
+  showHeader?: boolean;
 };
 
 type Channel = {
@@ -77,18 +78,21 @@ export function ConsultationChannelsSection({
       빠른 상담과 예약 안내를 도와드립니다.
     </>
   ),
+  showHeader = true,
 }: ConsultationChannelsSectionProps) {
   return (
     <section className="relative mt-8 border-t border-gold-accent/20 bg-gradient-to-b from-muted/30 via-background to-background px-0 pt-8 pb-8 sm:mt-10 sm:pt-10 sm:pb-10 md:pt-12 md:pb-12">
       <div className="mx-auto max-w-3xl px-4 sm:px-6 md:max-w-5xl md:px-8">
-        <header className="mb-8 text-center sm:mb-10">
-          <h2 className="mb-3 text-[clamp(1.35rem,2.8vw,1.75rem)] font-semibold leading-snug tracking-tight text-charcoal">
-            {heading}
-          </h2>
-          <p className="mx-auto max-w-xl text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg [word-break:keep-all]">
-            {description}
-          </p>
-        </header>
+        {showHeader ? (
+          <header className="mb-8 text-center sm:mb-10">
+            <h2 className="mb-3 text-[clamp(1.35rem,2.8vw,1.75rem)] font-semibold leading-snug tracking-tight text-charcoal">
+              {heading}
+            </h2>
+            <p className="mx-auto max-w-xl text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg [word-break:keep-all]">
+              {description}
+            </p>
+          </header>
+        ) : null}
 
         <ul className="grid list-none grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4" role="list">
           {channels.map((ch) => (
