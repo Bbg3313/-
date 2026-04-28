@@ -63,12 +63,7 @@ export function NoticeDetailPage() {
                     <ul className="space-y-2 text-sm">
                       {attachments.map((file, idx) => (
                         <li key={`${file.url}-${idx}`}>
-                          <a
-                            href={file.url}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="text-gold-accent hover:underline underline-offset-2"
-                          >
+                          <a href={file.url} download className="text-gold-accent hover:underline underline-offset-2">
                             {file.name}
                           </a>
                         </li>

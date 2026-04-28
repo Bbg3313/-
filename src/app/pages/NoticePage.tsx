@@ -4,7 +4,16 @@ import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 import { ConsultationChannelsSection } from "../components/ConsultationChannelsSection";
 import { fetchPublishedNotices } from "../lib/cmsApi";
-import type { Notice } from "../types/cms";
+import type { Notice, NoticeAttachment } from "../types/cms";
+
+function toAttachments(value: Notice["attachments"]): NoticeAttachment[] {
+  return Array.isArray(value) ? value : [];
+}
+
+function getPdfAttachment(notice: Notice): NoticeAttachment | null {
+  const files = toAttachments(notice.attachments);
+  return files.find((file) => file.name.toLowerCase().endsWith(".pdf")) ?? null;
+}
 
 export function NoticePage() {
   const [items, setItems] = useState<Notice[]>([]);
@@ -49,15 +58,27 @@ export function NoticePage() {
               </p>
             ) : (
               items.map((item, idx) => (
-                <Link
+                <div
                   key={item.id}
-                  to={`/notice/${item.slug}`}
                   className="grid grid-cols-[80px_1fr_130px] items-center border-b border-border/70 px-4 py-4 text-sm text-charcoal transition-colors hover:bg-muted/20"
                 >
                   <span className="text-muted-foreground">{items.length - idx}</span>
-                  <span className="truncate font-medium">{item.title}</span>
+                  <div className="flex min-w-0 items-center gap-3">
+                    <Link to={`/notice/${item.slug}`} className="truncate font-medium hover:text-gold-accent">
+                      {item.title}
+                    </Link>
+                    {item.title.includes("미성년자 시술 및 수술 동의서") && getPdfAttachment(item) ? (
+                      <a
+                        href={getPdfAttachment(item)?.url ?? "#"}
+                        download
+                        className="shrink-0 rounded border border-gold-accent/40 px-2 py-1 text-xs text-gold-accent hover:bg-gold-accent/10"
+                      >
+                        PDF 다운로드
+                      </a>
+                    ) : null}
+                  </div>
                   <span className="text-right text-muted-foreground">연세미의원</span>
-                </Link>
+                </div>
               ))
             )}
           </div>
