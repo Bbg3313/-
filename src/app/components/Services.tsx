@@ -66,7 +66,7 @@ export function Services() {
             Medical Services
           </h2>
           <p className="text-muted-foreground text-base sm:text-lg leading-relaxed [word-break:keep-all]">
-            피부과 전문의의 전문적인 진료와 최신 시술로 건강하고 아름다운 피부를 만들어드립니다.
+            대표원장의 전문적인 진료와 최신 시술로 건강하고 아름다운 피부를 만들어드립니다.
           </p>
         </div>
 

@@ -81,7 +81,7 @@ export function Hero() {
 
           {/* Description */}
           <p className="mb-8 max-w-xl text-base leading-relaxed text-white/70 [word-break:keep-all] sm:text-lg md:mb-12">
-            피부과 전문의의 체계적인 진료와 최신 의료 장비로
+            대표원장의 체계적인 진료와 최신 의료 장비로
             여러분의 피부 건강을 책임집니다
           </p>
 
