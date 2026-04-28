@@ -104,9 +104,12 @@ export function Events() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </div>
-              <div className="p-3.5 md:p-5 lg:p-6">
-                <p className="mb-1 text-xs uppercase tracking-widest text-gold-accent md:mb-2">{event.period}</p>
-                <p className="text-charcoal font-semibold leading-snug line-clamp-2 text-[15px] lg:text-base [word-break:keep-all]">
+              <div className="bg-gradient-to-b from-white to-[#fdfaf4] p-3.5 md:p-5 lg:p-6">
+                <p className="mb-1 text-[11px] font-medium uppercase tracking-[0.18em] text-[#b08a4c] md:mb-2">{event.period}</p>
+                <p
+                  className="line-clamp-2 text-[15px] font-semibold leading-snug tracking-[0.01em] text-[#2f2820] lg:text-base [word-break:keep-all]"
+                  style={{ fontFamily: "'Noto Serif KR', 'Pretendard', serif" }}
+                >
                   {event.title}
                 </p>
               </div>
