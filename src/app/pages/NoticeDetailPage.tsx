@@ -6,6 +6,8 @@ import { fetchNoticeBySlug } from "../lib/cmsApi";
 import type { Notice, NoticeAttachment } from "../types/cms";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 
+const MINOR_CONSENT_FALLBACK_URL = "/files/minor-consent-form.pdf";
+
 function toAttachments(value: Notice["attachments"]): NoticeAttachment[] {
   return Array.isArray(value) ? value : [];
 }
@@ -27,6 +29,11 @@ export function NoticeDetailPage() {
 
   const attachments = toAttachments(notice?.attachments ?? null);
   const images = toImages(notice?.images ?? null);
+  const fallbackAttachment =
+    notice && notice.title.includes("미성년자") && notice.title.includes("동의서") && attachments.length === 0
+      ? [{ name: "minor-consent-form.pdf", url: MINOR_CONSENT_FALLBACK_URL, mime_type: "application/pdf", size_bytes: null }]
+      : [];
+  const allAttachments = [...attachments, ...fallbackAttachment];
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
@@ -57,11 +64,11 @@ export function NoticeDetailPage() {
                   </div>
                 ) : null}
 
-                {attachments.length > 0 ? (
+                {allAttachments.length > 0 ? (
                   <section className="border-t border-border/70 pt-5">
                     <h2 className="mb-3 text-sm font-semibold text-charcoal">첨부파일</h2>
                     <ul className="space-y-2 text-sm">
-                      {attachments.map((file, idx) => (
+                      {allAttachments.map((file, idx) => (
                         <li key={`${file.url}-${idx}`}>
                           <a href={file.url} download className="text-gold-accent hover:underline underline-offset-2">
                             {file.name}

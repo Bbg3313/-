@@ -5,6 +5,8 @@ import { Footer } from "../components/Footer";
 import { fetchPublishedNotices } from "../lib/cmsApi";
 import type { Notice, NoticeAttachment } from "../types/cms";
 
+const MINOR_CONSENT_FALLBACK_URL = "/files/minor-consent-form.pdf";
+
 function toAttachments(value: Notice["attachments"]): NoticeAttachment[] {
   return Array.isArray(value) ? value : [];
 }
@@ -19,6 +21,13 @@ function getPreferredAttachment(notice: Notice): NoticeAttachment | null {
       file.url.toLowerCase().includes(".pdf")
   );
   return pdf ?? files[0];
+}
+
+function getNoticeDownloadUrl(notice: Notice): string | null {
+  const preferred = getPreferredAttachment(notice);
+  if (preferred?.url) return preferred.url;
+  if (notice.title.includes("미성년자") && notice.title.includes("동의서")) return MINOR_CONSENT_FALLBACK_URL;
+  return null;
 }
 
 export function NoticePage() {
@@ -63,29 +72,32 @@ export function NoticePage() {
                 등록된 공지사항이 없습니다.
               </p>
             ) : (
-              items.map((item, idx) => (
-                <div
-                  key={item.id}
-                  className="grid grid-cols-[80px_1fr_130px] items-center border-b border-border/70 px-4 py-4 text-sm text-charcoal transition-colors hover:bg-muted/20"
-                >
-                  <span className="text-muted-foreground">{items.length - idx}</span>
-                  <div className="flex min-w-0 items-center gap-3">
-                    <Link to={`/notice/${item.slug}`} className="truncate font-medium hover:text-gold-accent">
-                      {item.title}
-                    </Link>
-                    {getPreferredAttachment(item) ? (
-                      <a
-                        href={getPreferredAttachment(item)?.url ?? "#"}
-                        download
-                        className="shrink-0 rounded border border-gold-accent/40 px-2 py-1 text-xs text-gold-accent hover:bg-gold-accent/10"
-                      >
-                        파일 다운로드
-                      </a>
-                    ) : null}
+              items.map((item, idx) => {
+                const downloadUrl = getNoticeDownloadUrl(item);
+                return (
+                  <div
+                    key={item.id}
+                    className="grid grid-cols-[80px_1fr_130px] items-center border-b border-border/70 px-4 py-4 text-sm text-charcoal transition-colors hover:bg-muted/20"
+                  >
+                    <span className="text-muted-foreground">{items.length - idx}</span>
+                    <div className="flex min-w-0 items-center gap-3">
+                      <Link to={`/notice/${item.slug}`} className="truncate font-medium hover:text-gold-accent">
+                        {item.title}
+                      </Link>
+                      {downloadUrl ? (
+                        <a
+                          href={downloadUrl}
+                          download
+                          className="shrink-0 rounded border border-gold-accent/40 px-2 py-1 text-xs text-gold-accent hover:bg-gold-accent/10"
+                        >
+                          파일 다운로드
+                        </a>
+                      ) : null}
+                    </div>
+                    <span className="text-right text-muted-foreground">연세미의원</span>
                   </div>
-                  <span className="text-right text-muted-foreground">연세미의원</span>
-                </div>
-              ))
+                );
+              })
             )}
           </div>
 
