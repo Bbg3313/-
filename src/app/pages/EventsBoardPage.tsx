@@ -86,9 +86,10 @@ export function EventsBoardPage() {
               <Link
                 key={event.slug}
                 to={`/promotions/${event.slug}`}
-                className="group block bg-white overflow-hidden border border-border/70 hover:border-gold-accent/25 transition-colors shadow-sm hover:shadow-md"
+                className="group relative block overflow-hidden rounded-[1.05rem] border border-[#d8c5a1]/45 bg-white/95 shadow-[0_8px_26px_rgba(28,24,18,0.06)] ring-1 ring-[#f3ead7]/70 transition-all duration-300 hover:-translate-y-0.5 hover:border-[#c6a36b]/65 hover:shadow-[0_14px_34px_rgba(28,24,18,0.12)] hover:ring-[#e8d8b8]"
                 aria-label={`${event.title} 상세 보기`}
               >
+                <div className="pointer-events-none absolute inset-0 rounded-[1.05rem] bg-gradient-to-br from-white/25 via-transparent to-gold-accent/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                 <div className="relative aspect-[5/4] overflow-hidden bg-muted/40">
                   <ImageWithFallback
                     src={event.thumbnail}
