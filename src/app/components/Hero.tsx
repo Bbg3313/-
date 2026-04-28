@@ -5,6 +5,42 @@ import { SITE_LINKS } from "../config/siteLinks";
 import { fetchActiveHeroBanners } from "../lib/cmsApi";
 import type { HeroBanner } from "../types/cms";
 
+const FALLBACK_HERO_BANNERS: HeroBanner[] = [
+  {
+    id: "fallback-hero-1",
+    title: null,
+    subtitle: null,
+    image_url:
+      "https://images.unsplash.com/photo-1722185388507-0a46e2d9dcca?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBzcGElMjBuYXR1cmFsJTIwbGlnaHQlMjBtaW5pbWFsfGVufDF8fHx8MTc3NTQ2NDY2MXww&ixlib=rb-4.1.0&q=80&w=1800",
+    sort_order: 0,
+    is_active: true,
+    created_at: "",
+    updated_at: "",
+  },
+  {
+    id: "fallback-hero-2",
+    title: null,
+    subtitle: null,
+    image_url:
+      "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkZXJtYXRvbG9neSUyMGNsaW5pYyUyMGludGVyaW9yfGVufDF8fHx8MTc3NTQ2NDY2Mnww&ixlib=rb-4.1.0&q=80&w=1800",
+    sort_order: 1,
+    is_active: true,
+    created_at: "",
+    updated_at: "",
+  },
+  {
+    id: "fallback-hero-3",
+    title: null,
+    subtitle: null,
+    image_url:
+      "https://images.unsplash.com/photo-1556228720-195a672e8a03?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwzfHxkZXJtYXRvbG9neSUyMGJlYXV0eSUyMGNsaW5pY3xlbnwxfHx8fDE3NzU0NjQ2NjJ8MA&ixlib=rb-4.1.0&q=80&w=1800",
+    sort_order: 2,
+    is_active: true,
+    created_at: "",
+    updated_at: "",
+  },
+];
+
 export function Hero() {
   const isExternalReservation = /^https?:\/\//.test(SITE_LINKS.reservation);
   const [banners, setBanners] = useState<HeroBanner[]>([]);
@@ -12,8 +48,14 @@ export function Hero() {
 
   useEffect(() => {
     fetchActiveHeroBanners()
-      .then((rows) => setBanners(rows))
-      .catch(() => setBanners([]));
+      .then((rows) => {
+        if (rows.length >= 3) {
+          setBanners(rows);
+          return;
+        }
+        setBanners([...rows, ...FALLBACK_HERO_BANNERS].slice(0, 3));
+      })
+      .catch(() => setBanners(FALLBACK_HERO_BANNERS));
   }, []);
 
   useEffect(() => {
@@ -36,7 +78,7 @@ export function Hero() {
         <ImageWithFallback
           src={
             currentBanner?.image_url ??
-            "https://images.unsplash.com/photo-1722185388507-0a46e2d9dcca?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBzcGElMjBuYXR1cmFsJTIwbGlnaHQlMjBtaW5pbWFsfGVufDF8fHx8MTc3NTQ2NDY2MXww&ixlib=rb-4.1.0&q=80&w=1080"
+            FALLBACK_HERO_BANNERS[0].image_url
           }
           alt="Luxury dermatology clinic"
           className="w-full h-full object-cover"

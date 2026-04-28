@@ -10,9 +10,16 @@ function toAttachments(value: Notice["attachments"]): NoticeAttachment[] {
   return Array.isArray(value) ? value : [];
 }
 
-function getPdfAttachment(notice: Notice): NoticeAttachment | null {
+function getPreferredAttachment(notice: Notice): NoticeAttachment | null {
   const files = toAttachments(notice.attachments);
-  return files.find((file) => file.name.toLowerCase().endsWith(".pdf")) ?? null;
+  if (files.length === 0) return null;
+  const pdf = files.find(
+    (file) =>
+      file.name.toLowerCase().endsWith(".pdf") ||
+      file.mime_type?.toLowerCase().includes("pdf") ||
+      file.url.toLowerCase().includes(".pdf")
+  );
+  return pdf ?? files[0];
 }
 
 export function NoticePage() {
@@ -67,13 +74,13 @@ export function NoticePage() {
                     <Link to={`/notice/${item.slug}`} className="truncate font-medium hover:text-gold-accent">
                       {item.title}
                     </Link>
-                    {item.title.includes("미성년자 시술 및 수술 동의서") && getPdfAttachment(item) ? (
+                    {getPreferredAttachment(item) ? (
                       <a
-                        href={getPdfAttachment(item)?.url ?? "#"}
+                        href={getPreferredAttachment(item)?.url ?? "#"}
                         download
                         className="shrink-0 rounded border border-gold-accent/40 px-2 py-1 text-xs text-gold-accent hover:bg-gold-accent/10"
                       >
-                        PDF 다운로드
+                        파일 다운로드
                       </a>
                     ) : null}
                   </div>
