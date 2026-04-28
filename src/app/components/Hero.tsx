@@ -156,9 +156,26 @@ export function Hero() {
 
       {/* Scroll indicator */}
       <div className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 md:bottom-12">
-        <div className="flex flex-col items-center gap-1.5 text-white/60 md:gap-2">
-          <span className="text-xs tracking-widest uppercase">Scroll</span>
-          <div className="h-12 w-px bg-gradient-to-b from-white/60 to-transparent md:h-16" />
+        <div className="flex flex-col items-center gap-3 text-white/60 md:gap-4">
+          {banners.length > 1 ? (
+            <div className="flex items-center gap-2.5">
+              {banners.map((banner, i) => (
+                <button
+                  key={banner.id}
+                  type="button"
+                  onClick={() => setIndex(i)}
+                  aria-label={`히어로 배너 ${i + 1}번 보기`}
+                  className={`h-2.5 w-2.5 rounded-full transition-all ${
+                    i === index ? "bg-gold-accent shadow-[0_0_0_3px_rgba(255,255,255,0.18)]" : "bg-white/45 hover:bg-white/80"
+                  }`}
+                />
+              ))}
+            </div>
+          ) : null}
+          <div className="flex flex-col items-center gap-1.5 md:gap-2">
+            <span className="text-xs tracking-widest uppercase">Scroll</span>
+            <div className="h-12 w-px bg-gradient-to-b from-white/60 to-transparent md:h-16" />
+          </div>
         </div>
       </div>
     </section>
