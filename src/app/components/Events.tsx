@@ -106,10 +106,7 @@ export function Events() {
               </div>
               <div className="bg-gradient-to-b from-white to-[#fdfaf4] p-3.5 md:p-5 lg:p-6">
                 <p className="mb-1 text-[11px] font-medium uppercase tracking-[0.18em] text-[#b08a4c] md:mb-2">{event.period}</p>
-                <p
-                  className="line-clamp-2 text-[15px] font-semibold leading-snug tracking-[0.01em] text-[#2f2820] lg:text-base [word-break:keep-all]"
-                  style={{ fontFamily: "'Noto Serif KR', 'Pretendard', serif" }}
-                >
+                <p className="line-clamp-2 text-[15px] font-semibold leading-snug tracking-[0.005em] text-[#27211b] lg:text-base [word-break:keep-all]">
                   {event.title}
                 </p>
               </div>
