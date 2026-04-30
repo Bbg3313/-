@@ -48,6 +48,14 @@ alter table public.hero_banners enable row level security;
 alter table public.promotions enable row level security;
 alter table public.notices enable row level security;
 
+create table if not exists public.pricing_content (
+  singleton text primary key default 'main',
+  payload jsonb not null,
+  updated_at timestamptz not null default now()
+);
+
+alter table public.pricing_content enable row level security;
+
 drop policy if exists "public_read_hero_active" on public.hero_banners;
 create policy "public_read_hero_active" on public.hero_banners
 for select using (is_active = true);
@@ -70,6 +78,14 @@ for select using (is_published = true);
 
 drop policy if exists "admin_all_notices" on public.notices;
 create policy "admin_all_notices" on public.notices
+for all using (auth.role() = 'authenticated') with check (auth.role() = 'authenticated');
+
+drop policy if exists "public_read_pricing_content" on public.pricing_content;
+create policy "public_read_pricing_content" on public.pricing_content
+for select using (true);
+
+drop policy if exists "admin_all_pricing_content" on public.pricing_content;
+create policy "admin_all_pricing_content" on public.pricing_content
 for all using (auth.role() = 'authenticated') with check (auth.role() = 'authenticated');
 
 -- PostgREST가 새 테이블을 바로 인식하도록 (권한 오류 나면 이 줄만 제거 후 재시도)

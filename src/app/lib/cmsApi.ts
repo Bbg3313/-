@@ -1,5 +1,7 @@
 import type { HeroBanner, Notice, Promotion } from "../types/cms";
+import type { PricingSnapshot } from "../../data/pricingData";
 import { supabase } from "./supabase";
+import { parsePricingSnapshot } from "./validatePricingSnapshot";
 
 type UploadBucket = "hero-images" | "promotion-images" | "notice-files";
 
@@ -242,6 +244,27 @@ export async function updateNotice(id: string, payload: Partial<Notice>) {
 export async function deleteNotice(id: string) {
   const client = getClient();
   const { error } = await client.from("notices").delete().eq("id", id);
+  if (error) throwDb(error);
+}
+
+export async function fetchPricingSnapshot(): Promise<PricingSnapshot | null> {
+  const client = getClient();
+  const { data, error } = await client.from("pricing_content").select("payload").eq("singleton", "main").maybeSingle();
+  if (error) throwDb(error);
+  if (!data?.payload) return null;
+  return parsePricingSnapshot(data.payload);
+}
+
+export async function savePricingSnapshotAdmin(payload: PricingSnapshot) {
+  const client = getClient();
+  const { error } = await client.from("pricing_content").upsert(
+    {
+      singleton: "main",
+      payload,
+      updated_at: new Date().toISOString(),
+    },
+    { onConflict: "singleton" },
+  );
   if (error) throwDb(error);
 }
 

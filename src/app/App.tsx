@@ -16,6 +16,7 @@ import { AdminHeroPage } from "./pages/admin/AdminHeroPage";
 import { AdminPromotionsPage } from "./pages/admin/AdminPromotionsPage";
 import { RequireAdmin } from "./components/admin/RequireAdmin";
 import { AdminNoticesPage } from "./pages/admin/AdminNoticesPage";
+import { AdminPricingPage } from "./pages/admin/AdminPricingPage";
 import { NoticeDetailPage } from "./pages/NoticeDetailPage";
 
 export default function App() {
@@ -63,6 +64,14 @@ export default function App() {
           element={
             <RequireAdmin>
               <AdminNoticesPage />
+            </RequireAdmin>
+          }
+        />
+        <Route
+          path="/admin/pricing"
+          element={
+            <RequireAdmin>
+              <AdminPricingPage />
             </RequireAdmin>
           }
         />

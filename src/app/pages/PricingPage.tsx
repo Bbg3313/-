@@ -3,15 +3,15 @@ import { Link } from "react-router";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 import {
-  PRICING_CATEGORIES,
-  PRICING_SECTIONS,
-  VAT_NOTE,
+  getDefaultPricingSnapshot,
   type LaserHairPriceCol,
   type LaserHairRow,
   type PricingCategoryId,
   type PricingSection,
+  type PricingSnapshot,
   type PricingTable,
 } from "../../data/pricingData";
+import { fetchPricingSnapshot } from "../lib/cmsApi";
 
 /** 시술/가격 영역은 본문과 동일하게 Pretendard만 사용 */
 const PRICING_FONT =
@@ -335,7 +335,7 @@ function PricingTableView({ table }: { table: PricingTable }) {
   );
 }
 
-function SectionCard({ section }: { section: PricingSection }) {
+function SectionCard({ section, vatNote }: { section: PricingSection; vatNote: string }) {
   const hasTables = section.tables.length > 0;
   const hasLaser = Boolean(section.laserHairRows?.length);
 
@@ -353,7 +353,7 @@ function SectionCard({ section }: { section: PricingSection }) {
       </div>
 
       <div className="px-4 sm:px-6 pb-5 sm:pb-6 space-y-4">
-        <p className={`${TEXT_XS_MUTED} border-l-2 border-gold-accent/50 pl-2.5 ${KO_WRAP}`}>{VAT_NOTE}</p>
+        <p className={`${TEXT_XS_MUTED} border-l-2 border-gold-accent/50 pl-2.5 ${KO_WRAP}`}>{vatNote}</p>
         {hasLaser && section.laserHairRows ? <LaserHairTableView rows={section.laserHairRows} /> : null}
         {hasTables ? (
           <div className="space-y-3">
@@ -377,35 +377,49 @@ function SectionCard({ section }: { section: PricingSection }) {
 }
 
 export function PricingPage() {
+  const fileDefault = useMemo(() => getDefaultPricingSnapshot(), []);
+  const [snapshot, setSnapshot] = useState<PricingSnapshot | null>(null);
+
+  useEffect(() => {
+    fetchPricingSnapshot()
+      .then((row) => setSnapshot(row))
+      .catch(() => setSnapshot(null));
+  }, []);
+
+  const activeData = snapshot ?? fileDefault;
+  const { categories: pricingCategories, sections: pricingSections, vatNote } = activeData;
+
   const [active, setActive] = useState<PricingCategoryId | "all">("all");
-  const [scrollActive, setScrollActive] = useState<PricingCategoryId>(PRICING_CATEGORIES[0].id);
+  const [scrollActive, setScrollActive] = useState<PricingCategoryId>(
+    () => fileDefault.categories.find((c) => c.id !== "all")?.id ?? "botox-filler",
+  );
   const categoryRailRef = useRef<HTMLDivElement | null>(null);
   const categoryRefs = useRef<Record<PricingCategoryId, HTMLButtonElement | null>>(
-    Object.fromEntries(PRICING_CATEGORIES.map((c) => [c.id, null])) as Record<PricingCategoryId, HTMLButtonElement | null>,
+    Object.fromEntries(fileDefault.categories.map((c) => [c.id, null])) as Record<PricingCategoryId, HTMLButtonElement | null>,
   );
 
   const visible = useMemo(() => {
-    if (active === "all") return PRICING_SECTIONS;
-    return PRICING_SECTIONS.filter((s) => s.categoryId === active);
-  }, [active]);
+    if (active === "all") return pricingSections;
+    return pricingSections.filter((s) => s.categoryId === active);
+  }, [active, pricingSections]);
 
   useEffect(() => {
     if (active === "all") return;
-    const first = PRICING_SECTIONS.find((s) => s.categoryId === active);
+    const first = pricingSections.find((s) => s.categoryId === active);
     if (!first) return;
     const el = document.getElementById(`pricing-${first.id}`);
     el?.scrollIntoView({ behavior: "smooth", block: "start" });
-  }, [active]);
+  }, [active, pricingSections]);
 
   useEffect(() => {
     if (active !== "all") return;
 
     const updateScrollCategory = () => {
       const anchorY = window.innerWidth < 640 ? 200 : window.innerWidth < 768 ? 220 : 280;
-      let current = PRICING_CATEGORIES[0].id;
+      let current = pricingCategories.find((c) => c.id !== "all")?.id ?? "botox-filler";
       let bestDistance = Number.POSITIVE_INFINITY;
 
-      for (const section of PRICING_SECTIONS) {
+      for (const section of pricingSections) {
         const el = document.getElementById(`pricing-${section.id}`);
         if (!el) continue;
         const distance = Math.abs(el.getBoundingClientRect().top - anchorY);
@@ -425,7 +439,7 @@ export function PricingPage() {
       window.removeEventListener("scroll", updateScrollCategory);
       window.removeEventListener("resize", updateScrollCategory);
     };
-  }, [active]);
+  }, [active, pricingCategories, pricingSections]);
 
   useEffect(() => {
     const currentId = active === "all" ? scrollActive : active;
@@ -486,7 +500,7 @@ export function PricingPage() {
             ref={categoryRailRef}
             className="mx-auto flex w-full max-w-5xl gap-1.5 overflow-x-auto overflow-y-visible overscroll-x-contain scroll-pl-1 scroll-pr-1 py-0.5 [-webkit-overflow-scrolling:touch] sm:scroll-pl-2 sm:scroll-pr-2 md:grid md:grid-cols-6 md:overflow-visible md:scroll-pl-0 md:scroll-pr-0 md:py-0"
           >
-            {PRICING_CATEGORIES.map((c) => {
+            {pricingCategories.map((c) => {
               const isOn = active === "all" ? scrollActive === c.id : active === c.id;
               return (
                 <button
@@ -514,7 +528,7 @@ export function PricingPage() {
             {visible.length === 0 ? (
               <p className="text-muted-foreground">이 카테고리에 등록된 항목이 없습니다.</p>
             ) : (
-              visible.map((section) => <SectionCard key={section.id} section={section} />)
+              visible.map((section) => <SectionCard key={section.id} section={section} vatNote={vatNote} />)
             )}
           </div>
 

@@ -38,6 +38,13 @@ export function AdminHomePage() {
               <p className="text-xs text-muted-foreground mb-1">Notice Board</p>
               <p className="text-xl font-semibold text-charcoal">공지사항 관리</p>
             </Link>
+            <Link
+              to="/admin/pricing"
+              className="border border-border/70 bg-muted/20 p-6 hover:border-gold-accent/40 transition-colors"
+            >
+              <p className="text-xs text-muted-foreground mb-1">Pricing</p>
+              <p className="text-xl font-semibold text-charcoal">시술 · 가격 수정</p>
+            </Link>
           </div>
         </div>
       </main>

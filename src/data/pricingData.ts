@@ -617,3 +617,18 @@ export const PRICING_SECTIONS: PricingSection[] = [
     ],
   },
 ];
+
+/** 관리자 저장용 전체 가격표 스냅샷 (Supabase JSON과 동일 구조) */
+export type PricingSnapshot = {
+  vatNote: string;
+  categories: { id: PricingCategoryId | "all"; label: string }[];
+  sections: PricingSection[];
+};
+
+export function getDefaultPricingSnapshot(): PricingSnapshot {
+  return {
+    vatNote: VAT_NOTE,
+    categories: PRICING_CATEGORIES.map((c) => ({ id: c.id, label: c.label })),
+    sections: JSON.parse(JSON.stringify(PRICING_SECTIONS)) as PricingSection[],
+  };
+}
