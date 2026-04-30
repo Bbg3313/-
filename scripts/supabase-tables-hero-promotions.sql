@@ -1,5 +1,5 @@
 -- =============================================================================
--- "Could not find the table 'public.promotions' in the schema cache" 일 때
+-- "Could not find the table ... in the schema cache" (promotions, pricing_content 등)
 -- Supabase → SQL Editor 에서 이 파일 전체를 실행하세요.
 -- (스토리지 버킷만 만들고 이 스크립트를 안 돌린 경우가 많습니다.)
 -- =============================================================================

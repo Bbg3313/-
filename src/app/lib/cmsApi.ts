@@ -55,9 +55,9 @@ export function formatSupabaseClientError(err: unknown): string {
   }
   if (lower.includes("could not find the table") || lower.includes("schema cache")) {
     return [
-      "Supabase에 `public.promotions`(또는 hero_banners) 테이블이 없거나, API 스키마 캐시에 아직 반영되지 않았습니다.",
-      "① SQL Editor에서 scripts/supabase-tables-hero-promotions.sql 전체를 실행하세요. (스토리지 SQL만 돌렸다면 이 단계가 빠진 겁니다.)",
-      "② 실행 후 10~30초 기다렸다가 관리자 페이지를 새로고침한 뒤 다시 저장해 보세요.",
+      "Supabase에 필요한 테이블(예: pricing_content, hero_banners, promotions)이 없거나, API 스키마 캐시에 아직 반영되지 않았습니다.",
+      "① Supabase 대시보드 → SQL Editor → New query 에서 저장소의 scripts/supabase-tables-hero-promotions.sql 파일 내용을 통째로 붙여넣고 Run 하세요.",
+      "② 성공 후 10~30초 기다렸다가 이 페이지를 새로고침한 뒤 다시 시도하세요.",
       combined ? `(원문: ${combined})` : "",
     ]
       .filter(Boolean)
