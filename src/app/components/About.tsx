@@ -211,12 +211,15 @@ export function About() {
                   fontWeight: 500,
                 }}
               >
-                <span className="bg-gradient-to-r from-[#2f2923] via-[#4a3f33] to-[#7f6a4e] bg-clip-text text-transparent">
+                <span className="text-[#2a241f] [text-shadow:0_8px_20px_rgba(33,26,20,0.14)]">
                   Where Science
                 </span>
                 <br />
-                <span className="inline-block bg-gradient-to-r from-[#655541] via-[#9a805f] to-[#c5a677] bg-clip-text text-transparent [text-shadow:0_10px_24px_rgba(146,118,74,0.12)]">
-                  Meets <span className="font-medium">Beauty</span>
+                <span className="inline-flex items-baseline gap-2 [text-shadow:0_10px_24px_rgba(146,118,74,0.16)]">
+                  <span className="text-[#6d5a44]">Meets</span>
+                  <span className="bg-gradient-to-r from-[#b08a54] via-[#d9bc8a] to-[#8a6a3f] bg-clip-text font-semibold text-transparent">
+                    Beauty
+                  </span>
                 </span>
               </h2>
             </Reveal>
