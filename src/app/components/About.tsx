@@ -213,23 +213,23 @@ const features = [
   },
 ];
 
-function signaturePillClass(isBrand: boolean, isOpen: boolean, isInteractive: boolean) {
+const DEFAULT_SIGNATURE_TAB_ID =
+  SIGNATURE_SERVICES.find((s) => Boolean(s.gallery?.items.length))?.id ?? "botox";
+
+function signaturePillClass(isBrand: boolean, _isSelected: boolean, isInteractive: boolean) {
   if (isBrand) {
     return "flex min-h-[2.35rem] items-center justify-center rounded-md border border-gold-accent/45 bg-gradient-to-br from-[#fff8ea] via-[#f6e7c5] to-[#ead3a0] px-2 py-2 text-center text-[11px] font-semibold leading-snug tracking-wide text-charcoal break-keep [word-break:keep-all] shadow-[0_8px_18px_-12px_rgba(120,90,38,0.55),inset_0_1px_0_rgba(255,255,255,0.72)] sm:text-xs";
   }
   const base =
-    "flex min-h-[2.35rem] w-full items-center justify-center rounded-md border px-2 py-2 text-center text-[11px] font-medium leading-snug tracking-wide break-keep [word-break:keep-all] shadow-sm backdrop-blur-sm transition-all duration-300 sm:text-xs";
+    "flex min-h-[2.35rem] w-full items-center justify-center rounded-xl px-2 py-2 text-center text-[11px] font-medium leading-snug tracking-wide break-keep [word-break:keep-all] transition-[color,background-color,box-shadow,transform] duration-200 sm:text-xs";
   if (!isInteractive) {
-    return `${base} cursor-default border-gold-accent/20 bg-white/45 text-charcoal/55`;
+    return `${base} cursor-default border border-transparent bg-transparent text-charcoal/40`;
   }
-  if (isOpen) {
-    return `${base} cursor-pointer border-gold-accent/55 bg-gradient-to-b from-white/90 to-[#faf6ef] text-charcoal shadow-[0_10px_28px_-16px_rgba(120,90,38,0.35)] ring-1 ring-gold-accent/25`;
-  }
-  return `${base} cursor-pointer border-gold-accent/25 bg-white/55 text-charcoal/75 hover:border-gold-accent/45 hover:text-charcoal`;
+  return `${base} border border-transparent bg-transparent text-charcoal/45 hover:bg-black/[0.03] hover:text-charcoal/80 active:scale-[0.98]`;
 }
 
 export function About() {
-  const [openSignatureId, setOpenSignatureId] = useState<string | null>(null);
+  const [openSignatureId, setOpenSignatureId] = useState<string>(DEFAULT_SIGNATURE_TAB_ID);
   const openService = SIGNATURE_SERVICES.find((s) => s.id === openSignatureId);
 
   return (
@@ -310,57 +310,72 @@ export function About() {
               <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.28em] text-muted-foreground/80">Signature care</p>
               <div className="mb-6 sm:mb-9">
               <div
-                className="mb-2 grid w-full grid-cols-2 gap-2 sm:mb-3 sm:grid-cols-4 lg:grid-cols-8"
-                role="tablist"
-                aria-label="시그니처 케어 항목"
+                className="mb-3 rounded-2xl bg-black/[0.035] p-1.5 ring-1 ring-black/[0.04] backdrop-blur-[2px] sm:mb-4"
               >
-                {SIGNATURE_SERVICES.map((svc) => {
-                  const isBrand = svc.variant === "brand";
-                  const hasGallery = Boolean(svc.gallery?.items.length);
-                  const isOpen = openSignatureId === svc.id;
-                  const pillClass = signaturePillClass(isBrand, isOpen, hasGallery);
+                <div
+                  className="grid w-full grid-cols-2 gap-1 sm:grid-cols-4 lg:grid-cols-8"
+                  role="tablist"
+                  aria-label="시그니처 케어 항목"
+                >
+                  {SIGNATURE_SERVICES.map((svc) => {
+                    const isBrand = svc.variant === "brand";
+                    const hasGallery = Boolean(svc.gallery?.items.length);
+                    const isOpen = openSignatureId === svc.id;
+                    const pillClass = signaturePillClass(isBrand, isOpen, hasGallery);
 
-                  if (hasGallery) {
+                    if (hasGallery) {
+                      return (
+                        <button
+                          key={svc.id}
+                          type="button"
+                          role="tab"
+                          aria-selected={isOpen}
+                          aria-controls="signature-care-panel"
+                          id={`signature-tab-${svc.id}`}
+                          className="relative flex min-h-[2.35rem] w-full items-center justify-center overflow-hidden rounded-[10px] px-2 py-2 text-center text-[11px] font-semibold leading-snug tracking-wide break-keep [word-break:keep-all] transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#f4efe8] sm:text-xs"
+                          onClick={() => setOpenSignatureId(svc.id)}
+                        >
+                          {isOpen ? (
+                            <motion.span
+                              layoutId="signature-gallery-pill"
+                              className="absolute inset-0 z-0 rounded-[10px] bg-white shadow-[0_1px_0_rgba(0,0,0,0.05),0_14px_36px_-20px_rgba(28,22,18,0.16)] ring-1 ring-black/[0.06]"
+                              transition={{ type: "spring", stiffness: 500, damping: 34 }}
+                            />
+                          ) : null}
+                          <span
+                            className={`relative z-[1] ${isOpen ? "text-charcoal" : "text-charcoal/48 hover:text-charcoal/72"}`}
+                          >
+                            {svc.label}
+                          </span>
+                        </button>
+                      );
+                    }
+
                     return (
-                      <button
-                        key={svc.id}
-                        type="button"
-                        role="tab"
-                        aria-selected={isOpen}
-                        aria-controls="signature-care-panel"
-                        id={`signature-tab-${svc.id}`}
-                        className={pillClass}
-                        onClick={() => setOpenSignatureId((prev) => (prev === svc.id ? null : svc.id))}
-                      >
+                      <span key={svc.id} className={pillClass} role="presentation">
                         {svc.label}
-                      </button>
+                      </span>
                     );
-                  }
-
-                  return (
-                    <span key={svc.id} className={pillClass} role="presentation">
-                      {svc.label}
-                    </span>
-                  );
-                })}
+                  })}
+                </div>
               </div>
 
-              <AnimatePresence initial={false}>
+              <AnimatePresence initial={false} mode="wait">
                 {openService?.gallery ? (
                   <motion.div
                     key={openService.id}
                     id="signature-care-panel"
                     role="tabpanel"
                     aria-labelledby={`signature-tab-${openService.id}`}
-                    initial={{ opacity: 0, y: -6 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -4 }}
-                    transition={{ duration: 0.35, ease: easeLux }}
-                    className="overflow-hidden rounded-2xl border border-gold-accent/20 bg-gradient-to-b from-white/85 via-white/70 to-[#faf7f2]/90 p-4 shadow-[0_24px_48px_-28px_rgba(42,34,28,0.18)] ring-1 ring-black/[0.03] backdrop-blur-md sm:p-6"
+                    initial={{ opacity: 0, y: 10, filter: "blur(4px)" }}
+                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                    exit={{ opacity: 0, y: -8, filter: "blur(3px)" }}
+                    transition={{ duration: 0.32, ease: easeLux }}
+                    className="overflow-hidden rounded-3xl bg-white/75 p-4 shadow-[0_32px_64px_-40px_rgba(24,18,14,0.35)] ring-1 ring-black/[0.05] backdrop-blur-md sm:p-6"
                   >
-                    <div className="mb-4 flex flex-col gap-1 border-b border-gold-accent/15 pb-4 sm:flex-row sm:items-end sm:justify-between sm:gap-4">
+                    <div className="mb-4 flex flex-col gap-2 border-b border-black/[0.06] pb-4 sm:flex-row sm:items-end sm:justify-between sm:gap-6">
                       <div>
-                        <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gold-accent/90">
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-gold-accent/85">
                           {openService.gallery.eyebrow}
                         </p>
                         <h3 className="mt-1 font-serif text-lg font-medium tracking-tight text-charcoal sm:text-xl">{openService.gallery.title}</h3>
@@ -369,11 +384,11 @@ export function About() {
                         {openService.gallery.subtitle}
                       </p>
                     </div>
-                    <div className="grid auto-rows-fr gap-3 sm:grid-cols-3 sm:gap-4">
+                    <div className="-mx-1 flex snap-x snap-mandatory gap-3 overflow-x-auto px-1 pb-1 [scrollbar-width:thin] sm:mx-0 sm:grid sm:auto-rows-fr sm:grid-cols-3 sm:gap-4 sm:overflow-visible sm:px-0 sm:pb-0">
                       {openService.gallery.items.map((item) => (
                         <div
                           key={item.brand}
-                          className="group flex h-full min-h-0 flex-col overflow-hidden rounded-xl border border-white/80 bg-white/90 shadow-[0_12px_32px_-22px_rgba(35,30,26,0.22)] ring-1 ring-gold-accent/10 transition-shadow duration-300 hover:shadow-[0_18px_40px_-20px_rgba(120,90,38,0.22)]"
+                          className="group flex h-full min-h-0 w-[min(82vw,17.5rem)] shrink-0 snap-center flex-col overflow-hidden rounded-2xl border border-black/[0.05] bg-white shadow-[0_16px_40px_-28px_rgba(28,22,18,0.28)] transition-[box-shadow,transform] duration-300 hover:-translate-y-0.5 hover:shadow-[0_22px_48px_-26px_rgba(28,22,18,0.22)] sm:w-auto"
                         >
                           <div className="relative flex h-[11.25rem] shrink-0 items-center justify-center bg-gradient-to-b from-[#faf9f7] to-[#f0ebe4] sm:h-[13rem]">
                             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_30%_0%,rgba(255,255,255,0.9),transparent_55%)]" />
