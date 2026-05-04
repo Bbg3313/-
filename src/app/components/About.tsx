@@ -96,15 +96,15 @@ function GalleryTile({
             <ImageWithFallback
               src={src}
               alt={alt}
-              className="h-auto w-full max-w-full object-contain object-center transition-[transform,filter] duration-[1.05s] ease-out group-hover:scale-[1.02] group-hover:brightness-[1.02]"
+              className="h-auto w-full max-w-full object-contain object-center"
             />
           </div>
         ) : (
-          <div className="relative h-full min-h-[120px] w-full overflow-hidden bg-gradient-to-b from-[#f7f5f1] to-[#ebe6df]">
+          <div className="relative h-full min-h-[120px] w-full cursor-zoom-in overflow-hidden bg-gradient-to-b from-[#f7f5f1] to-[#ebe6df]">
             <ImageWithFallback
               src={src}
               alt={alt}
-              className="h-full w-full object-cover object-center transition-[transform,filter] duration-[1.05s] ease-out group-hover:scale-[1.035] group-hover:brightness-[1.02]"
+              className="h-full w-full origin-center object-cover object-center transition-[transform,filter] duration-500 ease-out group-hover:scale-[1.1] group-hover:brightness-[1.03]"
             />
           </div>
         )}
@@ -126,10 +126,6 @@ function AboutGalleryImages() {
       className="w-full shrink-0"
     >
       <div className="mx-auto w-full max-w-6xl px-0 sm:max-w-7xl">
-        <p className="mb-2 text-center text-[11px] font-medium tracking-[0.18em] text-muted-foreground/85 sm:mb-3 sm:text-xs">
-          병원 공간
-        </p>
-
         {/* 위: 메인 전체 노출(contain, 높이 제한 없음) / 아래: 간격·셀 높이 줄여 세로 확보 */}
         <div className="flex flex-col gap-2 sm:gap-2.5 md:gap-3">
           <GalleryTile
