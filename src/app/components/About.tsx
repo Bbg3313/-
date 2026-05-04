@@ -397,7 +397,7 @@ export function About() {
                 key={item.title}
                 className="flex flex-col rounded-2xl border border-gold-accent/18 bg-gradient-to-b from-white/90 to-[#faf7f2]/95 px-4 py-4 shadow-[0_10px_36px_-24px_rgba(35,28,22,0.18)] ring-1 ring-white/70 backdrop-blur-sm transition-[box-shadow,transform,border-color] duration-300 hover:-translate-y-0.5 hover:border-gold-accent/28 hover:shadow-[0_16px_44px_-26px_rgba(35,28,22,0.22)] sm:px-5 sm:py-5"
               >
-                <div className="flex items-start gap-3">
+                <div className="flex items-center gap-3">
                   <div
                     className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-gold-accent/30 bg-gradient-to-br from-white via-[#fffdf9] to-[#f3ead8] text-gold-accent shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_4px_14px_-8px_rgba(140,110,60,0.25)]"
                     aria-hidden
@@ -406,7 +406,7 @@ export function About() {
                       {item.icon}
                     </span>
                   </div>
-                  <h3 className="min-w-0 flex-1 text-left text-[0.9375rem] font-semibold leading-snug tracking-tight text-[#2a241f] sm:text-base">
+                  <h3 className="m-0 min-w-0 flex-1 self-center text-left text-[0.9375rem] font-semibold leading-snug tracking-tight text-[#2a241f] sm:text-base">
                     {item.title}
                   </h3>
                 </div>
