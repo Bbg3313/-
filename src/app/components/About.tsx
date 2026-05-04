@@ -423,10 +423,10 @@ export function About() {
           </AboutGalleryShell>
         </Reveal>
 
-        {/* 시그니처 케어 */}
-        <div className="mx-auto mt-14 w-full max-w-6xl sm:mt-16 md:mt-20 lg:mt-24">
-            <Reveal delay={0.17} className="shrink-0">
-              <div className="flex flex-col items-center px-2">
+        {/* 시그니처 케어 — 클리닉 갤러리(AboutGalleryShell)와 동일한 좌우 폭 */}
+        <div className="relative mx-auto mt-14 w-full max-w-3xl sm:mt-16 sm:max-w-5xl md:mt-20 lg:mt-24 lg:max-w-7xl">
+            <Reveal delay={0.17} className="shrink-0 w-full">
+              <div className="flex w-full flex-col items-center px-0">
                 <p className="mb-3 text-center text-[11px] font-medium uppercase tracking-[0.35em] text-gold-accent/90 md:mb-4">
                   Signature Care
                 </p>
