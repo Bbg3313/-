@@ -81,7 +81,7 @@ export function EventsBoardPage() {
             </p>
           ) : null}
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+          <div className="mx-auto grid max-w-6xl grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 md:grid-cols-3 md:gap-6 lg:max-w-7xl lg:gap-8">
             {cards.map((event) => (
               <Link
                 key={event.slug}

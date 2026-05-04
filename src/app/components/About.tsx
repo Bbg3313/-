@@ -386,6 +386,36 @@ export function About() {
           </Reveal>
         </div>
 
+        {/* 병원 가치 — 소개 직후, 3열로 압축 (넓은 단일 카드 제거) */}
+        <Reveal delay={0.15} className="mt-10 w-full sm:mt-12 md:mt-14">
+          <ul
+            className="mx-auto grid max-w-5xl grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-4 md:gap-5"
+            role="list"
+          >
+            {features.map((item) => (
+              <li
+                key={item.title}
+                className="flex flex-col gap-3 rounded-xl border border-gold-accent/15 bg-white/50 px-4 py-4 shadow-[0_8px_28px_-22px_rgba(35,28,22,0.14)] ring-1 ring-white/60 backdrop-blur-sm sm:px-4 sm:py-5"
+              >
+                <div
+                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-gold-accent/25 bg-white/90 text-gold-accent shadow-[inset_0_1px_0_rgba(255,255,255,0.95)] sm:h-10 sm:w-10"
+                  aria-hidden
+                >
+                  <span className="[&_svg]:block [&_svg]:h-[0.95rem] [&_svg]:w-[0.95rem] [&_svg]:stroke-[1.25] sm:[&_svg]:h-[1.05rem] sm:[&_svg]:w-[1.05rem]">
+                    {item.icon}
+                  </span>
+                </div>
+                <div className="min-w-0 text-left">
+                  <h3 className="text-sm font-semibold leading-snug tracking-tight text-charcoal">{item.title}</h3>
+                  <p className="mt-1.5 text-[13px] font-normal leading-relaxed text-muted-foreground [word-break:keep-all] sm:text-sm">
+                    {item.body}
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </Reveal>
+
         {/* 클리닉 이미지 — 본문 아래 전폭 센터 */}
         <Reveal delay={0.12} className="mt-12 w-full sm:mt-14 md:mt-16 lg:mt-20">
           <AboutGalleryShell>
@@ -393,7 +423,7 @@ export function About() {
           </AboutGalleryShell>
         </Reveal>
 
-        {/* 시그니처 케어 + 가치 */}
+        {/* 시그니처 케어 */}
         <div className="mx-auto mt-14 w-full max-w-6xl sm:mt-16 md:mt-20 lg:mt-24">
             <Reveal delay={0.17} className="shrink-0">
               <div className="flex flex-col items-center px-2">
@@ -535,36 +565,6 @@ export function About() {
                   </motion.div>
                 ) : null}
               </AnimatePresence>
-              </div>
-            </Reveal>
-
-            <Reveal delay={0.24} className="mt-8 w-full shrink-0 md:mt-10">
-              <div className="mx-auto flex w-full max-w-3xl flex-col overflow-hidden rounded-xl border border-gold-accent/15 bg-white/40 px-4 py-1 shadow-[0_8px_28px_-20px_rgba(45,38,32,0.12)] backdrop-blur-sm sm:px-5 sm:py-0 lg:max-w-none">
-                <ul className="flex flex-col divide-y divide-gold-accent/12">
-                  {features.map((item) => (
-                    <li
-                      key={item.title}
-                      className="flex gap-3 py-3 sm:gap-5 sm:py-5 lg:items-center"
-                    >
-                      <div
-                        className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-gold-accent/25 bg-white/90 text-gold-accent shadow-[inset_0_1px_0_rgba(255,255,255,0.95)] sm:mt-0 sm:h-11 sm:w-11"
-                        aria-hidden
-                      >
-                        <span className="[&_svg]:block [&_svg]:h-[1rem] [&_svg]:w-[1rem] [&_svg]:stroke-[1.25] sm:[&_svg]:h-[1.1rem] sm:[&_svg]:w-[1.1rem]">
-                          {item.icon}
-                        </span>
-                      </div>
-                      <div className="min-w-0 flex-1 self-center">
-                        <h3 className="mb-1.5 text-sm font-semibold leading-snug tracking-tight text-charcoal">
-                          {item.title}
-                        </h3>
-                        <p className="text-sm font-normal leading-relaxed text-muted-foreground [word-break:keep-all]">
-                          {item.body}
-                        </p>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
               </div>
             </Reveal>
         </div>

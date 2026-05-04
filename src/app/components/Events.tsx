@@ -87,7 +87,7 @@ export function Events() {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 md:gap-6 lg:grid-cols-4 lg:gap-8">
+        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 md:grid-cols-3 md:gap-6 lg:max-w-7xl lg:gap-8">
           {cards.map((event) => (
             <Link
               key={event.slug}
