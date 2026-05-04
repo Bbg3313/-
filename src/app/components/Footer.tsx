@@ -1,8 +1,7 @@
 import { Fragment, type ReactNode } from "react";
 import { Link } from "react-router";
 import { Instagram } from "lucide-react";
-import logo from "../../imports/logo.svg";
-import { SITE_LOGO_IMG_CLASS } from "../config/logo";
+import { SiteLogo } from "./branding/SiteLogo";
 import { SITE_LINKS } from "../config/siteLinks";
 import { SOCIAL_LINKS } from "../config/socialLinks";
 import { useHomeLogoClick } from "../hooks/useHomeLogoClick";
@@ -87,19 +86,14 @@ export function Footer({ className }: FooterProps) {
     <footer className={cn("mt-auto", className)}>
       <div className="border-t border-border bg-muted/50">
         <div className="mx-auto flex max-w-xl flex-col items-center px-6 pt-2 pb-6 md:pt-3 md:pb-12">
-          {/* 로고: SVG 여백 보정으로 시각적 중앙(약간 오른쪽 이동) */}
           <div className="flex w-full justify-center">
             <Link
               to="/"
               onClick={onHomeLogoClick}
-              className="group inline-flex max-w-full translate-x-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-muted/50 rounded-sm sm:translate-x-2.5 md:translate-x-3"
+              className="group inline-flex max-w-full flex-col items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-muted/50 rounded-sm"
               aria-label="연세미의원 홈 — 맨 위로 이동"
             >
-              <img
-                src={logo}
-                alt="연세미의원"
-                className={`${SITE_LOGO_IMG_CLASS} block opacity-95 transition-opacity group-hover:opacity-100`}
-              />
+              <SiteLogo layout="vertical" className="opacity-95 transition-opacity group-hover:opacity-100" />
             </Link>
           </div>
 

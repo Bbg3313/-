@@ -1,6 +1,7 @@
 import { useRef, useState, type ReactNode } from "react";
 import { AnimatePresence, motion, useInView } from "motion/react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
+import { cn } from "./ui/utils";
 
 const easeLux = [0.22, 1, 0.36, 1] as const;
 
@@ -114,7 +115,7 @@ function AboutGalleryImages() {
 function AboutGalleryShell({ children, className = "" }: { children: ReactNode; className?: string }) {
   return (
     <div
-      className={`relative mx-auto flex h-full min-h-0 w-full max-w-xl flex-col gap-3 sm:gap-5 lg:mx-0 lg:max-w-none lg:gap-6 ${className}`}
+      className={`relative mx-auto flex min-h-0 w-full max-w-3xl flex-col gap-3 sm:max-w-5xl sm:gap-5 lg:max-w-6xl lg:gap-6 ${className}`}
     >
       <div className="pointer-events-none absolute -left-3 -top-3 h-14 w-14 border-l border-t border-gold-accent/40 sm:-left-4 sm:-top-4" />
       <div className="pointer-events-none absolute -bottom-3 -right-3 h-14 w-14 border-b border-r border-gold-accent/40 sm:-bottom-4 sm:-right-4" />
@@ -173,11 +174,59 @@ const SIGNATURE_SERVICES: SignatureService[] = [
     },
   },
   { id: "booster", label: "스킨부스터" },
-  { id: "toning", label: "레이저토닝" },
-  { id: "lifting", label: "레이저 리프팅" },
+  {
+    id: "toning",
+    label: "레이저토닝",
+    gallery: {
+      eyebrow: "Laser toning",
+      title: "레이저 토닝 · 미인 (Miin)",
+      subtitle:
+        "LTRA Global 미인(Miin)은 Q-switched Nd:YAG 1064㎚·532㎚ 듀얼 파장으로 색소 병변, 기미, 잔주름, 카본 필(톤 개선), 문신 제거 등에 활용됩니다. 펄스·Quasi-long 등 세부 스펙은 상담 시 안내드리며, 피부 상태에 맞는 토닝 프로토콜을 제안합니다.",
+      items: [
+        {
+          src: "/images/signature-care/laser-miin.png",
+          brand: "미인 miin",
+          line: "LTRA Global · Q-switched Nd:YAG · 1064nm / 532nm",
+        },
+      ],
+    },
+  },
+  {
+    id: "lifting",
+    label: "레이저 리프팅",
+    gallery: {
+      eyebrow: "Ultrasound lifting",
+      title: "레이저 리프팅 · 슈링크 (Shurink)",
+      subtitle:
+        "슈링크(Shurink)는 초음파 에너지로 진피·SMAS 층에 집중하여 리프팅·탄력 개선을 돕는 대표적인 비침습 리프팅입니다. 부위와 피부 두께에 맞춰 샷 간격·에너지를 조절하며, 시술 전 상담에서 라인·횟수를 함께 결정합니다.",
+      items: [
+        {
+          src: "/images/signature-care/lifting-shurink.png",
+          brand: "슈링크 Shurink",
+          line: "초음파 리프팅 · 피부 속 탄력 UP",
+        },
+      ],
+    },
+  },
   { id: "thread", label: "실리프팅" },
   { id: "tele", label: "화상" },
-  { id: "clinic", label: "연세미의원", variant: "brand" },
+  {
+    id: "hair",
+    label: "제모",
+    gallery: {
+      eyebrow: "Laser hair removal",
+      title: "제모 · 듀얼 악센토 N (DUAL Accento N)",
+      subtitle:
+        "듀얼 악센토 N은 755㎚·1064㎚ 듀얼 파장 레이저로 모발 색·피부 타입에 맞춰 제모 시술을 설계할 수 있는 장비입니다. 부위·횟수·간격은 상담 시 피부 상태와 목표에 따라 안내드립니다.",
+      items: [
+        {
+          src: "/images/signature-care/hair-dual-accento-n.png",
+          brand: "DUAL Accento N",
+          line: "755nm & 1064nm · 듀얼 파장 레이저",
+        },
+      ],
+    },
+  },
 ];
 
 const features = [
@@ -250,64 +299,60 @@ export function About() {
       <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold-accent/25 to-transparent" />
 
       <div className="relative mx-auto w-full max-w-[90rem]">
-        <div className="grid min-h-0 gap-6 md:gap-10 lg:grid-cols-2 lg:items-stretch lg:gap-12 xl:gap-16">
-          {/* Left: 데스크톱(lg+)만 — 사진 스택. 모바일은 오른쪽 시그니처 케어 위에 동일 블록 삽입 */}
-          <Reveal className="hidden min-h-0 h-full w-full flex-col lg:flex">
-            <AboutGalleryShell>
-              <AboutGalleryImages />
-            </AboutGalleryShell>
+        {/* 상단: 센터 정렬 헤드라인 + 소개 */}
+        <div className="mx-auto max-w-4xl text-center">
+          <Reveal className="shrink-0">
+            <p className="mb-3 text-[11px] font-medium uppercase tracking-[0.35em] text-gold-accent/90 md:mb-4">Yonsei Mi Clinic</p>
+            <div className="mx-auto mb-5 h-px w-20 bg-gradient-to-r from-transparent via-gold-accent to-transparent md:mb-8" />
           </Reveal>
 
-          {/* Right: 상단 카피는 원래 스타일. 특징+푸터 카드만 lg에서 flex-1로 남는 높이까지 채움 */}
-          <div className="flex min-h-0 w-full min-w-0 flex-col lg:h-full lg:min-h-0 lg:pl-2 xl:pl-4">
-            <Reveal className="shrink-0">
-              <p className="mb-3 text-[11px] font-medium uppercase tracking-[0.35em] text-gold-accent/90 md:mb-5">Yonsei Mi Clinic</p>
-              <div className="mb-4 h-px w-20 bg-gradient-to-r from-gold-accent via-gold-accent/60 to-transparent md:mb-7" />
-            </Reveal>
-
-            <Reveal delay={0.05} className="shrink-0">
-              <h2
-                className="mb-4 w-full text-balance text-charcoal tracking-[-0.02em] md:mb-7"
-                style={{
-                  fontFamily: "'Playfair Display', serif",
-                  fontSize: "clamp(2.1rem, 3.6vw, 3.15rem)",
-                  lineHeight: 1.12,
-                  fontWeight: 500,
-                }}
-              >
-                <span className="text-[#2a241f] [text-shadow:0_8px_20px_rgba(33,26,20,0.14)]">
-                  Where Science
+          <Reveal delay={0.05} className="shrink-0">
+            <h2
+              className="mx-auto mb-5 w-full max-w-3xl text-balance text-center text-charcoal tracking-[-0.02em] sm:mb-7 md:mb-8"
+              style={{
+                fontFamily: "'Playfair Display', serif",
+                fontSize: "clamp(2.1rem, 4.2vw, 3.35rem)",
+                lineHeight: 1.12,
+                fontWeight: 500,
+              }}
+            >
+              <span className="text-[#2a241f] [text-shadow:0_8px_20px_rgba(33,26,20,0.14)]">Where Science</span>
+              <br />
+              <span className="inline-flex flex-wrap items-baseline justify-center gap-x-2 gap-y-0 [text-shadow:0_10px_24px_rgba(146,118,74,0.16)]">
+                <span className="text-[#6d5a44]">Meets</span>
+                <span className="bg-gradient-to-r from-[#b08a54] via-[#d9bc8a] to-[#8a6a3f] bg-clip-text font-semibold text-transparent">
+                  Beauty
                 </span>
-                <br />
-                <span className="inline-flex items-baseline gap-2 [text-shadow:0_10px_24px_rgba(146,118,74,0.16)]">
-                  <span className="text-[#6d5a44]">Meets</span>
-                  <span className="bg-gradient-to-r from-[#b08a54] via-[#d9bc8a] to-[#8a6a3f] bg-clip-text font-semibold text-transparent">
-                    Beauty
-                  </span>
-                </span>
-              </h2>
-            </Reveal>
+              </span>
+            </h2>
+          </Reveal>
 
-            <Reveal delay={0.1} className="shrink-0">
-              <p className="mb-3 w-full max-w-none text-base font-normal leading-[1.72] text-charcoal/88 [word-break:keep-all] sm:mb-4 sm:text-xl">
-                안녕하세요 연세미의원입니다. 진료과 1인 대표원장의 상담 및 시술 책임제 병원으로서 경주의 아름다움을 선도하고 있는 병원입니다.
-              </p>
-            </Reveal>
+          <Reveal delay={0.1} className="shrink-0">
+            <p className="mx-auto mb-4 max-w-2xl text-base font-normal leading-[1.72] text-charcoal/88 [word-break:keep-all] sm:mb-5 sm:text-lg md:text-xl">
+              안녕하세요 연세미의원입니다. 진료과 1인 대표원장의 상담 및 시술 책임제 병원으로서 경주의 아름다움을 선도하고 있는 병원입니다.
+            </p>
+          </Reveal>
 
-            <Reveal delay={0.14} className="shrink-0">
-              <p className="mb-4 w-full max-w-none border-l border-gold-accent/35 pl-5 text-[15px] font-normal leading-relaxed text-muted-foreground [word-break:keep-all] sm:mb-6 sm:text-base">
-                공장형 네트워크 병원과는 다른 시술 퀄리티를 보장합니다.
-              </p>
-            </Reveal>
+          <Reveal delay={0.14} className="shrink-0">
+            <p className="mx-auto max-w-xl border-t border-gold-accent/25 pt-5 text-[15px] font-normal leading-relaxed text-muted-foreground [word-break:keep-all] sm:pt-6 sm:text-base">
+              공장형 네트워크 병원과는 다른 시술 퀄리티를 보장합니다.
+            </p>
+          </Reveal>
+        </div>
 
-            <Reveal delay={0.15} className="mt-8 shrink-0 sm:mt-10 lg:hidden">
-              <AboutGalleryShell className="mb-6 sm:mb-8">
-                <AboutGalleryImages />
-              </AboutGalleryShell>
-            </Reveal>
+        {/* 클리닉 이미지 — 본문 아래 전폭 센터 */}
+        <Reveal delay={0.12} className="mt-12 w-full sm:mt-14 md:mt-16 lg:mt-20">
+          <AboutGalleryShell>
+            <AboutGalleryImages />
+          </AboutGalleryShell>
+        </Reveal>
 
+        {/* 시그니처 케어 + 가치 */}
+        <div className="mx-auto mt-12 w-full max-w-6xl sm:mt-14 md:mt-16 lg:mt-20">
             <Reveal delay={0.17} className="shrink-0">
-              <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.28em] text-muted-foreground/80">Signature care</p>
+              <p className="mb-2 text-center text-[10px] font-semibold uppercase tracking-[0.28em] text-muted-foreground/80">
+                Signature care
+              </p>
               <div className="mb-6 sm:mb-9">
               <div
                 className="mb-3 rounded-2xl bg-black/[0.035] p-1.5 ring-1 ring-black/[0.04] backdrop-blur-[2px] sm:mb-4"
@@ -384,18 +429,37 @@ export function About() {
                         {openService.gallery.subtitle}
                       </p>
                     </div>
-                    <div className="-mx-1 flex snap-x snap-mandatory gap-3 overflow-x-auto px-1 pb-1 [scrollbar-width:thin] sm:mx-0 sm:grid sm:auto-rows-fr sm:grid-cols-3 sm:gap-4 sm:overflow-visible sm:px-0 sm:pb-0">
+                    <div
+                      className={cn(
+                        "-mx-1 flex snap-x snap-mandatory gap-3 overflow-x-auto px-1 pb-1 [scrollbar-width:thin] sm:mx-0 sm:grid sm:auto-rows-fr sm:gap-4 sm:overflow-visible sm:px-0 sm:pb-0",
+                        openService.gallery.items.length === 1
+                          ? "sm:grid-cols-1 sm:max-w-4xl sm:mx-auto"
+                          : "sm:grid-cols-3",
+                      )}
+                    >
                       {openService.gallery.items.map((item) => (
                         <div
                           key={item.brand}
                           className="group flex h-full min-h-0 w-[min(82vw,17.5rem)] shrink-0 snap-center flex-col overflow-hidden rounded-2xl border border-black/[0.05] bg-white shadow-[0_16px_40px_-28px_rgba(28,22,18,0.28)] transition-[box-shadow,transform] duration-300 hover:-translate-y-0.5 hover:shadow-[0_22px_48px_-26px_rgba(28,22,18,0.22)] sm:w-auto"
                         >
-                          <div className="relative flex h-[11.25rem] shrink-0 items-center justify-center bg-gradient-to-b from-[#faf9f7] to-[#f0ebe4] sm:h-[13rem]">
+                          <div
+                            className={cn(
+                              "relative flex shrink-0 items-center justify-center bg-gradient-to-b from-[#faf9f7] to-[#f0ebe4]",
+                              openService.gallery.items.length === 1
+                                ? "h-[13.5rem] min-h-[13.5rem] sm:h-[min(28rem,52vw)] sm:min-h-[16rem]"
+                                : "h-[11.25rem] sm:h-[13rem]",
+                            )}
+                          >
                             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_30%_0%,rgba(255,255,255,0.9),transparent_55%)]" />
                             <ImageWithFallback
                               src={item.src}
-                              alt={`${item.brand} 제품 이미지`}
-                              className="relative z-[1] max-h-[92%] w-auto max-w-[92%] object-contain p-2 transition-transform duration-500 ease-out group-hover:scale-[1.02] sm:max-h-[90%] sm:p-3"
+                              alt={`${item.brand} 장비·안내 이미지`}
+                              className={cn(
+                                "relative z-[1] w-auto object-contain p-2 transition-transform duration-500 ease-out group-hover:scale-[1.01] sm:p-3",
+                                openService.gallery.items.length === 1
+                                  ? "max-h-[min(78vh,36rem)] max-w-[min(96%,42rem)] sm:max-h-[min(70vh,32rem)]"
+                                  : "max-h-[92%] max-w-[92%] sm:max-h-[90%]",
+                              )}
                             />
                           </div>
                           <div className="flex min-h-[4.5rem] flex-1 flex-col justify-center border-t border-gold-accent/12 bg-gradient-to-b from-white to-[#fdfcfa] px-3 py-3 sm:min-h-[4.75rem] sm:px-4 sm:py-3.5">
@@ -411,13 +475,13 @@ export function About() {
               </div>
             </Reveal>
 
-            <Reveal delay={0.24} className="mt-5 w-full shrink-0 md:mt-8 lg:mt-8 lg:flex lg:min-h-0 lg:flex-1 lg:flex-col">
-              <div className="flex min-h-0 w-full flex-1 flex-col overflow-hidden rounded-xl border border-gold-accent/15 bg-white/40 px-4 py-1 shadow-[0_8px_28px_-20px_rgba(45,38,32,0.12)] backdrop-blur-sm sm:px-5 sm:py-0">
-                <ul className="flex min-h-0 flex-1 flex-col divide-y divide-gold-accent/12 lg:min-h-0">
+            <Reveal delay={0.24} className="mt-8 w-full shrink-0 md:mt-10">
+              <div className="mx-auto flex w-full max-w-3xl flex-col overflow-hidden rounded-xl border border-gold-accent/15 bg-white/40 px-4 py-1 shadow-[0_8px_28px_-20px_rgba(45,38,32,0.12)] backdrop-blur-sm sm:px-5 sm:py-0 lg:max-w-none">
+                <ul className="flex flex-col divide-y divide-gold-accent/12">
                   {features.map((item) => (
                     <li
                       key={item.title}
-                      className="flex min-h-0 flex-1 gap-3 py-3 sm:gap-5 sm:py-5 lg:min-h-0 lg:items-center"
+                      className="flex gap-3 py-3 sm:gap-5 sm:py-5 lg:items-center"
                     >
                       <div
                         className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-gold-accent/25 bg-white/90 text-gold-accent shadow-[inset_0_1px_0_rgba(255,255,255,0.95)] sm:mt-0 sm:h-11 sm:w-11"
@@ -440,7 +504,6 @@ export function About() {
                 </ul>
               </div>
             </Reveal>
-          </div>
         </div>
       </div>
     </section>

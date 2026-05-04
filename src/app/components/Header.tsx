@@ -1,8 +1,7 @@
-import logo from "../../imports/logo.svg";
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router";
 import { Bell, CalendarDays, Hospital, MenuIcon, Sparkles, Stethoscope, Ticket } from "lucide-react";
-import { SITE_LOGO_IMG_CLASS } from "../config/logo";
+import { SiteLogo } from "./branding/SiteLogo";
 import { useHomeLogoClick } from "../hooks/useHomeLogoClick";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { SITE_LINKS } from "../config/siteLinks";
@@ -62,14 +61,13 @@ export function Header() {
         }`}
       >
       <nav className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-3 sm:px-6 sm:py-4 md:py-5">
-        <Link to="/" onClick={onHomeLogoClick} className="flex items-center shrink-0 group">
-          <img
-            src={logo}
-            alt="연세미의원"
-            className={`${SITE_LOGO_IMG_CLASS} h-14 sm:h-[5.5rem] md:h-24 transition-all duration-300 ${
-              solid ? "opacity-100" : "opacity-95"
-            }`}
-          />
+        <Link
+          to="/"
+          onClick={onHomeLogoClick}
+          className="group flex min-w-0 shrink-0 items-center transition-opacity duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-accent/45 focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm"
+          aria-label="연세미의원 홈"
+        >
+          <SiteLogo inverted={!solid} layout="horizontal" className={solid ? "opacity-100" : "opacity-[0.97]"} />
         </Link>
 
         <ul className="hidden md:flex items-center gap-10">
