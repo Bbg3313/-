@@ -240,13 +240,18 @@ const SIGNATURE_SERVICES: SignatureService[] = [
     id: "lifting",
     label: "레이저 리프팅",
     gallery: {
-      eyebrow: "Ultrasound lifting",
-      title: "레이저 리프팅 · 슈링크 (Shurink)",
+      eyebrow: "Laser lifting",
+      title: "레이저 리프팅 · 슈링크 · 덴시티 (DENSITY)",
       items: [
         {
           src: "/images/signature-care/lifting-shurink.png",
           brand: "슈링크 Shurink",
           line: "초음파 리프팅 · 피부 속 탄력 UP",
+        },
+        {
+          src: "/images/signature-care/lifting-density.png",
+          brand: "덴시티 DENSITY",
+          line: "듀얼 고주파 · 깊고 넓은 리프팅",
         },
       ],
     },
@@ -490,7 +495,9 @@ export function About() {
                         "-mx-1 flex snap-x snap-mandatory gap-3 overflow-x-auto px-1 pb-1 [scrollbar-width:thin] sm:mx-0 sm:grid sm:auto-rows-fr sm:gap-4 sm:overflow-visible sm:px-0 sm:pb-0",
                         openService.gallery.items.length === 1
                           ? "sm:grid-cols-1 sm:max-w-4xl sm:mx-auto"
-                          : "sm:grid-cols-3",
+                          : openService.gallery.items.length === 2
+                            ? "sm:grid-cols-2"
+                            : "sm:grid-cols-3",
                       )}
                     >
                       {openService.gallery.items.map((item) => (
