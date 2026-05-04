@@ -1,14 +1,6 @@
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useRef, useState, type ReactNode } from "react";
 import { AnimatePresence, motion, useInView } from "motion/react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-  type CarouselApi,
-} from "./ui/carousel";
 import { cn } from "./ui/utils";
 
 const easeLux = [0.22, 1, 0.36, 1] as const;
@@ -69,21 +61,40 @@ const ABOUT_CLINIC_SLIDES = [
   { src: "/images/about-clinic-slide-care-room.png", alt: "관리실" },
 ] as const;
 
-/** 병원 소개 — 슬라이드(높이 제한, 자연스러운 비율) */
+function GalleryTile({
+  src,
+  alt,
+  className,
+  delay = 0,
+}: {
+  src: string;
+  alt: string;
+  className?: string;
+  delay?: number;
+}) {
+  return (
+    <motion.figure
+      initial={{ opacity: 0, y: 14 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-24px" }}
+      transition={{ duration: 0.6, delay, ease: easeLux }}
+      className={cn("h-full min-h-0 overflow-hidden", className)}
+    >
+      <LuxImageCard className="h-full rounded-lg border-white/60 shadow-[0_18px_48px_-32px_rgba(35,30,26,0.22)] sm:rounded-xl">
+        <div className="relative h-full min-h-[120px] w-full overflow-hidden bg-gradient-to-b from-[#f7f5f1] to-[#ebe6df]">
+          <ImageWithFallback
+            src={src}
+            alt={alt}
+            className="h-full w-full object-cover object-center transition-[transform,filter] duration-[1.05s] ease-out group-hover:scale-[1.035] group-hover:brightness-[1.02]"
+          />
+        </div>
+      </LuxImageCard>
+    </motion.figure>
+  );
+}
+
+/** 병원 소개 — 에디토리얼 갤러리(모바일 2열 / 데스크톱 비대칭 벤토) */
 function AboutGalleryImages() {
-  const [carouselApi, setCarouselApi] = useState<CarouselApi>();
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  useEffect(() => {
-    if (!carouselApi) return;
-    const onSelect = () => setActiveIndex(carouselApi.selectedScrollSnap());
-    onSelect();
-    carouselApi.on("select", onSelect);
-    return () => {
-      carouselApi.off("select", onSelect);
-    };
-  }, [carouselApi]);
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -92,51 +103,66 @@ function AboutGalleryImages() {
       transition={{ duration: 0.85, ease: easeLux }}
       className="w-full shrink-0"
     >
-      <div className="relative w-full px-11 sm:px-14 md:px-16">
-        <Carousel
-          setApi={setCarouselApi}
-          opts={{ loop: true, align: "start" }}
-          className="w-full"
-        >
-          <CarouselContent className="-ml-2.5 sm:-ml-3">
-            {ABOUT_CLINIC_SLIDES.map((slide) => (
-              <CarouselItem key={slide.src} className="basis-full pl-2.5 sm:basis-full sm:pl-3">
-                <LuxImageCard className="h-full">
-                  <div className="relative mx-auto h-[min(34vh,260px)] w-full max-w-4xl overflow-hidden rounded-[inherit] bg-gradient-to-b from-[#f4f1ec] to-[#e9e4dc] sm:h-[min(36vh,300px)] md:h-[min(38vh,340px)] lg:h-[min(40vh,380px)]">
-                    <ImageWithFallback
-                      src={slide.src}
-                      alt={slide.alt}
-                      className="h-full w-full object-cover object-center transition-transform duration-[1s] ease-out group-hover:scale-[1.02]"
-                    />
-                  </div>
-                </LuxImageCard>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          <CarouselPrevious
-            variant="outline"
-            className="left-0 size-9 border-gold-accent/35 bg-white/90 text-charcoal shadow-md hover:bg-white disabled:opacity-40 sm:left-1 md:size-10"
-          />
-          <CarouselNext
-            variant="outline"
-            className="right-0 size-9 border-gold-accent/35 bg-white/90 text-charcoal shadow-md hover:bg-white disabled:opacity-40 sm:right-1 md:size-10"
-          />
-        </Carousel>
-        <div className="mt-3 flex justify-center gap-1.5 sm:mt-4" role="tablist" aria-label="병원 사진 위치">
-          {ABOUT_CLINIC_SLIDES.map((_, i) => (
-            <button
-              key={String(i)}
-              type="button"
-              role="tab"
-              aria-selected={i === activeIndex}
-              aria-label={`병원 사진 ${i + 1} / ${ABOUT_CLINIC_SLIDES.length}`}
+      <div className="mx-auto w-full max-w-6xl px-0 sm:max-w-7xl">
+        <p className="mb-3 text-center text-[11px] font-medium tracking-[0.18em] text-muted-foreground/85 sm:mb-4 sm:text-xs">
+          병원 공간
+        </p>
+
+        {/* 모바일·태블릿: 균등 2열 */}
+        <div className="grid grid-cols-2 gap-2.5 sm:gap-3 md:gap-4 lg:hidden">
+          {ABOUT_CLINIC_SLIDES.map((slide, i) => (
+            <GalleryTile
+              key={slide.src}
+              src={slide.src}
+              alt={slide.alt}
+              delay={i * 0.04}
               className={cn(
-                "h-1.5 rounded-full transition-[width,background-color] duration-300",
-                i === activeIndex ? "w-6 bg-gold-accent" : "w-1.5 bg-charcoal/20 hover:bg-charcoal/35",
+                i === 0 ? "col-span-2 aspect-[21/10] max-h-[min(42vw,220px)] sm:max-h-[260px]" : "aspect-[4/5] max-h-[min(48vw,280px)]",
               )}
-              onClick={() => carouselApi?.scrollTo(i)}
             />
           ))}
+        </div>
+
+        {/* 데스크톱: 4열 벤토 — 중앙 메인 + 좌우 스택 + 우측 톨 컬럼 */}
+        <div className="hidden min-h-[min(62vh,560px)] gap-3 lg:flex lg:gap-4 xl:gap-5">
+          <div className="flex min-h-0 min-w-0 flex-[0.92] flex-col gap-3 xl:gap-4">
+            <GalleryTile
+              src="/images/about-clinic-slide-waiting.png"
+              alt="대기·안내 공간"
+              delay={0.02}
+              className="min-h-[28%] flex-1 basis-0"
+            />
+            <GalleryTile src="/images/about-clinic-lobby.png" alt="로비" delay={0.06} className="min-h-[32%] flex-[1.1] basis-0" />
+          </div>
+
+          <GalleryTile
+            src="/images/about-clinic-main.png"
+            alt="연세미의원 로고와 인테리어"
+            delay={0}
+            className="min-h-0 max-w-[min(100%,480px)] flex-[1.35] min-w-0"
+          />
+
+          <div className="flex min-h-0 min-w-0 flex-[0.92] flex-col gap-3 xl:gap-4">
+            <GalleryTile
+              src="/images/about-clinic-room.png"
+              alt="시술실"
+              delay={0.04}
+              className="min-h-[30%] flex-[1] basis-0"
+            />
+            <GalleryTile
+              src="/images/about-clinic-slide-laser-room.png"
+              alt="레이저 시술실"
+              delay={0.08}
+              className="min-h-[38%] flex-[1.15] basis-0"
+            />
+          </div>
+
+          <GalleryTile
+            src="/images/about-clinic-slide-care-room.png"
+            alt="관리실"
+            delay={0.1}
+            className="min-h-0 flex-[0.88] min-w-0 max-w-[280px] xl:max-w-[300px]"
+          />
         </div>
       </div>
     </motion.div>
@@ -146,7 +172,7 @@ function AboutGalleryImages() {
 function AboutGalleryShell({ children, className = "" }: { children: ReactNode; className?: string }) {
   return (
     <div
-      className={`relative mx-auto flex min-h-0 w-full max-w-3xl flex-col gap-3 sm:max-w-5xl sm:gap-5 lg:max-w-6xl lg:gap-6 ${className}`}
+      className={`relative mx-auto flex min-h-0 w-full max-w-3xl flex-col gap-3 sm:max-w-5xl sm:gap-5 lg:max-w-7xl lg:gap-6 ${className}`}
     >
       <div className="pointer-events-none absolute -left-3 -top-3 h-14 w-14 border-l border-t border-gold-accent/40 sm:-left-4 sm:-top-4" />
       <div className="pointer-events-none absolute -bottom-3 -right-3 h-14 w-14 border-b border-r border-gold-accent/40 sm:-bottom-4 sm:-right-4" />
@@ -376,12 +402,15 @@ export function About() {
         {/* 시그니처 케어 + 가치 */}
         <div className="mx-auto mt-14 w-full max-w-6xl sm:mt-16 md:mt-20 lg:mt-24">
             <Reveal delay={0.17} className="shrink-0">
-              <div className="flex flex-col items-center">
-                <p className="text-center text-[10px] font-semibold uppercase tracking-[0.28em] text-muted-foreground/80">
-                  Signature care
+              <div className="flex flex-col items-center px-2">
+                <p
+                  className="text-center text-[11px] font-medium tracking-[0.22em] text-[#BFA37E] sm:text-xs sm:tracking-[0.26em] md:text-[13px] md:tracking-[0.28em]"
+                  style={{ fontFamily: ABOUT_BODY_FONT }}
+                >
+                  시그니처 케어
                 </p>
                 <div
-                  className="mt-6 h-px w-12 bg-gradient-to-r from-transparent via-gold-accent/40 to-transparent sm:mt-8"
+                  className="mt-4 h-[1px] w-[min(17rem,90%)] max-w-md bg-gradient-to-r from-transparent via-[#c4a574] to-transparent sm:mt-5"
                   aria-hidden
                 />
               </div>

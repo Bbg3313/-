@@ -86,14 +86,14 @@ export function Footer({ className }: FooterProps) {
     <footer className={cn("mt-auto", className)}>
       <div className="border-t border-border bg-muted/50">
         <div className="mx-auto flex max-w-xl flex-col items-center px-6 pt-2 pb-6 md:pt-3 md:pb-12">
-          <div className="flex w-full justify-center">
+          <div className="flex w-full flex-col items-center">
             <Link
               to="/"
               onClick={onHomeLogoClick}
-              className="group flex w-full max-w-full flex-col items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-muted/50 rounded-sm"
+              className="group inline-flex max-w-full flex-col items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-muted/50 rounded-sm"
               aria-label="연세미의원 홈 — 맨 위로 이동"
             >
-              <SiteLogo layout="vertical" className="w-full opacity-95 transition-opacity group-hover:opacity-100" />
+              <SiteLogo layout="vertical" className="opacity-95 transition-opacity group-hover:opacity-100" />
             </Link>
           </div>
 

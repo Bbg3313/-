@@ -31,7 +31,7 @@ export function SiteLogo({ inverted = false, layout = "horizontal", className }:
   /** 병원 로고 SVG — 헤더·푸터 높이에 맞춤 */
   const imgClass =
     layout === "vertical"
-      ? "mx-auto block h-[4.25rem] w-auto max-w-[min(100%,12.5rem)] shrink-0 object-contain object-center sm:h-[4.75rem] sm:max-w-[min(100%,14rem)]"
+      ? "block h-[4.25rem] w-auto max-w-[min(100%,12.5rem)] shrink-0 object-contain object-center sm:h-[4.75rem] sm:max-w-[min(100%,14rem)]"
       : "h-10 w-auto max-h-[3.25rem] max-w-[min(46vw,7.5rem)] shrink-0 object-contain object-left sm:h-12 sm:max-h-[3.75rem] sm:max-w-[min(40vw,8.5rem)] md:h-[3.35rem] md:max-h-[4rem] md:max-w-[9.5rem]";
 
   return (
@@ -40,7 +40,7 @@ export function SiteLogo({ inverted = false, layout = "horizontal", className }:
         "select-none",
         layout === "horizontal"
           ? "inline-flex items-center gap-2.5 sm:gap-3 md:gap-3.5"
-          : "flex w-full max-w-full flex-col items-center gap-2.5 sm:gap-3",
+          : "mx-auto flex w-auto max-w-full flex-col items-center gap-2.5 sm:gap-3",
         className,
       )}
     >
