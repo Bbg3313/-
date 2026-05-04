@@ -139,7 +139,8 @@ type SignatureService = {
     /** 패널 상단 소제목 (영문 라벨) */
     eyebrow: string;
     title: string;
-    subtitle: string;
+    /** 보톡스·필러 등 긴 안내가 필요할 때만 사용 */
+    subtitle?: string;
     items: SignatureGalleryItem[];
   };
 };
@@ -180,8 +181,6 @@ const SIGNATURE_SERVICES: SignatureService[] = [
     gallery: {
       eyebrow: "Laser toning",
       title: "레이저 토닝 · 미인 (Miin)",
-      subtitle:
-        "LTRA Global 미인(Miin)은 Q-switched Nd:YAG 1064㎚·532㎚ 듀얼 파장으로 색소 병변, 기미, 잔주름, 카본 필(톤 개선), 문신 제거 등에 활용됩니다. 펄스·Quasi-long 등 세부 스펙은 상담 시 안내드리며, 피부 상태에 맞는 토닝 프로토콜을 제안합니다.",
       items: [
         {
           src: "/images/signature-care/laser-miin.png",
@@ -197,8 +196,6 @@ const SIGNATURE_SERVICES: SignatureService[] = [
     gallery: {
       eyebrow: "Ultrasound lifting",
       title: "레이저 리프팅 · 슈링크 (Shurink)",
-      subtitle:
-        "슈링크(Shurink)는 초음파 에너지로 진피·SMAS 층에 집중하여 리프팅·탄력 개선을 돕는 대표적인 비침습 리프팅입니다. 부위와 피부 두께에 맞춰 샷 간격·에너지를 조절하며, 시술 전 상담에서 라인·횟수를 함께 결정합니다.",
       items: [
         {
           src: "/images/signature-care/lifting-shurink.png",
@@ -216,8 +213,6 @@ const SIGNATURE_SERVICES: SignatureService[] = [
     gallery: {
       eyebrow: "Laser hair removal",
       title: "제모 · 듀얼 악센토 N (DUAL Accento N)",
-      subtitle:
-        "듀얼 악센토 N은 755㎚·1064㎚ 듀얼 파장 레이저로 모발 색·피부 타입에 맞춰 제모 시술을 설계할 수 있는 장비입니다. 부위·횟수·간격은 상담 시 피부 상태와 목표에 따라 안내드립니다.",
       items: [
         {
           src: "/images/signature-care/hair-dual-accento-n.png",
@@ -348,14 +343,20 @@ export function About() {
         </Reveal>
 
         {/* 시그니처 케어 + 가치 */}
-        <div className="mx-auto mt-12 w-full max-w-6xl sm:mt-14 md:mt-16 lg:mt-20">
+        <div className="mx-auto mt-14 w-full max-w-6xl sm:mt-16 md:mt-20 lg:mt-24">
             <Reveal delay={0.17} className="shrink-0">
-              <p className="mb-2 text-center text-[10px] font-semibold uppercase tracking-[0.28em] text-muted-foreground/80">
-                Signature care
-              </p>
-              <div className="mb-6 sm:mb-9">
+              <div className="flex flex-col items-center">
+                <p className="text-center text-[10px] font-semibold uppercase tracking-[0.28em] text-muted-foreground/80">
+                  Signature care
+                </p>
+                <div
+                  className="mt-6 h-px w-12 bg-gradient-to-r from-transparent via-gold-accent/40 to-transparent sm:mt-8"
+                  aria-hidden
+                />
+              </div>
+              <div className="mt-5 mb-7 sm:mt-6 sm:mb-10">
               <div
-                className="mb-3 rounded-2xl bg-black/[0.035] p-1.5 ring-1 ring-black/[0.04] backdrop-blur-[2px] sm:mb-4"
+                className="mb-5 rounded-2xl bg-black/[0.035] p-1.5 ring-1 ring-black/[0.04] backdrop-blur-[2px] sm:mb-6"
               >
                 <div
                   className="grid w-full grid-cols-2 gap-1 sm:grid-cols-4 lg:grid-cols-8"
@@ -418,16 +419,25 @@ export function About() {
                     transition={{ duration: 0.32, ease: easeLux }}
                     className="overflow-hidden rounded-3xl bg-white/75 p-4 shadow-[0_32px_64px_-40px_rgba(24,18,14,0.35)] ring-1 ring-black/[0.05] backdrop-blur-md sm:p-6"
                   >
-                    <div className="mb-4 flex flex-col gap-2 border-b border-black/[0.06] pb-4 sm:flex-row sm:items-end sm:justify-between sm:gap-6">
+                    <div
+                      className={cn(
+                        "mb-4 border-b border-black/[0.06] pb-4",
+                        openService.gallery.subtitle?.trim()
+                          ? "flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between sm:gap-6"
+                          : "flex flex-col gap-1",
+                      )}
+                    >
                       <div>
                         <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-gold-accent/85">
                           {openService.gallery.eyebrow}
                         </p>
                         <h3 className="mt-1 font-serif text-lg font-medium tracking-tight text-charcoal sm:text-xl">{openService.gallery.title}</h3>
                       </div>
-                      <p className="max-w-xl text-[13px] leading-relaxed text-muted-foreground [word-break:keep-all] sm:text-sm">
-                        {openService.gallery.subtitle}
-                      </p>
+                      {openService.gallery.subtitle?.trim() ? (
+                        <p className="max-w-xl text-[13px] leading-relaxed text-muted-foreground [word-break:keep-all] sm:text-sm">
+                          {openService.gallery.subtitle}
+                        </p>
+                      ) : null}
                     </div>
                     <div
                       className={cn(

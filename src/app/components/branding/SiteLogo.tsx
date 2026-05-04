@@ -1,4 +1,4 @@
-import { useId } from "react";
+import logo from "../../../imports/logo.svg";
 import { cn } from "../ui/utils";
 
 type SiteLogoProps = {
@@ -8,53 +8,7 @@ type SiteLogoProps = {
   className?: string;
 };
 
-function LogoMark({ className, gradientId }: { className?: string; gradientId: string }) {
-  return (
-    <svg
-      viewBox="0 0 56 56"
-      className={cn("shrink-0", className)}
-      aria-hidden
-    >
-      <defs>
-        <linearGradient id={`${gradientId}-gold`} x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#f4ead0" />
-          <stop offset="32%" stopColor="#d4b46a" />
-          <stop offset="62%" stopColor="#b8923f" />
-          <stop offset="100%" stopColor="#7a5a24" />
-        </linearGradient>
-        <linearGradient id={`${gradientId}-shine`} x1="18%" y1="12%" x2="52%" y2="48%">
-          <stop offset="0%" stopColor="#ffffff" stopOpacity="0.55" />
-          <stop offset="45%" stopColor="#ffffff" stopOpacity="0.12" />
-          <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
-        </linearGradient>
-        <radialGradient id={`${gradientId}-halo`} cx="32%" cy="28%" r="70%">
-          <stop offset="0%" stopColor="#fff9ed" stopOpacity="0.65" />
-          <stop offset="55%" stopColor="#fff9ed" stopOpacity="0.08" />
-          <stop offset="100%" stopColor="#fff9ed" stopOpacity="0" />
-        </radialGradient>
-      </defs>
-      <circle cx="28" cy="28" r="27" fill={`url(#${gradientId}-halo)`} />
-      <circle cx="28" cy="28" r="25.25" fill="#fdfaf6" stroke={`url(#${gradientId}-gold)`} strokeWidth="1.15" />
-      <circle cx="28" cy="28" r="25.25" fill="none" stroke="rgba(255,255,255,0.55)" strokeWidth="0.5" opacity="0.45" transform="rotate(-52 28 28)" />
-      <path
-        d="M28 13.25c-6.85 0-12.4 5.05-12.4 11.35 0 5.95 5.55 11.65 12.4 19.15 6.85-7.5 12.4-13.2 12.4-19.15 0-6.3-5.55-11.35-12.4-11.35z"
-        fill={`url(#${gradientId}-gold)`}
-      />
-      <path
-        d="M28 13.25c-6.85 0-12.4 5.05-12.4 11.35 0 5.95 5.55 11.65 12.4 19.15 6.85-7.5 12.4-13.2 12.4-19.15 0-6.3-5.55-11.35-12.4-11.35z"
-        fill={`url(#${gradientId}-shine)`}
-      />
-      <path
-        d="M28 20.5c-3.35 0-6.1 2.45-6.1 5.45 0 2.85 2.75 5.55 6.1 9.1 3.35-3.55 6.1-6.25 6.1-9.1 0-3-2.75-5.45-6.1-5.45z"
-        fill="rgba(255,253,248,0.22)"
-      />
-    </svg>
-  );
-}
-
 export function SiteLogo({ inverted = false, layout = "horizontal", className }: SiteLogoProps) {
-  const gid = useId().replace(/:/g, "");
-
   const textBlock = (
     <div
       className={cn(
@@ -86,6 +40,12 @@ export function SiteLogo({ inverted = false, layout = "horizontal", className }:
     </div>
   );
 
+  /** 병원 로고 SVG — 글자 블록 높이에 맞춤 (가로형은 약간 낮게 두어 헤더 한 줄에 안정적으로) */
+  const imgClass =
+    layout === "vertical"
+      ? "h-[4.25rem] w-auto max-w-[min(100%,12.5rem)] shrink-0 object-contain object-center sm:h-[4.75rem] sm:max-w-[min(100%,14rem)]"
+      : "h-10 w-auto max-h-[3.25rem] max-w-[min(46vw,7.5rem)] shrink-0 object-contain object-left sm:h-12 sm:max-h-[3.75rem] sm:max-w-[min(40vw,8.5rem)] md:h-[3.35rem] md:max-h-[4rem] md:max-w-[9.5rem]";
+
   return (
     <span
       className={cn(
@@ -94,14 +54,19 @@ export function SiteLogo({ inverted = false, layout = "horizontal", className }:
         className,
       )}
     >
-      <LogoMark
-        gradientId={gid}
+      <img
+        src={logo}
+        alt=""
+        width={103}
+        height={61}
+        decoding="async"
+        draggable={false}
         className={cn(
-          "drop-shadow-[0_3px_14px_rgba(120,90,38,0.22)]",
-          layout === "vertical"
-            ? "h-[3.75rem] w-[3.75rem] sm:h-[4.25rem] sm:w-[4.25rem]"
-            : "h-11 w-11 sm:h-12 sm:w-12 md:h-[3.85rem] md:w-[3.85rem]",
+          "transition-opacity duration-300 group-hover:opacity-100",
+          inverted ? "opacity-[0.92] drop-shadow-[0_2px_12px_rgba(0,0,0,0.35)]" : "opacity-[0.96]",
+          imgClass,
         )}
+        aria-hidden
       />
       {textBlock}
     </span>
