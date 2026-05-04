@@ -66,28 +66,48 @@ function GalleryTile({
   alt,
   className,
   delay = 0,
+  /** 히어로: 비율 고정 없이 전체가 보이도록 contain (로고·하단 카피 잘림 방지) */
+  layout = "tile",
 }: {
   src: string;
   alt: string;
   className?: string;
   delay?: number;
+  layout?: "tile" | "hero";
 }) {
+  const isHero = layout === "hero";
+
   return (
     <motion.figure
       initial={{ opacity: 0, y: 14 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-24px" }}
       transition={{ duration: 0.6, delay, ease: easeLux }}
-      className={cn("h-full min-h-0 overflow-hidden", className)}
+      className={cn("min-h-0 overflow-hidden", isHero ? "h-auto w-full" : "h-full", className)}
     >
-      <LuxImageCard className="h-full rounded-lg border-white/60 shadow-[0_18px_48px_-32px_rgba(35,30,26,0.22)] sm:rounded-xl">
-        <div className="relative h-full min-h-[120px] w-full overflow-hidden bg-gradient-to-b from-[#f7f5f1] to-[#ebe6df]">
-          <ImageWithFallback
-            src={src}
-            alt={alt}
-            className="h-full w-full object-cover object-center transition-[transform,filter] duration-[1.05s] ease-out group-hover:scale-[1.035] group-hover:brightness-[1.02]"
-          />
-        </div>
+      <LuxImageCard
+        className={cn(
+          "rounded-lg border-white/60 shadow-[0_18px_48px_-32px_rgba(35,30,26,0.22)] sm:rounded-xl",
+          isHero ? "h-auto" : "h-full",
+        )}
+      >
+        {isHero ? (
+          <div className="relative flex w-full items-center justify-center bg-gradient-to-b from-[#f7f5f1] to-[#ebe6df] px-1 py-1.5 sm:px-2 sm:py-2">
+            <ImageWithFallback
+              src={src}
+              alt={alt}
+              className="h-auto w-full max-w-full object-contain object-center transition-[transform,filter] duration-[1.05s] ease-out group-hover:scale-[1.02] group-hover:brightness-[1.02]"
+            />
+          </div>
+        ) : (
+          <div className="relative h-full min-h-[120px] w-full overflow-hidden bg-gradient-to-b from-[#f7f5f1] to-[#ebe6df]">
+            <ImageWithFallback
+              src={src}
+              alt={alt}
+              className="h-full w-full object-cover object-center transition-[transform,filter] duration-[1.05s] ease-out group-hover:scale-[1.035] group-hover:brightness-[1.02]"
+            />
+          </div>
+        )}
       </LuxImageCard>
     </motion.figure>
   );
@@ -106,20 +126,22 @@ function AboutGalleryImages() {
       className="w-full shrink-0"
     >
       <div className="mx-auto w-full max-w-6xl px-0 sm:max-w-7xl">
-        <p className="mb-3 text-center text-[11px] font-medium tracking-[0.18em] text-muted-foreground/85 sm:mb-4 sm:text-xs">
+        <p className="mb-2 text-center text-[11px] font-medium tracking-[0.18em] text-muted-foreground/85 sm:mb-3 sm:text-xs">
           병원 공간
         </p>
 
-        <div className="flex flex-col gap-2.5 sm:gap-3 md:gap-4">
+        {/* 위: 메인 전체 노출(contain, 높이 제한 없음) / 아래: 간격·셀 높이 줄여 세로 확보 */}
+        <div className="flex flex-col gap-2 sm:gap-2.5 md:gap-3">
           <GalleryTile
             key={mainSlide.src}
             src={mainSlide.src}
             alt={mainSlide.alt}
             delay={0}
-            className="aspect-[16/9] w-full max-h-[min(52vh,440px)] sm:aspect-[2.15/1] sm:max-h-[min(48vh,480px)]"
+            layout="hero"
+            className="w-full"
           />
 
-          <div className="grid grid-cols-2 gap-2.5 sm:gap-3 md:grid-cols-5 md:gap-3 lg:gap-4">
+          <div className="grid grid-cols-2 gap-2 sm:gap-2.5 md:grid-cols-5 md:gap-2.5 lg:gap-3">
             {restSlides.map((slide, i) => (
               <GalleryTile
                 key={slide.src}
@@ -127,9 +149,9 @@ function AboutGalleryImages() {
                 alt={slide.alt}
                 delay={0.05 + i * 0.04}
                 className={cn(
-                  "aspect-[4/5] min-h-[140px] sm:min-h-[160px] md:min-h-0 md:aspect-[3/4]",
+                  "aspect-[3/4] min-h-0 min-w-0",
                   i === restSlides.length - 1 &&
-                    "col-span-2 mx-auto w-[min(100%,28rem)] md:col-span-1 md:w-full",
+                    "col-span-2 mx-auto w-full max-w-md md:col-span-1 md:max-w-none",
                 )}
               />
             ))}
