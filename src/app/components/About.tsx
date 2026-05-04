@@ -522,7 +522,7 @@ export function About() {
                     </div>
                     <div
                       className={cn(
-                        "-mx-1 flex snap-x snap-mandatory gap-3 overflow-x-auto px-1 pb-1 [scrollbar-width:thin] sm:mx-0 sm:grid sm:auto-rows-fr sm:gap-4 sm:overflow-visible sm:px-0 sm:pb-0",
+                        "-mx-1 flex snap-x snap-mandatory gap-4 overflow-x-auto px-1 pb-1 [scrollbar-width:thin] sm:mx-0 sm:grid sm:auto-rows-fr sm:gap-5 sm:overflow-visible sm:px-0 sm:pb-0 md:gap-6",
                         openService.gallery.items.length === 1
                           ? "sm:grid-cols-1 sm:max-w-4xl sm:mx-auto"
                           : openService.gallery.items.length === 2
@@ -533,14 +533,14 @@ export function About() {
                       {openService.gallery.items.map((item) => (
                         <div
                           key={item.brand}
-                          className="group flex h-full min-h-0 w-[min(82vw,17.5rem)] shrink-0 snap-center flex-col overflow-hidden rounded-2xl border border-black/[0.05] bg-white shadow-[0_16px_40px_-28px_rgba(28,22,18,0.28)] transition-[box-shadow,transform] duration-300 hover:-translate-y-0.5 hover:shadow-[0_22px_48px_-26px_rgba(28,22,18,0.22)] sm:w-auto"
+                          className="group flex h-full min-h-0 w-[min(90vw,22rem)] shrink-0 snap-center flex-col overflow-hidden rounded-2xl border border-black/[0.05] bg-white shadow-[0_16px_40px_-28px_rgba(28,22,18,0.28)] transition-[box-shadow,transform] duration-300 hover:-translate-y-0.5 hover:shadow-[0_22px_48px_-26px_rgba(28,22,18,0.22)] sm:w-auto"
                         >
                           <div
                             className={cn(
-                              "relative flex shrink-0 items-center justify-center bg-gradient-to-b from-[#faf9f7] to-[#f0ebe4]",
+                              "relative flex min-h-0 shrink-0 items-center justify-center bg-gradient-to-b from-[#faf9f7] to-[#f0ebe4]",
                               openService.gallery.items.length === 1
-                                ? "h-[13.5rem] min-h-[13.5rem] sm:h-[min(28rem,52vw)] sm:min-h-[16rem]"
-                                : "h-[11.25rem] sm:h-[13rem]",
+                                ? "min-h-[20rem] h-[min(72vw,28rem)] sm:min-h-[24rem] sm:h-[min(44rem,65vh)] md:min-h-[26rem] lg:h-[min(48rem,68vh)]"
+                                : "h-[18rem] sm:h-[22rem] md:h-[26rem] lg:h-[28rem] xl:h-[min(32rem,55vh)]",
                             )}
                           >
                             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_30%_0%,rgba(255,255,255,0.9),transparent_55%)]" />
@@ -548,10 +548,10 @@ export function About() {
                               src={item.src}
                               alt={`${item.brand} 장비·안내 이미지`}
                               className={cn(
-                                "relative z-[1] w-auto object-contain p-2 transition-transform duration-500 ease-out group-hover:scale-[1.01] sm:p-3",
+                                "relative z-[1] w-auto object-contain p-1 transition-transform duration-500 ease-out group-hover:scale-[1.01] sm:p-2 md:p-2.5",
                                 openService.gallery.items.length === 1
-                                  ? "max-h-[min(78vh,36rem)] max-w-[min(96%,42rem)] sm:max-h-[min(70vh,32rem)]"
-                                  : "max-h-[92%] max-w-[92%] sm:max-h-[90%]",
+                                  ? "max-h-[min(88vh,48rem)] max-w-[min(98%,50rem)] sm:max-h-[min(84vh,44rem)]"
+                                  : "max-h-[96%] max-w-[98%]",
                               )}
                             />
                           </div>
