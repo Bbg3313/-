@@ -135,6 +135,8 @@ type SignatureService = {
   /** 하이라이트 칩 (펼침 없음) */
   variant?: "brand";
   gallery?: {
+    /** 패널 상단 소제목 (영문 라벨) */
+    eyebrow: string;
     title: string;
     subtitle: string;
     items: SignatureGalleryItem[];
@@ -146,6 +148,7 @@ const SIGNATURE_SERVICES: SignatureService[] = [
     id: "botox",
     label: "보톡스",
     gallery: {
+      eyebrow: "Botulinum toxin",
       title: "보톡스 · 정품 시약",
       subtitle: "대표원장이 직접 상담·시술하며, 브랜드별 특성에 맞춘 맞춤 처방을 안내드립니다.",
       items: [
@@ -155,7 +158,20 @@ const SIGNATURE_SERVICES: SignatureService[] = [
       ],
     },
   },
-  { id: "filler", label: "필러" },
+  {
+    id: "filler",
+    label: "필러",
+    gallery: {
+      eyebrow: "Dermal filler",
+      title: "필러 · 정품 라인업",
+      subtitle: "국산·수입 정품 필러로 부위와 목적에 맞는 볼륨·주름 교정을 상담 시 안내드립니다.",
+      items: [
+        { src: "/images/signature-care/filler-neuramis.png", brand: "뉴라미스", line: "Neuramis · 라인별 선택" },
+        { src: "/images/signature-care/filler-atiere.png", brand: "아띠에르", line: "Classic · Intensive · Volume" },
+        { src: "/images/signature-care/filler-restylane.png", brand: "레스틸렌", line: "Refyne · Defyne · Volyme · Kysse" },
+      ],
+    },
+  },
   { id: "booster", label: "스킨부스터" },
   { id: "toning", label: "레이저토닝" },
   { id: "lifting", label: "레이저 리프팅" },
@@ -344,7 +360,9 @@ export function About() {
                   >
                     <div className="mb-4 flex flex-col gap-1 border-b border-gold-accent/15 pb-4 sm:flex-row sm:items-end sm:justify-between sm:gap-4">
                       <div>
-                        <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gold-accent/90">Botulinum toxin</p>
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gold-accent/90">
+                          {openService.gallery.eyebrow}
+                        </p>
                         <h3 className="mt-1 font-serif text-lg font-medium tracking-tight text-charcoal sm:text-xl">{openService.gallery.title}</h3>
                       </div>
                       <p className="max-w-xl text-[13px] leading-relaxed text-muted-foreground [word-break:keep-all] sm:text-sm">
