@@ -386,7 +386,7 @@ export function About() {
           </Reveal>
         </div>
 
-        {/* 병원 가치 — 소개 직후, 3열로 압축 (넓은 단일 카드 제거) */}
+        {/* 병원 가치 — 아이콘+제목 한 줄, 본문은 아래 */}
         <Reveal delay={0.15} className="mt-10 w-full sm:mt-12 md:mt-14">
           <ul
             className="mx-auto grid max-w-5xl grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-4 md:gap-5"
@@ -395,22 +395,24 @@ export function About() {
             {features.map((item) => (
               <li
                 key={item.title}
-                className="flex flex-col gap-3 rounded-xl border border-gold-accent/15 bg-white/50 px-4 py-4 shadow-[0_8px_28px_-22px_rgba(35,28,22,0.14)] ring-1 ring-white/60 backdrop-blur-sm sm:px-4 sm:py-5"
+                className="flex flex-col rounded-2xl border border-gold-accent/18 bg-gradient-to-b from-white/90 to-[#faf7f2]/95 px-4 py-4 shadow-[0_10px_36px_-24px_rgba(35,28,22,0.18)] ring-1 ring-white/70 backdrop-blur-sm transition-[box-shadow,transform,border-color] duration-300 hover:-translate-y-0.5 hover:border-gold-accent/28 hover:shadow-[0_16px_44px_-26px_rgba(35,28,22,0.22)] sm:px-5 sm:py-5"
               >
-                <div
-                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-gold-accent/25 bg-white/90 text-gold-accent shadow-[inset_0_1px_0_rgba(255,255,255,0.95)] sm:h-10 sm:w-10"
-                  aria-hidden
-                >
-                  <span className="[&_svg]:block [&_svg]:h-[0.95rem] [&_svg]:w-[0.95rem] [&_svg]:stroke-[1.25] sm:[&_svg]:h-[1.05rem] sm:[&_svg]:w-[1.05rem]">
-                    {item.icon}
-                  </span>
+                <div className="flex items-start gap-3">
+                  <div
+                    className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-gold-accent/30 bg-gradient-to-br from-white via-[#fffdf9] to-[#f3ead8] text-gold-accent shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_4px_14px_-8px_rgba(140,110,60,0.25)]"
+                    aria-hidden
+                  >
+                    <span className="[&_svg]:block [&_svg]:h-[1.1rem] [&_svg]:w-[1.1rem] [&_svg]:stroke-[1.3]">
+                      {item.icon}
+                    </span>
+                  </div>
+                  <h3 className="min-w-0 flex-1 text-left text-[0.9375rem] font-semibold leading-snug tracking-tight text-[#2a241f] sm:text-base">
+                    {item.title}
+                  </h3>
                 </div>
-                <div className="min-w-0 text-left">
-                  <h3 className="text-sm font-semibold leading-snug tracking-tight text-charcoal">{item.title}</h3>
-                  <p className="mt-1.5 text-[13px] font-normal leading-relaxed text-muted-foreground [word-break:keep-all] sm:text-sm">
-                    {item.body}
-                  </p>
-                </div>
+                <p className="mt-3.5 border-t border-gold-accent/12 pt-3.5 text-left text-[13px] font-normal leading-[1.65] text-muted-foreground [word-break:keep-all] sm:mt-4 sm:pt-4 sm:text-sm">
+                  {item.body}
+                </p>
               </li>
             ))}
           </ul>
