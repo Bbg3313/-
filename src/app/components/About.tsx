@@ -351,21 +351,21 @@ export function About() {
                         {openService.gallery.subtitle}
                       </p>
                     </div>
-                    <div className="grid gap-3 sm:grid-cols-3 sm:gap-4">
+                    <div className="grid auto-rows-fr gap-3 sm:grid-cols-3 sm:gap-4">
                       {openService.gallery.items.map((item) => (
                         <div
                           key={item.brand}
-                          className="group flex flex-col overflow-hidden rounded-xl border border-white/80 bg-white/90 shadow-[0_12px_32px_-22px_rgba(35,30,26,0.22)] ring-1 ring-gold-accent/10 transition-shadow duration-300 hover:shadow-[0_18px_40px_-20px_rgba(120,90,38,0.22)]"
+                          className="group flex h-full min-h-0 flex-col overflow-hidden rounded-xl border border-white/80 bg-white/90 shadow-[0_12px_32px_-22px_rgba(35,30,26,0.22)] ring-1 ring-gold-accent/10 transition-shadow duration-300 hover:shadow-[0_18px_40px_-20px_rgba(120,90,38,0.22)]"
                         >
-                          <div className="relative aspect-[4/3] bg-gradient-to-b from-[#faf9f7] to-[#f0ebe4]">
+                          <div className="relative flex h-[11.25rem] shrink-0 items-center justify-center bg-gradient-to-b from-[#faf9f7] to-[#f0ebe4] sm:h-[13rem]">
                             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_30%_0%,rgba(255,255,255,0.9),transparent_55%)]" />
                             <ImageWithFallback
                               src={item.src}
                               alt={`${item.brand} 제품 이미지`}
-                              className="relative z-[1] h-full w-full object-contain p-3 transition-transform duration-500 ease-out group-hover:scale-[1.02] sm:p-4"
+                              className="relative z-[1] max-h-[92%] w-auto max-w-[92%] object-contain p-2 transition-transform duration-500 ease-out group-hover:scale-[1.02] sm:max-h-[90%] sm:p-3"
                             />
                           </div>
-                          <div className="border-t border-gold-accent/12 bg-gradient-to-b from-white to-[#fdfcfa] px-3 py-3 sm:px-4 sm:py-3.5">
+                          <div className="flex min-h-[4.5rem] flex-1 flex-col justify-center border-t border-gold-accent/12 bg-gradient-to-b from-white to-[#fdfcfa] px-3 py-3 sm:min-h-[4.75rem] sm:px-4 sm:py-3.5">
                             <p className="text-sm font-semibold tracking-tight text-charcoal">{item.brand}</p>
                             <p className="mt-0.5 text-[11px] text-muted-foreground sm:text-xs">{item.line}</p>
                           </div>
