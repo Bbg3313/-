@@ -1,5 +1,5 @@
-import { useRef, type ReactNode } from "react";
-import { motion, useInView } from "motion/react";
+import { useRef, useState, type ReactNode } from "react";
+import { AnimatePresence, motion, useInView } from "motion/react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 
 const easeLux = [0.22, 1, 0.36, 1] as const;
@@ -123,15 +123,45 @@ function AboutGalleryShell({ children, className = "" }: { children: ReactNode; 
   );
 }
 
-const services = [
-  "보톡스",
-  "필러",
-  "스킨부스터",
-  "레이저토닝",
-  "레이저 리프팅",
-  "실리프팅",
-  "화상",
-  "연세미의원",
+type SignatureGalleryItem = {
+  src: string;
+  brand: string;
+  line: string;
+};
+
+type SignatureService = {
+  id: string;
+  label: string;
+  /** 하이라이트 칩 (펼침 없음) */
+  variant?: "brand";
+  gallery?: {
+    title: string;
+    subtitle: string;
+    items: SignatureGalleryItem[];
+  };
+};
+
+const SIGNATURE_SERVICES: SignatureService[] = [
+  {
+    id: "botox",
+    label: "보톡스",
+    gallery: {
+      title: "보톡스 · 정품 시약",
+      subtitle: "대표원장이 직접 상담·시술하며, 브랜드별 특성에 맞춘 맞춤 처방을 안내드립니다.",
+      items: [
+        { src: "/images/signature-care/botox-coretox.png", brand: "코어톡스", line: "국산 · 100 units" },
+        { src: "/images/signature-care/botox-meditoxin.png", brand: "메디톡스", line: "국산 · 100 units" },
+        { src: "/images/signature-care/botox-xeomin.png", brand: "제오민", line: "수입 · 100 units" },
+      ],
+    },
+  },
+  { id: "filler", label: "필러" },
+  { id: "booster", label: "스킨부스터" },
+  { id: "toning", label: "레이저토닝" },
+  { id: "lifting", label: "레이저 리프팅" },
+  { id: "thread", label: "실리프팅" },
+  { id: "tele", label: "화상" },
+  { id: "clinic", label: "연세미의원", variant: "brand" },
 ];
 
 const features = [
@@ -167,7 +197,25 @@ const features = [
   },
 ];
 
+function signaturePillClass(isBrand: boolean, isOpen: boolean, isInteractive: boolean) {
+  if (isBrand) {
+    return "flex min-h-[2.35rem] items-center justify-center rounded-md border border-gold-accent/45 bg-gradient-to-br from-[#fff8ea] via-[#f6e7c5] to-[#ead3a0] px-2 py-2 text-center text-[11px] font-semibold leading-snug tracking-wide text-charcoal break-keep [word-break:keep-all] shadow-[0_8px_18px_-12px_rgba(120,90,38,0.55),inset_0_1px_0_rgba(255,255,255,0.72)] sm:text-xs";
+  }
+  const base =
+    "flex min-h-[2.35rem] w-full items-center justify-center rounded-md border px-2 py-2 text-center text-[11px] font-medium leading-snug tracking-wide break-keep [word-break:keep-all] shadow-sm backdrop-blur-sm transition-all duration-300 sm:text-xs";
+  if (!isInteractive) {
+    return `${base} cursor-default border-gold-accent/20 bg-white/45 text-charcoal/55`;
+  }
+  if (isOpen) {
+    return `${base} cursor-pointer border-gold-accent/55 bg-gradient-to-b from-white/90 to-[#faf6ef] text-charcoal shadow-[0_10px_28px_-16px_rgba(120,90,38,0.35)] ring-1 ring-gold-accent/25`;
+  }
+  return `${base} cursor-pointer border-gold-accent/25 bg-white/55 text-charcoal/75 hover:border-gold-accent/45 hover:text-charcoal`;
+}
+
 export function About() {
+  const [openSignatureId, setOpenSignatureId] = useState<string | null>(null);
+  const openService = SIGNATURE_SERVICES.find((s) => s.id === openSignatureId);
+
   return (
     <section
       id="about"
@@ -244,19 +292,89 @@ export function About() {
 
             <Reveal delay={0.17} className="shrink-0">
               <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.28em] text-muted-foreground/80">Signature care</p>
-              <div className="mb-6 grid w-full grid-cols-2 gap-2 sm:mb-9 sm:grid-cols-4 lg:grid-cols-8">
-                {services.map((label) => (
-                  <span
-                    key={label}
-                    className={
-                      label === "연세미의원"
-                        ? "flex min-h-[2.35rem] items-center justify-center rounded-md border border-gold-accent/45 bg-gradient-to-br from-[#fff8ea] via-[#f6e7c5] to-[#ead3a0] px-2 py-2 text-center text-[11px] font-semibold leading-snug tracking-wide text-charcoal break-keep [word-break:keep-all] shadow-[0_8px_18px_-12px_rgba(120,90,38,0.55),inset_0_1px_0_rgba(255,255,255,0.72)] transition-colors hover:border-gold-accent/70 sm:text-xs"
-                        : "flex min-h-[2.35rem] items-center justify-center rounded-md border border-gold-accent/25 bg-white/55 px-2 py-2 text-center text-[11px] font-medium leading-snug tracking-wide text-charcoal/75 break-keep [word-break:keep-all] shadow-sm backdrop-blur-sm transition-colors hover:border-gold-accent/45 hover:text-charcoal sm:text-xs"
-                    }
+              <div className="mb-6 sm:mb-9">
+              <div
+                className="mb-2 grid w-full grid-cols-2 gap-2 sm:mb-3 sm:grid-cols-4 lg:grid-cols-8"
+                role="tablist"
+                aria-label="시그니처 케어 항목"
+              >
+                {SIGNATURE_SERVICES.map((svc) => {
+                  const isBrand = svc.variant === "brand";
+                  const hasGallery = Boolean(svc.gallery?.items.length);
+                  const isOpen = openSignatureId === svc.id;
+                  const pillClass = signaturePillClass(isBrand, isOpen, hasGallery);
+
+                  if (hasGallery) {
+                    return (
+                      <button
+                        key={svc.id}
+                        type="button"
+                        role="tab"
+                        aria-selected={isOpen}
+                        aria-controls="signature-care-panel"
+                        id={`signature-tab-${svc.id}`}
+                        className={pillClass}
+                        onClick={() => setOpenSignatureId((prev) => (prev === svc.id ? null : svc.id))}
+                      >
+                        {svc.label}
+                      </button>
+                    );
+                  }
+
+                  return (
+                    <span key={svc.id} className={pillClass} role="presentation">
+                      {svc.label}
+                    </span>
+                  );
+                })}
+              </div>
+
+              <AnimatePresence initial={false}>
+                {openService?.gallery ? (
+                  <motion.div
+                    key={openService.id}
+                    id="signature-care-panel"
+                    role="tabpanel"
+                    aria-labelledby={`signature-tab-${openService.id}`}
+                    initial={{ opacity: 0, y: -6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -4 }}
+                    transition={{ duration: 0.35, ease: easeLux }}
+                    className="overflow-hidden rounded-2xl border border-gold-accent/20 bg-gradient-to-b from-white/85 via-white/70 to-[#faf7f2]/90 p-4 shadow-[0_24px_48px_-28px_rgba(42,34,28,0.18)] ring-1 ring-black/[0.03] backdrop-blur-md sm:p-6"
                   >
-                    {label}
-                  </span>
-                ))}
+                    <div className="mb-4 flex flex-col gap-1 border-b border-gold-accent/15 pb-4 sm:flex-row sm:items-end sm:justify-between sm:gap-4">
+                      <div>
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gold-accent/90">Botulinum toxin</p>
+                        <h3 className="mt-1 font-serif text-lg font-medium tracking-tight text-charcoal sm:text-xl">{openService.gallery.title}</h3>
+                      </div>
+                      <p className="max-w-xl text-[13px] leading-relaxed text-muted-foreground [word-break:keep-all] sm:text-sm">
+                        {openService.gallery.subtitle}
+                      </p>
+                    </div>
+                    <div className="grid gap-3 sm:grid-cols-3 sm:gap-4">
+                      {openService.gallery.items.map((item) => (
+                        <div
+                          key={item.brand}
+                          className="group flex flex-col overflow-hidden rounded-xl border border-white/80 bg-white/90 shadow-[0_12px_32px_-22px_rgba(35,30,26,0.22)] ring-1 ring-gold-accent/10 transition-shadow duration-300 hover:shadow-[0_18px_40px_-20px_rgba(120,90,38,0.22)]"
+                        >
+                          <div className="relative aspect-[4/3] bg-gradient-to-b from-[#faf9f7] to-[#f0ebe4]">
+                            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_30%_0%,rgba(255,255,255,0.9),transparent_55%)]" />
+                            <ImageWithFallback
+                              src={item.src}
+                              alt={`${item.brand} 제품 이미지`}
+                              className="relative z-[1] h-full w-full object-contain p-3 transition-transform duration-500 ease-out group-hover:scale-[1.02] sm:p-4"
+                            />
+                          </div>
+                          <div className="border-t border-gold-accent/12 bg-gradient-to-b from-white to-[#fdfcfa] px-3 py-3 sm:px-4 sm:py-3.5">
+                            <p className="text-sm font-semibold tracking-tight text-charcoal">{item.brand}</p>
+                            <p className="mt-0.5 text-[11px] text-muted-foreground sm:text-xs">{item.line}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </motion.div>
+                ) : null}
+              </AnimatePresence>
               </div>
             </Reveal>
 
