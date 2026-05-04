@@ -1,6 +1,14 @@
-import { useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { AnimatePresence, motion, useInView } from "motion/react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+  type CarouselApi,
+} from "./ui/carousel";
 import { cn } from "./ui/utils";
 
 const easeLux = [0.22, 1, 0.36, 1] as const;
@@ -52,63 +60,86 @@ function LuxImageCard({ className = "", children }: { className?: string; childr
   );
 }
 
-/** 병원 소개 사진 스택 — 데스크톱·모바일 동일 마크업(크기·비율 동일) */
-function AboutGalleryImages() {
-  return (
-    <>
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-40px" }}
-        transition={{ duration: 0.85, ease: easeLux }}
-        className="shrink-0"
-      >
-        <LuxImageCard>
-          <div className="relative w-full bg-gradient-to-b from-[#f4f1ec] to-[#e9e4dc]">
-            <ImageWithFallback
-              src="/images/about-clinic-main.png"
-              alt="연세미의원 로고와 인테리어"
-              className="mx-auto block h-auto w-full max-h-[min(68vh,680px)] object-contain object-bottom transition-transform duration-[1.15s] ease-out group-hover:scale-[1.01]"
-            />
-          </div>
-        </LuxImageCard>
-      </motion.div>
+const ABOUT_CLINIC_SLIDES = [
+  { src: "/images/about-clinic-main.png", alt: "연세미의원 로고와 인테리어" },
+  { src: "/images/about-clinic-slide-waiting.png", alt: "대기·안내 공간" },
+  { src: "/images/about-clinic-lobby.png", alt: "로비" },
+  { src: "/images/about-clinic-slide-laser-room.png", alt: "레이저 시술실" },
+  { src: "/images/about-clinic-room.png", alt: "시술실" },
+  { src: "/images/about-clinic-slide-care-room.png", alt: "관리실" },
+] as const;
 
-      <div className="grid shrink-0 grid-cols-2 gap-3 sm:gap-5">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, delay: 0.08, ease: easeLux }}
+/** 병원 소개 — 슬라이드(높이 제한, 자연스러운 비율) */
+function AboutGalleryImages() {
+  const [carouselApi, setCarouselApi] = useState<CarouselApi>();
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    if (!carouselApi) return;
+    const onSelect = () => setActiveIndex(carouselApi.selectedScrollSnap());
+    onSelect();
+    carouselApi.on("select", onSelect);
+    return () => {
+      carouselApi.off("select", onSelect);
+    };
+  }, [carouselApi]);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.85, ease: easeLux }}
+      className="w-full shrink-0"
+    >
+      <div className="relative w-full px-11 sm:px-14 md:px-16">
+        <Carousel
+          setApi={setCarouselApi}
+          opts={{ loop: true, align: "start" }}
+          className="w-full"
         >
-          <LuxImageCard>
-            <div className="relative aspect-[4/5]">
-              <ImageWithFallback
-                src="/images/about-clinic-room.png"
-                alt="시술실"
-                className="h-full w-full object-cover transition-transform duration-[1s] ease-out group-hover:scale-[1.03]"
-              />
-            </div>
-          </LuxImageCard>
-        </motion.div>
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, delay: 0.16, ease: easeLux }}
-        >
-          <LuxImageCard>
-            <div className="relative aspect-[4/5]">
-              <ImageWithFallback
-                src="/images/about-clinic-lobby.png"
-                alt="로비"
-                className="h-full w-full object-cover transition-transform duration-[1s] ease-out group-hover:scale-[1.03]"
-              />
-            </div>
-          </LuxImageCard>
-        </motion.div>
+          <CarouselContent className="-ml-2.5 sm:-ml-3">
+            {ABOUT_CLINIC_SLIDES.map((slide) => (
+              <CarouselItem key={slide.src} className="basis-full pl-2.5 sm:basis-full sm:pl-3">
+                <LuxImageCard className="h-full">
+                  <div className="relative mx-auto h-[min(34vh,260px)] w-full max-w-4xl overflow-hidden rounded-[inherit] bg-gradient-to-b from-[#f4f1ec] to-[#e9e4dc] sm:h-[min(36vh,300px)] md:h-[min(38vh,340px)] lg:h-[min(40vh,380px)]">
+                    <ImageWithFallback
+                      src={slide.src}
+                      alt={slide.alt}
+                      className="h-full w-full object-cover object-center transition-transform duration-[1s] ease-out group-hover:scale-[1.02]"
+                    />
+                  </div>
+                </LuxImageCard>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious
+            variant="outline"
+            className="left-0 size-9 border-gold-accent/35 bg-white/90 text-charcoal shadow-md hover:bg-white disabled:opacity-40 sm:left-1 md:size-10"
+          />
+          <CarouselNext
+            variant="outline"
+            className="right-0 size-9 border-gold-accent/35 bg-white/90 text-charcoal shadow-md hover:bg-white disabled:opacity-40 sm:right-1 md:size-10"
+          />
+        </Carousel>
+        <div className="mt-3 flex justify-center gap-1.5 sm:mt-4" role="tablist" aria-label="병원 사진 위치">
+          {ABOUT_CLINIC_SLIDES.map((_, i) => (
+            <button
+              key={String(i)}
+              type="button"
+              role="tab"
+              aria-selected={i === activeIndex}
+              aria-label={`병원 사진 ${i + 1} / ${ABOUT_CLINIC_SLIDES.length}`}
+              className={cn(
+                "h-1.5 rounded-full transition-[width,background-color] duration-300",
+                i === activeIndex ? "w-6 bg-gold-accent" : "w-1.5 bg-charcoal/20 hover:bg-charcoal/35",
+              )}
+              onClick={() => carouselApi?.scrollTo(i)}
+            />
+          ))}
+        </div>
       </div>
-    </>
+    </motion.div>
   );
 }
 

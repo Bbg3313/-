@@ -90,10 +90,10 @@ export function Footer({ className }: FooterProps) {
             <Link
               to="/"
               onClick={onHomeLogoClick}
-              className="group inline-flex max-w-full flex-col items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-muted/50 rounded-sm"
+              className="group flex w-full max-w-full flex-col items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-muted/50 rounded-sm"
               aria-label="연세미의원 홈 — 맨 위로 이동"
             >
-              <SiteLogo layout="vertical" className="opacity-95 transition-opacity group-hover:opacity-100" />
+              <SiteLogo layout="vertical" className="w-full opacity-95 transition-opacity group-hover:opacity-100" />
             </Link>
           </div>
 
