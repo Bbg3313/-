@@ -93,8 +93,10 @@ function GalleryTile({
   );
 }
 
-/** 병원 소개 — 에디토리얼 갤러리(모바일 2열 / 데스크톱 비대칭 벤토) */
+/** 병원 소개 — 상단 메인 히어로 + 슬라이드 순서대로 5장 그리드 */
 function AboutGalleryImages() {
+  const [mainSlide, ...restSlides] = ABOUT_CLINIC_SLIDES;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -108,61 +110,30 @@ function AboutGalleryImages() {
           병원 공간
         </p>
 
-        {/* 모바일·태블릿: 균등 2열 */}
-        <div className="grid grid-cols-2 gap-2.5 sm:gap-3 md:gap-4 lg:hidden">
-          {ABOUT_CLINIC_SLIDES.map((slide, i) => (
-            <GalleryTile
-              key={slide.src}
-              src={slide.src}
-              alt={slide.alt}
-              delay={i * 0.04}
-              className={cn(
-                i === 0 ? "col-span-2 aspect-[21/10] max-h-[min(42vw,220px)] sm:max-h-[260px]" : "aspect-[4/5] max-h-[min(48vw,280px)]",
-              )}
-            />
-          ))}
-        </div>
-
-        {/* 데스크톱: 4열 벤토 — 중앙 메인 + 좌우 스택 + 우측 톨 컬럼 */}
-        <div className="hidden min-h-[min(62vh,560px)] gap-3 lg:flex lg:gap-4 xl:gap-5">
-          <div className="flex min-h-0 min-w-0 flex-[0.92] flex-col gap-3 xl:gap-4">
-            <GalleryTile
-              src="/images/about-clinic-slide-waiting.png"
-              alt="대기·안내 공간"
-              delay={0.02}
-              className="min-h-[28%] flex-1 basis-0"
-            />
-            <GalleryTile src="/images/about-clinic-lobby.png" alt="로비" delay={0.06} className="min-h-[32%] flex-[1.1] basis-0" />
-          </div>
-
+        <div className="flex flex-col gap-2.5 sm:gap-3 md:gap-4">
           <GalleryTile
-            src="/images/about-clinic-main.png"
-            alt="연세미의원 로고와 인테리어"
+            key={mainSlide.src}
+            src={mainSlide.src}
+            alt={mainSlide.alt}
             delay={0}
-            className="min-h-0 max-w-[min(100%,480px)] flex-[1.35] min-w-0"
+            className="aspect-[16/9] w-full max-h-[min(52vh,440px)] sm:aspect-[2.15/1] sm:max-h-[min(48vh,480px)]"
           />
 
-          <div className="flex min-h-0 min-w-0 flex-[0.92] flex-col gap-3 xl:gap-4">
-            <GalleryTile
-              src="/images/about-clinic-room.png"
-              alt="시술실"
-              delay={0.04}
-              className="min-h-[30%] flex-[1] basis-0"
-            />
-            <GalleryTile
-              src="/images/about-clinic-slide-laser-room.png"
-              alt="레이저 시술실"
-              delay={0.08}
-              className="min-h-[38%] flex-[1.15] basis-0"
-            />
+          <div className="grid grid-cols-2 gap-2.5 sm:gap-3 md:grid-cols-5 md:gap-3 lg:gap-4">
+            {restSlides.map((slide, i) => (
+              <GalleryTile
+                key={slide.src}
+                src={slide.src}
+                alt={slide.alt}
+                delay={0.05 + i * 0.04}
+                className={cn(
+                  "aspect-[4/5] min-h-[140px] sm:min-h-[160px] md:min-h-0 md:aspect-[3/4]",
+                  i === restSlides.length - 1 &&
+                    "col-span-2 mx-auto w-[min(100%,28rem)] md:col-span-1 md:w-full",
+                )}
+              />
+            ))}
           </div>
-
-          <GalleryTile
-            src="/images/about-clinic-slide-care-room.png"
-            alt="관리실"
-            delay={0.1}
-            className="min-h-0 flex-[0.88] min-w-0 max-w-[280px] xl:max-w-[300px]"
-          />
         </div>
       </div>
     </motion.div>
@@ -403,14 +374,11 @@ export function About() {
         <div className="mx-auto mt-14 w-full max-w-6xl sm:mt-16 md:mt-20 lg:mt-24">
             <Reveal delay={0.17} className="shrink-0">
               <div className="flex flex-col items-center px-2">
-                <p
-                  className="text-center text-[11px] font-medium tracking-[0.22em] text-[#BFA37E] sm:text-xs sm:tracking-[0.26em] md:text-[13px] md:tracking-[0.28em]"
-                  style={{ fontFamily: ABOUT_BODY_FONT }}
-                >
-                  시그니처 케어
+                <p className="mb-3 text-center text-[11px] font-medium uppercase tracking-[0.35em] text-gold-accent/90 md:mb-4">
+                  Signature Care
                 </p>
                 <div
-                  className="mt-4 h-[1px] w-[min(17rem,90%)] max-w-md bg-gradient-to-r from-transparent via-[#c4a574] to-transparent sm:mt-5"
+                  className="mx-auto h-px w-20 bg-gradient-to-r from-transparent via-gold-accent to-transparent"
                   aria-hidden
                 />
               </div>
@@ -421,7 +389,7 @@ export function About() {
                 <div
                   className="grid w-full grid-cols-2 gap-1 sm:grid-cols-4 lg:grid-cols-8"
                   role="tablist"
-                  aria-label="시그니처 케어 항목"
+                  aria-label="Signature care treatments"
                 >
                   {SIGNATURE_SERVICES.map((svc) => {
                     const isBrand = svc.variant === "brand";
