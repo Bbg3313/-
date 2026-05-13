@@ -1,5 +1,14 @@
 import { useRef, useState, type ReactNode } from "react";
+import { Link } from "react-router";
 import { AnimatePresence, motion, useInView } from "motion/react";
+import {
+  getProcedureTreatment,
+  listTreatmentsByCategory,
+  procedureDetailPath,
+  type ProcedureTreatment,
+} from "../../data/treatmentsCatalog";
+import { useProcedureHeroImageOverrides } from "../hooks/useProcedureHeroImageOverrides";
+import { pickProcedureHeroImageUrl } from "../lib/procedureHeroImages";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { cn } from "./ui/utils";
 
@@ -170,26 +179,67 @@ function AboutGalleryShell({ children, className = "" }: { children: ReactNode; 
   );
 }
 
-type SignatureGalleryItem = {
-  src: string;
-  brand: string;
-  line: string;
-};
-
 type SignatureService = {
   id: string;
   label: string;
   /** 하이라이트 칩 (펼침 없음) */
   variant?: "brand";
   gallery?: {
-    /** 패널 상단 소제목 (영문 라벨) */
     eyebrow: string;
     title: string;
-    /** 보톡스·필러 등 긴 안내가 필요할 때만 사용 */
     subtitle?: string;
-    items: SignatureGalleryItem[];
   };
 };
+
+/** 시그니처 탭 → 시술 안내(카탈로그) 매핑. 썸네일은 `heroImage` + Supabase `procedure_hero_images` 오버레이 */
+type SignatureCatalogSpec =
+  | { mode: "slugs"; slugs: { categorySlug: string; slug: string }[] }
+  | { mode: "category"; categorySlug: string; maxItems?: number };
+
+const SIGNATURE_CATALOG_BY_TAB: Record<string, SignatureCatalogSpec> = {
+  botox: {
+    mode: "slugs",
+    slugs: [
+      { categorySlug: "botox-filler", slug: "jaw-botox" },
+      { categorySlug: "botox-filler", slug: "wrinkle-botox" },
+      { categorySlug: "botox-filler", slug: "skin-botox" },
+    ],
+  },
+  filler: {
+    mode: "slugs",
+    slugs: [
+      { categorySlug: "botox-filler", slug: "filler-domestic" },
+      { categorySlug: "botox-filler", slug: "filler-import" },
+      { categorySlug: "botox-filler", slug: "filler-dissolving-injection" },
+    ],
+  },
+  booster: { mode: "category", categorySlug: "glow-booster", maxItems: 12 },
+  toning: {
+    mode: "slugs",
+    slugs: [
+      { categorySlug: "laser", slug: "laser-miin-toning" },
+      { categorySlug: "laser", slug: "laser-gd-toning" },
+    ],
+  },
+  lifting: { mode: "category", categorySlug: "lifting-laser", maxItems: 8 },
+  thread: { mode: "category", categorySlug: "thread-lifting", maxItems: 8 },
+  /** 화상·흉터: 카탈로그 대표 시술(CO2) 안내 */
+  tele: { mode: "slugs", slugs: [{ categorySlug: "laser", slug: "laser-co2" }] },
+  hair: { mode: "category", categorySlug: "hair-removal", maxItems: 4 },
+};
+
+function resolveSignatureTreatments(tabId: string): ProcedureTreatment[] {
+  const spec = SIGNATURE_CATALOG_BY_TAB[tabId];
+  if (!spec) return [];
+  if (spec.mode === "slugs") {
+    return spec.slugs
+      .map(({ categorySlug, slug }) => getProcedureTreatment(categorySlug, slug))
+      .filter((t): t is ProcedureTreatment => t != null);
+  }
+  const list = listTreatmentsByCategory(spec.categorySlug);
+  const cap = spec.maxItems ?? 24;
+  return list.slice(0, cap);
+}
 
 const SIGNATURE_SERVICES: SignatureService[] = [
   {
@@ -199,11 +249,6 @@ const SIGNATURE_SERVICES: SignatureService[] = [
       eyebrow: "Botulinum toxin",
       title: "보톡스 · 정품 시약",
       subtitle: "대표원장이 직접 상담·시술하며, 브랜드별 특성에 맞춘 맞춤 처방을 안내드립니다.",
-      items: [
-        { src: "/images/signature-care/botox-coretox.png", brand: "코어톡스", line: "국산 · 100 units" },
-        { src: "/images/signature-care/botox-meditoxin.png", brand: "메디톡스", line: "국산 · 100 units" },
-        { src: "/images/signature-care/botox-xeomin.png", brand: "제오민", line: "수입 · 100 units" },
-      ],
     },
   },
   {
@@ -213,27 +258,24 @@ const SIGNATURE_SERVICES: SignatureService[] = [
       eyebrow: "Dermal filler",
       title: "필러 · 정품 라인업",
       subtitle: "국산·수입 정품 필러로 부위와 목적에 맞는 볼륨·주름 교정을 상담 시 안내드립니다.",
-      items: [
-        { src: "/images/signature-care/filler-neuramis.png", brand: "뉴라미스", line: "Neuramis · 라인별 선택" },
-        { src: "/images/signature-care/filler-atiere.png", brand: "아띠에르", line: "Classic · Intensive · Volume" },
-        { src: "/images/signature-care/filler-restylane.png", brand: "레스틸렌", line: "Refyne · Defyne · Volyme · Kysse" },
-      ],
     },
   },
-  { id: "booster", label: "스킨부스터" },
+  {
+    id: "booster",
+    label: "스킨부스터",
+    gallery: {
+      eyebrow: "Skin booster",
+      title: "물광 · 스킨부스터",
+      subtitle: "하이주·리쥬란·쥬베룩 등 정품 라인으로 피부 결·탄력을 상담 시 안내드립니다.",
+    },
+  },
   {
     id: "toning",
     label: "레이저토닝",
     gallery: {
       eyebrow: "Laser toning",
-      title: "레이저 토닝 · 미인 (Miin)",
-      items: [
-        {
-          src: "/images/signature-care/laser-miin.png",
-          brand: "미인 miin",
-          line: "LTRA Global · Q-switched Nd:YAG · 1064nm / 532nm",
-        },
-      ],
+      title: "레이저 토닝",
+      subtitle: "미인·GD 토닝 등 시술 안내와 동일한 항목·이미지로 표시됩니다.",
     },
   },
   {
@@ -241,36 +283,35 @@ const SIGNATURE_SERVICES: SignatureService[] = [
     label: "레이저 리프팅",
     gallery: {
       eyebrow: "Laser lifting",
-      title: "레이저 리프팅 · 슈링크 · 덴시티 (DENSITY)",
-      items: [
-        {
-          src: "/images/signature-care/lifting-shurink.png",
-          brand: "슈링크 Shurink",
-          line: "초음파 리프팅 · 피부 속 탄력 UP",
-        },
-        {
-          src: "/images/signature-care/lifting-density.png",
-          brand: "덴시티 DENSITY",
-          line: "듀얼 고주파 · 깊고 넓은 리프팅",
-        },
-      ],
+      title: "레이저 리프팅",
+      subtitle: "슈링크·덴서티·볼뉴머 등 리프팅 레이저 시술 안내와 연동됩니다.",
     },
   },
-  { id: "thread", label: "실리프팅" },
-  { id: "tele", label: "화상" },
+  {
+    id: "thread",
+    label: "실리프팅",
+    gallery: {
+      eyebrow: "Thread lifting",
+      title: "실리프팅 · 녹는실",
+      subtitle: "민트·PCL·잼버·하이코 등 시술 안내 데이터와 동일하게 표시됩니다.",
+    },
+  },
+  {
+    id: "tele",
+    label: "화상",
+    gallery: {
+      eyebrow: "Scar & skin surface",
+      title: "화상 · 흉터 케어",
+      subtitle: "대표 시술 페이지로 연결됩니다. 세부는 시술 안내에서 확인해 주세요.",
+    },
+  },
   {
     id: "hair",
     label: "제모",
     gallery: {
       eyebrow: "Laser hair removal",
-      title: "제모 · 듀얼 악센토 N (DUAL Accento N)",
-      items: [
-        {
-          src: "/images/signature-care/hair-dual-accento-n.png",
-          brand: "DUAL Accento N",
-          line: "755nm & 1064nm · 듀얼 파장 레이저",
-        },
-      ],
+      title: "레이저 제모",
+      subtitle: "제모 시술 안내와 동일한 썸네일·명칭이 반영됩니다.",
     },
   },
 ];
@@ -308,8 +349,7 @@ const features = [
   },
 ];
 
-const DEFAULT_SIGNATURE_TAB_ID =
-  SIGNATURE_SERVICES.find((s) => Boolean(s.gallery?.items.length))?.id ?? "botox";
+const DEFAULT_SIGNATURE_TAB_ID = SIGNATURE_SERVICES.find((s) => s.gallery)?.id ?? "botox";
 
 function signaturePillClass(isBrand: boolean, _isSelected: boolean, isInteractive: boolean) {
   if (isBrand) {
@@ -326,6 +366,8 @@ function signaturePillClass(isBrand: boolean, _isSelected: boolean, isInteractiv
 export function About() {
   const [openSignatureId, setOpenSignatureId] = useState<string>(DEFAULT_SIGNATURE_TAB_ID);
   const openService = SIGNATURE_SERVICES.find((s) => s.id === openSignatureId);
+  const { map: procedureHeroOverrides } = useProcedureHeroImageOverrides();
+  const signatureTreatments = openService?.gallery ? resolveSignatureTreatments(openService.id) : [];
 
   return (
     <section
@@ -448,7 +490,7 @@ export function About() {
                 >
                   {SIGNATURE_SERVICES.map((svc) => {
                     const isBrand = svc.variant === "brand";
-                    const hasGallery = Boolean(svc.gallery?.items.length);
+                    const hasGallery = Boolean(svc.gallery);
                     const isOpen = openSignatureId === svc.id;
                     const pillClass = signaturePillClass(isBrand, isOpen, hasGallery);
 
@@ -522,48 +564,69 @@ export function About() {
                         </p>
                       ) : null}
                     </div>
+                    {signatureTreatments.length === 0 ? (
+                      <p className="py-8 text-center text-sm text-muted-foreground [word-break:keep-all]">
+                        이 탭에 연결된 시술 안내 항목이 없습니다.
+                      </p>
+                    ) : (
                     <div
                       className={cn(
                         "-mx-1 flex snap-x snap-mandatory gap-4 overflow-x-auto px-1 pb-1 [scrollbar-width:thin] sm:mx-0 sm:grid sm:auto-rows-fr sm:gap-5 sm:overflow-visible sm:px-0 sm:pb-0 md:gap-6",
-                        openService.gallery.items.length === 1
+                        signatureTreatments.length === 1
                           ? "sm:grid-cols-1 sm:max-w-4xl sm:mx-auto"
-                          : openService.gallery.items.length === 2
+                          : signatureTreatments.length === 2
                             ? "sm:grid-cols-2"
-                            : "sm:grid-cols-3",
+                            : "sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4",
                       )}
                     >
-                      {openService.gallery.items.map((item) => (
-                        <div
-                          key={item.brand}
+                      {signatureTreatments.map((t) => {
+                        const thumb =
+                          pickProcedureHeroImageUrl(
+                            t.categorySlug,
+                            t.slug,
+                            t.heroImage,
+                            procedureHeroOverrides,
+                          ) ?? "";
+                        return (
+                        <Link
+                          key={`${t.categorySlug}-${t.slug}`}
+                          to={procedureDetailPath(t.categorySlug, t.slug)}
                           className="group flex h-full min-h-0 w-[min(90vw,22rem)] shrink-0 snap-center flex-col overflow-hidden rounded-2xl border border-black/[0.05] bg-white shadow-[0_16px_40px_-28px_rgba(28,22,18,0.28)] transition-[box-shadow,transform] duration-300 hover:-translate-y-0.5 hover:shadow-[0_22px_48px_-26px_rgba(28,22,18,0.22)] sm:w-auto"
                         >
                           <div
                             className={cn(
                               "relative flex min-h-0 shrink-0 items-center justify-center bg-gradient-to-b from-[#faf9f7] to-[#f0ebe4]",
-                              openService.gallery.items.length === 1
+                              signatureTreatments.length === 1
                                 ? "min-h-[20rem] h-[min(72vw,28rem)] sm:min-h-[24rem] sm:h-[min(44rem,65vh)] md:min-h-[26rem] lg:h-[min(48rem,68vh)]"
-                                : "h-[18rem] sm:h-[22rem] md:h-[26rem] lg:h-[28rem] xl:h-[min(32rem,55vh)]",
+                                : "h-[14rem] sm:h-[18rem] md:h-[20rem] lg:h-[22rem]",
                             )}
                           >
                             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_30%_0%,rgba(255,255,255,0.9),transparent_55%)]" />
-                            <ImageWithFallback
-                              src={item.src}
-                              alt={`${item.brand} 장비·안내 이미지`}
-                              className={cn(
-                                "relative z-[1] w-auto object-contain p-1 transition-transform duration-500 ease-out group-hover:scale-[1.01] sm:p-2 md:p-2.5",
-                                openService.gallery.items.length === 1
-                                  ? "max-h-[min(88vh,48rem)] max-w-[min(98%,50rem)] sm:max-h-[min(84vh,44rem)]"
-                                  : "max-h-[96%] max-w-[98%]",
-                              )}
-                            />
+                            {thumb ? (
+                              <ImageWithFallback
+                                src={thumb}
+                                alt=""
+                                className={cn(
+                                  "relative z-[1] w-auto object-contain p-1 transition-transform duration-500 ease-out group-hover:scale-[1.01] sm:p-2 md:p-2.5",
+                                  signatureTreatments.length === 1
+                                    ? "max-h-[min(88vh,48rem)] max-w-[min(98%,50rem)] sm:max-h-[min(84vh,44rem)]"
+                                    : "max-h-[96%] max-w-[98%]",
+                                )}
+                              />
+                            ) : (
+                              <span className="relative z-[1] px-4 text-center text-xs text-muted-foreground [word-break:keep-all]">
+                                이미지 등록 예정
+                              </span>
+                            )}
                           </div>
-                          <div className="flex min-h-[4.5rem] flex-1 flex-col justify-center border-t border-gold-accent/12 bg-gradient-to-b from-white to-[#fdfcfa] px-3 py-3 sm:min-h-[4.75rem] sm:px-4 sm:py-3.5">
-                            <p className="text-sm font-semibold tracking-tight text-charcoal">{item.brand}</p>
-                            <p className="mt-0.5 text-[11px] text-muted-foreground sm:text-xs">{item.line}</p>
+                          <div className="flex min-h-[3.25rem] flex-1 flex-col justify-center border-t border-gold-accent/12 bg-gradient-to-b from-white to-[#fdfcfa] px-3 py-3 sm:min-h-[3.5rem] sm:px-4 sm:py-3">
+                            <p className="text-center text-sm font-semibold tracking-tight text-charcoal [word-break:keep-all]">{t.title}</p>
                           </div>
-                        </div>
-                      ))}
+                        </Link>
+                        );
+                      })}
                     </div>
+                    )}
                   </motion.div>
                 ) : null}
               </AnimatePresence>

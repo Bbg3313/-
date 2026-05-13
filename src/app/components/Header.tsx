@@ -6,7 +6,12 @@ import { useHomeLogoClick } from "../hooks/useHomeLogoClick";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { SITE_LINKS } from "../config/siteLinks";
 import { Sheet, SheetClose, SheetContent, SheetTitle, SheetTrigger } from "./ui/sheet";
-import { PROCEDURE_CATEGORIES, procedureCategoryPath } from "../../data/treatmentsCatalog";
+import {
+  PROCEDURE_CATEGORIES,
+  listTreatmentsByCategory,
+  procedureCategoryPath,
+  procedureDetailPath,
+} from "../../data/treatmentsCatalog";
 
 const MOBILE_SHEET_QUICK = {
   kakaoLabel: "\uCE74\uD1A1\uC0C1\uB2F4",
@@ -181,25 +186,42 @@ export function Header() {
             >
               <div className="max-h-[min(70vh,28rem)] overflow-x-auto overflow-y-auto border-b border-border/60 bg-background/[0.99] px-4 py-4 shadow-2xl shadow-black/10 ring-1 ring-black/[0.04] backdrop-blur-md sm:px-6 sm:py-5 md:px-8 md:py-5">
                 <div className="mx-auto flex w-full max-w-[1600px] flex-nowrap items-stretch gap-2 md:gap-3 lg:gap-4">
-                  {PROCEDURE_CATEGORIES.map((cat) => (
-                    <Link
-                      key={cat.slug}
-                      to={procedureCategoryPath(cat.slug)}
-                      className="group flex min-h-0 min-w-0 flex-1 basis-0 flex-col rounded-xl border border-border/35 bg-muted/[0.12] p-3 transition-colors hover:border-gold-accent/30 hover:bg-muted/[0.18] sm:p-3.5 md:p-4"
-                    >
-                      <span className="text-[13px] font-semibold leading-snug tracking-tight text-charcoal transition-colors group-hover:text-gold-accent [word-break:keep-all] md:text-[14px] lg:text-[15px]">
-                        {cat.label}
-                      </span>
-                      {cat.blurb ? (
-                        <span className="mt-2 line-clamp-2 text-[11px] leading-snug text-muted-foreground [word-break:keep-all] md:text-[12px] lg:line-clamp-3">
-                          {cat.blurb}
-                        </span>
-                      ) : null}
-                      <span className="mt-auto pt-3 text-[10px] font-semibold uppercase tracking-wider text-gold-accent/90 group-hover:text-gold-accent">
-                        둘러보기 →
-                      </span>
-                    </Link>
-                  ))}
+                  {PROCEDURE_CATEGORIES.map((cat) => {
+                    const treatments = listTreatmentsByCategory(cat.slug);
+                    return (
+                      <div
+                        key={cat.slug}
+                        className="group flex min-h-0 min-w-0 flex-1 basis-0 flex-col rounded-xl border border-border/35 bg-muted/[0.12] p-3 transition-colors hover:border-gold-accent/30 hover:bg-muted/[0.18] sm:p-3.5 md:p-4"
+                      >
+                        <Link
+                          to={procedureCategoryPath(cat.slug)}
+                          className="text-[13px] font-semibold leading-snug tracking-tight text-charcoal transition-colors hover:text-gold-accent [word-break:keep-all] md:text-[14px] lg:text-[15px]"
+                        >
+                          {cat.label}
+                        </Link>
+                        {treatments.length > 0 ? (
+                          <ul className="mt-2 min-h-0 flex-1 max-h-[min(11rem,32vh)] space-y-1 overflow-y-auto pr-0.5 md:max-h-[min(12rem,34vh)]">
+                            {treatments.map((t) => (
+                              <li key={t.slug}>
+                                <Link
+                                  to={procedureDetailPath(cat.slug, t.slug)}
+                                  className="block text-[11px] leading-snug text-muted-foreground transition-colors [word-break:keep-all] hover:text-gold-accent md:text-[12px]"
+                                >
+                                  {t.title}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        ) : null}
+                        <Link
+                          to={procedureCategoryPath(cat.slug)}
+                          className="mt-auto pt-2.5 text-[10px] font-semibold uppercase tracking-wider text-gold-accent/90 transition-colors hover:text-gold-accent"
+                        >
+                          둘러보기 →
+                        </Link>
+                      </div>
+                    );
+                  })}
                 </div>
                 <div className="mx-auto mt-5 flex max-w-[1600px] flex-wrap items-center justify-between gap-4 border-t border-border/50 pt-4 sm:mt-6 sm:pt-5">
                   <Link
