@@ -17,9 +17,9 @@ const footerLinks = [
 
 function InfoLine({ label, children }: { label: string; children: ReactNode }) {
   return (
-    <li className="flex flex-wrap items-center justify-center gap-x-2 sm:gap-x-3 text-sm text-muted-foreground leading-relaxed">
-      <span className="text-charcoal/75 font-medium shrink-0">{label}</span>
-      <span className="text-muted-foreground/45 select-none font-light" aria-hidden>
+    <li className="flex flex-wrap items-center justify-center gap-x-1.5 text-xs leading-snug text-muted-foreground sm:gap-x-3 sm:text-sm sm:leading-relaxed">
+      <span className="shrink-0 font-medium text-charcoal/75">{label}</span>
+      <span className="select-none font-light text-muted-foreground/45" aria-hidden>
         |
       </span>
       <span className="min-w-0 text-center [word-break:keep-all]">{children}</span>
@@ -28,7 +28,7 @@ function InfoLine({ label, children }: { label: string; children: ReactNode }) {
 }
 
 const socialInactive =
-  "flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-border/70 bg-background text-charcoal shadow-sm";
+  "flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-border/70 bg-background text-charcoal shadow-sm sm:h-11 sm:w-11";
 
 function SocialButton({
   href,
@@ -65,7 +65,7 @@ function SocialButton({
       target="_blank"
       rel="noopener noreferrer"
       className={cn(
-        "flex h-11 w-11 shrink-0 items-center justify-center rounded-full transition-all duration-200",
+        "flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-all duration-200 sm:h-11 sm:w-11",
         brand,
       )}
       aria-label={`${label} 새 창`}
@@ -85,22 +85,22 @@ export function Footer({ className }: FooterProps) {
   return (
     <footer className={cn("mt-auto", className)}>
       <div className="border-t border-border bg-muted/50">
-        <div className="mx-auto flex max-w-xl flex-col items-center px-6 pt-2 pb-6 md:pt-3 md:pb-12">
+        <div className="mx-auto flex max-w-xl flex-col items-center px-4 pb-3 pt-1.5 sm:px-6 sm:pb-6 sm:pt-2 md:pb-12 md:pt-3">
           <div className="flex w-full flex-col items-center">
             <Link
               to="/"
               onClick={onHomeLogoClick}
-              className="group inline-flex max-w-full flex-col items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-muted/50 rounded-sm"
+              className="group inline-flex max-w-full scale-[0.88] flex-col items-center rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-muted/50 sm:scale-100"
               aria-label="연세미의원 홈 — 맨 위로 이동"
             >
               <SiteLogo layout="vertical" className="opacity-95 transition-opacity group-hover:opacity-100" />
             </Link>
           </div>
 
-          <div className="my-4 h-px w-12 shrink-0 bg-gold-accent/35 md:my-7" aria-hidden />
+          <div className="my-2.5 h-px w-10 shrink-0 bg-gold-accent/35 sm:my-4 md:my-7" aria-hidden />
 
-          <div className="flex w-full max-w-md flex-col items-stretch gap-6 mx-auto">
-            <ul className="space-y-2.5 text-center">
+          <div className="mx-auto flex w-full max-w-md flex-col items-stretch gap-3 sm:gap-6">
+            <ul className="space-y-1 text-center sm:space-y-2.5">
               <InfoLine label="대표자">심형경</InfoLine>
               <InfoLine label="사업자등록번호">587-10-03051</InfoLine>
               <InfoLine label="주소">경북 경주시 화랑로 132, 2층 연세미의원</InfoLine>
@@ -114,18 +114,20 @@ export function Footer({ className }: FooterProps) {
               </InfoLine>
             </ul>
 
-            <div className="flex flex-wrap justify-center gap-4">
+            <div className="flex flex-wrap justify-center gap-3 sm:gap-4">
               <SocialButton href={SOCIAL_LINKS.instagram} label="인스타그램" variant="instagram">
-                <Instagram className="h-[22px] w-[22px]" strokeWidth={2} />
+                <Instagram className="h-[18px] w-[18px] sm:h-[22px] sm:w-[22px]" strokeWidth={2} />
               </SocialButton>
               <SocialButton href={SOCIAL_LINKS.naverBlog} label="네이버 블로그" variant="naver">
-                <NaverBlogIcon className="h-[26px] w-[26px] text-white" />
+                <NaverBlogIcon className="h-[22px] w-[22px] text-white sm:h-[26px] sm:w-[26px]" />
               </SocialButton>
             </div>
 
-            <div className="border border-border/60 bg-background/60 px-5 py-4 backdrop-blur-sm">
-              <p className="text-center text-xs tracking-widest text-charcoal/80 font-medium mb-2">주의사항</p>
-              <p className="text-center text-xs sm:text-sm text-muted-foreground leading-relaxed [word-break:keep-all]">
+            <div className="border border-border/60 bg-background/60 px-3 py-2 backdrop-blur-sm sm:px-5 sm:py-4">
+              <p className="mb-1 text-center text-[10px] font-medium tracking-widest text-charcoal/80 sm:mb-2 sm:text-xs">
+                주의사항
+              </p>
+              <p className="text-center text-[10px] leading-relaxed text-muted-foreground [word-break:keep-all] sm:text-sm sm:leading-relaxed">
                 해당 수술 및 시술의 결과는 개인마다 차이가 있을 수 있습니다. 개인에 따라 피부 트러블, 붓기, 출혈, 염증, 멍,
                 신경손상 등 부작용이 발생할 수 있으므로 주의를 요합니다.
               </p>
@@ -133,7 +135,7 @@ export function Footer({ className }: FooterProps) {
           </div>
 
           <nav
-            className="mt-7 flex flex-wrap justify-center items-center gap-x-1 gap-y-2 text-sm w-full"
+            className="mt-4 flex w-full flex-wrap items-center justify-center gap-x-0.5 gap-y-1 text-xs sm:mt-7 sm:gap-x-1 sm:gap-y-2 sm:text-sm"
             aria-label="법적 고지"
           >
             {footerLinks.map((item, i) => (
@@ -156,8 +158,8 @@ export function Footer({ className }: FooterProps) {
       </div>
 
       <div className="border-t border-primary/15 bg-secondary">
-        <div className="max-w-xl mx-auto px-6 py-3.5">
-          <p className="text-center text-muted-foreground text-[11px] sm:text-xs tracking-wide">
+        <div className="mx-auto max-w-xl px-4 py-2 sm:px-6 sm:py-3.5">
+          <p className="text-center text-[10px] tracking-wide text-muted-foreground sm:text-xs">
             © {new Date().getFullYear()} 연세미의원. All rights reserved.
           </p>
         </div>

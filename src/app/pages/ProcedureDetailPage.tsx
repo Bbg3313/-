@@ -24,7 +24,7 @@ export function ProcedureDetailPage() {
     return (
       <div className="flex min-h-screen flex-col bg-background">
         <Header />
-        <main className="flex-1 px-6 pb-24 pt-32 text-center md:pt-36">
+        <main className="flex-1 px-4 pb-28 pt-28 text-center sm:px-6 md:pb-24 md:pt-36">
           <p className="text-muted-foreground">시술 정보를 찾을 수 없습니다.</p>
           <Link to="/procedures" className="mt-4 inline-block text-gold-accent hover:underline">
             시술 안내 홈
@@ -48,9 +48,9 @@ export function ProcedureDetailPage() {
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <Header />
-      <main className="flex-1 px-6 pb-24 pt-32 md:pt-36">
+      <main className="flex-1 px-4 pb-28 pt-28 sm:px-6 md:pb-24 md:pt-36">
         <div className="mx-auto max-w-3xl">
-          <nav className="mb-6 flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+          <nav className="mb-5 flex flex-wrap items-center gap-x-1.5 gap-y-1 text-xs text-muted-foreground sm:mb-6 sm:gap-2 sm:text-sm">
             <Link to="/" className="hover:text-gold-accent">
               홈
             </Link>
@@ -67,13 +67,13 @@ export function ProcedureDetailPage() {
           </nav>
 
           <article>
-            <header className="mb-8">
+            <header className="mb-6 sm:mb-8">
               <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-gold-accent/90">Procedure</p>
               <h1
                 className="mt-2 text-charcoal"
                 style={{
                   fontFamily: "'Playfair Display', serif",
-                  fontSize: "clamp(1.75rem, 3.2vw, 2.35rem)",
+                  fontSize: "clamp(1.55rem, 5vw, 2.35rem)",
                   lineHeight: 1.15,
                   fontWeight: 500,
                 }}
@@ -86,8 +86,12 @@ export function ProcedureDetailPage() {
             </header>
 
             {heroSrc ? (
-              <div className="mb-8 overflow-hidden rounded-2xl border border-border/50 bg-muted/20 shadow-sm">
-                <ImageWithFallback src={heroSrc} alt="" className="w-full object-cover object-center" />
+              <div className="relative mb-8 aspect-[16/10] w-full overflow-hidden rounded-2xl border border-border/50 bg-muted/20 shadow-sm">
+                <ImageWithFallback
+                  src={heroSrc}
+                  alt=""
+                  className="absolute inset-0 h-full w-full object-cover object-center"
+                />
               </div>
             ) : null}
 
@@ -97,7 +101,7 @@ export function ProcedureDetailPage() {
             >
               <h2
                 id="procedure-spec-heading"
-                className="border-b border-gold-accent/20 bg-[#faf8f4] px-4 py-3 text-sm font-semibold tracking-tight text-charcoal sm:px-5"
+                className="border-b border-gold-accent/20 bg-[#faf8f4] px-3 py-2.5 text-sm font-semibold tracking-tight text-charcoal sm:px-5 sm:py-3"
               >
                 시술 요약
               </h2>
@@ -105,12 +109,12 @@ export function ProcedureDetailPage() {
                 {PROCEDURE_SPEC_LABELS.map(({ key, label }) => (
                   <div
                     key={key}
-                    className="grid gap-1 px-4 py-3 sm:grid-cols-[minmax(7rem,9rem)_1fr] sm:items-start sm:gap-4 sm:px-5 sm:py-3.5"
+                    className="grid gap-1 px-3 py-3 sm:grid-cols-[minmax(7rem,9rem)_1fr] sm:items-start sm:gap-4 sm:px-5 sm:py-3.5"
                   >
                     <dt className="text-xs font-semibold uppercase tracking-wide text-gold-accent/90 sm:pt-0.5">
                       {label}
                     </dt>
-                    <dd className="whitespace-pre-line text-[14px] leading-relaxed text-charcoal/90 [word-break:keep-all] sm:text-[15px]">
+                    <dd className="whitespace-pre-line text-[15px] leading-relaxed text-charcoal/90 [word-break:keep-all] sm:text-[15px]">
                       {displaySpecs[key]}
                     </dd>
                   </div>
@@ -136,16 +140,16 @@ export function ProcedureDetailPage() {
               </div>
             ) : null}
 
-            <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+            <div className="mt-8 flex flex-col gap-3 sm:mt-10 sm:flex-row sm:flex-wrap sm:items-center">
               <Link
                 to={priceHref}
-                className="inline-flex items-center justify-center rounded-xl border border-gold-accent/35 bg-gradient-to-b from-[#fff9ed] to-[#f3e6c8] px-5 py-3 text-sm font-semibold text-charcoal shadow-sm transition hover:border-gold-accent/55"
+                className="inline-flex min-h-12 w-full items-center justify-center rounded-xl border border-gold-accent/35 bg-gradient-to-b from-[#fff9ed] to-[#f3e6c8] px-5 py-3 text-sm font-semibold text-charcoal shadow-sm transition active:opacity-90 sm:min-h-0 sm:w-auto sm:hover:border-gold-accent/55"
               >
                 시술 · 가격표에서 금액 보기
               </Link>
               <Link
                 to={procedureCategoryPath(category.slug)}
-                className="inline-flex items-center justify-center rounded-xl border border-border px-5 py-3 text-sm font-medium text-muted-foreground transition hover:border-gold-accent/30 hover:text-charcoal"
+                className="inline-flex min-h-12 w-full items-center justify-center rounded-xl border border-border px-5 py-3 text-sm font-medium text-muted-foreground transition active:bg-muted/40 sm:min-h-0 sm:w-auto sm:hover:border-gold-accent/30 sm:hover:text-charcoal"
               >
                 ← {category.label} 목록
               </Link>

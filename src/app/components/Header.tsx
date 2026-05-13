@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useLayoutEffect, useCallback } from "react";
 import { Link, useLocation } from "react-router";
-import { Bell, CalendarDays, ChevronDown, Hospital, MenuIcon, Stethoscope, Ticket } from "lucide-react";
+import { Bell, CalendarDays, ChevronDown, Hospital, LayoutGrid, MenuIcon, Stethoscope, Ticket } from "lucide-react";
 import { SiteLogo } from "./branding/SiteLogo";
 import { useHomeLogoClick } from "../hooks/useHomeLogoClick";
 import { LanguageSwitcher } from "./LanguageSwitcher";
@@ -50,7 +50,6 @@ export function Header() {
   const isPricingActive = location.pathname === "/pricing";
   const isProceduresActive =
     location.pathname === "/procedures" || location.pathname.startsWith("/procedures/");
-  const isProceduresPricingTabActive = isPricingActive || isProceduresActive;
 
   useEffect(() => {
     if (!isHome) return;
@@ -121,15 +120,15 @@ export function Header() {
     <>
       <header
         ref={headerRef}
-        className={`fixed top-0 left-0 right-0 z-50 overflow-visible transition-all duration-500 ${
+        className={`fixed top-0 left-0 right-0 z-50 overflow-visible transition-all duration-500 pt-[max(0.5rem,env(safe-area-inset-top,0px))] ${
           solid ? "bg-background/98 backdrop-blur-md border-b border-border/50 shadow-sm" : "bg-transparent"
         }`}
       >
-      <nav className="relative mx-auto flex max-w-7xl items-center justify-between gap-4 overflow-visible px-5 py-3 sm:px-6 sm:py-4 md:py-5">
+      <nav className="relative mx-auto flex max-w-7xl items-center justify-between gap-2 overflow-visible px-3 py-2.5 sm:gap-4 sm:px-6 sm:py-4 md:py-5">
         <Link
           to="/"
           onClick={onHomeLogoClick}
-          className="group flex min-w-0 shrink-0 items-center transition-opacity duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-accent/45 focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm"
+          className="group flex min-w-0 max-w-[min(100%,58vw)] shrink items-center transition-opacity duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-accent/45 focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm sm:max-w-none sm:shrink-0"
           aria-label="연세미의원 홈"
         >
           <SiteLogo inverted={!solid} layout="horizontal" className={solid ? "opacity-100" : "opacity-[0.97]"} />
@@ -266,7 +265,7 @@ export function Header() {
           <LanguageSwitcher />
         </div>
 
-        <div className="flex shrink-0 items-center gap-1.5 md:hidden">
+        <div className="flex shrink-0 items-center gap-1 sm:gap-2 md:hidden">
           <LanguageSwitcher />
           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
             <SheetTrigger asChild>
@@ -362,8 +361,12 @@ export function Header() {
                   </Link>
                 </SheetClose>
                 <SheetClose asChild>
-                  <Link to="/procedures" className="flex items-center gap-2 rounded-md px-3 py-3 text-sm font-semibold text-charcoal hover:bg-muted/40">
-                    시술 안내 홈
+                  <Link
+                    to="/procedures"
+                    className="flex items-center gap-2 rounded-md px-3 py-3 text-sm font-semibold text-charcoal hover:bg-muted/40"
+                  >
+                    <LayoutGrid className="h-4 w-4 shrink-0 text-gold-accent/80" aria-hidden />
+                    시술 안내
                   </Link>
                 </SheetClose>
                 <div className="space-y-1 px-1 pb-2">
@@ -406,7 +409,7 @@ export function Header() {
         data-mobile-tabbar
         className="fixed inset-x-0 bottom-0 z-40 border-t border-border/70 bg-background/95 pb-[max(0.35rem,env(safe-area-inset-bottom))] pt-1 backdrop-blur-md md:hidden"
       >
-        <ul className="mx-auto grid w-full max-w-7xl grid-cols-[repeat(5,minmax(0,1fr))]">
+        <ul className="mx-auto grid w-full max-w-7xl grid-cols-6">
           <li className="min-w-0">
             <Link
               to="/events"
@@ -414,7 +417,7 @@ export function Header() {
                 isEventsActive ? "text-gold-accent" : "text-muted-foreground"
               }`}
             >
-              <Ticket className="h-4 w-4 shrink-0 text-gold-accent/80" aria-hidden />
+              <Ticket className="h-3.5 w-3.5 shrink-0 text-gold-accent/80 sm:h-4 sm:w-4" aria-hidden />
               <span className={MOBILE_TABBAR_LABEL}>이벤트</span>
             </Link>
           </li>
@@ -425,7 +428,7 @@ export function Header() {
                 isNoticeActive ? "text-gold-accent" : "text-muted-foreground"
               }`}
             >
-              <Bell className="h-4 w-4 shrink-0 text-gold-accent/80" aria-hidden />
+              <Bell className="h-3.5 w-3.5 shrink-0 text-gold-accent/80 sm:h-4 sm:w-4" aria-hidden />
               <span className={MOBILE_TABBAR_LABEL}>공지사항</span>
             </Link>
           </li>
@@ -436,7 +439,7 @@ export function Header() {
                 isAboutActive ? "text-gold-accent" : "text-muted-foreground"
               }`}
             >
-              <Hospital className="h-4 w-4 shrink-0 text-gold-accent/80" aria-hidden />
+              <Hospital className="h-3.5 w-3.5 shrink-0 text-gold-accent/80 sm:h-4 sm:w-4" aria-hidden />
               <span className={MOBILE_TABBAR_LABEL}>병원소개</span>
             </Link>
           </li>
@@ -447,19 +450,32 @@ export function Header() {
                 isDoctorsActive ? "text-gold-accent" : "text-muted-foreground"
               }`}
             >
-              <Stethoscope className="h-4 w-4 shrink-0 text-gold-accent/80" aria-hidden />
+              <Stethoscope className="h-3.5 w-3.5 shrink-0 text-gold-accent/80 sm:h-4 sm:w-4" aria-hidden />
               <span className={MOBILE_TABBAR_LABEL}>의료진</span>
             </Link>
           </li>
           <li className="min-w-0">
             <Link
-              to="/pricing"
+              to="/procedures"
+              title="시술 안내"
               className={`${MOBILE_TABBAR_ITEM} ${
-                isProceduresPricingTabActive ? "text-gold-accent" : "text-muted-foreground"
+                isProceduresActive ? "text-gold-accent" : "text-muted-foreground"
               }`}
             >
-              <CalendarDays className="h-4 w-4 shrink-0 text-gold-accent/80" aria-hidden />
-              <span className={MOBILE_TABBAR_LABEL}>시술/가격</span>
+              <LayoutGrid className="h-3.5 w-3.5 shrink-0 text-gold-accent/80 sm:h-4 sm:w-4" aria-hidden />
+              <span className={MOBILE_TABBAR_LABEL}>시술안내</span>
+            </Link>
+          </li>
+          <li className="min-w-0">
+            <Link
+              to="/pricing"
+              title="시술 · 가격"
+              className={`${MOBILE_TABBAR_ITEM} ${
+                isPricingActive ? "text-gold-accent" : "text-muted-foreground"
+              }`}
+            >
+              <CalendarDays className="h-3.5 w-3.5 shrink-0 text-gold-accent/80 sm:h-4 sm:w-4" aria-hidden />
+              <span className={MOBILE_TABBAR_LABEL}>시술가격</span>
             </Link>
           </li>
         </ul>

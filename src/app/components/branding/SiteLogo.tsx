@@ -14,6 +14,7 @@ export function SiteLogo({ inverted = false, layout = "horizontal", className }:
       className={cn(
         "flex min-w-0 flex-col justify-center leading-tight",
         layout === "vertical" && "items-center text-center",
+        layout === "horizontal" && "hidden sm:flex",
       )}
     >
       <span
@@ -32,7 +33,7 @@ export function SiteLogo({ inverted = false, layout = "horizontal", className }:
   const imgClass =
     layout === "vertical"
       ? "block h-[4.25rem] w-auto max-w-[min(100%,12.5rem)] shrink-0 object-contain object-center sm:h-[4.75rem] sm:max-w-[min(100%,14rem)]"
-      : "h-10 w-auto max-h-[3.25rem] max-w-[min(46vw,7.5rem)] shrink-0 object-contain object-left sm:h-12 sm:max-h-[3.75rem] sm:max-w-[min(40vw,8.5rem)] md:h-[3.35rem] md:max-h-[4rem] md:max-w-[9.5rem]";
+      : "h-9 w-auto max-h-[3rem] max-w-[min(40vw,6.25rem)] shrink-0 object-contain object-left sm:h-12 sm:max-h-[3.75rem] sm:max-w-[min(40vw,8.5rem)] md:h-[3.35rem] md:max-h-[4rem] md:max-w-[9.5rem]";
 
   return (
     <span

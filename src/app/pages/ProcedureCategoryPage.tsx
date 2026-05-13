@@ -21,7 +21,7 @@ export function ProcedureCategoryPage() {
     return (
       <div className="flex min-h-screen flex-col bg-background">
         <Header />
-        <main className="flex-1 px-6 pb-24 pt-32 text-center md:pt-36">
+        <main className="flex-1 px-4 pb-28 pt-28 text-center sm:px-6 md:pb-24 md:pt-36">
           <p className="text-muted-foreground">카테고리를 찾을 수 없습니다.</p>
           <Link to="/procedures" className="mt-4 inline-block text-gold-accent hover:underline">
             시술 안내 홈
@@ -35,9 +35,9 @@ export function ProcedureCategoryPage() {
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <Header />
-      <main className="flex-1 px-6 pb-24 pt-32 md:pt-36">
+      <main className="flex-1 px-4 pb-28 pt-28 sm:px-6 md:pb-24 md:pt-36">
         <div className="mx-auto max-w-6xl">
-          <nav className="mb-6 flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+          <nav className="mb-5 flex flex-wrap items-center gap-x-1.5 gap-y-1 text-xs text-muted-foreground sm:mb-6 sm:gap-2 sm:text-sm">
             <Link to="/" className="hover:text-gold-accent">
               홈
             </Link>
@@ -49,12 +49,12 @@ export function ProcedureCategoryPage() {
             <span className="text-charcoal">{category.label}</span>
           </nav>
 
-          <header className="mb-10 border-b border-gold-accent/15 pb-8 md:mb-12">
+          <header className="mb-8 border-b border-gold-accent/15 pb-6 md:mb-12 md:pb-8">
             <h1
               className="text-charcoal"
               style={{
                 fontFamily: "'Playfair Display', serif",
-                fontSize: "clamp(1.85rem, 3.5vw, 2.5rem)",
+                fontSize: "clamp(1.6rem, 5vw, 2.5rem)",
                 lineHeight: 1.15,
                 fontWeight: 500,
               }}
@@ -71,29 +71,29 @@ export function ProcedureCategoryPage() {
           {treatments.length === 0 ? (
             <p className="text-muted-foreground">등록된 시술 항목이 없습니다.</p>
           ) : (
-            <ul className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:gap-6">
+            <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:gap-6">
               {treatments.map((t) => {
                 const heroSrc = pickProcedureHeroImageUrl(category.slug, t.slug, t.heroImage, heroOverrides);
                 return (
                 <li key={t.slug}>
                   <Link
                     to={procedureDetailPath(category.slug, t.slug)}
-                    className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border/60 bg-white shadow-[0_8px_28px_-18px_rgba(35,28,22,0.12)] transition-[transform,box-shadow] duration-300 hover:-translate-y-0.5 hover:shadow-[0_14px_36px_-20px_rgba(35,28,22,0.18)]"
+                    className="group flex h-full min-h-0 flex-col overflow-hidden rounded-2xl border border-border/60 bg-white shadow-[0_8px_28px_-18px_rgba(35,28,22,0.12)] transition-[transform,box-shadow] duration-300 active:scale-[0.99] sm:hover:-translate-y-0.5 sm:hover:shadow-[0_14px_36px_-20px_rgba(35,28,22,0.18)]"
                   >
                     {heroSrc ? (
-                      <div className="relative aspect-[16/10] bg-muted/30">
+                      <div className="relative aspect-[16/10] w-full shrink-0 overflow-hidden bg-muted/30">
                         <ImageWithFallback
                           src={heroSrc}
                           alt=""
-                          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                          className="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.02]"
                         />
                         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent opacity-70" />
                       </div>
                     ) : (
-                      <div className="aspect-[16/10] bg-gradient-to-br from-[#f5f0e8] to-[#e8dfd2]" />
+                      <div className="aspect-[16/10] w-full shrink-0 bg-gradient-to-br from-[#f5f0e8] to-[#e8dfd2]" />
                     )}
-                    <div className="flex flex-1 flex-col p-4 sm:p-5">
-                      <h2 className="text-base font-semibold leading-snug text-charcoal [word-break:keep-all] sm:text-lg">
+                    <div className="flex flex-1 flex-col p-4 pb-5 sm:p-5">
+                      <h2 className="text-[15px] font-semibold leading-snug text-charcoal [word-break:keep-all] sm:text-lg">
                         {t.title}
                       </h2>
                       {t.subtitle ? (

@@ -68,7 +68,6 @@ const ABOUT_CLINIC_SLIDES = [
   { src: "/images/about-clinic-lobby.png", alt: "로비" },
   { src: "/images/about-clinic-slide-laser-room.png", alt: "레이저 시술실" },
   { src: "/images/about-clinic-room.png", alt: "시술실" },
-  { src: "/images/about-clinic-slide-care-room.png", alt: "관리실" },
 ] as const;
 
 function GalleryTile({
@@ -147,18 +146,14 @@ function AboutGalleryImages() {
             className="w-full"
           />
 
-          <div className="grid grid-cols-2 gap-2 sm:gap-2.5 md:grid-cols-5 md:gap-2.5 lg:gap-3">
+          <div className="grid grid-cols-2 gap-2 sm:gap-2.5 md:grid-cols-4 md:gap-2.5 lg:gap-3">
             {restSlides.map((slide, i) => (
               <GalleryTile
                 key={slide.src}
                 src={slide.src}
                 alt={slide.alt}
                 delay={0.05 + i * 0.04}
-                className={cn(
-                  "aspect-[3/4] min-h-0 min-w-0",
-                  i === restSlides.length - 1 &&
-                    "col-span-2 mx-auto w-full max-w-md md:col-span-1 md:max-w-none",
-                )}
+                className="aspect-[3/4] min-h-0 min-w-0"
               />
             ))}
           </div>
@@ -276,7 +271,7 @@ const SIGNATURE_SERVICES: SignatureService[] = [
     gallery: {
       eyebrow: "Laser toning",
       title: "레이저 토닝",
-      subtitle: "미인·GD 토닝 등 시술 안내와 동일한 항목·이미지로 표시됩니다.",
+      subtitle: "미인·GD 토닝 등 피부 톤·잡티 관리를 상담 시 맞춤 안내드립니다.",
     },
   },
   {
@@ -285,7 +280,7 @@ const SIGNATURE_SERVICES: SignatureService[] = [
     gallery: {
       eyebrow: "Laser lifting",
       title: "레이저 리프팅",
-      subtitle: "슈링크·덴서티·볼뉴머 등 리프팅 레이저 시술 안내와 연동됩니다.",
+      subtitle: "슈링크·덴서티·볼뉴머 등 초음파·고주파 리프팅을 상담 시 안내드립니다.",
     },
   },
   {
@@ -294,7 +289,7 @@ const SIGNATURE_SERVICES: SignatureService[] = [
     gallery: {
       eyebrow: "Thread lifting",
       title: "실리프팅 · 녹는실",
-      subtitle: "민트·PCL·잼버·하이코 등 시술 안내 데이터와 동일하게 표시됩니다.",
+      subtitle: "민트·PCL·잼버·하이코 등 녹는 실 라인을 상담 시 안내드립니다.",
     },
   },
   {
@@ -303,7 +298,7 @@ const SIGNATURE_SERVICES: SignatureService[] = [
     gallery: {
       eyebrow: "Scar & skin surface",
       title: "화상 · 흉터 케어",
-      subtitle: "대표 시술 페이지로 연결됩니다. 세부는 시술 안내에서 확인해 주세요.",
+      subtitle: "화상·흉터·표면 재생 케어를 상담 시 안내드립니다.",
     },
   },
   {
@@ -312,7 +307,7 @@ const SIGNATURE_SERVICES: SignatureService[] = [
     gallery: {
       eyebrow: "Laser hair removal",
       title: "레이저 제모",
-      subtitle: "제모 시술 안내와 동일한 썸네일·명칭이 반영됩니다.",
+      subtitle: "듀얼 파장 레이저 제모 등을 상담 시 안내드립니다.",
     },
   },
 ];
@@ -617,7 +612,7 @@ export function About() {
                     </div>
                     {signatureTreatments.length === 0 ? (
                       <p className="py-8 text-center text-sm text-muted-foreground [word-break:keep-all]">
-                        이 탭에 연결된 시술 안내 항목이 없습니다.
+                        이 탭에 등록된 시술이 없습니다.
                       </p>
                     ) : (
                     <div
