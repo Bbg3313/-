@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useLayoutEffect, useCallback } from "react";
 import { Link, useLocation } from "react-router";
 import { Bell, CalendarDays, ChevronDown, Hospital, MenuIcon, Stethoscope, Ticket } from "lucide-react";
 import { SiteLogo } from "./branding/SiteLogo";
@@ -31,7 +31,9 @@ export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [proceduresMenuOpen, setProceduresMenuOpen] = useState(false);
+  const [proceduresMegaTopPx, setProceduresMegaTopPx] = useState(0);
   const proceduresMenuCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const headerRef = useRef<HTMLElement | null>(null);
   const location = useLocation();
   const onHomeLogoClick = useHomeLogoClick();
   const isHome = location.pathname === "/";
@@ -66,6 +68,25 @@ export function Header() {
     [],
   );
 
+  const syncProceduresMegaTop = useCallback(() => {
+    const el = headerRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    setProceduresMegaTopPx(Math.max(0, rect.bottom - 10));
+  }, []);
+
+  useLayoutEffect(() => {
+    if (!proceduresMenuOpen) return;
+    syncProceduresMegaTop();
+    const onWin = () => syncProceduresMegaTop();
+    window.addEventListener("resize", onWin);
+    window.addEventListener("scroll", onWin, true);
+    return () => {
+      window.removeEventListener("resize", onWin);
+      window.removeEventListener("scroll", onWin, true);
+    };
+  }, [proceduresMenuOpen, syncProceduresMegaTop, mobileOpen, isScrolled, solid]);
+
   const clearProceduresMenuCloseTimer = () => {
     if (proceduresMenuCloseTimer.current) {
       clearTimeout(proceduresMenuCloseTimer.current);
@@ -75,6 +96,7 @@ export function Header() {
 
   const openProceduresMenu = () => {
     clearProceduresMenuCloseTimer();
+    syncProceduresMegaTop();
     setProceduresMenuOpen(true);
   };
 
@@ -93,6 +115,7 @@ export function Header() {
   return (
     <>
       <header
+        ref={headerRef}
         className={`fixed top-0 left-0 right-0 z-50 overflow-visible transition-all duration-500 ${
           solid ? "bg-background/98 backdrop-blur-md border-b border-border/50 shadow-sm" : "bg-transparent"
         }`}
@@ -146,38 +169,52 @@ export function Header() {
               />
             </Link>
             <div
-              className={`absolute left-0 top-full z-[60] pt-2 transition-[opacity,visibility] duration-150 ${
+              className={`fixed inset-x-0 z-[60] pt-3 transition-[opacity,visibility] duration-150 ${
                 proceduresMenuOpen
                   ? "visible opacity-100"
                   : "invisible pointer-events-none opacity-0"
               }`}
+              style={{ top: `${proceduresMegaTopPx || 72}px` }}
               role="navigation"
               aria-label="시술 카테고리"
               aria-hidden={!proceduresMenuOpen}
             >
-              <div className="min-w-[13.5rem] max-h-[min(70vh,22rem)] overflow-y-auto rounded-lg border border-border/60 bg-background/98 py-1 shadow-lg shadow-black/10 ring-1 ring-black/[0.04] backdrop-blur-md">
-                {PROCEDURE_CATEGORIES.map((cat) => (
+              <div className="max-h-[min(70vh,28rem)] overflow-x-auto overflow-y-auto border-b border-border/60 bg-background/[0.99] px-4 py-4 shadow-2xl shadow-black/10 ring-1 ring-black/[0.04] backdrop-blur-md sm:px-6 sm:py-5 md:px-8 md:py-5">
+                <div className="mx-auto flex w-full max-w-[1600px] flex-nowrap items-stretch gap-2 md:gap-3 lg:gap-4">
+                  {PROCEDURE_CATEGORIES.map((cat) => (
+                    <Link
+                      key={cat.slug}
+                      to={procedureCategoryPath(cat.slug)}
+                      className="group flex min-h-0 min-w-0 flex-1 basis-0 flex-col rounded-xl border border-border/35 bg-muted/[0.12] p-3 transition-colors hover:border-gold-accent/30 hover:bg-muted/[0.18] sm:p-3.5 md:p-4"
+                    >
+                      <span className="text-[13px] font-semibold leading-snug tracking-tight text-charcoal transition-colors group-hover:text-gold-accent [word-break:keep-all] md:text-[14px] lg:text-[15px]">
+                        {cat.label}
+                      </span>
+                      {cat.blurb ? (
+                        <span className="mt-2 line-clamp-2 text-[11px] leading-snug text-muted-foreground [word-break:keep-all] md:text-[12px] lg:line-clamp-3">
+                          {cat.blurb}
+                        </span>
+                      ) : null}
+                      <span className="mt-auto pt-3 text-[10px] font-semibold uppercase tracking-wider text-gold-accent/90 group-hover:text-gold-accent">
+                        둘러보기 →
+                      </span>
+                    </Link>
+                  ))}
+                </div>
+                <div className="mx-auto mt-5 flex max-w-[1600px] flex-wrap items-center justify-between gap-4 border-t border-border/50 pt-4 sm:mt-6 sm:pt-5">
                   <Link
-                    key={cat.slug}
-                    to={procedureCategoryPath(cat.slug)}
-                    className="block px-4 py-2.5 text-sm font-medium text-charcoal transition-colors hover:bg-muted/50 hover:text-gold-accent [word-break:keep-all]"
+                    to="/procedures"
+                    className="text-sm font-semibold uppercase tracking-wider text-charcoal hover:text-gold-accent"
                   >
-                    {cat.label}
+                    시술 안내 홈
                   </Link>
-                ))}
-                <div className="my-1 border-t border-border/50" />
-                <Link
-                  to="/procedures"
-                  className="block px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground transition-colors hover:bg-muted/50 hover:text-gold-accent"
-                >
-                  시술 안내 홈
-                </Link>
-                <Link
-                  to="/pricing"
-                  className="block px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground transition-colors hover:bg-muted/50 hover:text-gold-accent"
-                >
-                  시술·가격표
-                </Link>
+                  <Link
+                    to="/pricing"
+                    className="text-sm font-semibold uppercase tracking-wider text-muted-foreground hover:text-gold-accent"
+                  >
+                    시술·가격표
+                  </Link>
+                </div>
               </div>
             </div>
           </li>
