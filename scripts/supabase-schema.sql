@@ -128,3 +128,34 @@ create policy "auth_write_notice_files" on storage.objects
 for all using (bucket_id = 'notice-files' and auth.role() = 'authenticated')
 with check (bucket_id = 'notice-files' and auth.role() = 'authenticated');
 
+-- ---------------------------------------------------------------------------
+-- 시술 히어로 이미지 오버레이 (관리자 업로드)
+-- ---------------------------------------------------------------------------
+create table if not exists public.procedure_hero_images (
+  treatment_slug text primary key,
+  hero_image_url text not null,
+  updated_at timestamptz not null default now()
+);
+
+alter table public.procedure_hero_images enable row level security;
+
+drop policy if exists "public_read_procedure_hero_images" on public.procedure_hero_images;
+create policy "public_read_procedure_hero_images" on public.procedure_hero_images
+for select using (true);
+
+drop policy if exists "admin_all_procedure_hero_images" on public.procedure_hero_images;
+create policy "admin_all_procedure_hero_images" on public.procedure_hero_images
+for all using (auth.role() = 'authenticated') with check (auth.role() = 'authenticated');
+
+insert into storage.buckets (id, name, public)
+values ('procedure-images', 'procedure-images', true)
+on conflict (id) do nothing;
+
+drop policy if exists "public_read_procedure_images" on storage.objects;
+create policy "public_read_procedure_images" on storage.objects
+for select using (bucket_id = 'procedure-images');
+
+drop policy if exists "auth_write_procedure_images" on storage.objects;
+create policy "auth_write_procedure_images" on storage.objects
+for all using (bucket_id = 'procedure-images' and auth.role() = 'authenticated')
+with check (bucket_id = 'procedure-images' and auth.role() = 'authenticated');

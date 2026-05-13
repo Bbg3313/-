@@ -8,11 +8,14 @@ import {
   getProcedureTreatment,
   procedureCategoryPath,
 } from "../../data/treatmentsCatalog";
+import { useProcedureHeroImageOverrides } from "../hooks/useProcedureHeroImageOverrides";
+import { pickProcedureHeroImageUrl } from "../lib/procedureHeroImages";
 
 export function ProcedureDetailPage() {
   const { categorySlug = "", treatmentSlug = "" } = useParams();
   const category = getProcedureCategory(categorySlug);
   const treatment = getProcedureTreatment(categorySlug, treatmentSlug);
+  const { map: heroOverrides } = useProcedureHeroImageOverrides();
 
   if (!category || !treatment) {
     return (
@@ -30,6 +33,7 @@ export function ProcedureDetailPage() {
   }
 
   const priceHref = treatment.priceSectionId ? `/pricing#pricing-${treatment.priceSectionId}` : "/pricing";
+  const heroSrc = pickProcedureHeroImageUrl(categorySlug, treatmentSlug, treatment.heroImage, heroOverrides);
 
   const normalizeText = (s: string) => s.replace(/\r\n/g, "\n").trim();
   const showBodyNarrative =
@@ -76,9 +80,9 @@ export function ProcedureDetailPage() {
               ) : null}
             </header>
 
-            {treatment.heroImage ? (
+            {heroSrc ? (
               <div className="mb-8 overflow-hidden rounded-2xl border border-border/50 bg-muted/20 shadow-sm">
-                <ImageWithFallback src={treatment.heroImage} alt="" className="w-full object-cover object-center" />
+                <ImageWithFallback src={heroSrc} alt="" className="w-full object-cover object-center" />
               </div>
             ) : null}
 

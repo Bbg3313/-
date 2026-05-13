@@ -45,3 +45,10 @@ export type Notice = {
   updated_at: string;
 };
 
+/** `treatment_slug` 컬럼: 권장 `categorySlug/treatmentSlug`, 레거시로 시술 슬러그만 저장된 행도 허용 */
+export type ProcedureHeroImageRow = {
+  treatment_slug: string;
+  hero_image_url: string;
+  updated_at: string;
+};
+

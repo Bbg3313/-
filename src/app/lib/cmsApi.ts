@@ -1,9 +1,9 @@
-import type { HeroBanner, Notice, Promotion } from "../types/cms";
+import type { HeroBanner, Notice, Promotion, ProcedureHeroImageRow } from "../types/cms";
 import type { PricingSnapshot } from "../../data/pricingData";
 import { supabase } from "./supabase";
 import { parsePricingSnapshot } from "./validatePricingSnapshot";
 
-type UploadBucket = "hero-images" | "promotion-images" | "notice-files";
+type UploadBucket = "hero-images" | "promotion-images" | "notice-files" | "procedure-images";
 
 function getClient() {
   if (!supabase) {
@@ -85,7 +85,7 @@ function storageUploadErrorMessage(bucket: UploadBucket, raw: string): string {
       `스토리지 버킷 "${bucket}"이(가) Supabase에 없습니다.`,
       "Supabase 대시보드 → Storage에서 버킷 이름을 정확히 만들거나,",
       "SQL Editor에서 프로젝트의 scripts/supabase-storage-buckets.sql 파일 내용을 실행하세요.",
-      "(버킷 ID는 hero-images, promotion-images, notice-files 이어야 합니다. 공개 Public 권장)",
+      "(버킷 ID는 hero-images, promotion-images, notice-files, procedure-images 이어야 합니다. 공개 Public 권장)",
     ].join(" ");
   }
   if (lower.includes("row-level security") || lower.includes("rls") || lower.includes("policy")) {
@@ -265,6 +265,42 @@ export async function savePricingSnapshotAdmin(payload: PricingSnapshot) {
     },
     { onConflict: "singleton" },
   );
+  if (error) throwDb(error);
+}
+
+/** 공개 페이지: 테이블 없거나 오류 시 빈 객체 (사이트 기본 이미지 유지) */
+export async function fetchProcedureHeroImageOverrides(): Promise<Record<string, string>> {
+  if (!supabase) return {};
+  const { data, error } = await supabase.from("procedure_hero_images").select("treatment_slug, hero_image_url");
+  if (error || !data) return {};
+  return Object.fromEntries(
+    (data as { treatment_slug: string; hero_image_url: string }[]).map((r) => [r.treatment_slug, r.hero_image_url]),
+  );
+}
+
+export async function fetchProcedureHeroImagesAdmin(): Promise<ProcedureHeroImageRow[]> {
+  const client = getClient();
+  const { data, error } = await client.from("procedure_hero_images").select("*").order("treatment_slug");
+  if (error) throwDb(error);
+  return (data ?? []) as ProcedureHeroImageRow[];
+}
+
+export async function upsertProcedureHeroImage(treatmentSlug: string, heroImageUrl: string) {
+  const client = getClient();
+  const { error } = await client.from("procedure_hero_images").upsert(
+    {
+      treatment_slug: treatmentSlug,
+      hero_image_url: heroImageUrl,
+      updated_at: new Date().toISOString(),
+    },
+    { onConflict: "treatment_slug" },
+  );
+  if (error) throwDb(error);
+}
+
+export async function deleteProcedureHeroImage(treatmentSlug: string) {
+  const client = getClient();
+  const { error } = await client.from("procedure_hero_images").delete().eq("treatment_slug", treatmentSlug);
   if (error) throwDb(error);
 }
 

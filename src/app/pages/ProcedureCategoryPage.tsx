@@ -8,11 +8,14 @@ import {
   procedureCategoryPath,
   procedureDetailPath,
 } from "../../data/treatmentsCatalog";
+import { useProcedureHeroImageOverrides } from "../hooks/useProcedureHeroImageOverrides";
+import { pickProcedureHeroImageUrl } from "../lib/procedureHeroImages";
 
 export function ProcedureCategoryPage() {
   const { categorySlug = "" } = useParams();
   const category = getProcedureCategory(categorySlug);
   const treatments = category ? listTreatmentsByCategory(categorySlug) : [];
+  const { map: heroOverrides } = useProcedureHeroImageOverrides();
 
   if (!category) {
     return (
@@ -69,16 +72,18 @@ export function ProcedureCategoryPage() {
             <p className="text-muted-foreground">등록된 시술 항목이 없습니다.</p>
           ) : (
             <ul className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:gap-6">
-              {treatments.map((t) => (
+              {treatments.map((t) => {
+                const heroSrc = pickProcedureHeroImageUrl(category.slug, t.slug, t.heroImage, heroOverrides);
+                return (
                 <li key={t.slug}>
                   <Link
                     to={procedureDetailPath(category.slug, t.slug)}
                     className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border/60 bg-white shadow-[0_8px_28px_-18px_rgba(35,28,22,0.12)] transition-[transform,box-shadow] duration-300 hover:-translate-y-0.5 hover:shadow-[0_14px_36px_-20px_rgba(35,28,22,0.18)]"
                   >
-                    {t.heroImage ? (
+                    {heroSrc ? (
                       <div className="relative aspect-[16/10] bg-muted/30">
                         <ImageWithFallback
-                          src={t.heroImage}
+                          src={heroSrc}
                           alt=""
                           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
                         />
@@ -98,7 +103,8 @@ export function ProcedureCategoryPage() {
                     </div>
                   </Link>
                 </li>
-              ))}
+                );
+              })}
             </ul>
           )}
 
