@@ -10,29 +10,9 @@ import {
   procedureDetailPath,
 } from "../../data/treatmentsCatalog";
 
-/** 모바일에서 대카테고리 카드만 색으로 구분 (md 이상은 기존 통일 톤) */
-function hubCategoryCardMobileClass(slug: string): string {
-  const bySlug: Record<string, string> = {
-    "botox-filler":
-      "max-md:border max-md:border-rose-200/80 max-md:border-l-[6px] max-md:border-l-rose-500 max-md:bg-gradient-to-br max-md:from-rose-50 max-md:to-amber-50/90 max-md:ring-1 max-md:ring-rose-100/45",
-    "thread-lifting":
-      "max-md:border max-md:border-violet-200/75 max-md:border-l-[6px] max-md:border-l-violet-500 max-md:bg-gradient-to-br max-md:from-violet-50 max-md:to-fuchsia-50/85 max-md:ring-1 max-md:ring-violet-100/40",
-    laser:
-      "max-md:border max-md:border-sky-200/80 max-md:border-l-[6px] max-md:border-l-sky-500 max-md:bg-gradient-to-br max-md:from-sky-50 max-md:to-cyan-50/90 max-md:ring-1 max-md:ring-sky-100/40",
-    "lifting-laser":
-      "max-md:border max-md:border-amber-200/80 max-md:border-l-[6px] max-md:border-l-amber-500 max-md:bg-gradient-to-br max-md:from-amber-50 max-md:to-orange-50/85 max-md:ring-1 max-md:ring-amber-100/40",
-    "glow-booster":
-      "max-md:border max-md:border-emerald-200/75 max-md:border-l-[6px] max-md:border-l-emerald-500 max-md:bg-gradient-to-br max-md:from-emerald-50 max-md:to-teal-50/88 max-md:ring-1 max-md:ring-emerald-100/38",
-    "hair-removal":
-      "max-md:border max-md:border-slate-200/85 max-md:border-l-[6px] max-md:border-l-slate-500 max-md:bg-gradient-to-br max-md:from-slate-50 max-md:to-zinc-50/90 max-md:ring-1 max-md:ring-slate-100/45",
-    "tattoo-removal":
-      "max-md:border max-md:border-indigo-200/75 max-md:border-l-[6px] max-md:border-l-indigo-500 max-md:bg-gradient-to-br max-md:from-indigo-50 max-md:to-violet-50/85 max-md:ring-1 max-md:ring-indigo-100/40",
-  };
-  return (
-    bySlug[slug] ??
-    "max-md:border max-md:border-gold-accent/25 max-md:border-l-[6px] max-md:border-l-gold-accent max-md:bg-gradient-to-b max-md:from-white max-md:to-[#faf8f4] max-md:ring-1 max-md:ring-white/70"
-  );
-}
+/** 모바일 대카테고리 카드 — 골드·크림 톤만 (카테고리마다 다른 색 사용 안 함) */
+const HUB_CATEGORY_CARD_MOBILE_GOLD =
+  "max-md:border max-md:border-gold-accent/22 max-md:border-l-[5px] max-md:border-l-gold-accent max-md:bg-gradient-to-b max-md:from-white max-md:to-[#faf6ed] max-md:ring-1 max-md:ring-gold-accent/12";
 
 export function ProceduresHubPage() {
   return (
@@ -66,7 +46,7 @@ export function ProceduresHubPage() {
                     className={cn(
                       "flex h-full flex-col rounded-2xl border p-4 shadow-[0_10px_36px_-24px_rgba(35,28,22,0.15)] transition-[transform,box-shadow,border-color] duration-300 active:scale-[0.99] sm:p-6 sm:hover:-translate-y-0.5 sm:hover:shadow-[0_16px_44px_-26px_rgba(35,28,22,0.2)]",
                       "md:border-gold-accent/18 md:bg-gradient-to-b md:from-white md:to-[#faf8f4] md:ring-1 md:ring-white/70 md:hover:border-gold-accent/30",
-                      hubCategoryCardMobileClass(cat.slug),
+                      HUB_CATEGORY_CARD_MOBILE_GOLD,
                     )}
                   >
                     <Link
