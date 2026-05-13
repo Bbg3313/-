@@ -28,7 +28,7 @@ export function Doctors() {
             className="mb-3 text-charcoal tracking-tight md:mb-6"
             style={{
               fontFamily: "'Playfair Display', serif",
-              fontSize: "3.5rem",
+              fontSize: "clamp(2.35rem, 8vw, 3.5rem)",
               lineHeight: "1.1",
               fontWeight: "500",
             }}

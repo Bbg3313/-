@@ -61,7 +61,12 @@ export function Services() {
           <div className="mb-4 h-px w-12 bg-primary md:mb-8" />
           <h2
             className="mb-3 text-foreground tracking-tight md:mb-6"
-            style={{ fontFamily: "'Playfair Display', serif", fontSize: "3.5rem", lineHeight: "1.1", fontWeight: "600" }}
+            style={{
+              fontFamily: "'Playfair Display', serif",
+              fontSize: "clamp(2.35rem, 8vw, 3.5rem)",
+              lineHeight: "1.1",
+              fontWeight: "600",
+            }}
           >
             Medical Services
           </h2>

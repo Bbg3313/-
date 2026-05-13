@@ -73,16 +73,15 @@ export function ProcedureCategoryPage() {
                     className="group flex h-full min-h-0 flex-col overflow-hidden rounded-2xl border border-border/60 bg-white shadow-[0_8px_28px_-18px_rgba(35,28,22,0.12)] transition-[transform,box-shadow] duration-300 active:scale-[0.99] sm:hover:-translate-y-0.5 sm:hover:shadow-[0_14px_36px_-20px_rgba(35,28,22,0.18)]"
                   >
                     {heroSrc ? (
-                      <div className="relative aspect-[16/10] w-full shrink-0 overflow-hidden bg-muted/30">
+                      <div className="relative aspect-square w-full shrink-0 overflow-hidden bg-muted/25">
                         <ImageWithFallback
                           src={heroSrc}
                           alt=""
-                          className="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.02]"
+                          className="absolute inset-0 h-full w-full object-contain object-center p-1 transition-transform duration-500 group-hover:scale-[1.02] sm:p-1.5"
                         />
-                        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent opacity-70" />
                       </div>
                     ) : (
-                      <div className="aspect-[16/10] w-full shrink-0 bg-gradient-to-br from-[#f5f0e8] to-[#e8dfd2]" />
+                      <div className="aspect-square w-full shrink-0 bg-gradient-to-br from-[#f5f0e8] to-[#e8dfd2]" />
                     )}
                     <div className="flex flex-1 flex-col p-4 pb-5 sm:p-5">
                       <h2 className="text-[15px] font-semibold leading-snug text-charcoal [word-break:keep-all] sm:text-lg">

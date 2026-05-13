@@ -78,11 +78,11 @@ export function ProcedureDetailPage() {
             </header>
 
             {heroSrc ? (
-              <div className="relative mb-8 aspect-[16/10] w-full overflow-hidden rounded-2xl border border-border/50 bg-muted/20 shadow-sm">
+              <div className="relative mb-8 aspect-square w-full overflow-hidden rounded-2xl border border-border/50 bg-muted/25 shadow-sm">
                 <ImageWithFallback
                   src={heroSrc}
                   alt=""
-                  className="absolute inset-0 h-full w-full object-cover object-center"
+                  className="absolute inset-0 h-full w-full object-contain object-center p-2 sm:p-3"
                 />
               </div>
             ) : null}
@@ -117,8 +117,15 @@ export function ProcedureDetailPage() {
             {treatment.gallery && treatment.gallery.length > 0 ? (
               <ul className="mb-8 grid grid-cols-2 gap-3 sm:grid-cols-3">
                 {treatment.gallery.map((src) => (
-                  <li key={src} className="overflow-hidden rounded-xl border border-border/40">
-                    <ImageWithFallback src={src} alt="" className="aspect-square w-full object-cover" />
+                  <li
+                    key={src}
+                    className="relative aspect-square overflow-hidden rounded-xl border border-border/40 bg-muted/25"
+                  >
+                    <ImageWithFallback
+                      src={src}
+                      alt=""
+                      className="h-full w-full object-contain object-center p-1 sm:p-1.5"
+                    />
                   </li>
                 ))}
               </ul>

@@ -85,7 +85,7 @@ export function ConsultationChannelsSection({
       <div className="mx-auto max-w-3xl px-4 sm:px-6 md:max-w-5xl md:px-8">
         {showHeader ? (
           <header className="mb-8 text-center sm:mb-10">
-            <h2 className="mb-3 text-[clamp(1.35rem,2.8vw,1.75rem)] font-semibold leading-snug tracking-tight text-charcoal">
+            <h2 className="mb-3 font-semibold leading-snug tracking-tight text-charcoal max-md:text-[clamp(2.35rem,8vw,3.5rem)] max-md:leading-[1.1] md:text-[clamp(1.35rem,2.8vw,1.75rem)]">
               {heading}
             </h2>
             <p className="mx-auto max-w-xl text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg [word-break:keep-all]">
