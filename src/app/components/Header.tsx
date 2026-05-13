@@ -161,27 +161,25 @@ export function Header() {
               aria-label="시술 카테고리"
               aria-hidden={!proceduresMenuOpen}
             >
-              <div className="max-h-[min(82vh,40rem)] overflow-y-auto rounded-b-2xl border border-t-0 border-border/60 bg-background/[0.99] px-5 py-6 shadow-2xl shadow-black/10 ring-1 ring-black/[0.04] backdrop-blur-md sm:px-7 sm:py-7 md:px-8 md:py-8">
-                <div className="grid gap-6 sm:gap-7 md:grid-cols-2 lg:grid-cols-5 lg:gap-5 xl:gap-7">
+              <div className="max-h-[min(85vh,44rem)] overflow-x-auto overflow-y-auto rounded-b-2xl border border-t-0 border-border/60 bg-background/[0.99] px-4 py-5 shadow-2xl shadow-black/10 ring-1 ring-black/[0.04] backdrop-blur-md sm:px-5 sm:py-6 md:px-6 md:py-6">
+                <div className="grid w-full grid-cols-5 gap-2 md:gap-3 lg:gap-4">
                   {PROCEDURE_CATEGORIES.map((cat) => (
-                    <div key={cat.slug} className="min-w-0 rounded-xl border border-border/35 bg-muted/[0.12] p-3.5 sm:p-4">
+                    <div
+                      key={cat.slug}
+                      className="flex min-h-0 min-w-0 flex-col rounded-xl border border-border/35 bg-muted/[0.12] p-2.5 sm:p-3 md:p-3.5"
+                    >
                       <Link
                         to={procedureCategoryPath(cat.slug)}
-                        className="text-[15px] font-semibold leading-snug tracking-tight text-charcoal transition-colors hover:text-gold-accent [word-break:keep-all] sm:text-base"
+                        className="text-[13px] font-semibold leading-snug tracking-tight text-charcoal transition-colors hover:text-gold-accent [word-break:keep-all] md:text-[14px] lg:text-[15px]"
                       >
                         {cat.label}
                       </Link>
-                      {cat.blurb ? (
-                        <p className="mt-1.5 text-[11px] leading-relaxed text-muted-foreground [word-break:keep-all] sm:text-xs">
-                          {cat.blurb}
-                        </p>
-                      ) : null}
-                      <ul className="mt-3 space-y-1.5 border-l-2 border-gold-accent/25 pl-3 sm:mt-3.5">
+                      <ul className="mt-2 max-h-[min(38vh,15rem)] flex-1 space-y-1 overflow-y-auto overscroll-contain border-l-2 border-gold-accent/25 pl-2 sm:mt-2.5 sm:pl-2.5 md:max-h-[min(40vh,16rem)]">
                         {listTreatmentsByCategory(cat.slug).map((t) => (
                           <li key={t.slug}>
                             <Link
                               to={procedureDetailPath(cat.slug, t.slug)}
-                              className="block py-0.5 text-[13px] leading-snug text-muted-foreground transition-colors hover:text-gold-accent [word-break:keep-all] sm:text-sm"
+                              className="block py-0.5 text-[11px] leading-snug text-muted-foreground transition-colors hover:text-gold-accent [word-break:keep-all] md:text-[12px] lg:text-[13px]"
                             >
                               {t.title}
                             </Link>
@@ -190,9 +188,9 @@ export function Header() {
                       </ul>
                       <Link
                         to={procedureCategoryPath(cat.slug)}
-                        className="mt-3 inline-block text-[11px] font-semibold uppercase tracking-wider text-gold-accent/95 hover:text-gold-accent"
+                        className="mt-2 inline-block shrink-0 text-[10px] font-semibold uppercase tracking-wider text-gold-accent/95 hover:text-gold-accent"
                       >
-                        {cat.label} 전체 →
+                        전체 →
                       </Link>
                     </div>
                   ))}
