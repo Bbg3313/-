@@ -1,7 +1,15 @@
-import type { HeroBanner, Notice, Promotion, ProcedureHeroImageRow } from "../types/cms";
+import type {
+  HeroBanner,
+  Notice,
+  Promotion,
+  ProcedureHeroImageRow,
+  ProcedureSpecsOverrideRow,
+} from "../types/cms";
 import type { PricingSnapshot } from "../../data/pricingData";
+import type { ProcedureDetailSpecs } from "../../data/proceduresExcelCatalog";
 import { supabase } from "./supabase";
 import { parsePricingSnapshot } from "./validatePricingSnapshot";
+import { sanitizeSpecPatch } from "./procedureSpecsMerge";
 
 type UploadBucket = "hero-images" | "promotion-images" | "notice-files" | "procedure-images";
 
@@ -301,6 +309,51 @@ export async function upsertProcedureHeroImage(treatmentSlug: string, heroImageU
 export async function deleteProcedureHeroImage(treatmentSlug: string) {
   const client = getClient();
   const { error } = await client.from("procedure_hero_images").delete().eq("treatment_slug", treatmentSlug);
+  if (error) throwDb(error);
+}
+
+/** 공개: 테이블 없음/오류 시 빈 객체 */
+export async function fetchProcedureSpecsOverridesPublic(): Promise<
+  Record<string, Partial<ProcedureDetailSpecs>>
+> {
+  if (!supabase) return {};
+  const { data, error } = await supabase.from("procedure_specs_overrides").select("treatment_key, specs_patch");
+  if (error || !data) return {};
+  return Object.fromEntries(
+    (data as { treatment_key: string; specs_patch: unknown }[]).map((r) => [r.treatment_key, sanitizeSpecPatch(r.specs_patch)]),
+  );
+}
+
+export async function fetchProcedureSpecsOverridesAdmin(): Promise<ProcedureSpecsOverrideRow[]> {
+  const client = getClient();
+  const { data, error } = await client.from("procedure_specs_overrides").select("*").order("treatment_key");
+  if (error) throwDb(error);
+  return (data ?? []).map((row) => {
+    const r = row as { treatment_key: string; specs_patch: unknown; updated_at: string };
+    return {
+      treatment_key: r.treatment_key,
+      specs_patch: sanitizeSpecPatch(r.specs_patch) as Record<string, string>,
+      updated_at: r.updated_at,
+    };
+  });
+}
+
+export async function upsertProcedureSpecsOverride(treatmentKey: string, patch: Partial<ProcedureDetailSpecs>) {
+  const client = getClient();
+  const { error } = await client.from("procedure_specs_overrides").upsert(
+    {
+      treatment_key: treatmentKey,
+      specs_patch: patch,
+      updated_at: new Date().toISOString(),
+    },
+    { onConflict: "treatment_key" },
+  );
+  if (error) throwDb(error);
+}
+
+export async function deleteProcedureSpecsOverride(treatmentKey: string) {
+  const client = getClient();
+  const { error } = await client.from("procedure_specs_overrides").delete().eq("treatment_key", treatmentKey);
   if (error) throwDb(error);
 }
 

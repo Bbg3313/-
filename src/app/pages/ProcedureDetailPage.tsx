@@ -9,13 +9,16 @@ import {
   procedureCategoryPath,
 } from "../../data/treatmentsCatalog";
 import { useProcedureHeroImageOverrides } from "../hooks/useProcedureHeroImageOverrides";
-import { pickProcedureHeroImageUrl } from "../lib/procedureHeroImages";
+import { useProcedureSpecOverridesMap } from "../hooks/useProcedureSpecOverridesMap";
+import { pickProcedureHeroImageUrl, procedureHeroImageStorageKey } from "../lib/procedureHeroImages";
+import { mergeProcedureSpecs } from "../lib/procedureSpecsMerge";
 
 export function ProcedureDetailPage() {
   const { categorySlug = "", treatmentSlug = "" } = useParams();
+  const { map: heroOverrides } = useProcedureHeroImageOverrides();
+  const { map: specOverrides } = useProcedureSpecOverridesMap();
   const category = getProcedureCategory(categorySlug);
   const treatment = getProcedureTreatment(categorySlug, treatmentSlug);
-  const { map: heroOverrides } = useProcedureHeroImageOverrides();
 
   if (!category || !treatment) {
     return (
@@ -34,11 +37,13 @@ export function ProcedureDetailPage() {
 
   const priceHref = treatment.priceSectionId ? `/pricing#pricing-${treatment.priceSectionId}` : "/pricing";
   const heroSrc = pickProcedureHeroImageUrl(categorySlug, treatmentSlug, treatment.heroImage, heroOverrides);
+  const specStorageKey = procedureHeroImageStorageKey(categorySlug, treatmentSlug);
+  const displaySpecs = mergeProcedureSpecs(treatment.specs, specOverrides[specStorageKey] ?? specOverrides[treatmentSlug]);
 
   const normalizeText = (s: string) => s.replace(/\r\n/g, "\n").trim();
   const showBodyNarrative =
     treatment.body.trim().length > 0 &&
-    normalizeText(treatment.body) !== normalizeText(treatment.specs.procedureInfo);
+    normalizeText(treatment.body) !== normalizeText(displaySpecs.procedureInfo);
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
@@ -106,7 +111,7 @@ export function ProcedureDetailPage() {
                       {label}
                     </dt>
                     <dd className="whitespace-pre-line text-[14px] leading-relaxed text-charcoal/90 [word-break:keep-all] sm:text-[15px]">
-                      {treatment.specs[key]}
+                      {displaySpecs[key]}
                     </dd>
                   </div>
                 ))}

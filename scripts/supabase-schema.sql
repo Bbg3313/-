@@ -159,3 +159,22 @@ drop policy if exists "auth_write_procedure_images" on storage.objects;
 create policy "auth_write_procedure_images" on storage.objects
 for all using (bucket_id = 'procedure-images' and auth.role() = 'authenticated')
 with check (bucket_id = 'procedure-images' and auth.role() = 'authenticated');
+
+-- ---------------------------------------------------------------------------
+-- 시술 요약(스펙) 오버레이
+-- ---------------------------------------------------------------------------
+create table if not exists public.procedure_specs_overrides (
+  treatment_key text primary key,
+  specs_patch jsonb not null default '{}'::jsonb,
+  updated_at timestamptz not null default now()
+);
+
+alter table public.procedure_specs_overrides enable row level security;
+
+drop policy if exists "public_read_procedure_specs_overrides" on public.procedure_specs_overrides;
+create policy "public_read_procedure_specs_overrides" on public.procedure_specs_overrides
+for select using (true);
+
+drop policy if exists "admin_all_procedure_specs_overrides" on public.procedure_specs_overrides;
+create policy "admin_all_procedure_specs_overrides" on public.procedure_specs_overrides
+for all using (auth.role() = 'authenticated') with check (auth.role() = 'authenticated');

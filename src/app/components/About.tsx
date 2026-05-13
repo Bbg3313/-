@@ -1,6 +1,7 @@
-import { useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Link } from "react-router";
 import { AnimatePresence, motion, useInView } from "motion/react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import {
   getProcedureTreatment,
   listTreatmentsByCategory,
@@ -368,6 +369,35 @@ export function About() {
   const openService = SIGNATURE_SERVICES.find((s) => s.id === openSignatureId);
   const { map: procedureHeroOverrides } = useProcedureHeroImageOverrides();
   const signatureTreatments = openService?.gallery ? resolveSignatureTreatments(openService.id) : [];
+  const signatureTabsRef = useRef<HTMLDivElement>(null);
+  const [signatureTabScroll, setSignatureTabScroll] = useState({ canLeft: false, canRight: false });
+
+  useEffect(() => {
+    const el = signatureTabsRef.current;
+    if (!el) return;
+    const sync = () => {
+      const maxScroll = el.scrollWidth - el.clientWidth;
+      setSignatureTabScroll({
+        canLeft: el.scrollLeft > 2,
+        canRight: maxScroll > 2 && el.scrollLeft < maxScroll - 2,
+      });
+    };
+    sync();
+    el.addEventListener("scroll", sync, { passive: true });
+    const ro = new ResizeObserver(sync);
+    ro.observe(el);
+    return () => {
+      el.removeEventListener("scroll", sync);
+      ro.disconnect();
+    };
+  }, []);
+
+  const scrollSignatureTabs = (dir: "left" | "right") => {
+    const el = signatureTabsRef.current;
+    if (!el) return;
+    const step = Math.max(160, Math.floor(el.clientWidth * 0.75));
+    el.scrollBy({ left: dir === "right" ? step : -step, behavior: "smooth" });
+  };
 
   return (
     <section
@@ -483,51 +513,72 @@ export function About() {
               <div
                 className="mb-5 rounded-2xl bg-black/[0.035] p-1.5 ring-1 ring-black/[0.04] backdrop-blur-[2px] sm:mb-6"
               >
-                <div
-                  className="grid w-full grid-cols-2 gap-1 sm:grid-cols-4 lg:grid-cols-8"
-                  role="tablist"
-                  aria-label="Signature care treatments"
-                >
-                  {SIGNATURE_SERVICES.map((svc) => {
-                    const isBrand = svc.variant === "brand";
-                    const hasGallery = Boolean(svc.gallery);
-                    const isOpen = openSignatureId === svc.id;
-                    const pillClass = signaturePillClass(isBrand, isOpen, hasGallery);
+                <div className="flex items-stretch gap-1 sm:gap-1.5">
+                  <button
+                    type="button"
+                    aria-label="시그니처 메뉴 이전"
+                    disabled={!signatureTabScroll.canLeft}
+                    onClick={() => scrollSignatureTabs("left")}
+                    className="flex w-9 shrink-0 items-center justify-center rounded-lg border border-black/[0.06] bg-white/80 text-charcoal shadow-sm transition-colors hover:bg-white hover:text-gold-accent disabled:cursor-not-allowed disabled:opacity-35 sm:w-10"
+                  >
+                    <ChevronLeft className="h-5 w-5" aria-hidden />
+                  </button>
+                  <div
+                    ref={signatureTabsRef}
+                    className="flex min-h-[2.75rem] min-w-0 flex-1 flex-nowrap gap-1 overflow-x-auto scroll-smooth rounded-xl py-0.5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                    role="tablist"
+                    aria-label="Signature care treatments"
+                  >
+                    {SIGNATURE_SERVICES.map((svc) => {
+                      const isBrand = svc.variant === "brand";
+                      const hasGallery = Boolean(svc.gallery);
+                      const isOpen = openSignatureId === svc.id;
+                      const pillClass = signaturePillClass(isBrand, isOpen, hasGallery);
 
-                    if (hasGallery) {
-                      return (
-                        <button
-                          key={svc.id}
-                          type="button"
-                          role="tab"
-                          aria-selected={isOpen}
-                          aria-controls="signature-care-panel"
-                          id={`signature-tab-${svc.id}`}
-                          className="relative flex min-h-[2.35rem] w-full items-center justify-center overflow-hidden rounded-[10px] px-2 py-2 text-center text-[11px] font-semibold leading-snug tracking-wide break-keep [word-break:keep-all] transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#f4efe8] sm:text-xs"
-                          onClick={() => setOpenSignatureId(svc.id)}
-                        >
-                          {isOpen ? (
-                            <motion.span
-                              layoutId="signature-gallery-pill"
-                              className="absolute inset-0 z-0 rounded-[10px] bg-white shadow-[0_1px_0_rgba(0,0,0,0.05),0_14px_36px_-20px_rgba(28,22,18,0.16)] ring-1 ring-black/[0.06]"
-                              transition={{ type: "spring", stiffness: 500, damping: 34 }}
-                            />
-                          ) : null}
-                          <span
-                            className={`relative z-[1] ${isOpen ? "text-charcoal" : "text-charcoal/48 hover:text-charcoal/72"}`}
+                      if (hasGallery) {
+                        return (
+                          <button
+                            key={svc.id}
+                            type="button"
+                            role="tab"
+                            aria-selected={isOpen}
+                            aria-controls="signature-care-panel"
+                            id={`signature-tab-${svc.id}`}
+                            className="relative flex min-h-[2.35rem] shrink-0 items-center justify-center overflow-hidden rounded-[10px] px-3 py-2 text-center text-[11px] font-semibold leading-snug tracking-wide break-keep [word-break:keep-all] transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#f4efe8] sm:min-w-[5.25rem] sm:px-3.5 sm:text-xs"
+                            onClick={() => setOpenSignatureId(svc.id)}
                           >
-                            {svc.label}
-                          </span>
-                        </button>
-                      );
-                    }
+                            {isOpen ? (
+                              <motion.span
+                                layoutId="signature-gallery-pill"
+                                className="absolute inset-0 z-0 rounded-[10px] bg-white shadow-[0_1px_0_rgba(0,0,0,0.05),0_14px_36px_-20px_rgba(28,22,18,0.16)] ring-1 ring-black/[0.06]"
+                                transition={{ type: "spring", stiffness: 500, damping: 34 }}
+                              />
+                            ) : null}
+                            <span
+                              className={`relative z-[1] ${isOpen ? "text-charcoal" : "text-charcoal/48 hover:text-charcoal/72"}`}
+                            >
+                              {svc.label}
+                            </span>
+                          </button>
+                        );
+                      }
 
-                    return (
-                      <span key={svc.id} className={pillClass} role="presentation">
-                        {svc.label}
-                      </span>
-                    );
-                  })}
+                      return (
+                        <span key={svc.id} className={`${pillClass} shrink-0`} role="presentation">
+                          {svc.label}
+                        </span>
+                      );
+                    })}
+                  </div>
+                  <button
+                    type="button"
+                    aria-label="시그니처 메뉴 다음"
+                    disabled={!signatureTabScroll.canRight}
+                    onClick={() => scrollSignatureTabs("right")}
+                    className="flex w-9 shrink-0 items-center justify-center rounded-lg border border-black/[0.06] bg-white/80 text-charcoal shadow-sm transition-colors hover:bg-white hover:text-gold-accent disabled:cursor-not-allowed disabled:opacity-35 sm:w-10"
+                  >
+                    <ChevronRight className="h-5 w-5" aria-hidden />
+                  </button>
                 </div>
               </div>
 
@@ -572,11 +623,7 @@ export function About() {
                     <div
                       className={cn(
                         "-mx-1 flex snap-x snap-mandatory gap-4 overflow-x-auto px-1 pb-1 [scrollbar-width:thin] sm:mx-0 sm:grid sm:auto-rows-fr sm:gap-5 sm:overflow-visible sm:px-0 sm:pb-0 md:gap-6",
-                        signatureTreatments.length === 1
-                          ? "sm:grid-cols-1 sm:max-w-4xl sm:mx-auto"
-                          : signatureTreatments.length === 2
-                            ? "sm:grid-cols-2"
-                            : "sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4",
+                        "sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4",
                       )}
                     >
                       {signatureTreatments.map((t) => {
@@ -593,25 +640,13 @@ export function About() {
                           to={procedureDetailPath(t.categorySlug, t.slug)}
                           className="group flex h-full min-h-0 w-[min(90vw,22rem)] shrink-0 snap-center flex-col overflow-hidden rounded-2xl border border-black/[0.05] bg-white shadow-[0_16px_40px_-28px_rgba(28,22,18,0.28)] transition-[box-shadow,transform] duration-300 hover:-translate-y-0.5 hover:shadow-[0_22px_48px_-26px_rgba(28,22,18,0.22)] sm:w-auto"
                         >
-                          <div
-                            className={cn(
-                              "relative flex min-h-0 shrink-0 items-center justify-center bg-gradient-to-b from-[#faf9f7] to-[#f0ebe4]",
-                              signatureTreatments.length === 1
-                                ? "min-h-[20rem] h-[min(72vw,28rem)] sm:min-h-[24rem] sm:h-[min(44rem,65vh)] md:min-h-[26rem] lg:h-[min(48rem,68vh)]"
-                                : "h-[14rem] sm:h-[18rem] md:h-[20rem] lg:h-[22rem]",
-                            )}
-                          >
+                          <div className="relative flex h-[14rem] w-full shrink-0 items-center justify-center overflow-hidden bg-gradient-to-b from-[#faf9f7] to-[#f0ebe4] sm:h-[17rem] md:h-[19rem] lg:h-[20rem]">
                             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_30%_0%,rgba(255,255,255,0.9),transparent_55%)]" />
                             {thumb ? (
                               <ImageWithFallback
                                 src={thumb}
                                 alt=""
-                                className={cn(
-                                  "relative z-[1] w-auto object-contain p-1 transition-transform duration-500 ease-out group-hover:scale-[1.01] sm:p-2 md:p-2.5",
-                                  signatureTreatments.length === 1
-                                    ? "max-h-[min(88vh,48rem)] max-w-[min(98%,50rem)] sm:max-h-[min(84vh,44rem)]"
-                                    : "max-h-[96%] max-w-[98%]",
-                                )}
+                                className="relative z-[1] h-full w-full object-cover object-center transition-transform duration-500 ease-out group-hover:scale-[1.02]"
                               />
                             ) : (
                               <span className="relative z-[1] px-4 text-center text-xs text-muted-foreground [word-break:keep-all]">

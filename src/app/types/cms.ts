@@ -52,3 +52,10 @@ export type ProcedureHeroImageRow = {
   updated_at: string;
 };
 
+/** 시술 요약 JSON — 키는 ProcedureDetailSpecs 필드명과 동일 */
+export type ProcedureSpecsOverrideRow = {
+  treatment_key: string;
+  specs_patch: Record<string, string>;
+  updated_at: string;
+};
+

@@ -18,6 +18,7 @@ import { RequireAdmin } from "./components/admin/RequireAdmin";
 import { AdminNoticesPage } from "./pages/admin/AdminNoticesPage";
 import { AdminPricingPage } from "./pages/admin/AdminPricingPage";
 import { AdminProcedureImagesPage } from "./pages/admin/AdminProcedureImagesPage";
+import { AdminProcedureSpecsPage } from "./pages/admin/AdminProcedureSpecsPage";
 import { NoticeDetailPage } from "./pages/NoticeDetailPage";
 import { ProceduresHubPage } from "./pages/ProceduresHubPage";
 import { ProcedureCategoryPage } from "./pages/ProcedureCategoryPage";
@@ -79,6 +80,14 @@ export default function App() {
           element={
             <RequireAdmin>
               <AdminProcedureImagesPage />
+            </RequireAdmin>
+          }
+        />
+        <Route
+          path="/admin/procedure-specs"
+          element={
+            <RequireAdmin>
+              <AdminProcedureSpecsPage />
             </RequireAdmin>
           }
         />

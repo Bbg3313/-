@@ -46,6 +46,13 @@ export function AdminHomePage() {
               <p className="text-xl font-semibold text-charcoal">시술 히어로 이미지</p>
             </Link>
             <Link
+              to="/admin/procedure-specs"
+              className="border border-border/70 bg-muted/20 p-6 transition-colors hover:border-gold-accent/40"
+            >
+              <p className="mb-1 text-xs text-muted-foreground">Procedures</p>
+              <p className="text-xl font-semibold text-charcoal">시술 요약(스펙) 수정</p>
+            </Link>
+            <Link
               to="/admin/pricing"
               className="border border-border/70 bg-muted/20 p-6 hover:border-gold-accent/40 transition-colors"
             >
