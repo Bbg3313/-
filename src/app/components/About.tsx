@@ -608,7 +608,7 @@ export function About() {
                         <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-gold-accent/85">
                           {openService.gallery.eyebrow}
                         </p>
-                        <h3 className="mt-1 font-serif text-lg font-medium tracking-tight text-charcoal sm:text-xl">{openService.gallery.title}</h3>
+                        <h3 className="mt-1 text-lg font-semibold tracking-tight text-charcoal sm:text-xl">{openService.gallery.title}</h3>
                       </div>
                       {openService.gallery.subtitle?.trim() ? (
                         <p className="max-w-xl text-[13px] leading-relaxed text-muted-foreground [word-break:keep-all] sm:text-sm">
