@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useLayoutEffect, useCallback } from "react";
 import { Link, useLocation } from "react-router";
 import { Bell, CalendarDays, ChevronDown, Hospital, MenuIcon, Stethoscope, Ticket } from "lucide-react";
 import { SiteLogo } from "./branding/SiteLogo";
@@ -37,7 +37,9 @@ export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [proceduresMenuOpen, setProceduresMenuOpen] = useState(false);
+  const [proceduresMegaTopPx, setProceduresMegaTopPx] = useState(0);
   const proceduresMenuCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const headerRef = useRef<HTMLElement | null>(null);
   const location = useLocation();
   const onHomeLogoClick = useHomeLogoClick();
   const isHome = location.pathname === "/";
@@ -72,6 +74,25 @@ export function Header() {
     [],
   );
 
+  const syncProceduresMegaTop = useCallback(() => {
+    const el = headerRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    setProceduresMegaTopPx(Math.max(0, rect.bottom - 10));
+  }, []);
+
+  useLayoutEffect(() => {
+    if (!proceduresMenuOpen) return;
+    syncProceduresMegaTop();
+    const onWin = () => syncProceduresMegaTop();
+    window.addEventListener("resize", onWin);
+    window.addEventListener("scroll", onWin, true);
+    return () => {
+      window.removeEventListener("resize", onWin);
+      window.removeEventListener("scroll", onWin, true);
+    };
+  }, [proceduresMenuOpen, syncProceduresMegaTop, mobileOpen, isScrolled, solid]);
+
   const clearProceduresMenuCloseTimer = () => {
     if (proceduresMenuCloseTimer.current) {
       clearTimeout(proceduresMenuCloseTimer.current);
@@ -81,6 +102,7 @@ export function Header() {
 
   const openProceduresMenu = () => {
     clearProceduresMenuCloseTimer();
+    syncProceduresMegaTop();
     setProceduresMenuOpen(true);
   };
 
@@ -99,6 +121,7 @@ export function Header() {
   return (
     <>
       <header
+        ref={headerRef}
         className={`fixed top-0 left-0 right-0 z-50 overflow-visible transition-all duration-500 ${
           solid ? "bg-background/98 backdrop-blur-md border-b border-border/50 shadow-sm" : "bg-transparent"
         }`}
@@ -152,25 +175,26 @@ export function Header() {
               />
             </Link>
             <div
-              className={`absolute inset-x-0 top-full z-[60] -mt-2 pt-4 transition-[opacity,visibility] duration-150 ${
+              className={`fixed inset-x-0 z-[60] pt-3 transition-[opacity,visibility] duration-150 ${
                 proceduresMenuOpen
                   ? "visible opacity-100"
                   : "invisible pointer-events-none opacity-0"
               }`}
+              style={{ top: `${proceduresMegaTopPx || 72}px` }}
               role="navigation"
               aria-label="시술 카테고리"
               aria-hidden={!proceduresMenuOpen}
             >
-              <div className="max-h-[min(85vh,44rem)] overflow-x-auto overflow-y-auto rounded-b-2xl border border-t-0 border-border/60 bg-background/[0.99] px-4 py-5 shadow-2xl shadow-black/10 ring-1 ring-black/[0.04] backdrop-blur-md sm:px-5 sm:py-6 md:px-6 md:py-6">
-                <div className="grid w-full grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 md:gap-3 lg:gap-4">
+              <div className="max-h-[min(85vh,44rem)] overflow-x-auto overflow-y-auto border-b border-border/60 bg-background/[0.99] px-4 py-4 shadow-2xl shadow-black/10 ring-1 ring-black/[0.04] backdrop-blur-md sm:px-6 sm:py-5 md:px-8 md:py-6">
+                <div className="mx-auto flex w-full max-w-[1600px] flex-nowrap items-stretch gap-2 md:gap-3 lg:gap-4">
                   {PROCEDURE_CATEGORIES.map((cat) => (
                     <div
                       key={cat.slug}
-                      className="flex min-h-0 min-w-0 flex-col rounded-xl border border-border/35 bg-muted/[0.12] p-2.5 sm:p-3 md:p-3.5"
+                      className="flex min-h-0 min-w-0 flex-1 basis-0 flex-col rounded-xl border border-border/35 bg-muted/[0.12] p-2.5 sm:p-3 md:p-3.5"
                     >
                       <Link
                         to={procedureCategoryPath(cat.slug)}
-                        className="text-[13px] font-semibold leading-snug tracking-tight text-charcoal transition-colors hover:text-gold-accent [word-break:keep-all] md:text-[14px] lg:text-[15px]"
+                        className="text-[12px] font-semibold leading-snug tracking-tight text-charcoal transition-colors hover:text-gold-accent [word-break:keep-all] md:text-[13px] lg:text-[14px]"
                       >
                         {cat.label}
                       </Link>
@@ -179,7 +203,7 @@ export function Header() {
                           <li key={t.slug}>
                             <Link
                               to={procedureDetailPath(cat.slug, t.slug)}
-                              className="block py-0.5 text-[11px] leading-snug text-muted-foreground transition-colors hover:text-gold-accent [word-break:keep-all] md:text-[12px] lg:text-[13px]"
+                              className="block py-0.5 text-[10px] leading-snug text-muted-foreground transition-colors hover:text-gold-accent [word-break:keep-all] md:text-[11px] lg:text-[12px]"
                             >
                               {t.title}
                             </Link>
@@ -195,7 +219,7 @@ export function Header() {
                     </div>
                   ))}
                 </div>
-                <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-border/50 pt-5 sm:mt-7 sm:pt-6">
+                <div className="mx-auto mt-5 flex max-w-[1600px] flex-wrap items-center justify-between gap-4 border-t border-border/50 pt-4 sm:mt-6 sm:pt-5">
                   <Link
                     to="/procedures"
                     className="text-sm font-semibold uppercase tracking-wider text-charcoal hover:text-gold-accent"
