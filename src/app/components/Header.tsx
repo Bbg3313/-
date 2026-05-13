@@ -66,11 +66,11 @@ export function Header() {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        className={`fixed top-0 left-0 right-0 z-50 overflow-visible transition-all duration-500 ${
           solid ? "bg-background/98 backdrop-blur-md border-b border-border/50 shadow-sm" : "bg-transparent"
         }`}
       >
-      <nav className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-3 sm:px-6 sm:py-4 md:py-5">
+      <nav className="relative mx-auto flex max-w-7xl items-center justify-between gap-4 overflow-visible px-5 py-3 sm:px-6 sm:py-4 md:py-5">
         <Link
           to="/"
           onClick={onHomeLogoClick}
@@ -101,7 +101,7 @@ export function Header() {
               의료진
             </Link>
           </li>
-          <li className="group relative">
+          <li className="group">
             <Link
               to="/procedures"
               className={`inline-flex items-center gap-1 text-sm tracking-wider uppercase transition-colors duration-300 ${
@@ -112,27 +112,31 @@ export function Header() {
               <ChevronDown className="h-3 w-3 opacity-70 transition-transform duration-200 group-hover:rotate-180" aria-hidden />
             </Link>
             <div
-              className="pointer-events-none invisible absolute left-1/2 top-full z-[60] w-[min(100vw-2rem,52rem)] -translate-x-1/2 pt-3 opacity-0 transition-[opacity,visibility] duration-150 group-hover:pointer-events-auto group-hover:visible group-hover:opacity-100"
+              className="pointer-events-none invisible absolute inset-x-0 top-full z-[60] pt-2 opacity-0 transition-[opacity,visibility] duration-150 group-hover:pointer-events-auto group-hover:visible group-hover:opacity-100"
               role="navigation"
               aria-label="시술 카테고리"
             >
-              <div className="max-h-[min(70vh,28rem)] overflow-y-auto rounded-2xl border border-border/60 bg-background/98 p-5 shadow-xl backdrop-blur-md">
-                <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="max-h-[min(82vh,40rem)] overflow-y-auto rounded-b-2xl border border-t-0 border-border/60 bg-background/[0.99] px-5 py-6 shadow-2xl shadow-black/10 ring-1 ring-black/[0.04] backdrop-blur-md sm:px-7 sm:py-7 md:px-8 md:py-8">
+                <div className="grid gap-6 sm:gap-7 md:grid-cols-2 lg:grid-cols-5 lg:gap-5 xl:gap-7">
                   {PROCEDURE_CATEGORIES.map((cat) => (
-                    <div key={cat.slug} className="min-w-0">
+                    <div key={cat.slug} className="min-w-0 rounded-xl border border-border/35 bg-muted/[0.12] p-3.5 sm:p-4">
                       <Link
                         to={procedureCategoryPath(cat.slug)}
-                        className="text-[13px] font-semibold tracking-tight text-charcoal transition-colors hover:text-gold-accent [word-break:keep-all]"
+                        className="text-[15px] font-semibold leading-snug tracking-tight text-charcoal transition-colors hover:text-gold-accent [word-break:keep-all] sm:text-base"
                       >
                         {cat.label}
                       </Link>
-                      <ul className="mt-2 space-y-1 border-l border-gold-accent/20 pl-3">
+                      {cat.blurb ? (
+                        <p className="mt-1.5 text-[11px] leading-relaxed text-muted-foreground [word-break:keep-all] sm:text-xs">
+                          {cat.blurb}
+                        </p>
+                      ) : null}
+                      <ul className="mt-3 space-y-1.5 border-l-2 border-gold-accent/25 pl-3 sm:mt-3.5">
                         {listTreatmentsByCategory(cat.slug).map((t) => (
                           <li key={t.slug}>
                             <Link
                               to={procedureDetailPath(cat.slug, t.slug)}
-                              className="block truncate py-0.5 text-xs text-muted-foreground transition-colors hover:text-gold-accent [word-break:keep-all]"
-                              title={t.title}
+                              className="block py-0.5 text-[13px] leading-snug text-muted-foreground transition-colors hover:text-gold-accent [word-break:keep-all] sm:text-sm"
                             >
                               {t.title}
                             </Link>
@@ -141,23 +145,23 @@ export function Header() {
                       </ul>
                       <Link
                         to={procedureCategoryPath(cat.slug)}
-                        className="mt-2 inline-block text-[10px] font-medium uppercase tracking-wider text-gold-accent/90 hover:text-gold-accent"
+                        className="mt-3 inline-block text-[11px] font-semibold uppercase tracking-wider text-gold-accent/95 hover:text-gold-accent"
                       >
-                        카테고리 전체 →
+                        {cat.label} 전체 →
                       </Link>
                     </div>
                   ))}
                 </div>
-                <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-border/50 pt-4">
+                <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-border/50 pt-5 sm:mt-7 sm:pt-6">
                   <Link
                     to="/procedures"
-                    className="text-xs font-semibold uppercase tracking-wider text-charcoal hover:text-gold-accent"
+                    className="text-sm font-semibold uppercase tracking-wider text-charcoal hover:text-gold-accent"
                   >
                     시술 안내 홈
                   </Link>
                   <Link
                     to="/pricing"
-                    className="text-xs font-semibold uppercase tracking-wider text-muted-foreground hover:text-gold-accent"
+                    className="text-sm font-semibold uppercase tracking-wider text-muted-foreground hover:text-gold-accent"
                   >
                     시술·가격표
                   </Link>

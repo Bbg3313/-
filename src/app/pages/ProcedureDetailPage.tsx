@@ -2,6 +2,7 @@ import { Link, useParams } from "react-router";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
+import { PROCEDURE_SPEC_LABELS } from "../../data/procedureDetailSpecs";
 import {
   getProcedureCategory,
   getProcedureTreatment,
@@ -75,6 +76,33 @@ export function ProcedureDetailPage() {
                 <ImageWithFallback src={treatment.heroImage} alt="" className="w-full object-cover object-center" />
               </div>
             ) : null}
+
+            <section
+              className="mb-8 overflow-hidden rounded-2xl border border-border/55 bg-white/90 shadow-sm ring-1 ring-black/[0.03]"
+              aria-labelledby="procedure-spec-heading"
+            >
+              <h2
+                id="procedure-spec-heading"
+                className="border-b border-gold-accent/20 bg-[#faf8f4] px-4 py-3 text-sm font-semibold tracking-tight text-charcoal sm:px-5"
+              >
+                시술 요약
+              </h2>
+              <dl className="divide-y divide-border/50">
+                {PROCEDURE_SPEC_LABELS.map(({ key, label }) => (
+                  <div
+                    key={key}
+                    className="grid gap-1 px-4 py-3 sm:grid-cols-[minmax(7rem,9rem)_1fr] sm:items-start sm:gap-4 sm:px-5 sm:py-3.5"
+                  >
+                    <dt className="text-xs font-semibold uppercase tracking-wide text-gold-accent/90 sm:pt-0.5">
+                      {label}
+                    </dt>
+                    <dd className="whitespace-pre-line text-[14px] leading-relaxed text-charcoal/90 [word-break:keep-all] sm:text-[15px]">
+                      {treatment.specs[key]}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </section>
 
             {treatment.gallery && treatment.gallery.length > 0 ? (
               <ul className="mb-8 grid grid-cols-2 gap-3 sm:grid-cols-3">
