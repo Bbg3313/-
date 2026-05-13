@@ -74,7 +74,7 @@ export const PROCEDURE_CATEGORIES: ProcedureCategory[] = [
   },
   { slug: "thread-lifting", label: "실리프팅", blurb: "PCL 실·잼버실·하이코 등 녹는 실 시술", sort: 20 },
   { slug: "laser", label: "레이저", blurb: "CO₂·듀얼 악센토·미인·GD 토닝·인피니·셀라스 등", sort: 30 },
-  { slug: "lifting-laser", label: "리프팅레이저", blurb: "초음파·고주파 리프팅", sort: 40 },
+  { slug: "lifting-laser", label: "리프팅레이저", blurb: "리프테라2·볼뉴머·슈링크·덴서티 등", sort: 40 },
   {
     slug: "glow-booster",
     label: "물광/스킨부스터",
@@ -220,28 +220,38 @@ const RAW_EXCEL_PROCEDURE_TREATMENTS: ExcelProcedureRowInput[] = [
     specs: { ...S },
     sort: 60,
   },
-  // ——— 리프팅레이저 ———
+  // ——— 리프팅레이저 (대카테고리: lifting-laser) ———
   {
-    slug: "lifting-hifu",
+    slug: "lifting-liftera-2",
     categorySlug: "lifting-laser",
-    title: "초음파 리프팅",
+    title: "리프테라2",
     heroImage: "/images/signature-care/lifting-shurink.png",
     specs: { ...S },
     sort: 10,
   },
   {
-    slug: "lifting-rf-density",
+    slug: "lifting-volnewmer",
     categorySlug: "lifting-laser",
-    title: "고주파 리프팅",
+    title: "볼뉴머",
+    heroImage: "/images/signature-care/lifting-shurink.png",
     specs: { ...S },
     sort: 20,
   },
   {
-    slug: "lifting-volume-eye",
+    slug: "lifting-shurink",
     categorySlug: "lifting-laser",
-    title: "볼륨·아이 리프팅",
+    title: "슈링크",
+    heroImage: "/images/signature-care/lifting-shurink.png",
     specs: { ...S },
     sort: 30,
+  },
+  {
+    slug: "lifting-density",
+    categorySlug: "lifting-laser",
+    title: "덴서티",
+    heroImage: "/images/signature-care/lifting-density.png",
+    specs: { ...S },
+    sort: 40,
   },
   // ——— 물광/스킨부스터 ———
   {
