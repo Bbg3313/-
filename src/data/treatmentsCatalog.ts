@@ -14,7 +14,6 @@ export {
   PROCEDURE_CATEGORIES,
   EXCEL_PROCEDURE_TREATMENTS,
   PROCEDURE_TREATMENTS,
-  EXCEL_SPEC_TEMPLATE,
   getProcedureCategory,
   listTreatmentsByCategory,
   getProcedureTreatment,

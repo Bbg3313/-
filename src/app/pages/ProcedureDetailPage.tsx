@@ -31,6 +31,11 @@ export function ProcedureDetailPage() {
 
   const priceHref = treatment.priceSectionId ? `/pricing#pricing-${treatment.priceSectionId}` : "/pricing";
 
+  const normalizeText = (s: string) => s.replace(/\r\n/g, "\n").trim();
+  const showBodyNarrative =
+    treatment.body.trim().length > 0 &&
+    normalizeText(treatment.body) !== normalizeText(treatment.specs.procedureInfo);
+
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <Header />
@@ -114,11 +119,13 @@ export function ProcedureDetailPage() {
               </ul>
             ) : null}
 
-            <div className="rounded-2xl border border-gold-accent/15 bg-white/80 p-5 shadow-sm ring-1 ring-black/[0.03] sm:p-7">
-              <p className="whitespace-pre-line text-[15px] leading-[1.75] text-charcoal/90 [word-break:keep-all] sm:text-base">
-                {treatment.body}
-              </p>
-            </div>
+            {showBodyNarrative ? (
+              <div className="rounded-2xl border border-gold-accent/15 bg-white/80 p-5 shadow-sm ring-1 ring-black/[0.03] sm:p-7">
+                <p className="whitespace-pre-line text-[15px] leading-[1.75] text-charcoal/90 [word-break:keep-all] sm:text-base">
+                  {treatment.body}
+                </p>
+              </div>
+            ) : null}
 
             <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
               <Link
