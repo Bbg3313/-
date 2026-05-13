@@ -83,7 +83,14 @@ export function Footer({ className }: FooterProps) {
   const onHomeLogoClick = useHomeLogoClick();
 
   return (
-    <footer className={cn("mt-auto", className)}>
+    <footer
+      className={cn(
+        "mt-auto",
+        // 모바일 고정 하단 탭(Header)에 푸터가 가리지 않도록 — 본문 pb와 무관하게 스크롤 끝에서도 전체 노출
+        "max-md:pb-[calc(5.25rem+env(safe-area-inset-bottom,0px))]",
+        className,
+      )}
+    >
       <div className="border-t border-border bg-muted/50">
         <div className="mx-auto flex max-w-xl flex-col items-center px-4 pb-3 pt-1.5 sm:px-6 sm:pb-6 sm:pt-2 md:pb-12 md:pt-3">
           <div className="flex w-full flex-col items-center">
