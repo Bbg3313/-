@@ -30,11 +30,11 @@ export function ProceduresHubPage() {
               시술 안내
             </h1>
             <p className="mx-auto max-w-2xl text-sm leading-relaxed text-muted-foreground [word-break:keep-all] sm:text-base">
-              카테고리별 시술 정보를 확인하실 수 있습니다. 가격은 시술·가격 페이지에서 함께 안내드립니다.
+              보톡스/필러, 실리프팅, 레이저, 리프팅레이저, 물광/스킨부스터 다섯 카테고리로 나뉘어 있으며, 세부 시술은 각 카드에서 확인하실 수 있습니다. 가격은 시술·가격 페이지에서 안내드립니다.
             </p>
           </div>
 
-          <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5">
+          <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 xl:gap-4">
             {PROCEDURE_CATEGORIES.map((cat) => (
               <li key={cat.slug}>
                 <Link

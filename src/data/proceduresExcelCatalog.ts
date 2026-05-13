@@ -1,6 +1,11 @@
 /**
  * 시술 안내 — 세부 시술 목록·스펙은 가격표와 무관합니다.
- * `시술정리.xlsx` (또는 동일 구조) 내용을 아래 `EXCEL_PROCEDURE_TREATMENTS`에 그대로 반영하세요.
+ *
+ * 시술 카테고리(고정 5가지)
+ * ① 보톡스/필러 ② 실리프팅 ③ 레이저 ④ 리프팅레이저 ⑤ 물광/스킨부스터
+ * (`PROCEDURE_CATEGORIES` · 각 행의 `categorySlug`는 위와 일치해야 합니다.)
+ *
+ * `시술정리.xlsx` (또는 동일 구조) 내용을 아래 `RAW_EXCEL_PROCEDURE_TREATMENTS`에 그대로 반영하세요.
  * 엑셀 컬럼 예: 부위 | 시술정보 | 마취시간 | 시술시간 | 회복기간 | 유지기간 | 재시술주기 | 주의사항 | 제목 | 부제 | 본문
  * (선택) 가격표와 연결할 때만 `priceSectionId`에 pricing 섹션 id를 넣습니다.
  */
@@ -64,7 +69,7 @@ export const PROCEDURE_CATEGORIES: ProcedureCategory[] = [
   {
     slug: "botox-filler",
     label: "보톡스/필러",
-    blurb: "보톡스·필러·바디·스킨보톡스 등",
+    blurb: "턱·주름·스킨보톡스, 윤곽·코조각 주사, 필러(국산·수입), 필러 녹이는 주사",
     sort: 10,
   },
   { slug: "thread-lifting", label: "실리프팅", blurb: "녹는 실 리프팅", sort: 20 },
@@ -87,66 +92,59 @@ const S = EXCEL_SPEC_TEMPLATE;
 type ExcelProcedureRowInput = Omit<ProcedureTreatment, "body"> & { body?: string };
 
 const RAW_EXCEL_PROCEDURE_TREATMENTS: ExcelProcedureRowInput[] = [
-  // ——— 보톡스/필러 (엑셀 순서대로 교체) ———
+  // ——— 보톡스/필러 ———
   {
-    slug: "botox-forehead-glabella",
+    slug: "jaw-botox",
     categorySlug: "botox-filler",
-    title: "이마·미간 보톡스",
-    subtitle: "주름 완화",
-    body: "엑셀「본문」",
+    title: "턱보톡스",
     heroImage: "/images/signature-care/botox-meditoxin.png",
     specs: { ...S },
     sort: 10,
   },
   {
-    slug: "botox-eye",
+    slug: "wrinkle-botox",
     categorySlug: "botox-filler",
-    title: "눈가·눈밑 보톡스",
+    title: "주름보톡스",
+    heroImage: "/images/signature-care/botox-meditoxin.png",
     specs: { ...S },
     sort: 20,
-  },
-  {
-    slug: "botox-jaw-masseter",
-    categorySlug: "botox-filler",
-    title: "턱·침샘 보톡스",
-    specs: { ...S },
-    sort: 30,
   },
   {
     slug: "skin-botox",
     categorySlug: "botox-filler",
     title: "스킨보톡스",
+    heroImage: "/images/signature-care/botox-meditoxin.png",
+    specs: { ...S },
+    sort: 30,
+  },
+  {
+    slug: "contour-injection-descenba-violet",
+    categorySlug: "botox-filler",
+    title: "윤곽주사(디센바, 브이올렛)",
     specs: { ...S },
     sort: 40,
   },
   {
-    slug: "body-botox",
+    slug: "nose-contour-injection",
     categorySlug: "botox-filler",
-    title: "바디 보톡스",
+    title: "코조각주사",
     specs: { ...S },
     sort: 50,
   },
   {
-    slug: "filler-volume",
+    slug: "filler-domestic-import",
     categorySlug: "botox-filler",
-    title: "볼륨 필러",
+    title: "필러(국산,수입)",
     heroImage: "/images/signature-care/filler-atiere.png",
     specs: { ...S },
     sort: 60,
   },
   {
-    slug: "filler-wrinkle",
+    slug: "filler-dissolving-injection",
     categorySlug: "botox-filler",
-    title: "주름 필러",
+    title: "필러 녹이는 주사",
     specs: { ...S },
     sort: 70,
-  },
-  {
-    slug: "filler-lips",
-    categorySlug: "botox-filler",
-    title: "입술 필러",
-    specs: { ...S },
-    sort: 80,
   },
   // ——— 실리프팅 ———
   {
