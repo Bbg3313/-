@@ -30,23 +30,20 @@ export function ProceduresHubPage() {
               시술 안내
             </h1>
             <p className="mx-auto max-w-2xl text-sm leading-relaxed text-muted-foreground [word-break:keep-all] sm:text-base">
-              보톡스/필러, 실리프팅, 레이저, 리프팅레이저, 물광/스킨부스터, 제모, 문신제거로 나뉘어 있으며, 세부 시술은 각 카드에서 확인하실 수 있습니다. 가격은 시술·가격 페이지에서 안내드립니다.
+              카테고리를 선택하시면 해당 분야 시술 목록으로 이동합니다. 가격은 시술·가격 페이지에서 안내드립니다.
             </p>
           </div>
 
-          <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 xl:gap-4">
+          <ul className="mx-auto grid max-w-5xl grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {PROCEDURE_CATEGORIES.map((cat) => (
               <li key={cat.slug}>
                 <Link
                   to={procedureCategoryPath(cat.slug)}
-                  className="group flex h-full flex-col rounded-2xl border border-gold-accent/18 bg-gradient-to-b from-white to-[#faf8f4] p-5 shadow-[0_10px_36px_-24px_rgba(35,28,22,0.15)] ring-1 ring-white/70 transition-[transform,box-shadow,border-color] duration-300 hover:-translate-y-0.5 hover:border-gold-accent/30 hover:shadow-[0_16px_44px_-26px_rgba(35,28,22,0.2)] sm:p-6"
+                  className="group flex h-full min-h-[7.5rem] flex-col justify-between rounded-2xl border border-gold-accent/18 bg-gradient-to-b from-white to-[#faf8f4] p-6 shadow-[0_10px_36px_-24px_rgba(35,28,22,0.15)] ring-1 ring-white/70 transition-[transform,box-shadow,border-color] duration-300 hover:-translate-y-0.5 hover:border-gold-accent/30 hover:shadow-[0_16px_44px_-26px_rgba(35,28,22,0.2)] sm:min-h-[8rem]"
                 >
                   <h2 className="text-lg font-semibold tracking-tight text-charcoal group-hover:text-gold-accent sm:text-xl">
                     {cat.label}
                   </h2>
-                  {cat.blurb ? (
-                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground [word-break:keep-all]">{cat.blurb}</p>
-                  ) : null}
                   <span className="mt-4 text-xs font-medium uppercase tracking-[0.2em] text-gold-accent/90">자세히 →</span>
                 </Link>
               </li>
