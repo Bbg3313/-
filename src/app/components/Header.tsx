@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router";
-import { Bell, CalendarDays, ChevronDown, Hospital, MenuIcon, Sparkles, Stethoscope, Ticket } from "lucide-react";
+import { Bell, CalendarDays, ChevronDown, Hospital, MenuIcon, Stethoscope, Ticket } from "lucide-react";
 import { SiteLogo } from "./branding/SiteLogo";
 import { useHomeLogoClick } from "../hooks/useHomeLogoClick";
 import { LanguageSwitcher } from "./LanguageSwitcher";
@@ -31,14 +31,17 @@ const MOBILE_TABBAR_ITEM =
 const MOBILE_TABBAR_LABEL =
   "line-clamp-2 w-full min-w-0 max-w-full text-balance break-keep text-[9px] font-semibold leading-[1.2] sm:text-[10px]";
 
+const PROCEDURES_MENU_CLOSE_MS = 280;
+
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [proceduresMenuOpen, setProceduresMenuOpen] = useState(false);
+  const proceduresMenuCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const location = useLocation();
   const onHomeLogoClick = useHomeLogoClick();
   const isHome = location.pathname === "/";
   const solid = !isHome || isScrolled || mobileOpen;
-  const isExternalReservation = /^https?:\/\//.test(SITE_LINKS.reservation);
   const isEventsActive = location.pathname === "/events";
   const isNoticeActive = location.pathname === "/notice" || location.pathname.startsWith("/notice/");
   const isAboutActive = isHome && location.hash === "#about";
@@ -47,7 +50,6 @@ export function Header() {
   const isProceduresActive =
     location.pathname === "/procedures" || location.pathname.startsWith("/procedures/");
   const isProceduresPricingTabActive = isPricingActive || isProceduresActive;
-  const isReservationActive = !isExternalReservation && location.pathname === SITE_LINKS.reservation;
 
   useEffect(() => {
     if (!isHome) return;
@@ -58,6 +60,37 @@ export function Header() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [isHome]);
+
+  useEffect(() => {
+    setProceduresMenuOpen(false);
+  }, [location.pathname, location.hash]);
+
+  useEffect(
+    () => () => {
+      if (proceduresMenuCloseTimer.current) clearTimeout(proceduresMenuCloseTimer.current);
+    },
+    [],
+  );
+
+  const clearProceduresMenuCloseTimer = () => {
+    if (proceduresMenuCloseTimer.current) {
+      clearTimeout(proceduresMenuCloseTimer.current);
+      proceduresMenuCloseTimer.current = null;
+    }
+  };
+
+  const openProceduresMenu = () => {
+    clearProceduresMenuCloseTimer();
+    setProceduresMenuOpen(true);
+  };
+
+  const scheduleCloseProceduresMenu = () => {
+    clearProceduresMenuCloseTimer();
+    proceduresMenuCloseTimer.current = setTimeout(() => {
+      setProceduresMenuOpen(false);
+      proceduresMenuCloseTimer.current = null;
+    }, PROCEDURES_MENU_CLOSE_MS);
+  };
 
   const navClass = solid
     ? "text-charcoal hover:text-gold-accent"
@@ -101,7 +134,11 @@ export function Header() {
               의료진
             </Link>
           </li>
-          <li className="group">
+          <li
+            className="relative"
+            onMouseEnter={openProceduresMenu}
+            onMouseLeave={scheduleCloseProceduresMenu}
+          >
             <Link
               to="/procedures"
               className={`inline-flex items-center gap-1 text-sm tracking-wider uppercase transition-colors duration-300 ${
@@ -109,12 +146,20 @@ export function Header() {
               }`}
             >
               시술 안내
-              <ChevronDown className="h-3 w-3 opacity-70 transition-transform duration-200 group-hover:rotate-180" aria-hidden />
+              <ChevronDown
+                className={`h-3 w-3 opacity-70 transition-transform duration-200 ${proceduresMenuOpen ? "rotate-180" : ""}`}
+                aria-hidden
+              />
             </Link>
             <div
-              className="pointer-events-none invisible absolute inset-x-0 top-full z-[60] pt-2 opacity-0 transition-[opacity,visibility] duration-150 group-hover:pointer-events-auto group-hover:visible group-hover:opacity-100"
+              className={`absolute inset-x-0 top-full z-[60] -mt-2 pt-4 transition-[opacity,visibility] duration-150 ${
+                proceduresMenuOpen
+                  ? "visible opacity-100"
+                  : "invisible pointer-events-none opacity-0"
+              }`}
               role="navigation"
               aria-label="시술 카테고리"
+              aria-hidden={!proceduresMenuOpen}
             >
               <div className="max-h-[min(82vh,40rem)] overflow-y-auto rounded-b-2xl border border-t-0 border-border/60 bg-background/[0.99] px-5 py-6 shadow-2xl shadow-black/10 ring-1 ring-black/[0.04] backdrop-blur-md sm:px-7 sm:py-7 md:px-8 md:py-8">
                 <div className="grid gap-6 sm:gap-7 md:grid-cols-2 lg:grid-cols-5 lg:gap-5 xl:gap-7">
@@ -168,25 +213,6 @@ export function Header() {
                 </div>
               </div>
             </div>
-          </li>
-          <li>
-            {isExternalReservation ? (
-              <a
-                href={SITE_LINKS.reservation}
-                target="_blank"
-                rel="noreferrer"
-                className={`text-sm tracking-wider uppercase transition-colors duration-300 ${navClass}`}
-              >
-                예약·문의
-              </a>
-            ) : (
-              <Link
-                to={SITE_LINKS.reservation}
-                className={`text-sm tracking-wider uppercase transition-colors duration-300 ${navClass}`}
-              >
-                예약·문의
-              </Link>
-            )}
           </li>
           <li>
             <Link
@@ -351,28 +377,6 @@ export function Header() {
                     </Collapsible>
                   ))}
                 </div>
-                {isExternalReservation ? (
-                  <a
-                    href={SITE_LINKS.reservation}
-                    target="_blank"
-                    rel="noreferrer"
-                    onClick={() => setMobileOpen(false)}
-                    className="flex items-center gap-2 rounded-md px-3 py-3 text-sm text-charcoal hover:bg-muted/40"
-                  >
-                    <Sparkles className="h-4 w-4 text-gold-accent/80" />
-                    예약·문의
-                  </a>
-                ) : (
-                  <SheetClose asChild>
-                    <Link
-                      to={SITE_LINKS.reservation}
-                      className="flex items-center gap-2 rounded-md px-3 py-3 text-sm text-charcoal hover:bg-muted/40"
-                    >
-                      <Sparkles className="h-4 w-4 text-gold-accent/80" />
-                      예약·문의
-                    </Link>
-                  </SheetClose>
-                )}
                 <SheetClose asChild>
                   <Link to="/pricing" className="flex items-center gap-2 rounded-md px-3 py-3 text-sm text-charcoal hover:bg-muted/40">
                     <CalendarDays className="h-4 w-4 text-gold-accent/80" />
@@ -400,7 +404,7 @@ export function Header() {
         data-mobile-tabbar
         className="fixed inset-x-0 bottom-0 z-40 border-t border-border/70 bg-background/95 pb-[max(0.35rem,env(safe-area-inset-bottom))] pt-1 backdrop-blur-md md:hidden"
       >
-        <ul className="mx-auto grid w-full max-w-7xl grid-cols-[repeat(6,minmax(0,1fr))]">
+        <ul className="mx-auto grid w-full max-w-7xl grid-cols-[repeat(5,minmax(0,1fr))]">
           <li className="min-w-0">
             <Link
               to="/events"
@@ -444,29 +448,6 @@ export function Header() {
               <Stethoscope className="h-4 w-4 shrink-0 text-gold-accent/80" aria-hidden />
               <span className={MOBILE_TABBAR_LABEL}>의료진</span>
             </Link>
-          </li>
-          <li className="min-w-0">
-            {isExternalReservation ? (
-              <a
-                href={SITE_LINKS.reservation}
-                target="_blank"
-                rel="noreferrer"
-                className={`${MOBILE_TABBAR_ITEM} text-muted-foreground hover:text-gold-accent`}
-              >
-                <Sparkles className="h-4 w-4 shrink-0 text-gold-accent/80" aria-hidden />
-                <span className={MOBILE_TABBAR_LABEL}>예약·문의</span>
-              </a>
-            ) : (
-              <Link
-                to={SITE_LINKS.reservation}
-                className={`${MOBILE_TABBAR_ITEM} ${
-                  isReservationActive ? "text-gold-accent" : "text-muted-foreground"
-                }`}
-              >
-                <Sparkles className="h-4 w-4 shrink-0 text-gold-accent/80" aria-hidden />
-                <span className={MOBILE_TABBAR_LABEL}>예약·문의</span>
-              </Link>
-            )}
           </li>
           <li className="min-w-0">
             <Link

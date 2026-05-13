@@ -2,8 +2,8 @@ import { Link, useParams } from "react-router";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
-import { PROCEDURE_SPEC_LABELS } from "../../data/procedureDetailSpecs";
 import {
+  PROCEDURE_SPEC_LABELS,
   getProcedureCategory,
   getProcedureTreatment,
   procedureCategoryPath,
