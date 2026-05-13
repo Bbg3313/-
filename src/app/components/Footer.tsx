@@ -92,7 +92,7 @@ export function Footer({ className }: FooterProps) {
       )}
     >
       <div className="border-t border-border bg-muted/50">
-        <div className="mx-auto flex max-w-xl flex-col items-center px-4 pb-3 pt-1.5 sm:px-6 sm:pb-6 sm:pt-2 md:pb-12 md:pt-3">
+        <div className="mx-auto flex max-w-xl flex-col items-center px-4 pb-2 pt-1 sm:px-5 sm:pb-4 sm:pt-1.5 md:pb-6 md:pt-2">
           <div className="flex w-full flex-col items-center">
             <Link
               to="/"
@@ -104,10 +104,10 @@ export function Footer({ className }: FooterProps) {
             </Link>
           </div>
 
-          <div className="my-2.5 h-px w-10 shrink-0 bg-gold-accent/35 sm:my-4 md:my-7" aria-hidden />
+          <div className="my-2 h-px w-10 shrink-0 bg-gold-accent/35 sm:my-3 md:my-4" aria-hidden />
 
-          <div className="mx-auto flex w-full max-w-md flex-col items-stretch gap-3 sm:gap-6">
-            <ul className="space-y-1 text-center sm:space-y-2.5">
+          <div className="mx-auto flex w-full max-w-md flex-col items-stretch gap-2.5 sm:gap-4">
+            <ul className="space-y-0.5 text-center sm:space-y-1.5">
               <InfoLine label="대표자">심형경</InfoLine>
               <InfoLine label="사업자등록번호">587-10-03051</InfoLine>
               <InfoLine label="주소">경북 경주시 화랑로 132, 2층 연세미의원</InfoLine>
@@ -121,7 +121,7 @@ export function Footer({ className }: FooterProps) {
               </InfoLine>
             </ul>
 
-            <div className="flex flex-wrap justify-center gap-3 sm:gap-4">
+            <div className="flex flex-wrap justify-center gap-2.5 sm:gap-3">
               <SocialButton href={SOCIAL_LINKS.instagram} label="인스타그램" variant="instagram">
                 <Instagram className="h-[18px] w-[18px] sm:h-[22px] sm:w-[22px]" strokeWidth={2} />
               </SocialButton>
@@ -130,8 +130,8 @@ export function Footer({ className }: FooterProps) {
               </SocialButton>
             </div>
 
-            <div className="border border-border/60 bg-background/60 px-3 py-2 backdrop-blur-sm sm:px-5 sm:py-4">
-              <p className="mb-1 text-center text-[10px] font-medium tracking-widest text-charcoal/80 sm:mb-2 sm:text-xs">
+            <div className="border border-border/60 bg-background/60 px-3 py-1.5 backdrop-blur-sm sm:px-4 sm:py-2.5">
+              <p className="mb-0.5 text-center text-[10px] font-medium tracking-widest text-charcoal/80 sm:mb-1 sm:text-xs">
                 주의사항
               </p>
               <p className="text-center text-[10px] leading-relaxed text-muted-foreground [word-break:keep-all] sm:text-sm sm:leading-relaxed">
@@ -142,7 +142,7 @@ export function Footer({ className }: FooterProps) {
           </div>
 
           <nav
-            className="mt-4 flex w-full flex-wrap items-center justify-center gap-x-0.5 gap-y-1 text-xs sm:mt-7 sm:gap-x-1 sm:gap-y-2 sm:text-sm"
+            className="mt-3 flex w-full flex-wrap items-center justify-center gap-x-0.5 gap-y-1 text-xs sm:mt-4 sm:gap-x-1 sm:gap-y-1.5 sm:text-sm"
             aria-label="법적 고지"
           >
             {footerLinks.map((item, i) => (
@@ -165,7 +165,7 @@ export function Footer({ className }: FooterProps) {
       </div>
 
       <div className="border-t border-primary/15 bg-secondary">
-        <div className="mx-auto max-w-xl px-4 py-2 sm:px-6 sm:py-3.5">
+        <div className="mx-auto max-w-xl px-4 py-1.5 sm:px-5 sm:py-2">
           <p className="text-center text-[10px] tracking-wide text-muted-foreground sm:text-xs">
             © {new Date().getFullYear()} 연세미의원. All rights reserved.
           </p>
