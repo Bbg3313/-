@@ -6,13 +6,7 @@ import { useHomeLogoClick } from "../hooks/useHomeLogoClick";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { SITE_LINKS } from "../config/siteLinks";
 import { Sheet, SheetClose, SheetContent, SheetTitle, SheetTrigger } from "./ui/sheet";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./ui/collapsible";
-import {
-  PROCEDURE_CATEGORIES,
-  listTreatmentsByCategory,
-  procedureCategoryPath,
-  procedureDetailPath,
-} from "../../data/treatmentsCatalog";
+import { PROCEDURE_CATEGORIES, procedureCategoryPath } from "../../data/treatmentsCatalog";
 
 const MOBILE_SHEET_QUICK = {
   kakaoLabel: "\uCE74\uD1A1\uC0C1\uB2F4",
@@ -185,38 +179,26 @@ export function Header() {
               aria-label="시술 카테고리"
               aria-hidden={!proceduresMenuOpen}
             >
-              <div className="max-h-[min(85vh,44rem)] overflow-x-auto overflow-y-auto border-b border-border/60 bg-background/[0.99] px-4 py-4 shadow-2xl shadow-black/10 ring-1 ring-black/[0.04] backdrop-blur-md sm:px-6 sm:py-5 md:px-8 md:py-6">
+              <div className="max-h-[min(70vh,28rem)] overflow-x-auto overflow-y-auto border-b border-border/60 bg-background/[0.99] px-4 py-4 shadow-2xl shadow-black/10 ring-1 ring-black/[0.04] backdrop-blur-md sm:px-6 sm:py-5 md:px-8 md:py-5">
                 <div className="mx-auto flex w-full max-w-[1600px] flex-nowrap items-stretch gap-2 md:gap-3 lg:gap-4">
                   {PROCEDURE_CATEGORIES.map((cat) => (
-                    <div
+                    <Link
                       key={cat.slug}
-                      className="flex min-h-0 min-w-0 flex-1 basis-0 flex-col rounded-xl border border-border/35 bg-muted/[0.12] p-2.5 sm:p-3 md:p-3.5"
+                      to={procedureCategoryPath(cat.slug)}
+                      className="group flex min-h-0 min-w-0 flex-1 basis-0 flex-col rounded-xl border border-border/35 bg-muted/[0.12] p-3 transition-colors hover:border-gold-accent/30 hover:bg-muted/[0.18] sm:p-3.5 md:p-4"
                     >
-                      <Link
-                        to={procedureCategoryPath(cat.slug)}
-                        className="text-[12px] font-semibold leading-snug tracking-tight text-charcoal transition-colors hover:text-gold-accent [word-break:keep-all] md:text-[13px] lg:text-[14px]"
-                      >
+                      <span className="text-[13px] font-semibold leading-snug tracking-tight text-charcoal transition-colors group-hover:text-gold-accent [word-break:keep-all] md:text-[14px] lg:text-[15px]">
                         {cat.label}
-                      </Link>
-                      <ul className="mt-2 max-h-[min(38vh,15rem)] flex-1 space-y-1 overflow-y-auto overscroll-contain border-l-2 border-gold-accent/25 pl-2 sm:mt-2.5 sm:pl-2.5 md:max-h-[min(40vh,16rem)]">
-                        {listTreatmentsByCategory(cat.slug).map((t) => (
-                          <li key={t.slug}>
-                            <Link
-                              to={procedureDetailPath(cat.slug, t.slug)}
-                              className="block py-0.5 text-[10px] leading-snug text-muted-foreground transition-colors hover:text-gold-accent [word-break:keep-all] md:text-[11px] lg:text-[12px]"
-                            >
-                              {t.title}
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                      <Link
-                        to={procedureCategoryPath(cat.slug)}
-                        className="mt-2 inline-block shrink-0 text-[10px] font-semibold uppercase tracking-wider text-gold-accent/95 hover:text-gold-accent"
-                      >
-                        전체 →
-                      </Link>
-                    </div>
+                      </span>
+                      {cat.blurb ? (
+                        <span className="mt-2 line-clamp-2 text-[11px] leading-snug text-muted-foreground [word-break:keep-all] md:text-[12px] lg:line-clamp-3">
+                          {cat.blurb}
+                        </span>
+                      ) : null}
+                      <span className="mt-auto pt-3 text-[10px] font-semibold uppercase tracking-wider text-gold-accent/90 group-hover:text-gold-accent">
+                        둘러보기 →
+                      </span>
+                    </Link>
                   ))}
                 </div>
                 <div className="mx-auto mt-5 flex max-w-[1600px] flex-wrap items-center justify-between gap-4 border-t border-border/50 pt-4 sm:mt-6 sm:pt-5">
@@ -362,41 +344,20 @@ export function Header() {
                     시술 안내 홈
                   </Link>
                 </SheetClose>
-                <div className="space-y-2 px-1 pb-2">
-                  <p className="px-3 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">카테고리</p>
+                <div className="space-y-1 px-1 pb-2">
+                  <p className="px-3 pb-1 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">시술 카테고리</p>
                   {PROCEDURE_CATEGORIES.map((cat) => (
-                    <Collapsible key={cat.slug} className="rounded-lg border border-border/55 bg-muted/15">
-                      <CollapsibleTrigger className="flex w-full items-center justify-between gap-2 px-3 py-2.5 text-left text-sm font-medium text-charcoal hover:bg-muted/30 [&[data-state=open]>svg]:rotate-180">
-                        <span className="[word-break:keep-all]">{cat.label}</span>
-                        <ChevronDown className="h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200" aria-hidden />
-                      </CollapsibleTrigger>
-                      <CollapsibleContent className="border-t border-border/40 px-2 pb-2 pt-1">
-                        <ul className="space-y-0.5">
-                          {listTreatmentsByCategory(cat.slug).map((t) => (
-                            <li key={t.slug}>
-                              <SheetClose asChild>
-                                <Link
-                                  to={procedureDetailPath(cat.slug, t.slug)}
-                                  className="block rounded-md px-2 py-2 text-xs text-muted-foreground transition-colors hover:bg-background/80 hover:text-charcoal [word-break:keep-all]"
-                                >
-                                  {t.title}
-                                </Link>
-                              </SheetClose>
-                            </li>
-                          ))}
-                          <li>
-                            <SheetClose asChild>
-                              <Link
-                                to={procedureCategoryPath(cat.slug)}
-                                className="mt-1 block rounded-md px-2 py-2 text-xs font-medium text-gold-accent hover:bg-background/60"
-                              >
-                                {cat.label} 전체 보기
-                              </Link>
-                            </SheetClose>
-                          </li>
-                        </ul>
-                      </CollapsibleContent>
-                    </Collapsible>
+                    <SheetClose asChild key={cat.slug}>
+                      <Link
+                        to={procedureCategoryPath(cat.slug)}
+                        className="flex flex-col gap-1 rounded-lg border border-border/50 bg-muted/10 px-3 py-3 text-left transition-colors hover:border-gold-accent/25 hover:bg-muted/25"
+                      >
+                        <span className="text-sm font-semibold text-charcoal [word-break:keep-all]">{cat.label}</span>
+                        {cat.blurb ? (
+                          <span className="line-clamp-2 text-xs leading-snug text-muted-foreground [word-break:keep-all]">{cat.blurb}</span>
+                        ) : null}
+                      </Link>
+                    </SheetClose>
                   ))}
                 </div>
                 <SheetClose asChild>
