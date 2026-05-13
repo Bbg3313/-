@@ -3,6 +3,7 @@ import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 import { ContactInner } from "../components/Contact";
 import { ConsultationChannelsSection } from "../components/ConsultationChannelsSection";
+import { SECTION_TITLE_RULE_CLASS } from "../config/sectionDecor";
 
 export function ReservationPage() {
   return (
@@ -18,7 +19,7 @@ export function ReservationPage() {
           </Link>
 
           <div className="text-center mb-14 lg:mb-16">
-            <div className="w-12 h-px bg-gold-accent mx-auto mb-8" />
+            <div className={SECTION_TITLE_RULE_CLASS} aria-hidden />
             <h1 className="mb-4 text-charcoal tracking-tight text-3xl sm:text-4xl md:text-[2.75rem] font-semibold leading-tight">
               예약·문의
             </h1>

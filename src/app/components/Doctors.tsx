@@ -1,4 +1,5 @@
 import { ImageWithFallback } from "./figma/ImageWithFallback";
+import { SECTION_TITLE_RULE_CLASS } from "../config/sectionDecor";
 
 const DIRECTOR = {
   name: "심형경",
@@ -23,7 +24,7 @@ export function Doctors() {
     <section id="doctors" className="relative bg-background px-6 py-12 sm:py-24 lg:py-32">
       <div className="max-w-6xl mx-auto">
         <div className="mx-auto mb-8 max-w-3xl text-center md:mb-16 lg:mb-20">
-          <div className="mx-auto mb-4 h-px w-12 bg-gold-accent md:mb-8" />
+          <div className={SECTION_TITLE_RULE_CLASS} aria-hidden />
           <h2
             className="mb-3 text-charcoal tracking-tight md:mb-6"
             style={{

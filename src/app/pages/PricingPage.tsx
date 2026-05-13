@@ -12,6 +12,7 @@ import {
   type PricingTable,
 } from "../../data/pricingData";
 import { fetchPricingSnapshot } from "../lib/cmsApi";
+import { SECTION_TITLE_RULE_CLASS } from "../config/sectionDecor";
 
 /** 시술/가격 영역은 본문과 동일하게 Pretendard만 사용 */
 const PRICING_FONT =
@@ -479,7 +480,7 @@ export function PricingPage() {
           </div>
 
           <header className="mb-6 sm:mb-8">
-            <div className="w-12 h-px bg-primary/40 mb-4 sm:mb-5" />
+            <div className={SECTION_TITLE_RULE_CLASS} aria-hidden />
             <h1
               className={`text-charcoal text-2xl font-semibold tracking-tight sm:text-3xl md:text-[2.25rem] mb-3 ${LEAD_SM} ${KO_WRAP}`}
             >

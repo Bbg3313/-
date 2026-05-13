@@ -2,6 +2,7 @@ import { useRef, type ReactNode } from "react";
 import { motion, useInView } from "motion/react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { cn } from "./ui/utils";
+import { SECTION_TITLE_RULE_CLASS } from "../config/sectionDecor";
 
 const easeLux = [0.22, 1, 0.36, 1] as const;
 
@@ -221,7 +222,7 @@ export function About() {
         <div className="mx-auto max-w-4xl text-center">
           <Reveal className="shrink-0">
             <p className="mb-3 text-[11px] font-medium uppercase tracking-[0.35em] text-gold-accent/90 md:mb-4">Yonsei Mi Clinic</p>
-            <div className="mx-auto mb-5 h-px w-20 bg-gradient-to-r from-transparent via-gold-accent to-transparent md:mb-8" />
+            <div className={SECTION_TITLE_RULE_CLASS} aria-hidden />
           </Reveal>
 
           <Reveal delay={0.05} className="shrink-0">

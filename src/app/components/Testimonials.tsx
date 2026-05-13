@@ -1,3 +1,5 @@
+import { SECTION_TITLE_RULE_CLASS } from "../config/sectionDecor";
+
 export function Testimonials() {
   const testimonials = [
     {
@@ -32,7 +34,7 @@ export function Testimonials() {
       <div className="max-w-7xl mx-auto relative">
         {/* Section Header */}
         <div className="text-center mb-24">
-          <div className="w-12 h-px bg-gold-accent mx-auto mb-8" />
+          <div className={SECTION_TITLE_RULE_CLASS} aria-hidden />
           <h2
             className="mb-6 text-charcoal tracking-tight"
             style={{

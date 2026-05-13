@@ -2,6 +2,7 @@ import React, { useCallback, useState } from "react";
 import { Link } from "react-router";
 import { Check, Copy } from "lucide-react";
 import { SITE_LINKS } from "../config/siteLinks";
+import { SECTION_TITLE_RULE_CLASS } from "../config/sectionDecor";
 import { ConsultationChannelsSection } from "./ConsultationChannelsSection";
 
 /** 주소 복사 버튼에 넣을 도로명(번지까지) */
@@ -142,7 +143,7 @@ export function Contact() {
     >
       <div className="mx-auto box-border w-full min-w-0 max-w-6xl">
         <div className="mx-auto mb-8 max-w-3xl text-center md:mb-16 lg:mb-20">
-          <div className="mx-auto mb-4 h-px w-12 bg-gold-accent md:mb-8" />
+          <div className={SECTION_TITLE_RULE_CLASS} aria-hidden />
           <h2
             className="mb-3 w-full text-center text-charcoal tracking-tight md:mb-6"
             style={{

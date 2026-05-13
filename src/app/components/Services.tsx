@@ -1,6 +1,7 @@
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { Link } from "react-router";
 import { SITE_LINKS } from "../config/siteLinks";
+import { SECTION_TITLE_RULE_CLASS } from "../config/sectionDecor";
 
 export function Services() {
   const isExternalReservation = /^https?:\/\//.test(SITE_LINKS.reservation);
@@ -55,22 +56,22 @@ export function Services() {
       {/* Subtle decorative element */}
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
 
-      <div className="max-w-7xl mx-auto">
-        {/* Header with elegant typography */}
-        <div className="mb-10 max-w-2xl md:mb-20 lg:mb-24">
-          <div className="mb-4 h-px w-12 bg-primary md:mb-8" />
+      <div className="mx-auto max-w-7xl">
+        {/* 헤더 — PC 가운데 정렬, 섹션 제목은 Events 등과 동일 톤 */}
+        <div className="mx-auto mb-10 max-w-3xl text-center md:mb-20 lg:mb-24">
+          <div className={SECTION_TITLE_RULE_CLASS} aria-hidden />
           <h2
-            className="mb-3 text-foreground tracking-tight md:mb-6"
+            className="mb-3 text-charcoal tracking-tight md:mb-6"
             style={{
               fontFamily: "'Playfair Display', serif",
               fontSize: "clamp(2.35rem, 8vw, 3.5rem)",
               lineHeight: "1.1",
-              fontWeight: "600",
+              fontWeight: "500",
             }}
           >
             Medical Services
           </h2>
-          <p className="text-muted-foreground text-base sm:text-lg leading-relaxed [word-break:keep-all]">
+          <p className="mx-auto max-w-2xl text-pretty text-base leading-relaxed text-muted-foreground [word-break:keep-all] sm:text-lg">
             대표원장의 전문적인 진료와 최신 시술로 건강하고 아름다운 피부를 만들어드립니다.
           </p>
         </div>
@@ -119,8 +120,8 @@ export function Services() {
                   {services[0].subtitle}
                 </p>
                 <h3
-                  className="mb-4 text-white text-[1.9rem] leading-[1.2] sm:text-[2.5rem]"
-                  style={{ fontFamily: "'Playfair Display', serif", fontWeight: "600" }}
+                  className="mb-3 text-[1.75rem] font-semibold leading-[1.2] text-white"
+                  style={{ fontFamily: "'Playfair Display', serif" }}
                 >
                   {services[0].title}
                 </h3>
@@ -147,8 +148,8 @@ export function Services() {
                       {service.subtitle}
                     </p>
                     <h3
-                      className="text-white mb-3"
-                      style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.75rem", lineHeight: "1.2", fontWeight: "600" }}
+                      className="mb-3 text-[1.75rem] font-semibold leading-[1.2] text-white"
+                      style={{ fontFamily: "'Playfair Display', serif" }}
                     >
                       {service.title}
                     </h3>
@@ -175,8 +176,8 @@ export function Services() {
                   {services[3].subtitle}
                 </p>
                 <h3
-                  className="text-white mb-3"
-                  style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.75rem", lineHeight: "1.2", fontWeight: "600" }}
+                  className="mb-3 text-[1.75rem] font-semibold leading-[1.2] text-white"
+                  style={{ fontFamily: "'Playfair Display', serif" }}
                 >
                   {services[3].title}
                 </h3>
@@ -200,8 +201,8 @@ export function Services() {
                   {services[4].subtitle}
                 </p>
                 <h3
-                  className="text-white mb-3"
-                  style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.75rem", lineHeight: "1.2", fontWeight: "600" }}
+                  className="mb-3 text-[1.75rem] font-semibold leading-[1.2] text-white"
+                  style={{ fontFamily: "'Playfair Display', serif" }}
                 >
                   {services[4].title}
                 </h3>
@@ -225,8 +226,8 @@ export function Services() {
                   {services[5].subtitle}
                 </p>
                 <h3
-                  className="text-white mb-3"
-                  style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.75rem", lineHeight: "1.2", fontWeight: "600" }}
+                  className="mb-3 text-[1.75rem] font-semibold leading-[1.2] text-white"
+                  style={{ fontFamily: "'Playfair Display', serif" }}
                 >
                   {services[5].title}
                 </h3>

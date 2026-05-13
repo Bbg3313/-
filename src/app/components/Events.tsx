@@ -3,6 +3,7 @@ import { Link } from "react-router";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { fetchPublishedPromotions } from "../lib/cmsApi";
 import type { Promotion } from "../types/cms";
+import { SECTION_TITLE_RULE_CLASS } from "../config/sectionDecor";
 
 const EVENTS = [
   {
@@ -62,7 +63,7 @@ export function Events() {
 
       <div className="max-w-[90rem] mx-auto relative">
         <div className="mb-8 text-center md:mb-16 lg:mb-20">
-          <div className="mx-auto mb-4 h-px w-12 bg-gold-accent md:mb-8" />
+          <div className={SECTION_TITLE_RULE_CLASS} aria-hidden />
           <h2
             className="mb-3 text-charcoal tracking-tight md:mb-6"
             style={{

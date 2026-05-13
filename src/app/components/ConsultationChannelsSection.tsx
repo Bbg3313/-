@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { SECTION_TITLE_RULE_CLASS } from "../config/sectionDecor";
 import { SITE_LINKS } from "../config/siteLinks";
 
 type ConsultationChannelsSectionProps = {
@@ -70,7 +71,7 @@ const channels: Channel[] = [
 ];
 
 export function ConsultationChannelsSection({
-  heading = "상담안내",
+  heading = "Consultation",
   description = (
     <>
       궁금하신 부분이 있다면 언제든 연락해주세요.
@@ -81,14 +82,23 @@ export function ConsultationChannelsSection({
   showHeader = true,
 }: ConsultationChannelsSectionProps) {
   return (
-    <section className="relative mt-8 border-t border-gold-accent/20 bg-gradient-to-b from-muted/30 via-background to-background px-0 pt-8 pb-8 sm:mt-10 sm:pt-10 sm:pb-10 md:pt-12 md:pb-12">
+    <section className="relative mt-10 border-t border-gold-accent/20 bg-gradient-to-b from-muted/30 via-background to-background px-0 pt-12 pb-12 sm:mt-12 sm:pt-14 sm:pb-14 md:mt-14 md:pt-16 md:pb-16">
       <div className="mx-auto max-w-3xl px-4 sm:px-6 md:max-w-5xl md:px-8">
         {showHeader ? (
-          <header className="mb-8 text-center sm:mb-10">
-            <h2 className="mb-3 font-semibold leading-snug tracking-tight text-charcoal max-md:text-[clamp(2.35rem,8vw,3.5rem)] max-md:leading-[1.1] md:text-[clamp(1.35rem,2.8vw,1.75rem)]">
+          <header className="mb-10 text-center sm:mb-12">
+            <div className={SECTION_TITLE_RULE_CLASS} aria-hidden />
+            <h2
+              className="mb-3 text-charcoal tracking-tight md:mb-6"
+              style={{
+                fontFamily: "'Playfair Display', serif",
+                fontSize: "clamp(2.35rem, 8vw, 3.5rem)",
+                lineHeight: "1.1",
+                fontWeight: "500",
+              }}
+            >
               {heading}
             </h2>
-            <p className="mx-auto max-w-xl text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg [word-break:keep-all]">
+            <p className="mx-auto max-w-2xl text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg [word-break:keep-all]">
               {description}
             </p>
           </header>

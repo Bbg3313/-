@@ -5,6 +5,7 @@ import { Footer } from "../components/Footer";
 import { fetchPromotionBySlug } from "../lib/cmsApi";
 import type { Promotion } from "../types/cms";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
+import { SECTION_TITLE_RULE_CLASS } from "../config/sectionDecor";
 
 export function EventDetailPage() {
   const { slug } = useParams();
@@ -22,7 +23,7 @@ export function EventDetailPage() {
       <Header />
       <main className="flex-1 px-6 pt-32 md:pt-36 pb-20">
         <div className="max-w-3xl mx-auto">
-          <div className="w-12 h-px bg-gold-accent mb-8" />
+          <div className={SECTION_TITLE_RULE_CLASS} aria-hidden />
           <h1 className="mb-6 text-charcoal tracking-tight text-3xl md:text-5xl font-semibold">
             {promotion?.title ?? "이벤트 상세"}
           </h1>

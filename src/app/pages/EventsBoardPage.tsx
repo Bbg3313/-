@@ -5,6 +5,7 @@ import { Footer } from "../components/Footer";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { fetchPublishedPromotions } from "../lib/cmsApi";
 import type { Promotion } from "../types/cms";
+import { SECTION_TITLE_RULE_CLASS } from "../config/sectionDecor";
 
 const FALLBACK_EVENTS = [
   {
@@ -56,7 +57,7 @@ export function EventsBoardPage() {
           </Link>
 
           <div className="text-center mb-14 lg:mb-16">
-            <div className="w-12 h-px bg-gold-accent mx-auto mb-8" />
+            <div className={SECTION_TITLE_RULE_CLASS} aria-hidden />
             <h1
               className="mb-4 text-charcoal tracking-tight"
               style={{
