@@ -29,7 +29,7 @@ export function FloatingActions() {
 
   const isEventsBoardActive =
     location.pathname === "/events" || location.pathname.startsWith("/promotions");
-  const isNoticeActive = location.pathname === "/notice";
+  const isNoticeActive = location.pathname === "/notice" || location.pathname.startsWith("/notice/");
   const isExternalEventBoard = /^https?:\/\//.test(SITE_LINKS.eventBoard);
   const isExternalReservation = /^https?:\/\//.test(SITE_LINKS.reservation);
   const isReservationActive =

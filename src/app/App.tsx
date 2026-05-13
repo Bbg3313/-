@@ -18,6 +18,9 @@ import { RequireAdmin } from "./components/admin/RequireAdmin";
 import { AdminNoticesPage } from "./pages/admin/AdminNoticesPage";
 import { AdminPricingPage } from "./pages/admin/AdminPricingPage";
 import { NoticeDetailPage } from "./pages/NoticeDetailPage";
+import { ProceduresHubPage } from "./pages/ProceduresHubPage";
+import { ProcedureCategoryPage } from "./pages/ProcedureCategoryPage";
+import { ProcedureDetailPage } from "./pages/ProcedureDetailPage";
 
 export default function App() {
   return (
@@ -32,6 +35,9 @@ export default function App() {
         <Route path="/events/:slug" element={<EventDetailPage />} />
         <Route path="/promotions/:slug" element={<EventDetailPage />} />
         <Route path="/pricing" element={<PricingPage />} />
+        <Route path="/procedures" element={<ProceduresHubPage />} />
+        <Route path="/procedures/:categorySlug" element={<ProcedureCategoryPage />} />
+        <Route path="/procedures/:categorySlug/:treatmentSlug" element={<ProcedureDetailPage />} />
         <Route path="/privacy" element={<PrivacyPage />} />
         <Route path="/terms" element={<TermsPage />} />
         <Route path="/admin/login" element={<AdminLoginPage />} />

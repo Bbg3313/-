@@ -1,11 +1,18 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router";
-import { Bell, CalendarDays, Hospital, MenuIcon, Sparkles, Stethoscope, Ticket } from "lucide-react";
+import { Bell, CalendarDays, ChevronDown, Hospital, MenuIcon, Sparkles, Stethoscope, Ticket } from "lucide-react";
 import { SiteLogo } from "./branding/SiteLogo";
 import { useHomeLogoClick } from "../hooks/useHomeLogoClick";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { SITE_LINKS } from "../config/siteLinks";
 import { Sheet, SheetClose, SheetContent, SheetTitle, SheetTrigger } from "./ui/sheet";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./ui/collapsible";
+import {
+  PROCEDURE_CATEGORIES,
+  listTreatmentsByCategory,
+  procedureCategoryPath,
+  procedureDetailPath,
+} from "../../data/treatmentsCatalog";
 
 const MOBILE_SHEET_QUICK = {
   kakaoLabel: "\uCE74\uD1A1\uC0C1\uB2F4",
@@ -37,6 +44,9 @@ export function Header() {
   const isAboutActive = isHome && location.hash === "#about";
   const isDoctorsActive = isHome && location.hash === "#doctors";
   const isPricingActive = location.pathname === "/pricing";
+  const isProceduresActive =
+    location.pathname === "/procedures" || location.pathname.startsWith("/procedures/");
+  const isProceduresPricingTabActive = isPricingActive || isProceduresActive;
   const isReservationActive = !isExternalReservation && location.pathname === SITE_LINKS.reservation;
 
   useEffect(() => {
@@ -91,6 +101,70 @@ export function Header() {
               의료진
             </Link>
           </li>
+          <li className="group relative">
+            <Link
+              to="/procedures"
+              className={`inline-flex items-center gap-1 text-sm tracking-wider uppercase transition-colors duration-300 ${
+                isProceduresActive ? "text-gold-accent" : navClass
+              }`}
+            >
+              시술 안내
+              <ChevronDown className="h-3 w-3 opacity-70 transition-transform duration-200 group-hover:rotate-180" aria-hidden />
+            </Link>
+            <div
+              className="pointer-events-none invisible absolute left-1/2 top-full z-[60] w-[min(100vw-2rem,52rem)] -translate-x-1/2 pt-3 opacity-0 transition-[opacity,visibility] duration-150 group-hover:pointer-events-auto group-hover:visible group-hover:opacity-100"
+              role="navigation"
+              aria-label="시술 카테고리"
+            >
+              <div className="max-h-[min(70vh,28rem)] overflow-y-auto rounded-2xl border border-border/60 bg-background/98 p-5 shadow-xl backdrop-blur-md">
+                <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                  {PROCEDURE_CATEGORIES.map((cat) => (
+                    <div key={cat.slug} className="min-w-0">
+                      <Link
+                        to={procedureCategoryPath(cat.slug)}
+                        className="text-[13px] font-semibold tracking-tight text-charcoal transition-colors hover:text-gold-accent [word-break:keep-all]"
+                      >
+                        {cat.label}
+                      </Link>
+                      <ul className="mt-2 space-y-1 border-l border-gold-accent/20 pl-3">
+                        {listTreatmentsByCategory(cat.slug).map((t) => (
+                          <li key={t.slug}>
+                            <Link
+                              to={procedureDetailPath(cat.slug, t.slug)}
+                              className="block truncate py-0.5 text-xs text-muted-foreground transition-colors hover:text-gold-accent [word-break:keep-all]"
+                              title={t.title}
+                            >
+                              {t.title}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                      <Link
+                        to={procedureCategoryPath(cat.slug)}
+                        className="mt-2 inline-block text-[10px] font-medium uppercase tracking-wider text-gold-accent/90 hover:text-gold-accent"
+                      >
+                        카테고리 전체 →
+                      </Link>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-border/50 pt-4">
+                  <Link
+                    to="/procedures"
+                    className="text-xs font-semibold uppercase tracking-wider text-charcoal hover:text-gold-accent"
+                  >
+                    시술 안내 홈
+                  </Link>
+                  <Link
+                    to="/pricing"
+                    className="text-xs font-semibold uppercase tracking-wider text-muted-foreground hover:text-gold-accent"
+                  >
+                    시술·가격표
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </li>
           <li>
             {isExternalReservation ? (
               <a
@@ -111,7 +185,12 @@ export function Header() {
             )}
           </li>
           <li>
-            <Link to="/pricing" className={`text-sm tracking-wider uppercase transition-colors duration-300 ${navClass}`}>
+            <Link
+              to="/pricing"
+              className={`text-sm tracking-wider uppercase transition-colors duration-300 ${
+                isPricingActive ? "text-gold-accent" : navClass
+              }`}
+            >
               시술/가격
             </Link>
           </li>
@@ -226,6 +305,48 @@ export function Header() {
                     의료진
                   </Link>
                 </SheetClose>
+                <SheetClose asChild>
+                  <Link to="/procedures" className="flex items-center gap-2 rounded-md px-3 py-3 text-sm font-semibold text-charcoal hover:bg-muted/40">
+                    시술 안내 홈
+                  </Link>
+                </SheetClose>
+                <div className="space-y-2 px-1 pb-2">
+                  <p className="px-3 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">카테고리</p>
+                  {PROCEDURE_CATEGORIES.map((cat) => (
+                    <Collapsible key={cat.slug} className="rounded-lg border border-border/55 bg-muted/15">
+                      <CollapsibleTrigger className="flex w-full items-center justify-between gap-2 px-3 py-2.5 text-left text-sm font-medium text-charcoal hover:bg-muted/30 [&[data-state=open]>svg]:rotate-180">
+                        <span className="[word-break:keep-all]">{cat.label}</span>
+                        <ChevronDown className="h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200" aria-hidden />
+                      </CollapsibleTrigger>
+                      <CollapsibleContent className="border-t border-border/40 px-2 pb-2 pt-1">
+                        <ul className="space-y-0.5">
+                          {listTreatmentsByCategory(cat.slug).map((t) => (
+                            <li key={t.slug}>
+                              <SheetClose asChild>
+                                <Link
+                                  to={procedureDetailPath(cat.slug, t.slug)}
+                                  className="block rounded-md px-2 py-2 text-xs text-muted-foreground transition-colors hover:bg-background/80 hover:text-charcoal [word-break:keep-all]"
+                                >
+                                  {t.title}
+                                </Link>
+                              </SheetClose>
+                            </li>
+                          ))}
+                          <li>
+                            <SheetClose asChild>
+                              <Link
+                                to={procedureCategoryPath(cat.slug)}
+                                className="mt-1 block rounded-md px-2 py-2 text-xs font-medium text-gold-accent hover:bg-background/60"
+                              >
+                                {cat.label} 전체 보기
+                              </Link>
+                            </SheetClose>
+                          </li>
+                        </ul>
+                      </CollapsibleContent>
+                    </Collapsible>
+                  ))}
+                </div>
                 {isExternalReservation ? (
                   <a
                     href={SITE_LINKS.reservation}
@@ -347,7 +468,7 @@ export function Header() {
             <Link
               to="/pricing"
               className={`${MOBILE_TABBAR_ITEM} ${
-                isPricingActive ? "text-gold-accent" : "text-muted-foreground"
+                isProceduresPricingTabActive ? "text-gold-accent" : "text-muted-foreground"
               }`}
             >
               <CalendarDays className="h-4 w-4 shrink-0 text-gold-accent/80" aria-hidden />
