@@ -366,12 +366,15 @@ export function About() {
   const signatureTreatments = openService?.gallery ? resolveSignatureTreatments(openService.id) : [];
   const signatureTabsRef = useRef<HTMLDivElement>(null);
   const [signatureTabScroll, setSignatureTabScroll] = useState({ canLeft: false, canRight: false });
+  /** 한 줄에 모두 들어갈 때만 탭 사이·끝 여백을 균등 분배 (왼쪽 몰림·오른쪽 빈 칸 방지) */
+  const [signatureTabsFitRow, setSignatureTabsFitRow] = useState(false);
 
   useEffect(() => {
     const el = signatureTabsRef.current;
     if (!el) return;
     const sync = () => {
       const maxScroll = el.scrollWidth - el.clientWidth;
+      setSignatureTabsFitRow(maxScroll <= 2);
       setSignatureTabScroll({
         canLeft: el.scrollLeft > 2,
         canRight: maxScroll > 2 && el.scrollLeft < maxScroll - 2,
@@ -520,7 +523,10 @@ export function About() {
                   </button>
                   <div
                     ref={signatureTabsRef}
-                    className="flex min-h-[2.75rem] min-w-0 flex-1 flex-nowrap gap-1 overflow-x-auto scroll-smooth rounded-xl py-0.5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                    className={cn(
+                      "flex min-h-[2.75rem] min-w-0 flex-1 flex-nowrap overflow-x-auto scroll-smooth rounded-xl py-0.5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
+                      signatureTabsFitRow ? "justify-evenly gap-1.5 px-0.5 sm:gap-2 sm:px-1" : "justify-start gap-1",
+                    )}
                     role="tablist"
                     aria-label="Signature care treatments"
                   >

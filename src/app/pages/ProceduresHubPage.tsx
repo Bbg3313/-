@@ -23,15 +23,7 @@ export function ProceduresHubPage() {
 
           <div className="mb-8 text-center md:mb-14">
             <div className="mx-auto mb-4 h-px w-12 bg-gold-accent sm:mb-6" />
-            <h1
-              className="mb-2 text-charcoal sm:mb-4"
-              style={{
-                fontFamily: "'Playfair Display', serif",
-                fontSize: "clamp(1.75rem, 5.5vw, 2.75rem)",
-                lineHeight: 1.12,
-                fontWeight: 500,
-              }}
-            >
+            <h1 className="mb-2 text-2xl font-semibold leading-tight tracking-tight text-charcoal sm:mb-4 sm:text-3xl md:text-4xl">
               시술 안내
             </h1>
             <p className="mx-auto max-w-2xl px-1 text-sm leading-relaxed text-muted-foreground [word-break:keep-all] sm:px-0 sm:text-base">

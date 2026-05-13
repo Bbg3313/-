@@ -69,15 +69,7 @@ export function ProcedureDetailPage() {
           <article>
             <header className="mb-6 sm:mb-8">
               <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-gold-accent/90">Procedure</p>
-              <h1
-                className="mt-2 text-charcoal"
-                style={{
-                  fontFamily: "'Playfair Display', serif",
-                  fontSize: "clamp(1.55rem, 5vw, 2.35rem)",
-                  lineHeight: 1.15,
-                  fontWeight: 500,
-                }}
-              >
+              <h1 className="mt-2 text-xl font-semibold leading-tight tracking-tight text-charcoal sm:text-2xl md:text-3xl">
                 {treatment.title}
               </h1>
               {treatment.subtitle ? (

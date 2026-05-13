@@ -50,15 +50,7 @@ export function ProcedureCategoryPage() {
           </nav>
 
           <header className="mb-8 border-b border-gold-accent/15 pb-6 md:mb-12 md:pb-8">
-            <h1
-              className="text-charcoal"
-              style={{
-                fontFamily: "'Playfair Display', serif",
-                fontSize: "clamp(1.6rem, 5vw, 2.5rem)",
-                lineHeight: 1.15,
-                fontWeight: 500,
-              }}
-            >
+            <h1 className="text-2xl font-semibold leading-tight tracking-tight text-charcoal sm:text-3xl md:text-[2.125rem]">
               {category.label}
             </h1>
             {category.blurb ? (
