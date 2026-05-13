@@ -162,7 +162,7 @@ export function Header() {
               aria-hidden={!proceduresMenuOpen}
             >
               <div className="max-h-[min(85vh,44rem)] overflow-x-auto overflow-y-auto rounded-b-2xl border border-t-0 border-border/60 bg-background/[0.99] px-4 py-5 shadow-2xl shadow-black/10 ring-1 ring-black/[0.04] backdrop-blur-md sm:px-5 sm:py-6 md:px-6 md:py-6">
-                <div className="grid w-full grid-cols-5 gap-2 md:gap-3 lg:gap-4">
+                <div className="grid w-full grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 md:gap-3 lg:gap-4">
                   {PROCEDURE_CATEGORIES.map((cat) => (
                     <div
                       key={cat.slug}

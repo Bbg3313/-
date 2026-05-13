@@ -1,8 +1,8 @@
 /**
  * 시술 안내 — 세부 시술 목록·스펙은 가격표와 무관합니다.
  *
- * 시술 카테고리(고정 5가지)
- * ① 보톡스/필러 ② 실리프팅 ③ 레이저 ④ 리프팅레이저 ⑤ 물광/스킨부스터
+ * 시술 카테고리
+ * ① 보톡스/필러 ② 실리프팅 ③ 레이저 ④ 리프팅레이저 ⑤ 물광/스킨부스터 ⑥ 제모 ⑦ 문신제거
  * (`PROCEDURE_CATEGORIES` · 각 행의 `categorySlug`는 위와 일치해야 합니다.)
  *
  * `시술정리.xlsx` (또는 동일 구조) 내용을 아래 `RAW_EXCEL_PROCEDURE_TREATMENTS`에 그대로 반영하세요.
@@ -81,6 +81,8 @@ export const PROCEDURE_CATEGORIES: ProcedureCategory[] = [
     blurb: "하이주·릴리이드M·바이리즌·뉴라미스 스킨인핸서·리쥬란·리쥬란HB·리쥬란아이·쥬베룩·리투오 등",
     sort: 50,
   },
+  { slug: "hair-removal", label: "제모", blurb: "레이저 제모", sort: 60 },
+  { slug: "tattoo-removal", label: "문신제거", blurb: "레이저 문신 제거", sort: 70 },
 ].sort((a, b) => a.sort - b.sort);
 
 const S = EXCEL_SPEC_TEMPLATE;
@@ -332,6 +334,24 @@ const RAW_EXCEL_PROCEDURE_TREATMENTS: ExcelProcedureRowInput[] = [
     title: "리투오",
     specs: { ...S },
     sort: 110,
+  },
+  // ——— 제모 (단독 1항목) ———
+  {
+    slug: "hair-removal",
+    categorySlug: "hair-removal",
+    title: "제모",
+    heroImage: "/images/signature-care/hair-dual-accento-n.png",
+    specs: { ...S },
+    sort: 10,
+  },
+  // ——— 문신제거 (단독 1항목) ———
+  {
+    slug: "tattoo-removal",
+    categorySlug: "tattoo-removal",
+    title: "문신제거",
+    heroImage: "/images/signature-care/laser-miin.png",
+    specs: { ...S },
+    sort: 10,
   },
 ];
 
